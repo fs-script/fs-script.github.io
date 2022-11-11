@@ -11,12 +11,12 @@ actions:
   - text: 案例目录
     link: /b-demo/
     type: secondary
-  # - text: 面试八股
-  #   link: /c-interview/
-  #   type: secondary
-  # - text: 工具归纳
-  #   link: /d-tools/
-  #   type: secondary
+  - text: 面试八股
+    link: /c-interview/
+    type: secondary
+  - text: 工具归纳
+    link: /d-tools/
+    type: secondary
 features:
   - title: ▪ 核心技术
     details: HTML 构建骨架，CSS 修饰定位，JS 交互控制，Node 启动服务
