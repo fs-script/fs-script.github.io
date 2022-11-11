@@ -11,12 +11,12 @@ actions:
   - text: 案例目录
     link: /b-demo/
     type: secondary
-  - text: 面试八股
-    link: /c-interview/
-    type: secondary
-  - text: 工具归纳
-    link: /d-tools/
-    type: secondary
+  # - text: 面试八股
+  #   link: /c-interview/
+  #   type: secondary
+  # - text: 工具归纳
+  #   link: /d-tools/
+  #   type: secondary
 features:
   - title: ▪ 核心技术
     details: HTML 构建骨架，CSS 修饰定位，JS 交互控制，Node 启动服务
@@ -50,8 +50,15 @@ footer: ©2022 前端摸金手册
   backdrop-filter: blur(20px);
   border: 0px;
 }
+.page-home .sidebar {
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  border: 0px;
+}
 .page-home .navbar .search-box input {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
 }
 .page-home .navbar-dropdown-wrapper:not(.mobile) .navbar-dropdown {
   background-color: rgba(0, 0, 0, 0.2);
