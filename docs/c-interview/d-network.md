@@ -1,15 +1,15 @@
 ---
-title: Operation
-description: Operation
+title: Network
+description: Network
 editLink: false
 lastUpdated: false
 contributors: false
 prev:
-  text: Theory
-  link: /c-interview/a-theory.md
-next:
   text: Browser
   link: /c-interview/c-browser.md
+next:
+  text: Theory
+  link: /c-interview/a-theory.md
 ---
 
-## Operation
+## 网络

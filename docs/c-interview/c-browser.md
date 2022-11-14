@@ -1,15 +1,15 @@
 ---
-title: Theory
-description: Theory
+title: Browser
+description: Browser
 editLink: false
 lastUpdated: false
 contributors: false
 prev:
-  text: NetWork
-  link: /c-interview/d-network.md
-next:
   text: Operation
   link: /c-interview/b-operation.md
+next:
+  text: Network
+  link: /c-interview/d-network.md
 ---
 
-## Theory
+## 浏览器

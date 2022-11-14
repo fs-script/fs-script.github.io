@@ -5,11 +5,11 @@ editLink: false
 lastUpdated: false
 contributors: false
 prev:
-  text: Icon
-  link: /d-tools/c-icon.md
+  text: Git
+  link: /d-tools/a-git.md
 next:
   text: Color
-  link: /d-tools/b-color.md
+  link: /d-tools/c-color.md
 ---
 
 ## Use

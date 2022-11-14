@@ -6,10 +6,10 @@ lastUpdated: false
 contributors: false
 prev:
   text: Use
-  link: /d-tools/a-use.md
+  link: /d-tools/b-use.md
 next:
   text: Icon
-  link: /d-tools/c-icon.md
+  link: /d-tools/d-icon.md
 ---
 
 ## Color

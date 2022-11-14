@@ -27,6 +27,10 @@ next:
 
 - [Operation(操作)](/c-interview/b-operation.md)
 
+- [Browser(浏览器)](/c-interview/c-browser.md)
+
+- [Network(网络)](/c-interview/d-network.md)
+
 <Badge text="算法" />
 
 ---

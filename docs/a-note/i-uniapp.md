@@ -1,15 +1,15 @@
 ---
-title: React.js
-description: React.js
+title: UniApp
+description: UniApp
 editLink: false
 lastUpdated: false
 contributors: false
 prev:
-  text: Vue.js
-  link: /a-note/f-vue.md
-next:
   text: BuildTools
   link: /a-note/h-build.md
+next:
+  text: WeChat
+  link: /a-note/j-wechat.md
 ---
 
-## React.js
+## UniApp

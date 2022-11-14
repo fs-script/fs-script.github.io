@@ -50,6 +50,38 @@ export default defineUserConfig({
             text: "React.js",
             link: "/a-note/g-react.md",
           },
+          {
+            text: "Build",
+            link: "/a-note/h-build.md",
+          },
+          {
+            text: "UniApp",
+            link: "/a-note/i-uniapp.md",
+          },
+          {
+            text: "WeChat",
+            link: "/a-note/j-wechat.md",
+          },
+          {
+            text: "Visualization",
+            link: "/a-note/k-visualization.md",
+          },
+          {
+            text: "MicroFrontends",
+            link: "/a-note/l-microFrontends.md",
+          },
+          {
+            text: "Flutter",
+            link: "/a-note/m-flutter.md",
+          },
+          {
+            text: "Rust",
+            link: "/a-note/n-rust.md",
+          },
+          {
+            text: "Web3",
+            link: "/a-note/o-web3.md",
+          },
         ],
       },
       {
@@ -76,22 +108,34 @@ export default defineUserConfig({
             text: "Operation",
             link: "/c-interview/b-operation.md",
           },
+          {
+            text: "Browser",
+            link: "/c-interview/c-browser.md",
+          },
+          {
+            text: "Network",
+            link: "/c-interview/d-network.md",
+          },
         ],
       },
       {
         text: "🤓 - Tools",
         children: [
           {
+            text: "Git",
+            link: "/d-tools/a-git.md",
+          },
+          {
             text: "Use",
-            link: "/d-tools/a-use.md",
+            link: "/d-tools/b-use.md",
           },
           {
             text: "Color",
-            link: "/d-tools/b-color.md",
+            link: "/d-tools/c-color.md",
           },
           {
             text: "Icon",
-            link: "/d-tools/c-icon.md",
+            link: "/d-tools/d-icon.md",
           },
         ],
       },

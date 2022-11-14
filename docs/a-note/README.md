@@ -39,6 +39,22 @@ next:
 
 - [React.js](/a-note/g-react.md)
 
+- [Build](/a-note/h-build.md)
+
+- [UniApp](/a-note/i-uniapp.md)
+
+- [WeChat](/a-note/j-wechat.md)
+
+- [Visualization](/a-note/k-visualization.md)
+
+- [MicroFrontends](/a-note/l-microFrontends.md)
+
+- [Flutter](/a-note/m-flutter.md)
+
+- [Rust](/a-note/n-rust.md)
+
+- [Web3](/a-note/o-web3.md)
+
 <Badge text="官方" />
 
 ---
