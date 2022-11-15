@@ -379,3 +379,10 @@ next:
 ## 肆 - SVG（待更新）
 
 ## 伍 - SEO（待更新）
+
+<style>
+table {
+  display: table !important;
+  width: 100% !important;
+}
+</style>
