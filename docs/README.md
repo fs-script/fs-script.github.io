@@ -86,4 +86,8 @@ footer: ©2022 前端摸金手册
 .page-home .home .hero .action-button.secondary:hover {
   background-color: rgba(255, 255, 255, 0.8);
 }
+table {
+  display: table !important;
+  width: 100% !important;
+}
 </style>

@@ -9,7 +9,7 @@ prev:
   link: /a-note/n-rust.md
 next:
   text: HTML
-  link: /a-note/o-web3.md
+  link: /a-note/a-html.md
 ---
 
 ## Web3
