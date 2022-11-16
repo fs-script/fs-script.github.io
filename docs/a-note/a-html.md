@@ -374,11 +374,7 @@ next:
 | time | 定义日期/时间 |
 | footer | 定义页脚 |
 
-## 叁 - Canvas（待更新）
-
-## 肆 - SVG（待更新）
-
-## 伍 - SEO（待更新）
+## 叁 - SEO（待更新）
 
 <style>
 table {
