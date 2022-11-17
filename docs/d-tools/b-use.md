@@ -13,3 +13,6 @@ next:
 ---
 
 ## Use
+
+npm 更换最新淘宝源：
+npm config set registry https://registry.npmmirror.com/ 

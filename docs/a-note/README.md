@@ -15,9 +15,9 @@ next:
 
 ::: tip 📚 在线书籍
 
-[现代JavaScript教程](https://zh.javascript.info/)
+[现代 JavaScript 教程](https://zh.javascript.info/)
 
-[ECMAScript6入门](https://es6.ruanyifeng.com/)
+[ECMAScript6 入门](https://es6.ruanyifeng.com/)
 
 :::
 
