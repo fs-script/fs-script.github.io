@@ -1,6 +1,6 @@
 ---
-title: 文档总览
-description: 文档总览
+title: 笔记总览
+description: 笔记总览
 sidebar: false
 editLink: false
 lastUpdated: false
@@ -13,13 +13,10 @@ next:
   link: /b-demo/
 ---
 
-::: tip 📚 在线书籍
-
-[现代 JavaScript 教程](https://zh.javascript.info/)
-
-[ECMAScript6 入门](https://es6.ruanyifeng.com/)
-
-:::
+<div style="margin: 0 auto; padding-top: 30px; width: 200px; text-align: center;">
+  <h1>笔记总览</h1>
+  <img src="/images/note.png" />
+</div>
 
 <Badge text="站内" />
 
@@ -51,7 +48,7 @@ next:
 
 - [Flutter](/a-note/m-flutter.md)
 
-- [Rust](/a-note/n-rust.md)
+- [Electron](/a-note/n-electron.md)
 
 - [Web3](/a-note/o-web3.md)
 
@@ -59,12 +56,20 @@ next:
 
 ---
 
-- [Vue 3](https://cn.vuejs.org/index.html)
+- [MDN](https://developer.mozilla.org/zh-CN/)
 
-- [React 18](https://zh-hans.reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/zh/)
 
-<Badge text="翻译" />
+- [Vue](https://cn.vuejs.org/)
 
----
+- [React](https://zh-hans.reactjs.org/)
 
--
+- [Angular](https://angular.cn/)
+
+- [Flutter](https://flutter.cn/)
+
+- [Electron](https://www.electronjs.org/zh/)
+
+- [uni-app](https://uniapp.dcloud.net.cn/)
+
+- [weChat](https://developers.weixin.qq.com/doc/)

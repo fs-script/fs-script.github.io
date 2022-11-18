@@ -13,28 +13,33 @@ next:
   link: /d-tools/
 ---
 
-::: tip 📋 在线题库
-
-[前端面试题宝典](https://fe.ecool.fun/topic-list)
-
-:::
+<div style="margin: 0 auto; padding-top: 30px; width: 200px; text-align: center;">
+  <h1>面试八股</h1>
+  <img src="/images/interview.png" />
+</div>
 
 <Badge text="站内" />
 
 ---
 
-- [Theory(理论)](/c-interview/a-theory.md)
+- [Theory (理论)](/c-interview/a-theory.md)
 
-- [Operation(操作)](/c-interview/b-operation.md)
+- [Operation (操作)](/c-interview/b-operation.md)
 
-- [Browser(浏览器)](/c-interview/c-browser.md)
+- [Browser (浏览器)](/c-interview/c-browser.md)
 
-- [Network(网络)](/c-interview/d-network.md)
+- [Network (网络)](/c-interview/d-network.md)
 
-<Badge text="算法" />
+<Badge text="📋 题库" />
 
----
+::: tip
 
-- [力扣](https://leetcode.cn/problemset/all/)
+[力扣](https://leetcode.cn/problemset/all/)
 
-- [牛客](https://www.nowcoder.com/exam/company)
+[牛客](https://www.nowcoder.com/exam/company)
+
+[前端 - 1](https://fe.ecool.fun/topic-list)
+
+[前端 - 2](http://www.h-camel.com/index.html)
+
+:::

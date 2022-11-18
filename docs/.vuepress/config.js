@@ -75,8 +75,8 @@ export default defineUserConfig({
             link: "/a-note/m-flutter.md",
           },
           {
-            text: "Rust",
-            link: "/a-note/n-rust.md",
+            text: "Electron",
+            link: "/a-note/n-electron.md",
           },
           {
             text: "Web3",

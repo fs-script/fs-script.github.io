@@ -9,32 +9,29 @@ prev:
   text: 面试八股
   link: /c-interview/
 next:
-  text: 文档总览
+  text: 笔记总览
   link: /a-note/
 ---
 
-::: tip 🔨 在线工具
-
-[CodePen(开发编辑器)](https://codepen.io/)
-
-[Diagrams(UML-绘图)](https://app.diagrams.net/)
-
-[PhotoShop(搞定设计)](https://ps.gaoding.com/#/)
-
-:::
+<div style="margin: 0 auto; padding-top: 30px; width: 200px; text-align: center;">
+  <h1>工具归纳</h1>
+  <img src="/images/tools.png" />
+</div>
 
 <Badge text="站内" />
 
 ---
 
-- [Use(安装-配置)](/d-tools/a-use.md)
+- [Git/SVN/GitHub/GitLab](/d-tools/a-git.md)
 
-- [Color(配色)](/d-tools/b-color.md)
+- [Use (安装/配置)](/d-tools/b-use.md)
 
-- [Icon(图标)](/d-tools/c-icon.md)
+- [Color (配色/设计)](/d-tools/c-color.md)
+
+- [Icon (图标/插画)](/d-tools/d-icon.md)
 
 <Badge text="npm" />
 
 ---
 
-- [生成目录树](https://www.npmjs.com/package/tree-node-cli)
+- [tree-node-cli (生成目录树)](https://www.npmjs.com/package/tree-node-cli)
