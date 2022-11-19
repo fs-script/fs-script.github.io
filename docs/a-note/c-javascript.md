@@ -20,6 +20,7 @@ next:
 
 - `"use strict"`：在代码最顶部添加，将开启严格模式（现代模式），激活新特性。`class` 与 `module` 会自动开启该模式。
 - 语句：可以省略分号，一个换行代表一个分号（自动插入分号），但有些情况下无法正确识别。
+
 - 单行注释：
 
 ```javascript
@@ -27,6 +28,7 @@ next:
 ```
 
 - 多行注释：
+
 ```javascript
 /* 多行
    注释
@@ -95,7 +97,7 @@ next:
 | a % b | 取余 |
 | a ** b | 幂运算 |
 
-- 从左向右运算
+- 从左向右运算。
 
 | 赋值运算符 | 描述 |
 | --- | --- |
@@ -126,7 +128,7 @@ next:
 | >> | 按位右移 |
 | >>> | 无符号右移 |
 
-- 32位整数
+- 32位整数。
 
 ### 06 - 值比较
 
@@ -151,8 +153,8 @@ next:
 let result = condition ? value1 : value2;
 ```
 
-- 可以使用多个问号
-- 禁止使用如 `break、continue`
+- 可以使用多个问号。
+- 禁止使用如 `break`、`continue`
 
 ### 08 - 逻辑运算
 
@@ -246,6 +248,7 @@ for (let i = 0; i < 9; i++) {
 
 ```javascript
 let num = 0;
+
 // outer 标签
 outer: for (let b = 1; b <= 9; b++) {
   for (let c = 1; c <= 9; c++) {
@@ -291,6 +294,7 @@ y();
 - 可以为参数设置默认值。
 - 空值 `return` 或没有 `return` 返回值为 `undefined`
 - 命名常用前缀：`get...`、`calc...`、`create...`、`check...`
+
 - 回调函数/匿名函数：
 
 ```javascript
@@ -347,7 +351,7 @@ function hello(...) {
 
 ### 16 - 自动化测试
 
-- 待更新
+待更新...
 
 ### 17 - 对象
 
@@ -369,6 +373,7 @@ let user2 = {};
 - 访问属性：`user1.name` 点方法、`user1["likes birds"]` 方括号访问多词属性。
 - 添加属性：`user1.age = 30`
 - 删除属性：`delete user1.age`
+
 - 判断属性是否存在：
 
 ```javascript
@@ -414,7 +419,7 @@ for (let value of user1) {
 ```
 
 - JavaScript 能够被访问任何属性，即使属性不存在，读取不存在的属性只会得到 `undefined`
-- 对象属性顺序，整数属性会被进行排序，其他属性则按照创建的顺序显示，可以在整数属性前添加 + 解决自动排序。
+- 对象属性顺序，整数属性会被进行排序，其他属性则按照创建的顺序显示，可以在整数属性前添加 `+` 解决自动排序。
 
 ### 18 - 对象引用与复制
 
@@ -458,7 +463,7 @@ function User(name) {
     };
   }
 
-  let user = new User("Jack");
+let user = new User("Jack");
 ```
 
 - 构造函数被调用时，隐式的创建了一个空对象，并且分配了 `this`，通过 `this` 添加新的属性，最后隐式的返回了 `this`
@@ -468,6 +473,7 @@ function User(name) {
 ### 22 - 可选链
 
 - 可选链 `?.` 前面的值为 `undefined` 或者 `null`，它会停止运算并返回 `undefined`
+
 - 安全地访问 `user.address.street` 的方式：
 
 ```javascript
@@ -482,8 +488,8 @@ console.log(user?.address?.street);
 
 ### 23 - Symbol类型
 
-- 只有两种原始类型可以用作对象属性键：字符串类型、Symbol类型。
-- Symbol 值表示唯一的标识符，是带有可选描述的原始唯一值，保证是唯一的，不会被自动转换为字符串。
+- 只有两种原始类型可以用作对象属性键：字符串类型、`Symbol`类型。
+- `Symbol` 值表示唯一的标识符，是带有可选描述的原始唯一值，保证是唯一的，不会被自动转换为字符串。
 
 ```javascript
 let id = Symbol("id");
@@ -497,13 +503,15 @@ let user = {
 };
 
 let id = Symbol("id");
-user[id] = 1;  // 第三方代码看不到
-console.log(user[id]);  // 可以使用 symbol 作为键来访问数据
+// 第三方代码看不到
+user[id] = 1;
+// 可以使用 symbol 作为键来访问数据
+console.log(user[id]);
 ```
 
-- Symbol 总是不同的，即使它们有相同的名字。
-- Symbol 属性不参与 `for..in...` 循环。
-- 从全局注册表中读取，如果不存在就创建它：全局注册表中的 Symbol 再读取复制是相同的。
+- `Symbol` 总是不同的，即使它们有相同的名字。
+- `Symbol` 属性不参与 `for..in...` 循环。
+- 从全局注册表中读取，如果不存在就创建它：全局注册表中的 `Symbol` 再读取复制是相同的。
 
 ```javascript
 let sym1 = Symbol.for("name");
@@ -517,7 +525,7 @@ console.log(Symbol.keyFor(sym1));  // name
 console.log(Symbol.keyFor(sym2));  // id
 ```
 
-- `Symbol.keyFor`内部使用全局 Symbol 注册表来查找 Symbol 的键。
+- `Symbol.keyFor`内部使用全局 `Symbol` 注册表来查找 `Symbol` 的键。
 
 ### 24 - 原始值转换
 
@@ -638,7 +646,8 @@ console.log(user + 500);
 
 - 可以应用 `for..of` 的对象被称为可迭代对象。
 - 数组是可迭代的，字符串也是可迭代的，数组和字符串是使用最广泛的内建可迭代对象。
-- `Symbol.iterator` 专门用于使对象可迭代的内建 Symbol
+- `Symbol.iterator` 专门用于使对象可迭代的内建 `Symbol`
+
 ```javascript
 let range = {
   from: 1,
@@ -690,7 +699,7 @@ let range = {
 
 ### 29 - 映射与集合
 
-- Map 是一个带键的数据项的集合，就像一个 Object 一样，但是它们最大的差别是 Map 允许任何类型的键（key）。
+- `Map` 是一个带键的数据项的集合，就像一个 `Object` 一样，但是它们最大的差别是 `Map` 允许任何类型的键（`key`）。
 
 | 方法 | 描述 |
 | --- | --- |
@@ -708,8 +717,8 @@ let range = {
 | Object.fromEntries([[...], [...]]) | 返回给定一个键值对数组来创建一个相应的对象 |
 
 - 与对象不同，键不会被转换成字符串，键可以是任何类型。
-- 使用对象作为键是 Map 最值得注意和重要的功能之一。
-- Map 有内建的 `forEach` 方法。
+- 使用对象作为键是 `Map` 最值得注意和重要的功能之一。
+- `Map` 有内建的 `forEach` 方法。
 
 ```javascript
 let recipeMap = new Map([
@@ -719,7 +728,7 @@ let recipeMap = new Map([
 ]);
 ```
 
-- Set 是一个特殊的类型集合，“值的集合”（没有键），它的每一个值只能出现一次。
+- `Set` 是一个特殊的类型集合，“值的集合”（没有键），它的每一个值只能出现一次。
 
 | 方法 | 描述 |
 | --- | --- |
@@ -733,22 +742,22 @@ let recipeMap = new Map([
 | set.values() | 与上诉的方法一致，目的是兼容Map |
 | set.entries() | 遍历并返回一个包含所有实体的可迭代对象，也是为了兼容Map |
 
--  可以使用 `for...of..` 或者 `forEach` 来遍历 Set
+-  可以使用 `for...of..` 或者 `forEach` 来遍历 `Set`
 
 ### 30- 弱映射与弱集合
 
-- 使用对象作为常规 Map 的键，那么当 Map 存在时，该对象也将存在，它会占用内存，并且不会被（垃圾回收机制）回收。
-- weakMap 和 Map 的第一个不同点就是，weakMap 的键必须是对象，不能是原始值。
+- 使用对象作为常规 `Map` 的键，那么当 `Map` 存在时，该对象也将存在，它会占用内存，并且不会被（垃圾回收机制）回收。
+- `weakMap` 和 `Map` 的第一个不同点就是，`weakMap` 的键必须是对象，不能是原始值。
 
 ```javascript
 let weakMap = new WeakMap();
 ```
 
--  在 weakMap 中使用一个对象作为键，并且没有其他对这个对象的引用，该对象将会被从内存（和map）中自动清除。
--  weakMap 不支持迭代以及 keys()，values() 和 entries() 方法,所以没有办法获取 weakMap 的所有键或值。
--  weakMap 的主要应用场景是额外数据的存储，可能是第三方库，并想存储一些与之相关的数据，那么这些数据就应该与这个对象共存亡，再有就是缓存的应用。
--  与 Set 类似，但是只能向 weakSet 添加对象。
--  对象只有在其它某个（些）地方能被访问的时候，才能留在 weakSet 中。
+-  在 `weakMap` 中使用一个对象作为键，并且没有其他对这个对象的引用，该对象将会被从内存（和 `map`）中自动清除。
+-  `weakMap` 不支持迭代以及 `keys()`，`values()` 和 `entries()` 方法,所以没有办法获取 `weakMap` 的所有键或值。
+-  `weakMap` 的主要应用场景是额外数据的存储，可能是第三方库，并想存储一些与之相关的数据，那么这些数据就应该与这个对象共存亡，再有就是缓存的应用。
+-  与 `Set` 类似，但是只能向 `weakSet` 添加对象。
+-  对象只有在其它某个（些）地方能被访问的时候，才能留在 `weakSet` 中。
 
 ### 31 - 解构赋值
 
@@ -783,7 +792,7 @@ let [name1, name2, ...rest] = [
 ];
 ```
 
-- 缺少对应值的变量都会被赋 undefined
+- 缺少对应值的变量都会被赋 `undefined`
 - 可以使用冒号来设置变量名称 `let {width: w, height: h, title} = obj`
 
 ```javascript
@@ -826,13 +835,13 @@ showMenu(options);
 
 ### 32 - 日期和时间
 
-- 不带参数，创建的是一个表示当前日期和时间的 Date 对象。
+- 不带参数，创建的是一个表示当前日期和时间的 `Date` 对象。
 
 ```javascript
 let now = new Date();
 ```
 
-- 传入整数参数，代表的是自 1970-01_01 00 : 00 : 00 以来经过的毫秒数，该整数被称为时间戳。
+- 传入整数参数，代表的是自 `1970-01_01 00 : 00 : 00` 以来经过的毫秒数，该整数被称为时间戳。
 - 如果只有一个参数，并且是字符串，那么它会被自动解析，`new Date(year, month, date, hours, minutes, seconds, ms)`。
 
 | 方法 | 描述 |
@@ -878,8 +887,8 @@ let student = {
 let json = JSON.stringify(student);
 ```
 
-- JSON 支持以下数据类型：Objects、Arrays、Primitives（strings、numbers、boolean values true/false、null）。
-- JSON 是语言无关的纯数据规范，因此一些特定于 JavaScript 的对象属性会被 `JSON.stringify` 跳过：函数属性（方法）、Symbol 类型的键和值、存储 `undefined` 的属性。
+- JSON 支持以下数据类型：`Objects`、`Arrays`、`Primitives`（`strings`、`numbers`、`boolean`、`true/false`、`null`）。
+- JSON 是语言无关的纯数据规范，因此一些特定于 JavaScript 的对象属性会被 `JSON.stringify` 跳过：函数属性（方法）、`Symbol` 类型的键和值、存储 `undefined` 的属性。
 
 ```javascript
 // 自定义 “toJSON”
@@ -896,7 +905,7 @@ let meetup = {
 };
 ```
 
-- `JSON.parse(json)`解码 JSON为字符串。
+- `JSON.parse(json)` 解码 JSON 为字符串。
 
 ```javascript
 let userData = '{ "name": "John", "age": 35, "isAdmin": false, "friends": [0,1,2,3] }';
@@ -913,8 +922,6 @@ let meetup1 = JSON.parse(str, function (key, value) {
 });
 
 console.log(meetup1.date.getDate());
-
-// 都支持用于智能读/写的转换函数
 ```
 
 ### 34 - 递归与堆栈
@@ -924,11 +931,11 @@ console.log(meetup1.date.getDate());
 ```javascript
 // 递归调用
 function pow(x, n) {
-    if (n == 1) {
-        return x;
-    } else {
-        return x * pow(x, n - 1);
-    }
+  if (n == 1) {
+    return x;
+  } else {
+    return x * pow(x, n - 1);
+  }
 }
 
 console.log(pow(2, 10));
@@ -944,7 +951,7 @@ console.log(pow(2, 10));
 
 - 在 JS 中，无论函数是如何定义的，都可以在调用它时传入任意数量的参数。
 - `...变量名`，这将会声明一个数组并指定其名称，其中存有剩余的参数。
-- rest 参数必须放到参数列表的末尾
+- `rest` 参数必须放到参数列表的末尾。
 
 ```javascript
 // rest 参数
@@ -958,7 +965,7 @@ console.log(sumAll(1, 2, 3, 4, 5, 6));
 ```
 
 - `arguments` 是一个特殊类数组对象，可以在函数中被访问，该对象以参数在参数列表中的索引作为键，存储所有参数，箭头函数没有`arguments`
-- spread 语法：使用 ...可迭代对象，可以把可迭代对象展开到参数列表中。
+- `spread` 语法：使用 `...可迭代对象`，可以把可迭代对象展开到参数列表中。
 
 ```javascript
 // Spread 语法
@@ -967,13 +974,13 @@ let arr = [3, 5, 6, 9, 8, 4];
 console.log(Math.max(...arr));
 ```
 
-- spread 语法内部使用了迭代器来收集元素，与 `for..of` 的方式相同，可用于复制 array/object
+- `spread` 语法内部使用了迭代器来收集元素，与 `for..of` 的方式相同，可用于复制 `array/object`
 
 ### 36 - 变量作用域与闭包
 
-- `let\const` 如果在代码块 `{...}`内声明了一个变量，那么这个变量只在该代码块内可见。
+- `let\const` 如果在代码块 `{...}` 内声明了一个变量，那么这个变量只在该代码块内可见。
 - `if`，`for` 和 `while` 等，在 `{...}` 中声明的变量也仅在内部可见。
-- 闭包是指：一个函数可以记住其外部变量并可以访问这些变量，在JavaScript 中，几乎所有函数都是天生闭包的（有一个例外），JavaScript 中的函数会自动通过隐藏的 `[[Environment]]` 属性记住创建它们的位置，所以它们都可以访问外部变量，函数中创建的函数可以访问外部函数的变量。
+- 闭包是指：一个函数可以记住其外部变量并可以访问这些变量，在 JavaScript 中，几乎所有函数都是天生闭包的（有一个例外），JavaScript 中的函数会自动通过隐藏的 `[[Environment]]` 属性记住创建它们的位置，所以它们都可以访问外部变量，函数中创建的函数可以访问外部函数的变量。
 - 闭包就是指有权访问另一个函数作用域中的变量的函数。
 - 函数将从内到外依次在对应的词法环境中寻找目标变量，它使用最新的值。
 - 通常，函数调用完成后，会将词法环境和其中的所有变量从内存中删除，但是，如果有一个嵌套的函数在函数结束后仍可达，则它将具有引用词法环境的 `[[Environment]]` 属性。
@@ -983,7 +990,7 @@ console.log(Math.max(...arr));
 - `var` 没有块级作用域，用 `var` 声明的变量，不是函数作用域就是全局作用域。
 - 使用 `var` ，可以重复声明一个变量，不管多少次都行。
 - `var` 声明的变量，可以在其声明语句前被使用，被提升，声明会被提升，但是赋值不会。
-- 所有的 `var` 声明都是在函数开头处理的，可以在任何地方引用它们，但是在它们被赋值之前都是 undefined
+- 所有的 `var` 声明都是在函数开头处理的，可以在任何地方引用它们，但是在它们被赋值之前都是 `undefined`
 - 全局对象提供可在任何地方使用的变量和函数，默认情况下，这些全局变量内建于语言或环境中，在浏览器中，它的名字是 “window”，对 Node.js 而言，它的名字是 “global”
 - `globalThis` 被作为全局对象的标准名称加入到了 JavaScript 中，所有环境都应该支持该名称。
 
@@ -996,14 +1003,14 @@ let sayHi = function func(who) {
   if (who) {
     alert(`Hello, ${who}`);
   } else {
-    func("Guest"); // 使用 func 再次调用函数自身
+    func("Guest");  // 使用 func 再次调用函数自身
   }
 };
 
-sayHi(); // Hello, Guest
+sayHi();  // Hello, Guest
 
 // 但这不工作：
-func(); // Error, func is not defined（在函数外不可见）
+func();  // Error, func is not defined（在函数外不可见）
 ```
 
 - 它允许函数在内部引用自己，它在函数外是不可见的。
@@ -1026,6 +1033,7 @@ console.log(f2.length);
 ```
 
 ### 39 - new Function
+
 ```javascript
 let sum = new Function('a', 'b', 'return a + b');
 
@@ -1094,7 +1102,6 @@ function cachingDecorator(func) {
     }
 
     let result = func(x); // 否则就调用 func
-
     cache.set(x, result); // 然后将结果缓存（记住）下来
     return result;
   };
@@ -1116,6 +1123,7 @@ console.log("Again: " + slow(2)); // 返回缓存中的 slow(2) 的结果
 func(1, 2, 3);
 func.call(obj, 1, 2, 3)
 ```
+
 ```javascript
 func.call(context, ...args);
 func.apply(context, args);
@@ -1165,6 +1173,7 @@ for (let key in user) {
 ```
 
 - 偏函数：通过绑定先有函数的一些参数来创建一个新函数。
+
 ```javascript
 function mul(a, b) {
   return a * b;
@@ -1176,7 +1185,8 @@ console.log(double(3)); // 6
 console.log(double(4)); // 8
 ```
 
-- `partial(func[, arg1, arg2...])` 调用的结果是一个包装器 。
+- `partial(func[, arg1, arg2...])` 调用的结果是一个包装器。
+
 ```javascript
 function partial(func, ...argsBound) {
   return function(...args) {
@@ -1218,7 +1228,7 @@ Object.defineProperties(user, {
 });
 ```
 
-- 完全克隆对象，包括属性、symbol类型、不可枚举类型。
+- 完全克隆对象，包括属性、`Symbol`、不可枚举类型。
 
 ```javascript
 let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj));
@@ -1283,12 +1293,12 @@ console.log(rabbit.jumps);
 - 引用不能形成闭环，如果试图在一个闭环中分配 `__proto__`，JavaScript 会抛出错误。
 - `__proto__` 的值可以是对象，也可以是 `null`，而其他的类型都会被忽略。
 - 只能有一个 `[[Prototype]]`，一个对象不能从其他两个对象获得继承。
-- `__proto__` 是 `[[Prototype]]` 的因历史原因而留下来的 getter/setter
-- 访问器（accessor）属性是一个例外，因为分配（assignment）操作是由 setter 函数处理的。因此，写入此类属性实际上与调用函数相同。
+- `__proto__` 是 `[[Prototype]]` 的因历史原因而留下来的 `getter/setter`
+- 访问器（accessor）属性是一个例外，因为分配（assignment）操作是由 `setter` 函数处理的。因此，写入此类属性实际上与调用函数相同。
 - 无论在哪里找到方法，在一个对象还是在原型中。在一个方法调用中，`this` 始终是点符号 `.` 前面的对象（调用者）。
 - 当继承的对象运行继承的方法时，它们将仅修改自己的状态，而不会修改大对象的状态。
 - 方法是共享的，但对象状态不是。
-- 现代编程语言建议应该使用函数 `Object.getPrototypeOf/Object.setPrototypeOf` 来取代 `__proto__` 去 get/set 原型。
+- 现代编程语言建议应该使用函数 `Object.getPrototypeOf/Object.setPrototypeOf` 来取代 `__proto__` 去 `get/set` 原型。
 - `for..in` 循环也会迭代继承的属性。
 
 | 方法 | 描述 |
@@ -1309,9 +1319,9 @@ for(let prop in rabbit) {
   let isOwn = rabbit.hasOwnProperty(prop);
 
   if (isOwn) {
-    alert(`Our: ${prop}`); // Our: jumps
+    alert(`Our: ${prop}`);  // Our: jumps
   } else {
-    alert(`Inherited: ${prop}`); // Inherited: eats
+    alert(`Inherited: ${prop}`);  // Inherited: eats
   }
 }
 ```
@@ -1338,19 +1348,20 @@ function Rabbit(name) {
 // 当创建了一个 new Rabbit 时，把它的 [[Prototype]] 赋值为 animal
 Rabbit.prototype = animal;
 
-let rabbit = new Rabbit("White Rabbit"); //  rabbit.__proto__ == animal
+//  rabbit.__proto__ == animal
+let rabbit = new Rabbit("White Rabbit");
 
-console.log(rabbit.eats); // true
+console.log(rabbit.eats);  // true
 ```
 
 ### 47 - 原生的原型
 
-- 所有的内建对象都遵循相同的模式（pattern）：方法都存储在 prototype 中，对象本身只存储数据，原始数据类型也将方法存储在包装器对象的 prototype 中。
+- 所有的内建对象都遵循相同的模式（pattern）：方法都存储在 `prototype` 中，对象本身只存储数据，原始数据类型也将方法存储在包装器对象的 `prototype` 中。
 - `obj = {}` 和 `obj = new Object()` 是一个意思，其中 `Object` 就是一个内建的对象构造函数，其自身的 `prototype` 指向一个带有 `toString` 和其他方法的一个巨大的对象。
-- `Array`、`Date`、`Function` 及其他，都在 prototype 上挂载了方法。
+- `Array`、`Date`、`Function` 及其他，都在 `prototype` 上挂载了方法。
 - 访问基本数据类型的属性，那么临时包装器对象将会通过内建的构造器 `String`、`Number` 和 `Boolean` 被创建。它们提供操作字符串、数字和布尔值的方法然后消失。
 - 值 `null` 和 `undefined` 没有对象包装器。
-- 修改原生原型：Polyfilling 是一个术语，表示某个方法在 JavaScript 规范中已存在，但是特定的 JavaScript 引擎尚不支持该方法，那么可以通过手动实现它，并用以填充内建原型。
+- 修改原生原型：`Polyfilling` 是一个术语，表示某个方法在 JavaScript 规范中已存在，但是特定的 JavaScript 引擎尚不支持该方法，那么可以通过手动实现它，并用以填充内建原型。
 
 ```javascript
 console.dir([1, 2, 3]);
@@ -1369,9 +1380,9 @@ console.log(obj.join(", "));
 
 ### 48 - 原型方法
 
-- `Object.getPrototypeOf(obj)` ： 返回对象 obj 的 [[Prototype]]
-- `Object.setPrototypeOf(obj, proto)` ：将对象 obj 的 [[Prototype]] 设置为 proto
-- `Object.create(proto, [descriptors])` ：利用给定的 proto 作为 [[Prototype]] 和可选的属性描述来创建一个空对象
+- `Object.getPrototypeOf(obj)` ： 返回对象 `obj` 的 `[[Prototype]]`
+- `Object.setPrototypeOf(obj, proto)` ：将对象 `obj` 的 `[[Prototype]]` 设置为 `proto`
+- `Object.create(proto, [descriptors])` ：利用给定的 `proto` 作为 `[[Prototype]]` 和可选的属性描述来创建一个空对象。
 
 ```javascript
 let animal = {
@@ -1379,13 +1390,13 @@ let animal = {
 };
 
 // 创建一个以 animal 为原型的新对象
-let rabbit = Object.create(animal); // 与 {__proto__: animal} 相同
+let rabbit = Object.create(animal);  // 与 {__proto__: animal} 相同
 
-alert(rabbit.eats); // true
+alert(rabbit.eats);  // true
 
-alert(Object.getPrototypeOf(rabbit) === animal); // true
+alert(Object.getPrototypeOf(rabbit) === animal);  // true
 
-Object.setPrototypeOf(rabbit, {}); // 将 rabbit 的原型修改为 {}
+Object.setPrototypeOf(rabbit, {});  // 将 rabbit 的原型修改为 {}
 ```
 
 - `Object.create` 方法更强大，因为它有一个可选的第二参数：属性描述器，可以在此处为新对象提供额外的属性。
@@ -1401,7 +1412,7 @@ let clone = Object.create(
 
 - `__proto__` 不是对象的属性，而是 `Object.prototype` 的访问器属性。
 - `__proto__` 是一种访问 `[[Prototype]]` 的方式，而不是 `[[prototype]]` 本身。
-- 大多数与对象相关的方法都是 `Object.something(...)`，例如 `Object.keys(obj)` ，它们不在 prototype 中，因此在 “very plain” 对象中它们还是可以继续使用。
+- 大多数与对象相关的方法都是 `Object.something(...)`，例如 `Object.keys(obj)` ，它们不在 `prototype` 中，因此在 “very plain” 对象中它们还是可以继续使用。
 - ![原型.png](https://pic.jitudisk.com/public/2022/11/16/953738a9e5030.png)
 
 ### 49 - Class
@@ -1417,21 +1428,21 @@ class User {
 }
 
 // class 是一个函数
-console.log(typeof User); // function
+console.log(typeof User);  // function
 
 // ...或者，更确切地说，是 constructor 方法
-console.log(User === User.prototype.constructor); // true
+console.log(User === User.prototype.constructor);  // true
 
 // 方法在 User.prototype 中，例如：
-console.log(User.prototype.sayHi); // sayHi 方法的代码
+console.log(User.prototype.sayHi);  // sayHi 方法的代码
 
 // 在原型中实际上有两个方法
-console.log(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
+console.log(Object.getOwnPropertyNames(User.prototype));  // constructor, sayHi
 ```
 
-- 通过 `class` 创建的函数具有特殊的内部属性标记 `[[IsClassConstructor]]: true`。因此，它与手动创建并不完全相同。
+- 通过 `class` 创建的函数具有特殊的内部属性标记 `[[IsClassConstructor]]: true`。因此它与手动创建并不完全相同。
 - 类方法不可枚举。
-- 类总是使用 `use strict`
+- 类总是使用 `"use strict"`
 - 类字段的不同之处在于，它们会在每个独立对象中被设置，而不是设在 `User.prototype`，可以用于函数绑定。
 
 ```javascript
@@ -1443,6 +1454,7 @@ let User = class {
 };
 // class 之后可以跟一个名字，只有内部可见
 ```
+
 ```javascript
 // get / set
 class User {
@@ -1483,7 +1495,7 @@ new User().sayHi(); // Hello
 ```
 
 - 执行 `super.method(...)` 来调用一个父类方法。
-- 执行 `super(...)` 来调用一个父类 constructor（只能在 constructor 中）。
+- 执行 `super(...)` 来调用一个父类 `constructor`（只能在 `constructor` 中）。
 - 箭头函数没有`super`，如果被访问，它会从外部函数获取。
 - 继承时如果没有写自己的 `constructor`：
 
@@ -1610,12 +1622,12 @@ let user = {
 alert( {}.toString.call(user) );
 ```
 
-- 类型检查方法
+- 类型检查方法。
 
 |  | 用于 | 返回值 |
 | --- | --- | --- |
 | typeof | 原始数据类型 | string |
-| {}.toString | 原始数据类型，内建对象，包含 `Symbol.toStringTag`
+| {}.toString | 原始数据类型，内建对象，包含 Symbol.toStringTag
  属性的对象 | string |
 | instanceof | 对象，考虑继承时更出色 | true/false |
 
@@ -1660,8 +1672,8 @@ new User("Dude").sayHi(); // Hello Dude!
 -  `try...catch` 仅对运行时的 `error` 有效，只能处理有效代码中出现的错误，这类错误被称为“运行时的错误（runtime errors）”，有时被称为“异常（exceptions）”。
 -  发生错误时，JavaScript 生成一个包含有关其详细信息的对象，然后将该对象作为参数传递给 `catch`。
 -  `error` 对象的常用属性：`name/message/stack`
--  `throw` 操作符会生成一个 error 对象，在try中不符合要求时，主动抛出一个异常。
--  JavaScript 中有很多内建的标准 error 的构造器：`Error`，`SyntaxError`，`ReferenceError`，`TypeError` 等，也可以使用它们来创建 `error` 对象。
+-  `throw` 操作符会生成一个 `error` 对象，在 `try` 中不符合要求时，主动抛出一个异常。
+-  JavaScript 中有很多内建的标准 `error` 的构造器：`Error`，`SyntaxError`，`ReferenceError`，`TypeError` 等，也可以使用它们来创建 `error` 对象。
 
 ```javascript
 let error = new Error(message);
@@ -1676,11 +1688,11 @@ let error = new ReferenceError(message);
 
 ```javascript
 try {
-   ... 尝试执行的代码 ...
+  ... 尝试执行的代码 ...
 } catch (err) {
-   ... 处理 error ...
+  ... 处理 error ...
 } finally {
-   ... 总是会执行的代码 ...
+  ... 总是会执行的代码 ...
 }
 ```
 
@@ -1703,6 +1715,7 @@ function readUser(json) {
   if (!user.age) {
     throw new ValidationError("No field: age");
   }
+
   if (!user.name) {
     throw new ValidationError("No field: name");
   }
@@ -1779,7 +1792,7 @@ promise.then(
 );
 ```
 
-- `.then` 的第一个参数是一个函数，该函数将在 promise resolved 且接收到结果后执行，`.then` 的第二个参数也是一个函数，该函数将在 promise rejected 且接收到 `error` 信息后执行。
+- `.then` 的第一个参数是一个函数，该函数将在 `promise resolved` 且接收到结果后执行，`.then` 的第二个参数也是一个函数，该函数将在 `promise rejected` 且接收到 `error` 信息后执行。
 
 ```javascript
 let promise = new Promise((resolve, reject) => {
@@ -1791,7 +1804,7 @@ promise.catch(alert);  // 1 秒后显示 "Error: Whoops!"
 ```
 
 - `.catch(f)` 调用是 `.then(null, f)` 的完全的模拟，它只是一个简写形式。
-- 调用 `.finally(f)` 类似于 `.then(f, f)`，因为当 promise settled 时 `f` 就会执行：无论 `promise` 被 `resolve` 还是 `reject`，`finally` 的功能是设置一个处理程序在前面的操作完成后，执行清理/终结。
+- 调用 `.finally(f)` 类似于 `.then(f, f)`，因为当 `promise settled` 时 `f` 就会执行：无论 `promise` 被 `resolve` 还是 `reject`，`finally` 的功能是设置一个处理程序在前面的操作完成后，执行清理/终结。
 
 ```javascript
 new Promise((resolve, reject) => {
@@ -1806,29 +1819,31 @@ new Promise((resolve, reject) => {
 - `finally` 处理程序（handler）没有参数，`finally` 处理程序也不应该返回任何内容。
 - `finally` 处理程序没有得到前一个处理程序的结果（它没有参数），而这个结果被传递给了下一个合适的处理程序，如果 `finally` 处理程序返回了一些内容，那么这些内容会被忽略，当 `finally` 抛出 `error` 时，执行将转到最近的 `error` 的处理程序。
 - 如果 `promise` 为 `pending` 状态，`.then/catch/finally` 处理程序（handler）将等待它的结果，`Promise` 则更加灵活，可以随时添加处理程序（handler）：如果结果已经在了，它们就会执行。
-- Promise链：
+
+**Promise链：**
+
 - `.then(handler)` 中所使用的处理程序（handler）可以创建并返回一个 `promise`，返回 `promise` 使能够构建异步行为链。
 - 确切地说，处理程序（handler）返回的不完全是一个 `promise`，而是返回的被称为 “thenable” 对象，一个具有方法 `.then` 的任意对象，它会被当做一个 `promise` 来对待。
 - `fetch(url)`方法从远程服务器加载用户信息。
 - `response.text()` 方法：当全部文字（full text）内容从远程服务器下载完成后，它会返回一个 `promise`，该 `promise` 以刚刚下载完成的这个文本作为 `result` 进行 `resolve`
 -  `fetch` 返回的 `response` 对象还包括 `response.json()` 方法，该方法读取远程数据并将其解析为 JSON
 -  作为一个好的做法，异步行为应该始终返回一个 `promise`
--  总结：如果 `.then`（或 `catch/finally` 都可以）处理程序（handler）返回一个 `promise`，那么链的其余部分将会等待，直到它状态变为 `settled`，当它被 `settled` 后，其 `result`（或 error）将被进一步传递下去。
+-  总结：如果 `.then`（或 `catch/finally` 都可以）处理程序（handler）返回一个 `promise`，那么链的其余部分将会等待，直到它状态变为 `settled`，当它被 `settled` 后，其 `result`（或 `error` ）将被进一步传递下去。
 -  捕获所有 `error` 的最简单的方法是，将 `.catch` 附加到链的末尾。
 -  在 `executor` 周围的隐式 `try..catch`自动捕获了 `error`，并将其变为 `rejected promise`，`.then` 处理程序（handler）中 `throw`，这意味着 `promise` 被 `rejected`，因此控制权移交至最近的 `error` 处理程序（handler）。
 -  在 `.catch` 中 `throw`，那么控制权就会被移交到下一个最近的 `error` 处理程序（handler），处理该 `error` 并正常完成，那么它将继续到最近的成功的 `.then` 处理程序（handler）。
--  在任何情况下都应该有 `unhandledrejection` 事件处理程序（用于浏览器，以及其他环境的模拟），以跟踪未处理的 error 并告知用户（可能还有的服务器）有关信息，以使应用程序永远不会“死掉”。
+-  在任何情况下都应该有 `unhandledrejection` 事件处理程序（用于浏览器，以及其他环境的模拟），以跟踪未处理的 `error` 并告知用户（可能还有的服务器）有关信息，以使应用程序永远不会“死掉”。
 
 ```javascript
 window.addEventListener('unhandledrejection', function(event) {
   // 这个事件对象有两个特殊的属性：
-  alert(event.promise); // [object Promise] - 生成该全局 error 的 promise
-  alert(event.reason); // Error: Whoops! - 未处理的 error 对象
+  alert(event.promise);  // [object Promise] - 生成该全局 error 的 promise
+  alert(event.reason);  // Error: Whoops! - 未处理的 error 对象
 });
 
 new Promise(function() {
   throw new Error("Whoops!");
-}); // 没有用来处理 error 的 catch
+});  // 没有用来处理 error 的 catch
 ```
 
 ### 59 - Promise API
@@ -1845,12 +1860,12 @@ new Promise(function() {
 | Promise.reject(error) | 基本没被使用 | 用 `error`
  创建一个 rejected 的 promise |
 
--  一个常见的技巧是，将一个任务数据数组映射（map）到一个 `promise` 数组，然后将其包装到 `Promise.all`
+-  一个常见的技巧是，将一个任务数据数组映射（`map`）到一个 `promise` 数组，然后将其包装到 `Promise.all`
 -  任意一个 `promise` 被 `reject`，由 `Promise.all` 返回的 `promise` 就会立即 `reject`，并且带有的就是这个 `error`，如果出现 `error`，其他 `promise` 将被忽略。
 -  `Promise.all(...)` 接受含有 `promise` 项的可迭代对象（大多数情况下是数组）作为参数，但是如果这些对象中的任何一个不是 `promise`，那么它将被“按原样”传递给结果数组。
--  `Promise.allSettled`，对于每个 promise，都得到了其状态（status）和 `value/reason`，以对象数组的形式返回它们的结果：`status`: `"fulfilled"` 或 `"rejected"`、`value`（如果 fulfilled）或 `reason`（如果 rejected）。
+-  `Promise.allSettled`，对于每个 `promise`，都得到了其状态（`status`）和 `value/reason`，以对象数组的形式返回它们的结果：`status`: `"fulfilled"` 或 `"rejected"`、`value`（如果 `fulfilled` ）或 `reason`（如果 rejected）。
 -  `Promisification`：指将一个接受回调的函数转换为一个返回 `promise` 的函数，但不是回调的完全替代。
--  在实际开发中，可能需要 `promisify` 很多函数，所以使用一个 `helper`（辅助函数）很有意义，将其称为 `promisify(f)`：它接受一个需要被 `promisify` 的函数 `f`，并返回一个包装（wrapper）函数。
+-  在实际开发中，可能需要 `promisify` 很多函数，所以使用一个 `helper`（辅助函数）很有意义，将其称为 `promisify(f)`：它接受一个需要被 `promisify` 的函数 `f`，并返回一个包装（ `wrapper` ）函数。
 
 ```javascript
 function promisify(f) {
@@ -1864,7 +1879,7 @@ function promisify(f) {
         }
       }
 
-      args.push(callback); // 将自定义的回调附加到 f 参数（arguments）的末尾
+      args.push(callback);  // 将自定义的回调附加到 f 参数（arguments）的末尾
 
       f.call(this, ...args);  // 调用原始的函数
     });
@@ -1901,15 +1916,15 @@ async function f() {
 let value = await promise;
 ```
 
-- `await` 让 JavaScript 引擎等待直到 `promise` 完成（settle）并返回结果，不能在普通函数中使用 `await`
+- `await` 让 JavaScript 引擎等待直到 `promise` 完成（ `settle` ）并返回结果，不能在普通函数中使用 `await`
 - `await` 实际上会暂停函数的执行，直到 `promise` 状态变为 `settled`，然后以 `promise` 的结果继续执行。
 - 现代浏览器在 `modules` 里允许顶层的 `await`，也可以包装到匿名的异步函数中。
 - `await` 允许使用 `thenable` 对象（那些具有可调用的 `then` 方法的对象）。
-- 当使用 `async/await` 时，几乎就不会用到 `.then` 了，因为 `await` 处理了等待，并且使用常规的 `try..catch` 而不是 `.catch`，在所有 `async` 函数之外，在语法上就不能使用 `await` 了，所以这时候通常的做法是添加 `.then/catch` 来处理最终的结果（result）或掉出来的（falling-through）error
+- 当使用 `async/await` 时，几乎就不会用到 `.then` 了，因为 `await` 处理了等待，并且使用常规的 `try..catch` 而不是 `.catch`，在所有 `async` 函数之外，在语法上就不能使用 `await` 了，所以这时候通常的做法是添加 `.then/catch` 来处理最终的结果（ `result` ）或掉出来的（falling-through）`error`
 
 ### 62 - Generator
 
-- `Generator` 可以按需一个接一个地返回（“yield”）多个值。它们可与 `iterable` 完美配合使用，从而可以轻松地创建数据流。
+- `Generator` 可以按需一个接一个地返回（ `yield` ）多个值。它们可与 `iterable` 完美配合使用，从而可以轻松地创建数据流。
 
 ```javascript
 function* generateSequence() {
@@ -1970,7 +1985,6 @@ let range = {
       last: this.to,
 
       async next() {
-
         // 注意：可以在 async next 内部使用 "await"
         await new Promise((resolve) => setTimeout(resolve, 1000));  // (3)
 
@@ -2066,6 +2080,7 @@ export class User {
 ```
 
 - 大部分 JavaScript 样式指南都不建议在函数和类声明后使用分号。
+
 - 导出与声明分开：
 
 ```javascript
@@ -2260,8 +2275,8 @@ let name = user.name;  // 显示 "GET name"
 user.name = "Pete";  // 显示 "SET name=Pete"
 ```
 
-- 如果一个捕捉器想要将调用转发给对象，则只需使用相同的参数调用 Reflect. 就足够了。
-- 第三个参数 `receiver`，它保证将正确的 `this` 传递给 getter
+- 如果一个捕捉器想要将调用转发给对象，则只需使用相同的参数调用 `Reflect`. 就足够了。
+- 第三个参数 `receiver`，它保证将正确的 `this` 传递给 `getter`
 - `Reflect` 调用的命名与捕捉器的命名完全相同。
 
 ```javascript
@@ -2293,7 +2308,8 @@ user = new Proxy(user, {
 alert(user.getName()); // Guest
 ```
 
-- `Proxy` 无法拦截严格相等性检查 ===，没有办法拦截对于对象的严格相等性检查。一个对象只严格等于其自身，没有其他值。
+- `Proxy` 无法拦截严格相等性检查 `===`，没有办法拦截对于对象的严格相等性检查。一个对象只严格等于其自身，没有其他值。
+
 - 一个可撤销的代理是可以被禁用的代理，`Proxy.revocable()` 方法可以用来创建一个可撤销的代理对象：
 
 ```javascript
@@ -2381,7 +2397,7 @@ function curry(func) {
 
 - `obj.method()` 语句中，点 `'.'` 返回的不是一个函数，而是一个特殊的 `Reference Type` 的值。
 - `Reference Type` 是 ECMA 中的一个“规范类型”。不能直接使用它，但它被用在 JavaScript 语言内部。
-- `Reference Type` 的值是一个三个值的组合 `(base, name, strict)`，其中 `base` 是对象，`name` 是属性名，`strict` 在 use strict 模式下为 true
+- `Reference Type` 的值是一个三个值的组合 `(base, name, strict)`，其中 `base` 是对象，`name` 是属性名，`strict` 在 `use strict` 模式下为 `true`
 - `Reference Type` 是一个特殊的“中间人”内部类型，目的是从 `.` 传递信息给 `()` 调用，当 `()` 被在 `Reference Type` 上调用时，它们会接收到关于对象和对象的方法的完整信息，然后可以设置正确的 `this`。任何例如赋值 `hi = user.hi` 等其他的操作，都会将 `Reference Type` 作为一个整体丢弃掉，而会取 `user.hi`（一个函数）的值并继续传递，所以任何后续操作都“丢失”了 `this`，因此，`this` 的值仅在函数直接被通过点符号 `obj.method()` 或方括号 `obj[method]` 语法（此处它们作用相同）调用时才被正确传递。还有很多种解决这个问题的方式，例如 `func.bind()`
 
 ### 70 - 微任务与宏任务
@@ -2389,12 +2405,12 @@ function curry(func) {
 - 浏览器中 JavaScript 的执行流程和 Node.js 中的流程都是基于事件循环的，是一个在 JavaScript 引擎等待任务，执行任务和进入休眠状态等待更多任务这几个状态之间转换的无限循环。
 - 多个任务组成了一个队列，即所谓的“宏任务队列”，队列中的任务基于“先进先出”的原则执行。
 - 引擎执行任务时永远不会进行渲染（render）。如果任务执行需要很长一段时间也没关系。仅在任务完成后才会绘制对 DOM 的更改。如果一项任务执行花费的时间过长，浏览器将无法执行其他任务，例如处理用户事件。因此，在一定时间后，浏览器会抛出一个如“页面未响应”之类的警报，建议你终止这个任务。这种情况常发生在有大量复杂的计算或导致死循环的程序错误时。
-- 微任务仅来自于的代码。它们通常是由 promise 创建的：对 .then/catch/finally 处理程序的执行会成为微任务。微任务也被用于 await 的“幕后”，因为它是 promise 处理的另一种形式。
+- 微任务仅来自于的代码。它们通常是由 `promise` 创建的：对 `.then/catch/finally` 处理程序的执行会成为微任务。微任务也被用于 `await` 的“幕后”，因为它是 `promise` 处理的另一种形式。
 - 每个宏任务之后，引擎会立即执行微任务队列中的所有任务，然后再执行其他的宏任务，或渲染，或进行其他任何操作。
 - 微任务会在执行任何其他事件处理，或渲染，或执行任何其他宏任务之前完成。
 - 有一个特殊的函数 `queueMicrotask(func)`，它对 `func` 进行排队，以在微任务队列中执行。
 - 安排一个新的宏任务：使用零延迟的 `setTimeout(f)`，它可被用于将繁重的计算任务拆分成多个部分，以使浏览器能够对用户事件作出反应，并在任务的各部分之间显示任务进度。此外，也被用于在事件处理程序中，将一个行为安排在事件被完全处理（冒泡完成）后。
-- 安排一个新的微任务：使用 `queueMicrotask(f)`，promise 处理程序也会通过微任务队列，在微任务之间没有 UI 或网络事件的处理。它们一个立即接一个地执行，所以可以使用 `queueMicrotask` 来在保持环境状态一致的情况下，异步地执行一个函数。
+- 安排一个新的微任务：使用 `queueMicrotask(f)`，`promise` 处理程序也会通过微任务队列，在微任务之间没有 UI 或网络事件的处理。它们一个立即接一个地执行，所以可以使用 `queueMicrotask` 来在保持环境状态一致的情况下，异步地执行一个函数。
 
 ## 贰 - DOM/BOM
 
@@ -2425,7 +2441,7 @@ function curry(func) {
 - `firstChild` 和 `lastChild` 属性是访问第一个和最后一个子元素的快捷方式。
 - 函数 `elem.hasChildNodes()` 用于检查节点是否有子节点。
 - `childNodes` 看起来就像一个数组，但实际上它并不是一个数组，而是一个集合，一个类数组的可迭代对象，可以使用 `for..of` 来迭代它。
-- DOM 集合是只读的，DOM 集合是实时的，不要使用 `for..in` 来遍历集合（for..in 循环遍历的是所有可枚举的（enumerable）属性）。
+- DOM 集合是只读的，DOM 集合是实时的，不要使用 `for..in` 来遍历集合（`for..in` 循环遍历的是所有可枚举的（ `enumerable` ）属性）。
 - 兄弟节点（Sibling） 是指有同一个父节点的节点，下一个兄弟节点在 `nextSibling` 属性中，上一个是在 `previousSibling` 属性中，通过 `parentNode` 来访问父节点。
 
 ### 03 - 搜索DOM
@@ -2441,7 +2457,7 @@ function curry(func) {
 | elem.matches(css) | 检查 elem 是否与给定的 CSS 选择器匹配，返回 true 或 false |
 | elem.closest(css) | 查找与 CSS 选择器匹配的最近的祖先，elem 自己也会被搜索 |
 
--  不要使用以 id 命名的全局变量来访问元素。
+-  不要使用以 `id` 命名的全局变量来访问元素。
 -  所有的 `getElementsBy*` 方法都会返回一个 实时的（live） 集合。这样的集合始终反映的是文档的当前状态，并且在文档发生更改时会“自动更新”。
 -  相反，`querySelectorAll` 返回的是一个静态的 集合。像元素的固定数组。
 
@@ -2476,7 +2492,7 @@ function curry(func) {
 
 - 特性的名称是大小写不敏感的，可以将任何东西赋值给特性，但是这些东西会变成字符串类型的。
 - DOM 属性不总是字符串类型的。
-- attributes 集合是可迭代对象，该对象将所有元素的特性（标准和非标准的）作为 name 和 value 属性存储在对象
+- attributes 集合是可迭代对象，该对象将所有元素的特性（标准和非标准的）作为 `name` 和 `value` 属性存储在对象
 - 当一个标准的特性被改变，对应的属性也会自动更新。
 
 ```javascript
@@ -2524,12 +2540,13 @@ function curry(func) {
 
 ```javascript
 <body data-about="Elephants">
+
 <script>
   alert(document.body.dataset.about); // Elephants
 </script>
 ```
 
-- 像 data-order-state 这样的多词特性可以以驼峰式进行调用：`dataset.orderState`
+- 像 `data-order-state` 这样的多词特性可以以驼峰式进行调用：`dataset.orderState`
 - 特性（attribute）： 写在 HTML 中的内容，属性（property）：DOM 对象中的内容。
 
 ### 06 - 修改文档
@@ -2632,7 +2649,7 @@ button.style.WebkitBorderRadius = '5px';
 ```
 
 - 现在 getComputedStyle 实际上返回的是属性的解析值（resolved）。
-- JavaScript 看不到 ：visited 所应用的样式。此外，CSS 中也有一个限制，即禁止在 :visited 中应用更改几何形状的样式，这是为了确保一个不好的页面无法测试链接是否被访问，进而窥探隐私。
+- JavaScript 看不到 `:visited` 所应用的样式。此外，CSS 中也有一个限制，即禁止在 `:visited` 中应用更改几何形状的样式，这是为了确保一个不好的页面无法测试链接是否被访问，进而窥探隐私。
 
 ### 08 - 元素大小与滚动
 
@@ -2652,7 +2669,7 @@ button.style.WebkitBorderRadius = '5px';
 | scrollWidth/scrollHeight | 内容的 width/height，就像 clientWidth/clientHeight 一样，但还包括元素的滚动出的不可见的部分 |
 | scrollLeft/scrollTop | 从元素的左上角开始，滚动出元素的上半部分的 width/height |
 
-- 除了 scrollLeft/scrollTop 外，所有属性都是只读的。如果修改 scrollLeft/scrollTop，浏览器会滚动对应的元素。
+- 除了 `scrollLeft/scrollTop` 外，所有属性都是只读的。如果修改 `scrollLeft/scrollTop`，浏览器会滚动对应的元素。
 
 ### 09 - Window 大小与滚动
 
@@ -2670,7 +2687,7 @@ button.style.WebkitBorderRadius = '5px';
 | elem.scrollIntoView(top) | 将滚动页面以使 elem 可见，如果 top=true（默认值），页面滚动，使 elem 出现在窗口顶部，元素的上边缘将与窗口顶部对齐，如果 top=false，页面滚动，使 elem 出现在窗口底部，元素的底部边缘将与窗口底部对齐 |
 | document.body.style.overflow = "hidden" | 使文档不可滚动 |
 
-- 整个文档的width、height:
+- 整个文档的`width`、`height`:
 
 ```javascript
 let scrollHeight = Math.max(
@@ -2718,7 +2735,7 @@ let scrollHeight = Math.max(
 
 - 处理程序可以设置在 HTML 中名为 `on<event>` 的特性中，最好创建一个 JavaScript 函数，然后在 HTML 特性中调用这个函数。
 - 可以使用 DOM 属性 `on<event>` 来分配处理程序，例如 `elem.onclick`
-- 处理程序中的 this 的值是对应的元素，就是处理程序所在的那个元素。
+- 处理程序中的 `this` 的值是对应的元素，就是处理程序所在的那个元素。
 - 错误警示，例如：函数应该是以 `sayThanks` 的形式进行赋值，而不是 `sayThanks()`，但在HTML标记中，确实需要括号。
 - 不要对处理程序使用 `setAttribute`，因为特性总是字符串的，函数变成了一个字符串。
 - `element.addEventListener(event, handler[, options]);`多次调用 `addEventListener` 允许添加多个处理程序。
@@ -2834,7 +2851,7 @@ let event = new Event(type[, options]);
 
 - 默认情况下，以上两者都为 false：`{bubbles: false, cancelable: false}`
 - 事件对象被创建后，应该使用 `elem.dispatchEvent(event)` 调用在元素上“运行”它。
-- 对于来自真实用户操作的事件，`event.isTrusted` 属性为 true，对于脚本生成的事件，`event.isTrusted` 属性为 false
+- 对于来自真实用户操作的事件，`event.isTrusted` 属性为 `true`，对于脚本生成的事件，`event.isTrusted` 属性为 `false`
 - 对于自定义事件，应该使用 `CustomEvent` 构造器。它有一个名为 `detail` 的附加选项，应该将事件特定的数据分配给它。然后，所有处理程序可以以 `event.detail` 的形式来访问它。
 - 事件中的事件是同步的，通常事件是在队列中处理的，但存在例外：一个事件是在另一个事件中发起的。例如使用 `dispatchEvent`，这类事件将会被立即处理，即在新的事件处理程序被调用之后，恢复到当前的事件处理程序。
 - 使用自己的名称的自定义事件通常是出于架构的目的而创建的。
@@ -2873,7 +2890,7 @@ elem.ondragstart = function() {
 ```
 
 - 在拖动开始时，记住鼠标指针相对于元素的初始偏移（shift）：`shiftX/shiftY`，并在拖动过程中保持它不变。
-- `document.elementFromPoint(clientX, clientY)` 的方法，它会返回在给定的窗口相对坐标处的嵌套的最深的元素（如果给定的坐标在窗口外，则返回 null）。
+- `document.elementFromPoint(clientX, clientY)` 的方法，它会返回在给定的窗口相对坐标处的嵌套的最深的元素（如果给定的坐标在窗口外，则返回 `null`）。
 
 ### 17 - 指针事件
 
@@ -2892,14 +2909,14 @@ elem.ondragstart = function() {
 
 - 大多数设备都不支持这些属性，因此它们很少被使用。
 - `pointercancel` 事件将会在一个正处于活跃状态的指针交互由于某些原因被中断时触发。也就是在这个事件之后，该指针就不会继续触发更多事件了。
-- `elem.setPointerCapture(pointerId)` 将给定的 `pointerId` 绑定到 elem。在调用之后，所有具有相同 `pointerId` 的指针事件都将 elem 作为目标（就像事件发生在 elem 上一样），无论这些 elem 在文档中的实际位置是什么，当 `elem.releasePointerCapture(pointerId)` 被调用，绑定会被移除，当 `pointerup` 或 `pointercancel` 事件出现时，绑定会被自动地移除。指针捕获可以被用于简化拖放类的交互。
+- `elem.setPointerCapture(pointerId)` 将给定的 `pointerId` 绑定到 `elem`。在调用之后，所有具有相同 `pointerId` 的指针事件都将 `elem` 作为目标（就像事件发生在 `elem` 上一样），无论这些 `elem` 在文档中的实际位置是什么，当 `elem.releasePointerCapture(pointerId)` 被调用，绑定会被移除，当 `pointerup` 或 `pointercancel` 事件出现时，绑定会被自动地移除。指针捕获可以被用于简化拖放类的交互。
 - `gotpointercapture` 会在一个元素使用 `setPointerCapture` 来启用捕获后触发。
 - `lostpointercapture` 会在捕获被释放后触发：其触发可能是由于 `releasePointerCapture` 的显式调用，或是 `pointerup/pointercancel` 事件触发后的自动调用。
 
 ### 18 - 键盘事件
 
 - 当一个按键被按下时，会触发 `keydown` 事件，而当按键被释放时，会触发 `keyup` 事件。
-- `event.code` 和 `event.key`，事件对象的 key 属性允许获取字符，而事件对象的 code 属性则允许获取“物理按键代码”。
+- `event.code` 和 `event.key`，事件对象的 `key` 属性允许获取字符，而事件对象的 `code` 属性则允许获取“物理按键代码”。
 
 ```javascript
 document.addEventListener('keydown', function(event) {
@@ -2909,7 +2926,7 @@ document.addEventListener('keydown', function(event) {
 });
 ```
 
-- 对于由自动重复触发的事件，event 对象的 `event.repeat` 属性被设置为 `true`
+- 对于由自动重复触发的事件，`event` 对象的 `event.repeat` 属性被设置为 `true`
 - 跟踪 `oninput` 事件：在任何修改后都会触发此事件。这样就可以检查新的 `input.value`，并在其无效时修改它/高亮显示 `<input>`
 
 ### 19 - 滚动事件
@@ -3024,7 +3041,7 @@ option = new Option(text, value, defaultSelected, selected);
 - 使用 `focusin` 和 `focusout` 事件：与 `focus/blur` 事件完全一样，只是它们会冒泡，必须使用 `elem.addEventListener` 来分配它们，而不是 `on<event>`
 - 可以通过 `document.activeElement` 来获取当前所聚焦的元素。
 - 当元素更改完成时，将触发 `change` 事件，对于文本输入框，当其失去焦点时，就会触发 `change` 事件，`select，input type=checkbox/radio`，会在选项更改后立即触发 `change` 事件。
-- 每当用户对输入值进行修改后，就会触发 `input` 事件，与键盘事件不同，只要值改变了，`input` 事件就会触发，即使那些不涉及键盘行为的值的更改也是如此：使用鼠标粘贴，或者使用语音识别来输入文本。另一方面，`input` 事件不会在那些不涉及值更改的键盘输入或其他行为上触发，例如在输入时按方向键 ⇦ ⇨、无法阻止 `oninput` 中的任何事件，无法使用 `event.preventDefault()`，已经太迟了，不会起任何作用了。
+- 每当用户对输入值进行修改后，就会触发 `input` 事件，与键盘事件不同，只要值改变了，`input` 事件就会触发，即使那些不涉及键盘行为的值的更改也是如此：使用鼠标粘贴，或者使用语音识别来输入文本。另一方面，`input` 事件不会在那些不涉及值更改的键盘输入或其他行为上触发，例如在输入时按方向键 `⇦ ⇨`、无法阻止 `oninput` 中的任何事件，无法使用 `event.preventDefault()`，已经太迟了，不会起任何作用了。
 - `cut，copy，paste`，这些事件发生于剪切/拷贝/粘贴一个值的时候，它们属于 `ClipboardEvent` 类，并提供了对剪切/拷贝/粘贴的数据的访问方法，也可以使用 `event.preventDefault()` 来中止行为，然后什么都不会被复制/粘贴。`event.clipboardData` 属性可以用于访问剪贴板。
 - 提交表单时，会触发 `submit` 事件，它通常用于在将表单发送到服务器之前对表单进行校验，或者中止提交，并使用 JavaScript 来处理表单。`form.submit()` 方法允许从 JavaScript 启动表单发送。可以使用此方法动态地创建表单，并将其发送到服务器。
 - 提交表单主要有两种方式：第一种，点击 `<input type="submit">` 或 `<input type="image">`；第二种，在 `input` 字段中按下 `Enter` 键。
@@ -3035,7 +3052,6 @@ option = new Option(text, value, defaultSelected, selected);
 let form = document.createElement('form');
 form.action = 'https://google.com/search';
 form.method = 'GET';
-
 form.innerHTML = '<input name="q" value="test">';
 
 // 该表单必须在文档中才能提交
@@ -3137,7 +3153,7 @@ script.onerror = function() {
 - 要允许跨源访问，`<script>` 标签需要具有 `crossorigin` 特性，并且远程服务器必须提供特殊的 `header`
 - 三个级别的跨源访问：
 	- 无 `crossorigin` 特性： 禁止访问。
-	- `crossorigin="anonymous"`：如果服务器的响应带有包含 _ 或的源的 _`_header Access-Control-Allow-Origin_`_，则允许访问。浏览器不会将授权信息和 _`_cookie_`_ 发送到远程服务器。_
+	- `crossorigin="anonymous"`：如果服务器的响应带有包含 _ 或的源的 _`_header Access-Control-Allow-Origin_`_，则允许访问。浏览器不会将授权信息和 _`_cookie_`_ 发送到远程服务器。
   - `crossorigin="use-credentials"`：如果服务器发送回带有的源的 `header Access-Control-Allow-Origin` 和 `Access-Control-Allow-Credentials: true`，则允许访问。浏览器会将授权信息和 `cookie` 发送到远程服务器。
 
 ### 25 - DOM变动观察器
@@ -3282,7 +3298,7 @@ open('/', 'test', params);
 ```
 
 - `open` 调用会返回对新窗口的引用。它可以用来操纵弹窗的属性，更改位置，甚至更多操作。
-- 只有在窗口是同源的时，窗口才能自由访问彼此的内容（相同的协议://domain:port）。
+- 只有在窗口是同源的时，窗口才能自由访问彼此的内容（相同的协议`://domain:port`）。
 
 | 方法 | 描述 |
 | --- | --- |
@@ -3302,12 +3318,12 @@ open('/', 'test', params);
 ### 28 - 跨窗口通信
 
 - 如果两个 URL 具有相同的协议，域和端口，则称它们是“同源”的。
-- 一个 `<iframe>` 标签承载了一个单独的嵌入的窗口，它具有自己的 `document` 和 `window`。`iframe.contentWindow` 来获取 `<iframe>` 中的 `window`。`iframe.contentDocument` 来获取 `<iframe>` 中的 `document`，是 `iframe.contentWindow.document` 的简写形式。当访问嵌入的窗口中的东西时，浏览器会检查 `iframe` 是否具有相同的源，如果不是，则会拒绝访问（对 location 进行写入是一个例外，它是会被允许的）。
+- 一个 `<iframe>` 标签承载了一个单独的嵌入的窗口，它具有自己的 `document` 和 `window`。`iframe.contentWindow` 来获取 `<iframe>` 中的 `window`。`iframe.contentDocument` 来获取 `<iframe>` 中的 `document`，是 `iframe.contentWindow.document` 的简写形式。当访问嵌入的窗口中的东西时，浏览器会检查 `iframe` 是否具有相同的源，如果不是，则会拒绝访问（对 `location` 进行写入是一个例外，它是会被允许的）。
 - 如果窗口的二级域相同，可以使浏览器忽略该差异，使得它们可以被作为“同源”的来对待，以便进行跨窗口通信，每个这样的窗口都应该执行下面这行代码：`document.domain = 'xxxxx.com'`; `document.domain` 属性正在被从规范中删除。跨窗口通信是建议的替代方案。
 - 不应该对尚未加载完成的 `iframe` 的文档进行处理，因为那是错误的文档。
 - 获取 `<iframe>` 的 `window` 对象的另一个方式是从命名集合 `window.frames` 中获取。通过索引获取：`window.frames[0]`，文档中的第一个 `iframe` 的 `window` 对象。通过名称获取：`window.frames.iframeName` ，获取 `name="iframeName"` 的 `iframe` 的 `window` 对象。
 - 一个 `iframe` 内可能嵌套了其他的 `iframe`，相应的 `window` 对象会形成一个层次结构：`window.frames`，“子”窗口的集合（用于嵌套的 `iframe`）。`window.parent`：对“父”（外部）窗口的引用。`window.top`：对最顶级父窗口的引用。
-- `sandbox` 特性允许在 `<iframe>` 中禁止某些特定行为，以防止其执行不被信任的代码。它通过将 `iframe` 视为非同源的，或者应用其他限制来实现 `iframe` 的“沙盒化”，对于 `<iframe sandbox src="...">`，有一个应用于其上的默认的限制集。但是，可以通过提供一个以空格分隔的限制列表作为特性的值，来放宽这些限制，该列表中的各项为不应该应用于这个 `iframe` 的限制，例如：`<iframe sandbox="allow-forms allow-popups">`。一个空的 "`sandbox`" 特性会施加最严格的限制，但是用一个以空格分隔的列表，列出要移除的限制。
+- `sandbox` 特性允许在 `<iframe>` 中禁止某些特定行为，以防止其执行不被信任的代码。它通过将 `iframe` 视为非同源的，或者应用其他限制来实现 `iframe` 的“沙盒化”，对于 `<iframe sandbox src="...">`，有一个应用于其上的默认的限制集。但是，可以通过提供一个以空格分隔的限制列表作为特性的值，来放宽这些限制，该列表中的各项为不应该应用于这个 `iframe` 的限制，例如：`<iframe sandbox="allow-forms allow-popups">`。一个空的 `sandbox` 特性会施加最严格的限制，但是用一个以空格分隔的列表，列出要移除的限制。
 - `allow-same-origin`，默认情况下，"`sandbox`" 会为 `iframe` 强制实施“不同来源”的策略。换句话说，它使浏览器将 `iframe` 视为来自另一个源，即使其 `src` 指向的是同一个网站也是如此。具有所有隐含的脚本限制。此选项会移除这些限制。`allow-top-navigation`，允许 `iframe` 更改 `parent.location`。`allow-forms`，允许在 `iframe` 中提交表单。`allow-scripts`，允许在 `iframe` 中运行脚本。`allow-popups`，允许在 `iframe` 中使用 `window.open` 打开弹窗。
 - `postMessage` 接口允许窗口之间相互通信，无论它们来自什么源。
 - 想要发送消息的窗口需要调用接收窗口的 `postMessage` 方法。换句话说，如果想把消息发送给 `win`，应该调用 `win.postMessage(data, targetOrigin)`，`data`：要发送的数据，可以是任何对象，数据会被通过使用“结构化序列化算法（structured serialization algorithm）”进行克隆。IE 浏览器只支持字符串，因此需要对复杂的对象调用 `JSON.stringify` 方法进行处理，以支持该浏览器。`targetOrigin`：指定目标窗口的源，以便只有来自给定的源的窗口才能获得该消息。
@@ -3321,7 +3337,6 @@ window.addEventListener("message", function(event) {
   }
 
   alert( "received: " + event.data );
-
   // 可以使用 event.source.postMessage(...) 向回发送消息
 });
 ```
@@ -3381,7 +3396,7 @@ new TypedArray();
 
 - `TypedArray` 具有常规的 `Array` 方法，可以遍历，`map`，`slice`，`find` 和 `reduce` 等，没有 `splice`，无法“删除”一个值，因为类型化数组是缓冲区（buffer）上的视图，并且缓冲区（buffer）是固定的、连续的内存区域。所能做的就是分配一个零值。无 `concat` 方法。
 - `arr.set(fromArr, [offset])` 从 `offset`（默认为 0）开始，将 `fromArr` 中的所有元素复制到 arr。`arr.subarray([begin, end])` 创建一个从 `begin` 到 `end`（不包括）相同类型的新视图，这类似于 `slice` 方法（同样也支持），但不复制任何内容，只是创建一个新视图，以对给定片段的数据进行操作。
-- DataView 是在 ArrayBuffer 上的一种特殊的超灵活“未类型化”视图。它允许以任何格式访问任何偏移量（offset）的数据，`new DataView(buffer, [byteOffset], [byteLength])`，`buffer` ，底层的 ArrayBuffer。与类型化数组不同，DataView 不会自行创建缓冲区（buffer），需要事先准备好。`byteOffset`，视图的起始字节位置（默认为 0）。`byteLength`，视图的字节长度（默认至 buffer 的末尾）。
+- `DataView` 是在 `ArrayBuffer` 上的一种特殊的超灵活“未类型化”视图。它允许以任何格式访问任何偏移量（offset）的数据，`new DataView(buffer, [byteOffset], [byteLength])`，`buffer` ，底层的 `ArrayBuffer`。与类型化数组不同，`DataView` 不会自行创建缓冲区（buffer），需要事先准备好。`byteOffset`，视图的起始字节位置（默认为 0）。`byteLength`，视图的字节长度（默认至 buffer 的末尾）。
 
 ```javascript
 // 4 个字节的二进制数组，每个都是最大值 255
@@ -3401,7 +3416,7 @@ alert( dataView.getUint32(0) ); // 4294967295（最大的 32 位无符号整数�
 dataView.setUint32(0, 0); // 将 4 个字节的数字设为 0，即将所有字节都设为 0
 ```
 
-- 内建的 TextDecoder 对象在给定缓冲区（buffer）和编码格式（encoding）的情况下，允许将值读取为实际的 JavaScript 字符串。
+- 内建的 `TextDecoder` 对象在给定缓冲区（buffer）和编码格式（encoding）的情况下，允许将值读取为实际的 JavaScript 字符串。
 
 ```javascript
 let decoder = new TextDecoder([label], [options]);
@@ -3428,7 +3443,7 @@ let str = decoder.decode([input], [options]);
 ```javascript
 let uint8Array = new Uint8Array([72, 101, 108, 108, 111]);
 
-alert( new TextDecoder().decode(uint8Array) ); // Hello
+alert( new TextDecoder().decode(uint8Array) );  // Hello
 ```
 
 - `TextEncoder` 做相反的事情：将字符串转换为字节。
@@ -3445,7 +3460,7 @@ let encoder = new TextEncoder();
 ```javascript
 let encoder = new TextEncoder();
 let uint8Array = encoder.encode("Hello");
-alert(uint8Array); // 72,101,108,108,111
+alert(uint8Array);  // 72,101,108,108,111
 ```
 
 - `Blob` 由一个可选的字符串 `type`（通常是 MIME 类型）和 `blobParts` 组成的一系列其他 `Blob` 对象，字符串和 `BufferSource`。
@@ -3589,7 +3604,7 @@ function showFile(input) {
 - `FileReader` 是一个对象，其唯一目的是从 `Blob`（因此也从 `File`）对象中读取数据。
 
 ```javascript
-let reader = new FileReader(); // 没有参数
+let reader = new FileReader();  // 没有参数
 ```
 
 | 方法 | 描述 |
@@ -3617,7 +3632,6 @@ function readFile(input) {
   reader.onerror = function() {
     console.log(reader.error);
   };
-
 }
 </script>
 ```
@@ -3626,8 +3640,8 @@ function readFile(input) {
 
 ### 31 - LocalStorge/sessionStorage
 
-- Web 存储对象 localStorage 和 sessionStorage 允许在浏览器上保存键/值对。
-- 与 cookie 不同，Web 存储对象不会随每个请求被发送到服务器。因此，可以保存更多数据，大多数现代浏览器都允许保存至少 5 MB 的数据（或更多），并且具有用于配置数据的设置。还有一点和 cookie 不同，服务器无法通过 HTTP header 操纵存储对象，一切都是在 JavaScript 中完成的，存储绑定到源（域/协议/端口三者）。也就是说，不同协议或子域对应不同的存储对象，它们之间无法访问彼此数据。
+- Web 存储对象 `localStorage` 和 `sessionStorage` 允许在浏览器上保存键/值对。
+- 与 `cookie` 不同，Web 存储对象不会随每个请求被发送到服务器。因此，可以保存更多数据，大多数现代浏览器都允许保存至少 5 MB 的数据（或更多），并且具有用于配置数据的设置。还有一点和 `cookie` 不同，服务器无法通过 `HTTP header` 操纵存储对象，一切都是在 JavaScript 中完成的，存储绑定到源（域/协议/端口三者）。也就是说，不同协议或子域对应不同的存储对象，它们之间无法访问彼此数据。
 - 两个存储对象都提供相同的方法和属性：
 
 | 方法 | 描述 |
@@ -3639,9 +3653,9 @@ function readFile(input) {
 | key(index) | 获取该索引下的键名 |
 | length | 存储的内容的长度 |
 
-- localStorage 最主要的特点是：在同源的所有标签页和窗口之间共享数据。数据不会过期，它在浏览器重启甚至系统重启后仍然存在。键和值都必须是字符串，如果是任何其他类型，例数字或对象，它会被自动转换为字符串。
-- sessionStorage 的数据只存在于当前浏览器标签页，具有相同页面的另一个标签页中将会有不同的存储。但是，它在同一标签页下的 iframe 之间是共享的（假如它们来自相同的源）。数据在页面刷新后仍然保留，但在关闭/重新打开浏览器标签页后不会被保留。
-- 当 localStorage 或 sessionStorage 中的数据更新后，`storage` 事件就会触发，它具有以下属性：
+- `localStorage` 最主要的特点是：在同源的所有标签页和窗口之间共享数据。数据不会过期，它在浏览器重启甚至系统重启后仍然存在。键和值都必须是字符串，如果是任何其他类型，例数字或对象，它会被自动转换为字符串。
+- `sessionStorage` 的数据只存在于当前浏览器标签页，具有相同页面的另一个标签页中将会有不同的存储。但是，它在同一标签页下的 `iframe` 之间是共享的（假如它们来自相同的源）。数据在页面刷新后仍然保留，但在关闭/重新打开浏览器标签页后不会被保留。
+- 当 `localStorage` 或 `sessionStorage` 中的数据更新后，`storage` 事件就会触发，它具有以下属性：
 
 | 属性 | 描述 |
 | --- | --- |
@@ -3653,8 +3667,8 @@ function readFile(input) {
 
 ### 32 - IndexedDB
 
-- IndexedDB 是一个浏览器内建的数据库，通过支持多种类型的键，来存储几乎可以是任何类型的值。支撑事务的可靠性。支持键值范围查询、索引。和 localStorage 相比，它可以存储更大的数据量。
-- IndexedDB 适用于离线应用，可与 ServiceWorkers 和其他技术相结合使用。
+- `IndexedDB` 是一个浏览器内建的数据库，通过支持多种类型的键，来存储几乎可以是任何类型的值。支撑事务的可靠性。支持键值范围查询、索引。和 `localStorage` 相比，它可以存储更大的数据量。
+- `IndexedDB` 适用于离线应用，可与 `ServiceWorkers` 和其他技术相结合使用。
 - 打开数据库：`let openRequest = indexedDB.open(name, version);`
 
 | 参数 | 描述 |
@@ -3666,7 +3680,7 @@ function readFile(input) {
 | error | 打开失败 |
 | upgradeneeded | 数据库已准备就绪，但其版本已过时 |
 
-- 如果本地数据库版本低于 open 中指定的版本，会触发一个特殊事件 `upgradeneeded`。可以根据需要比较版本并升级数据结构。
+- 如果本地数据库版本低于 `open` 中指定的版本，会触发一个特殊事件 `upgradeneeded`。可以根据需要比较版本并升级数据结构。
 
 ```javascript
 let openRequest = indexedDB.open("store", 1);
@@ -3737,7 +3751,7 @@ openRequest.onblocked = function() {
 };
 ```
 
-- 对象库是 IndexedDB 的核心概念，在其他数据库中对应的对象称为“表”或“集合”，它是储存数据的地方。一个数据库可能有多个存储区，尽管被命名为“对象库”，但也可以存储原始类型。有一种对象不能被存储：循环引用的对象，此类对象不可序列化，也不能进行 `JSON.stringify`
+- 对象库是 `IndexedDB` 的核心概念，在其他数据库中对应的对象称为“表”或“集合”，它是储存数据的地方。一个数据库可能有多个存储区，尽管被命名为“对象库”，但也可以存储原始类型。有一种对象不能被存储：循环引用的对象，此类对象不可序列化，也不能进行 `JSON.stringify`
 - 库中的每个值都必须有唯一的键 `key`。键的类型必须为数字、日期、字符串、二进制或数组。它是唯一的标识符，所以可以通过键来搜索/删除/更新值。
 - 创建对象库：`db.createObjectStore(name[, keyOptions]);`
 
@@ -3767,7 +3781,7 @@ openRequest.onupgradeneeded = function() {
 ```javascript
 db.deleteObjectStore('books')
 ```
-- 事务是一组操作，要么全部成功，要么全部失败。所有数据操作都必须在 IndexedDB 中的事务内进行。启动事务`db.transaction(store[, type]);`
+- 事务是一组操作，要么全部成功，要么全部失败。所有数据操作都必须在 `IndexedDB` 中的事务内进行。启动事务`db.transaction(store[, type]);`
 
 | 参数 | 描述 |
 | --- | --- |
@@ -3810,7 +3824,7 @@ request.onerror = function() {
 - 要手动中止事务，调用，`transaction.abort();`取消请求里所做的所有修改，并触发 `transaction.onabort` 事件。
 - 失败的请求将自动中止事务，并取消所有的更改。
 - 自己去处理失败事务（例如尝试另一个请求）并让它继续执行，而不是取消现有的更改。可以调用 `request.onerror` 处理程序，在其中调用 `event.preventDefault()` 防止事务中止。
-- IndexedDB 事件冒泡：请求 → 事务 → 数据库。可以通过在 `request.onerror` 中使用 `event.stopPropagation()` 来停止冒泡，从而停止 `db.onerror` 事件。
+- `IndexedDB` 事件冒泡：请求 → 事务 → 数据库。可以通过在 `request.onerror` 中使用 `event.stopPropagation()` 来停止冒泡，从而停止 `db.onerror` 事件。
 
 ```javascript
 request.onerror = function(event) {
@@ -3827,7 +3841,7 @@ request.onerror = function(event) {
 ```
 
 - 对象库有两种主要的搜索类型：通过键值或键值范围。在 “books” 存储中，将是 `book.id` 的值或值的范围。通过另一个对象字段，例如 `book.price`。这需要一个额外的数据结构，名为“索引（index）”。
-- IDBKeyRange 对象，指定一个可接受的“键值范围”，IDBKeyRange 对象是通过下列调用创建的：
+- `IDBKeyRange` 对象，指定一个可接受的“键值范围”，`IDBKeyRange` 对象是通过下列调用创建的：
 
 | 调用 | 描述 |
 | --- | --- |
@@ -3836,7 +3850,7 @@ request.onerror = function(event) {
 | IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen]) | 表示: 在 lower 和 upper 之间。如果 open 为 true，则相应的键不包括在范围中 |
 | IDBKeyRange.only(key) | 仅包含一个键的范围 key，很少使用 |
 
-- 要进行实际的搜索，有以下方法，它们接受一个可以是精确键值或键值范围的 query 参数：
+- 要进行实际的搜索，有以下方法，它们接受一个可以是精确键值或键值范围的 `query` 参数：
 
 | 方法 | 描述 |
 | --- | --- |
@@ -3912,9 +3926,9 @@ let request = store.openCursor(query, [direction]);
 | advance(count) | 将光标向前移动 count 次，跳过值 |
 | continue([key]) | 将光标移至匹配范围中的下一个值（如果给定键，紧接键之后） |
 
-- 无论是否有更多的值匹配光标调用 onsuccess。结果中，可以获得指向下一条记录的光标，或者 undefined。
+- 无论是否有更多的值匹配光标调用 `onsuccess`。结果中，可以获得指向下一条记录的光标，或者 `undefined`
 - 索引是允许按对象字段进行搜索，在索引上的光标与在对象存储上的光标完全相同，它们通过一次返回一个值来节省内存。
-- 使用一个轻便的承诺包装器 [https://github.com/jakearchibald/idb](https://github.com/jakearchibald/idb) 。它使用 promisified IndexedDB 方法创建全局 idb 对象，可以不使用 `onsuccess/onerror`，而是这样写：
+- 使用一个轻便的承诺包装器 [https://github.com/jakearchibald/idb](https://github.com/jakearchibald/idb) 。它使用 `promisified IndexedDB` 方法创建全局 `idb` 对象，可以不使用 `onsuccess/onerror`，而是这样写：
 
 ```javascript
 let db = await idb.openDB('store', 1, db => {
@@ -3950,7 +3964,7 @@ window.addEventListener('unhandledrejection', event => {
 ```
 
 - 浏览器一旦执行完成当前的代码和微任务之后，事务就会自动提交。因此，如果在事务中间放置一个类似 `fetch` 的宏任务，事务只是会自动提交，而不会等待它执行完成。因此，下一个请求会失败。
-- 极少数情况下，需要原始的 request 对象。可以将 promise 的 `promise.request` 属性，当作原始对象进行访问：
+- 极少数情况下，需要原始的 `request` 对象。可以将 `promise` 的 `promise.request` 属性，当作原始对象进行访问：
 
 ```javascript
 let promise = books.add(book); // 获取 promise 对象(不要 await 结果)
@@ -3974,28 +3988,27 @@ let result = await promise; // 如果仍然需要
 | event.propertyName | 当前完成动画的属性，这在同时为多个属性加上动画时会很有用 |
 | event.elapsedTime | 动画完成的时间（按秒计算），不包括 transition-delay |
 
-- 使用 setInterval：
+- 使用 `setInterval`：
 
 ```javascript
 elem.onclick = function() {
-      let start = Date.now();
+  let start = Date.now();
 
-      let timer = setInterval(function() {
-        let timePassed = Date.now() - start;
+  let timer = setInterval(function() {
+    let timePassed = Date.now() - start;
 
-        train.style.left = timePassed / 5 + 'px';
+    train.style.left = timePassed / 5 + 'px';
 
-        if (timePassed > 2000) clearInterval(timer);
+    if (timePassed > 2000) clearInterval(timer);
 
-      }, 20);
-    }
+    }, 20);
+  }
 ```
 
-- 使用 requestAnimationFrame：`let requestId = requestAnimationFrame(callback);`会让 callback 函数在浏览器每次重绘的最近时间运行。返回值 `requestId` 可用来取消回调：取消回调的周期执行 `cancelAnimationFrame(requestId);`
+- 使用 `requestAnimationFrame`：`let requestId = requestAnimationFrame(callback);`会让 `callback` 函数在浏览器每次重绘的最近时间运行。返回值 `requestId` 可用来取消回调：取消回调的周期执行 `cancelAnimationFrame(requestId);`
 
 ```javascript
 function animate({timing, draw, duration}) {
-
   let start = performance.now();
 
   requestAnimationFrame(function animate(time) {
@@ -4006,12 +4019,11 @@ function animate({timing, draw, duration}) {
     // 计算当前动画状态
     let progress = timing(timeFraction);
 
-    draw(progress); // 绘制
+    draw(progress);  // 绘制
 
     if (timeFraction < 1) {
       requestAnimationFrame(animate);
     }
-
   });
 }
 ```
@@ -4024,9 +4036,9 @@ function animate({timing, draw, duration}) {
 | timing(timeFraction) | 时序函数 |
 | draw(progress) | 获取动画完成状态并绘制的函数 |
 
--  时序函数：类似 CSS 属性 transition-timing-function，传入一个已过去的时间与总时间之比的小数（0 代表开始，1 代表结束），返回动画完成度（类似 Bezier 曲线中的 y）。
--  值 progress = 0 表示开始动画状态，progress = 1 表示结束状态，这是实际绘制动画的函数。
--  n 次幂，抛物线：
+- 时序函数：类似 CSS 属性 `transition-timing-function`，传入一个已过去的时间与总时间之比的小数（0 代表开始，1 代表结束），返回动画完成度（类似 `Bezier` 曲线中的 y）。
+- 值 `progress = 0` 表示开始动画状态，`progress = 1` 表示结束状态，这是实际绘制动画的函数。
+- n 次幂，抛物线：
 
 ```javascript
 function quad(timeFraction) {
@@ -4070,7 +4082,7 @@ function elastic(x, timeFraction) {
 }
 ```
 
-- “变换”函数 makeEaseOut，接受一个“常规”时序函数 timing 并返回一个封装器，里面封装了 timing 函数：
+- “变换”函数 `makeEaseOut`，接受一个“常规”时序函数 `timing` 并返回一个封装器，里面封装了 `timing` 函数：
 
 ```javascript
 // 接受时序函数，返回变换后的变体
@@ -4081,7 +4093,7 @@ function makeEaseOut(timing) {
 }
 ```
 
-- 在动画的开头和结尾都显示效果。该变换称为“easeInOut”：
+- 在动画的开头和结尾都显示效果。该变换称为 `easeInOut`：
 
 ```javascript
 function makeEaseInOut(timing) {
@@ -4096,9 +4108,9 @@ function makeEaseInOut(timing) {
 
 ### 34 - Web Components
 
-- 一个组件有自己的 JavaScript 类与DOM 结构，并且只由自己的类管理，无法被外部代码操作，（「封装」原则），CSS 样式，作用在这个组件上。API：事件，类方法等等，让组件可以与其他组件交互。
-- 可以通过描述带有自己的方法、属性和事件等的类来创建自定义 HTML 元素。在 custom elements （自定义标签）定义完成之后，可以将其和 HTML 的内建标签一同使用。
-- Custom elements 有两种：Autonomous custom elements （自主自定义标签），“全新的” 元素, 继承自 HTMLElement 抽象类。Customized built-in elements （自定义内建元素），继承内建的 HTML 元素，比如自定义 HTMLButtonElement 等
+- 一个组件有自己的 JavaScript 类与 DOM 结构，并且只由自己的类管理，无法被外部代码操作，（「封装」原则），CSS 样式，作用在这个组件上。API：事件，类方法等等，让组件可以与其他组件交互。
+- 可以通过描述带有自己的方法、属性和事件等的类来创建自定义 HTML 元素。在 `custom elements` （自定义标签）定义完成之后，可以将其和 HTML 的内建标签一同使用。
+- `Custom elements` 有两种：`Autonomous custom elements` （自主自定义标签），“全新的” 元素, 继承自 `HTMLElement` 抽象类。`Customized built-in elements` （自定义内建元素），继承内建的 HTML 元素，比如自定义 `HTMLButtonElement` 等
 
 ```javascript
   class MyElement extends HTMLElement {
@@ -4129,7 +4141,6 @@ function makeEaseInOut(timing) {
       // 在元素被移动到新的文档的时候，这个方法会被调用
       // （document.adoptNode 会用到, 非常少见）
     }
-
     // 还可以添加更多的元素方法和属性
   }
 
@@ -4137,14 +4148,13 @@ function makeEaseInOut(timing) {
   customElements.define("my-element", MyElement);
 ```
 
-- Custom element 名称必须包括一个短横线 -, 比如 `my-element` 和 `super-button` 都是有效的元素名，这是为了确保 custom element 和内建 HTML 元素之间不会发生命名冲突。
+- `Custom element` 名称必须包括一个短横线 -, 比如 `my-element` 和 `super-button` 都是有效的元素名，这是为了确保 `custom element` 和内建 HTML 元素之间不会发生命名冲突。
 - 为了监视这些属性，可以在 `observedAttributes() static getter` 中提供属性列表。当这些属性发生变化的时候，`attributeChangedCallback` 会被调用。出于性能优化的考虑，其他属性变化的时候并不会触发这个回调方法。
 
 ```javascript
 <script>
 class TimeFormatted extends HTMLElement {
-
-  render() { // (1)
+  render() {
     let date = new Date(this.getAttribute('datetime') || Date.now());
 
     this.innerHTML = new Intl.DateTimeFormat("default", {
@@ -4158,21 +4168,20 @@ class TimeFormatted extends HTMLElement {
     }).format(date);
   }
 
-  connectedCallback() { // (2)
+  connectedCallback() {
     if (!this.rendered) {
       this.render();
       this.rendered = true;
     }
   }
 
-  static get observedAttributes() { // (3)
+  static get observedAttributes() {
     return ['datetime', 'year', 'month', 'day', 'hour', 'minute', 'second', 'time-zone-name'];
   }
 
-  attributeChangedCallback(name, oldValue, newValue) { // (4)
+  attributeChangedCallback(name, oldValue, newValue) {
     this.render();
   }
-
 }
 
 customElements.define("time-formatted", TimeFormatted);
@@ -4181,11 +4190,11 @@ customElements.define("time-formatted", TimeFormatted);
 <time-formatted id="elem" hour="numeric" minute="numeric" second="numeric"></time-formatted>
 
 <script>
-setInterval(() => elem.setAttribute('datetime', new Date()), 1000); // (5)
+setInterval(() => elem.setAttribute('datetime', new Date()), 1000);
 </script>
 ```
 
-- 在 HTML 解析器构建 DOM 的时候，会按照先后顺序处理元素，先处理父级元素再处理子元素。如果需要子元素，可以使用延迟时间为零的 setTimeout 来推迟访问子元素
+- 在 HTML 解析器构建 DOM 的时候，会按照先后顺序处理元素，先处理父级元素再处理子元素。如果需要子元素，可以使用延迟时间为零的 `setTimeout` 来推迟访问子元素。
 
 ```javascript
 <script>
@@ -4225,7 +4234,7 @@ customElements.define('show-hello', class extends HTMLElement {
 <show-hello name="John"></show-hello>
 ```
 
-- 调用 `elem.attachShadow({mode: …})` 可以创建一个 shadow tree。这里有两个限制：在每个元素中，只能创建一个 shadow root；elem 必须是自定义元素，或者是以下元素的其中一个：`「article」`、`「aside」`、`「blockquote」`、`「body」`、`「div」`、`「footer」`、`「h1…h6」`、`「header」`、`「main」`、`「nav」`、`「p」`、`「section」`或者`「span」`。其他元素，比如 `<img>`，不能容纳 shadow tree
+- 调用 `elem.attachShadow({mode: …})` 可以创建一个 shadow tree。这里有两个限制：在每个元素中，只能创建一个 shadow root；`elem` 必须是自定义元素，或者是以下元素的其中一个：`「article」`、`「aside」`、`「blockquote」`、`「body」`、`「div」`、`「footer」`、`「h1…h6」`、`「header」`、`「main」`、`「nav」`、`「p」`、`「section」`或者`「span」`。其他元素，比如 `<img>`，不能容纳 shadow tree
 - `mode` 选项可以设定封装层级，必须是以下两个值之一：
 
 | 参数 | 描述 |
@@ -4238,11 +4247,11 @@ customElements.define('show-hello', class extends HTMLElement {
 |  | 浏览器原生的 shadow tree，比如 `<input type="range">`
 ，是封闭的，没有任何方法可以访问它们 |
 
-- Shadow DOM 元素对于 light DOM 中的 `querySelector` 不可见。Shadow DOM 中的元素可能与 light DOM 中某些元素的 id 冲突，这些元素必须在 shadow tree 中独一无二，Shadow DOM 有自己的样式，外部样式规则在 shadow DOM 中不产生作用。
+- Shadow DOM 元素对于 light DOM 中的 `querySelector` 不可见。Shadow DOM 中的元素可能与 light DOM 中某些元素的 `id` 冲突，这些元素必须在 shadow tree 中独一无二，Shadow DOM 有自己的样式，外部样式规则在 shadow DOM 中不产生作用。
 
 ```javascript
 <style>
-  /* 文档样式对 #elem 内的 shadow tree 无作用 (1) */
+  /* 文档样式对 #elem 内的 shadow tree 无作用 */
   p { color: red; }
 </style>
 
@@ -4250,15 +4259,15 @@ customElements.define('show-hello', class extends HTMLElement {
 
 <script>
   elem.attachShadow({mode: 'open'});
-    // shadow tree 有自己的样式 (2)
+  // shadow tree 有自己的样式
   elem.shadowRoot.innerHTML = `
     <style> p { font-weight: bold; } </style>
     <p>Hello, John!</p>
   `;
 
-  // <p> 只对 shadow tree 里面的查询可见 (3)
-  alert(document.querySelectorAll('p').length); // 0
-  alert(elem.shadowRoot.querySelectorAll('p').length); // 1
+  // <p> 只对 shadow tree 里面的查询可见
+  alert(document.querySelectorAll('p').length);  // 0
+  alert(elem.shadowRoot.querySelectorAll('p').length);  // 1
 </script>
 ```
 
@@ -4283,8 +4292,8 @@ customElements.define('show-hello', class extends HTMLElement {
 </script>
 ```
 
-- `<template>` 的内容可以是任何语法正确的 HTML，`<template>` 内容被视为“超出文档范围”，因此它不会产生任何影响。可以在JavaScript 中访问 `template.content` ，将其克隆以在新组件中重复使用。 
-- 通常，如果一个元素含有 shadow DOM，那么其 light DOM 就不会被展示出来，插槽允许在 shadow DOM 中显示 light DOM 子元素。Shadow DOM 支持 `<slot>` 元素，由 light DOM 中的内容自动填充： 
+- `<template>` 的内容可以是任何语法正确的 HTML，`<template>` 内容被视为“超出文档范围”，因此它不会产生任何影响。可以在JavaScript 中访问 `template.content` ，将其克隆以在新组件中重复使用。
+- 通常，如果一个元素含有 shadow DOM，那么其 light DOM 就不会被展示出来，插槽允许在 shadow DOM 中显示 light DOM 子元素。Shadow DOM 支持 `<slot>` 元素，由 light DOM 中的内容自动填充：
 
 ```javascript
 <script>
@@ -4349,7 +4358,7 @@ setTimeout(() => {
 ```
 
 - `node.assignedSlot` ， 返回 node 分配给的 `<slot>` 元素。
-- `slot.assignedNodes({flatten: true/false})` ，分配给插槽的 DOM 节点。默认情况下，flatten 选项为 false，如果显式地设置为 true，则它将更深入地查看扁平化 DOM ，如果嵌套了组件，则返回嵌套的插槽，如果未分配节点，则返回备用内容。
+- `slot.assignedNodes({flatten: true/false})` ，分配给插槽的 DOM 节点。默认情况下，`flatten` 选项为 `false`，如果显式地设置为 `true`，则它将更深入地查看扁平化 DOM ，如果嵌套了组件，则返回嵌套的插槽，如果未分配节点，则返回备用内容。
 - `slot.assignedElements({flatten: true/false})` ，分配给插槽的 DOM 元素，与上面相同，但仅元素节点。
 
 ```javascript
@@ -4490,11 +4499,11 @@ userCard.onclick = e => alert(`Outer target: ${e.target.tagName}`);
 </user-card>
 ```
 
-- 对于 `<span slot="username">` 上的点击事件，会调用 `event.composedPath()` 并返回一个数组：[span, slot, div, shadow-root, user-card, body, html, document, window]，在组合之后，这正是扁平 DOM 中目标元素的父链。
-- Shadow 树详细信息仅提供给 `{mode:'open'}` 树，如果 shadow 树是用 `{mode: 'closed'}` 创建的，那么组合路径就从 host 开始：`user-card` 及其更上层。
-- 大多数事件能成功冒泡到 shadow DOM 边界，很少有事件不能冒泡到 shadow DOM 边界。这由 `composed` 事件对象属性控制：如果 `composed` 是 true，那么事件就能穿过边界；否则它仅能在 shadow DOM 内部捕获。内建事件大部分都是 composed: true 的
+- 对于 `<span slot="username">` 上的点击事件，会调用 `event.composedPath()` 并返回一个数组：`[span, slot, div, shadow-root, user-card, body, html, document, window]`，在组合之后，这正是扁平 DOM 中目标元素的父链。
+- Shadow 树详细信息仅提供给 `{mode:'open'}` 树，如果 shadow 树是用 `{mode: 'closed'}` 创建的，那么组合路径就从 `host` 开始：`user-card` 及其更上层。
+- 大多数事件能成功冒泡到 shadow DOM 边界，很少有事件不能冒泡到 shadow DOM 边界。这由 `composed` 事件对象属性控制：如果 `composed` 是 `true`，那么事件就能穿过边界；否则它仅能在 shadow DOM 内部捕获。内建事件大部分都是 `composed: true` 的。
 
-- 当发送（dispatch）自定义事件，需要设置 bubbles 和 composed 属性都为 true 以使其冒泡并从组件中冒泡出来：
+- 当发送（dispatch）自定义事件，需要设置 `bubbles` 和 `composed` 属性都为 `true` 以使其冒泡并从组件中冒泡出来：
 
 ```javascript
 <div id="outer"></div>
@@ -4529,8 +4538,8 @@ inner.dispatchEvent(new CustomEvent('test', {
 
 ## 叁 - 正则表达式
 
-- 正则表达式是搜索和替换字符串的一种强大方式，在 JavaScript 中，正则表达式通过内建的 RegExp 类的对象来实现，并与字符串集成。正则表达式（可叫作“regexp”或者“reg”）包含模式和可选的修饰符
-- 创建一个正则表达式对象有两种语法，较长一点的语法：`regexp = new RegExp("pattern", "flags");`较短一点的语法，使用斜杠 "/"：`regexp = /pattern/gmi;`
+- 正则表达式是搜索和替换字符串的一种强大方式，在 JavaScript 中，正则表达式通过内建的 `RegExp` 类的对象来实现，并与字符串集成。正则表达式（可叫作“`regexp`”或者“`reg`”）包含模式和可选的修饰符
+- 创建一个正则表达式对象有两种语法，较长一点的语法：`regexp = new RegExp("pattern", "flags");`较短一点的语法，使用斜杠 "`/`"：`regexp = /pattern/gmi;`
 - 如果要在字符串中进行搜索，可以使用 `search` 方法，然后返回匹配项在字符串中的位置，如果没找到则返回 -1
 - 正则表达式的修饰符可能会影响搜索结果，在 JavaScript 中，有 6 个修饰符：
 
@@ -4573,7 +4582,7 @@ alert( "A\nB".match(/A[\s\S]B/) ); // A\nB (match!)
 ```
 
 - 空格是一个字符。与其他字符同等重要
-- JavaScript 使用 Unicode 编码 （Unicode encoding）对字符串进行编码。大多数字符使用 2 个字节编码，length 把 4 个字节当成了 2 个 2 字节长的字符。
+- JavaScript 使用 Unicode 编码 （Unicode encoding）对字符串进行编码。大多数字符使用 2 个字节编码，`length` 把 4 个字节当成了 2 个 2 字节长的字符。
 - 默认情况下，正则表达式同样把一个 4 个字节的长字符当成一对 2 个字节长的字符。
 - /u，当一个正则表达式使用这个修饰符后，4 个字节长的字符将被正确地处理。
 - 查找具有某种属性的字符，写作 `\p{…}`
@@ -4613,8 +4622,8 @@ alert( regexp.test(goodInput) ); // true
 alert( regexp.test(badInput) ); // false
 ```
 
-- 锚点 ^ 和 $ 属于测试，它们的宽度为零。
-- 通过 /m 可以开启多行模式，这仅仅会影响 ^ 和 $ 锚符的行为。在多行模式下，它们不仅仅匹配文本的开始与结束，还匹配每一行的开始与结束。
+- 锚点 `^` 和 `$` 属于测试，它们的宽度为零。
+- 通过 `/m` 可以开启多行模式，这仅仅会影响 `^` 和 `$` 锚符的行为。在多行模式下，它们不仅仅匹配文本的开始与结束，还匹配每一行的开始与结束。
 
 ```javascript
 // /^\d+/gm 将匹配每一行的开头数字
@@ -4626,7 +4635,7 @@ alert( str.match(/^\d+/gm) ); // 1, 2, 33
 ```
 
 - 默认情况下，锚符 `^` 仅仅匹配文本的开头，在多行模式下，它匹配行的开头。
-- 要寻找新的一行的话，不仅可以使用锚符 `^` 和 `$`，也可以使用换行符 `\n`。它和锚符 `^` 和 `$` 的第一个不同点是它不像锚符那样，它会“消耗”掉 `\n` 并且将其（\n）加入到匹配结果中，还有一个不同点，换行符 `\n` 不会匹配字符串结尾。
+- 要寻找新的一行的话，不仅可以使用锚符 `^` 和 `$`，也可以使用换行符 `\n`。它和锚符 `^` 和 `$` 的第一个不同点是它不像锚符那样，它会“消耗”掉 `\n` 并且将其（`\n`）加入到匹配结果中，还有一个不同点，换行符 `\n` 不会匹配字符串结尾。
 
 ```javascript
 let str = `1st place: Winnie
@@ -4640,45 +4649,45 @@ alert( str.match(/\w+\n/gim) ); // Winnie\n,Piglet\n
 - 有三种不同的位置可作为词边界：在字符串开头，如果第一个字符是单词字符 `\w`。在字符串中的两个字符之间，其中一个是单词字符 `\w`，另一个不是。在字符串末尾，如果最后一个字符是单词字符 `\w`。
 
 ```javascript
-alert( "Hello, Java!".match(/\bJava\b/) ); // Java
-alert( "Hello, JavaScript!".match(/\bJava\b/) ); // null
+alert( "Hello, Java!".match(/\bJava\b/) );  // Java
+alert( "Hello, JavaScript!".match(/\bJava\b/) );  // null
 ```
 
-- `\b` 既可以用于单词，也可以用于数字，例如，模式 \b\d\d\b 查找独立的两位数。 
-- 词边界 `\b` 不适用于非拉丁字母。 
-- 一个反斜杠 \  是用来表示匹配字符类的，所以它是一个特殊字符。 
-- 这里是包含所有特殊字符的列表：`[ \ ^ $ . | ? * + ( )` 
-- 如果要把特殊字符作为常规字符来使用，只需要在它前面加个反斜杠。这种方式也被叫做“转义一个字符”。 
+- `\b` 既可以用于单词，也可以用于数字，例如，模式 `\b\d\d\b` 查找独立的两位数。
+- 词边界 `\b` 不适用于非拉丁字母。
+- 一个反斜杠 `\`  是用来表示匹配字符类的，所以它是一个特殊字符。
+- 这里是包含所有特殊字符的列表：`[ \ ^ $ . | ? * + ( )`
+- 如果要把特殊字符作为常规字符来使用，只需要在它前面加个反斜杠。这种方式也被叫做“转义一个字符”。
 
 ```javascript
-alert( "Chapter 5.1".match(/\d\.\d/) ); // 5.1
-alert( "function g()".match(/g\(\)/) ); // "g()"
-alert( "1\\2".match(/\\/) ); // '\'
-alert( "/".match(/\//) ); // '/'
-alert( "/".match(new RegExp("/")) ); // '/'
+alert( "Chapter 5.1".match(/\d\.\d/) );  // 5.1
+alert( "function g()".match(/g\(\)/) );  // "g()"
+alert( "1\\2".match(/\\/) );  // '\'
+alert( "/".match(/\//) );  // '/'
+alert( "/".match(new RegExp("/")) );  // '/'
 ```
 
-- 斜杠符号 / 并不是一个特殊符号，但是它被用于在 Javascript 中开启和关闭正则匹配：/...pattern.../，所以也应该转义它。 
-- 所以调用 new RegExp 会获得一个没有反斜杠的字符串。要修复这个问题，需要双斜杠，因为引用会把 \ 变为 \  
-- 在方括号 `[…]` 中的几个字符或者字符类意味着“搜索给定的字符中的任意一个”这被叫做一个集合。 
+- 斜杠符号 `/` 并不是一个特殊符号，但是它被用于在 Javascript 中开启和关闭正则匹配：`/...pattern.../`，所以也应该转义它。
+- 所以调用 `new RegExp` 会获得一个没有反斜杠的字符串。要修复这个问题，需要双斜杠，因为引用会把 `\\` 变为 `\`
+- 在方括号 `[…]` 中的几个字符或者字符类意味着“搜索给定的字符中的任意一个”这被叫做一个集合。
 
 ```javascript
 // 查找 [t 或者 m]，然后再匹配 “op”
-alert( "Mop top".match(/[tm]op/gi) ); // "Mop", "top"
+alert( "Mop top".match(/[tm]op/gi) );  // "Mop", "top"
 
 // 查找 “V”，然后匹配 [o 或者 i]，之后再匹配 “la”
-alert( "Voila".match(/V[oi]la/) ); // null，并没有匹配上
+alert( "Voila".match(/V[oi]la/) );  // null，并没有匹配上
 ```
 
 - 请注意尽管在集合中有多个字符，但它们在匹配中只会对应其中的一个。
 - 方括号也可以包含字符范围，比如说，`[a-z]` 会匹配从 a 到 z 范围内的字母，`[0-5]` 表示从 0 到 5 的数字。
 
 ```javascript
-alert( "Exception 0xAF".match(/x[0-9A-F][0-9A-F]/g) ); // xAF
+alert( "Exception 0xAF".match(/x[0-9A-F][0-9A-F]/g) );  // xAF
 ```
 
 - `[0-9A-F]` 表示两个范围：搜索一个字符，满足数字 0 到 9 或字母 A 到 F。
-- 也可以在 […] 里面使用字符类，\d 和 [0-9] 相同，\w 和 [a-zA-Z0-9_] 相同，\s 和 [\t\n\v\f\r ] 外加少量罕见的 unicode 空格字符相同。
+- 也可以在 `[…]` 里面使用字符类，`\d` 和 `[0-9]` 相同，`\w` 和 `[a-zA-Z0-9_]` 相同，`\s` 和 `[\t\n\v\f\r]` 外加少量罕见的 unicode 空格字符相同。
 - 可以编写一个更通用的模式，该模式可以查找任何语言中的文字字符。这很容易想到就 Unicode 属性：`[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]`
 
 ```javascript
@@ -4690,10 +4699,10 @@ let str = `Hi 你好 12`;
 alert( str.match(regexp) ); // H,i,你,好,1,2
 ```
 
-- 类似 `[^…]`的“排除”范围匹配，通过在匹配查询的开头添加插入符号 ^ 来表示，它会匹配所有除了给定的字符之外的任意字符
+- 类似 `[^…]`的“排除”范围匹配，通过在匹配查询的开头添加插入符号 `^` 来表示，它会匹配所有除了给定的字符之外的任意字符。
 
 ```javascript
-alert( "alice15@gmail.com".match(/[^\d\sA-Z]/gi) ); // @ and .
+alert( "alice15@gmail.com".match(/[^\d\sA-Z]/gi) );  // @ and .
 ```
 
 - 在方括号表示中，绝大多数特殊字符可以在不转义的情况下使用。
@@ -4702,36 +4711,36 @@ alert( "alice15@gmail.com".match(/[^\d\sA-Z]/gi) ); // @ and .
 // 并不需要转义
 let reg = /[-().^+]/g;
 
-alert( "1 + 2 - 3".match(reg) ); // 匹配 +，-
+alert( "1 + 2 - 3".match(reg) );  // 匹配 +，-
 ```
 
-- 如果集合中有代理对（surrogate pairs），则需要标志 u 以使其正常工作。
+- 如果集合中有代理对（surrogate pairs），则需要标志 `u` 以使其正常工作。
 
 ```javascript
-alert( '𝒳'.match(/[𝒳𝒴]/u) ); // 𝒳
+alert( '𝒳'.match(/[𝒳𝒴]/u) );  // 𝒳
 ```
 
-- 没有标志 u 的代理对被视为两个字符。 
+- 没有标志 `u` 的代理对被视为两个字符。
 - 用来形容所需要的数量的词被称为量词，最明显的量词便是一对引号间的数字：`{n}`。在一个字符（或一个字符类等等）后跟着一个量词，用来指出具体需要的数量。`\d{5}` 表示 5 位的数字，如同 `\d\d\d\d\d` 
 
 ```javascript
-alert( "I'm 12345 years old".match(/\d{5}/) ); //  "12345"
+alert( "I'm 12345 years old".match(/\d{5}/) );  // "12345"
 ```
 
 - 某个范围的位数：`{3,5}`
 
 ```javascript
-alert( "I'm not 12, but 1234 years old".match(/\d{3,5}/) ); // "1234"
+alert( "I'm not 12, but 1234 years old".match(/\d{3,5}/) );  // "1234"
 ```
 
-- 可以省略上限，那么正则表达式 \d{3,} 就会查找位数大于或等于 3 的数字。
+- 可以省略上限，那么正则表达式 `\d{3,}` 就会查找位数大于或等于 3 的数字。
 - 大多数常用的量词都可以有缩写：
 - `+`，代表一个或多个，相当于 `{1,}`
 
 ```javascript
 let str = "+7(903)-123-45-67";
 
-alert( str.match(/\d+/g) ); // 7,903,123,45,67
+alert( str.match(/\d+/g) );  // 7,903,123,45,67
 ```
 
 - `?` 代表零个或一个，相当于 `{0,1}`
@@ -4739,27 +4748,27 @@ alert( str.match(/\d+/g) ); // 7,903,123,45,67
 ```javascript
 let str = "Should I write color or colour?";
 
-alert( str.match(/colou?r/g) ); // color, colour
+alert( str.match(/colou?r/g) );  // color, colour
 ```
 
 - `*`代表着零个或多个，相当于 `{0,}`
 
 ```javascript
-alert( "100 10 1".match(/\d0*/g) ); // 100, 10, 1
+alert( "100 10 1".match(/\d0*/g) );  // 100, 10, 1
 ```
 
 - 贪婪搜索：为了查找到一个匹配项，正则表达式引擎采用了以下算法，对于字符串中的每一个字符用这个模式来匹配此字符若无匹配，移至下一个字符。在贪婪模式下（默认情况下），量词都会尽可能地重复多次。
-- 懒惰模式：懒惰模式中的量词与贪婪模式中的是相反的，它想要“重复最少次数”。能够通过在量词之后添加一个问号 '?' 来启用它。通常，一个问号 ? 就是一个它本身的量词（0 或 1），但如果添加另一个量词（甚至可以是它自己），就会有不同的意思，它将匹配的模式从贪婪转为懒惰。懒惰模式只能够通过带 ? 的量词启用，其它的量词依旧保持贪婪模式。
+- 懒惰模式：懒惰模式中的量词与贪婪模式中的是相反的，它想要“重复最少次数”。能够通过在量词之后添加一个问号 `?` 来启用它。通常，一个问号 `?` 就是一个它本身的量词（0 或 1），但如果添加另一个量词（甚至可以是它自己），就会有不同的意思，它将匹配的模式从贪婪转为懒惰。懒惰模式只能够通过带 `?` 的量词启用，其它的量词依旧保持贪婪模式。
 - 模式的一部分可以用括号括起来 (...)，这称为捕获组（capturing group）这有两个影响：允许将匹配的一部分作为结果数组中的单独项。如果将量词放在括号后，则它将括号视为一个整体。
 
 ```javascript
-alert( 'Gogogo now!'.match(/(go)+/i) ); // "Gogogo"
+alert( 'Gogogo now!'.match(/(go)+/i) );  // "Gogogo"
 
 let regexp = /(\w+\.)+\w+/g;
-alert( "site.com my.site.com".match(regexp) ); // site.com,my.site.com
+alert( "site.com my.site.com".match(regexp) );  // site.com,my.site.com
 
 let regexp = /[-.\w]+@([\w-]+\.)+[\w-]+/g;
-alert("my@mail.com @ his@site.com.uk".match(regexp)); // my@mail.com, his@site.com.uk
+alert("my@mail.com @ his@site.com.uk".match(regexp));  // my@mail.com, his@site.com.uk
 ```
 
 - 括号从左到右编号，正则引擎会记住它们各自匹配的内容，并允许在结果中获得它。
@@ -4769,8 +4778,8 @@ let str = '<h1>Hello, world!</h1>';
 
 let tag = str.match(/<(.*?)>/);
 
-alert( tag[0] ); // <h1>
-alert( tag[1] ); // h1
+alert( tag[0] );  // <h1>
+alert( tag[1] );  // h1
 ```
 
 - 括号可以嵌套，在这种情况下，编号也从左到右。
@@ -4781,39 +4790,39 @@ let str = '<span class="my">';
 let regexp = /<(([a-z]+)\s*([^>]*))>/;
 
 let result = str.match(regexp);
-alert(result[0]); // <span class="my">
-alert(result[1]); // span class="my"
-alert(result[2]); // span
-alert(result[3]); // class="my"
+alert(result[0]);  // <span class="my">
+alert(result[1]);  // span class="my"
+alert(result[2]);  // span
+alert(result[3]);  // class="my"
 ```
 
-- 即使组是可选的并且在匹配项中不存在（例如，具有数量词 (...)?），也存在相应的 result 数组项，并且等于 undefined
+- 即使组是可选的并且在匹配项中不存在（例如，具有数量词 (...)?），也存在相应的 `result` 数组项，并且等于 `undefined`
 
 ```javascript
 let match = 'a'.match(/a(z)?(c)?/);
 
-alert( match.length ); // 3
-alert( match[0] ); // a（完全匹配）
-alert( match[1] ); // undefined
-alert( match[2] ); // undefined
+alert( match.length );  // 3
+alert( match[0] );  // a（完全匹配）
+alert( match[1] );  // undefined
+alert( match[2] );  // undefined
 
 let match = 'ac'.match(/a(z)?(c)?/)
 
-alert( match.length ); // 3
-alert( match[0] ); // ac（完全匹配）
-alert( match[1] ); // undefined，因为 (z)? 没匹配项
-alert( match[2] ); // c
+alert( match.length );  // 3
+alert( match[0] );  // ac（完全匹配）
+alert( match[1] );  // undefined，因为 (z)? 没匹配项
+alert( match[2] );  // c
 ```
 
 - 搜索所有具有组的匹配项：`matchAll`
-- 当搜索所有匹配项（标志 g）时，match 方法不会返回组的内容。
+- 当搜索所有匹配项（标志 g）时，`match` 方法不会返回组的内容。
 
 ```javascript
 let str = '<h1> <h2>';
 
 let tags = str.match(/<(.*?)>/g);
 
-alert( tags ); // <h1>,<h2>
+alert( tags );  // <h1>,<h2>
 // 结果是一个匹配数组，但没有每个匹配项的详细信息
 ```
 
@@ -4821,17 +4830,17 @@ alert( tags ); // <h1>,<h2>
 let results = '<h1> <h2>'.matchAll(/<(.*?)>/gi);
 
 // results - is not an array, but an iterable object
-alert(results); // [object RegExp String Iterator]
+alert(results);  // [object RegExp String Iterator]
 
-alert(results[0]); // undefined (*)
+alert(results[0]);  // undefined (*)
 
-results = Array.from(results); // let's turn it into array
+results = Array.from(results);  // let's turn it into array
 
-alert(results[0]); // <h1>,h1 (1st tag)
-alert(results[1]); // <h2>,h2 (2nd tag)
+alert(results[0]);  // <h1>,h1 (1st tag)
+alert(results[1]);  // <h2>,h2 (2nd tag)
 ```
 
-- 由 `matchAll` 所返回的每个匹配，其格式与不带标志 g 的 match 所返回的格式相同：它是一个具有额外的 `index`（字符串中的匹配索引）属性和 `input`（源字符串）的数组。
+- 由 `matchAll` 所返回的每个匹配，其格式与不带标志 `g` 的 `match` 所返回的格式相同：它是一个具有额外的 `index`（字符串中的匹配索引）属性和 `input`（源字符串）的数组。
 - 调用 `matchAll` 不会执行搜索。相反它返回一个可迭代的对象，最初没有结果。每当对它进行迭代时才会执行搜索，例如在循环中。因此这将根据需要找到尽可能多的结果，而不是全部。
 - 计算括号很不方便，但有一个更好的选择：给括号起个名字，是通过在开始括号之后立即放置 `?<name>` 来完成的。
 
@@ -4841,9 +4850,9 @@ let str = "2019-04-30";
 
 let groups = str.match(dateRegexp).groups;
 
-alert(groups.year); // 2019
-alert(groups.month); // 04
-alert(groups.day); // 30
+alert(groups.year);  // 2019
+alert(groups.month);  // 04
+alert(groups.day);  // 30
 ```
 
 ```javascript
@@ -4862,13 +4871,13 @@ for(let result of results) {
 }
 ```
 
-- 方法 `str.replace(regexp, replacement)` 用 `replacement` 替换 str 中匹配 `regexp` 的所有捕获组。这使用 `$n` 来完成，其中 n 是组号。
+- 方法 `str.replace(regexp, replacement)` 用 `replacement` 替换 `str` 中匹配 `regexp` 的所有捕获组。这使用 `$n` 来完成，其中 `n` 是组号。
 
 ```javascript
 let str = "John Bull";
 let regexp = /(\w+) (\w+)/;
 
-alert( str.replace(regexp, '$2, $1') ); // Bull, John
+alert( str.replace(regexp, '$2, $1') );  // Bull, John
 ```
 
 - 对于命名括号，引用为 `$<name>`
@@ -4882,7 +4891,7 @@ alert( str.replace(regexp, '$<day>.$<month>.$<year>') );
 // 30.10.2019, 01.01.2020
 ```
 
-- 非捕获组 `?:`   有时需要括号才能正确应用量词，但不希望它们的内容出现在结果中，可以通过在开头添加 ?: 来排除组
+- 非捕获组 `?:`   有时需要括号才能正确应用量词，但不希望它们的内容出现在结果中，可以通过在开头添加 `?:` 来排除组。
 
 ```javascript
 let str = "Gogogo John!";
@@ -4897,14 +4906,14 @@ alert( result[1] ); // John
 alert( result.length ); // 2（数组中没有更多项）
 ```
 
-- 按编号反向引用：\N，可以使用 \N 在模式中引用一个组，其中 N 是组号。
+- 按编号反向引用：`\N`，可以使用 `\N` 在模式中引用一个组，其中 `N` 是组号。
 
 ```javascript
 let str = `He said: "She's the one!".`;
 
 let regexp = /(['"])(.*?)\1/g;
 
-alert( str.match(regexp) ); // "She's the one!"
+alert( str.match(regexp) );  // "She's the one!"
 ```
 
 - 不要搞混了： 在模式中用 `\1`，在替换项中用：`$1`
@@ -4915,7 +4924,7 @@ let str = `He said: "She's the one!".`;
 
 let regexp = /(?<quote>['"])(.*?)\k<quote>/g;
 
-alert( str.match(regexp) ); // "She's the one!"
+alert( str.match(regexp) );  // "She's the one!"
 ```
 
 - 选择是正则表达式中的一个术语，实际上是一个简单的“或”。
@@ -4925,57 +4934,57 @@ let reg = /html|php|css|java(script)?/gi;
 
 let str = "First HTML appeared, then CSS, then JavaScript";
 
-alert( str.match(reg) ); // 'HTML', 'CSS', 'JavaScript'
+alert( str.match(reg) );  // 'HTML', 'CSS', 'JavaScript'
 ```
 
-- 选择符号并非在字符级别生效，而是在表达式级别。正则表达式 A|B|C 意思是命中 A、B 或 C 其一均可。
+- 选择符号并非在字符级别生效，而是在表达式级别。正则表达式 `A|B|C` 意思是命中 A、B 或 C 其一均可。
 
 ```javascript
 let reg = /([01]\d|2[0-3]):[0-5]\d/g;
 
-alert("00:00 10:10 23:59 25:99 1:2".match(reg)); // 00:00,10:10,23:59
+alert("00:00 10:10 23:59 25:99 1:2".match(reg));  // 00:00,10:10,23:59
 ```
 
-- 前瞻断言：x(?=y)，它表示：仅在后面是 y 的情况匹配 x
+- 前瞻断言：`x(?=y)`，它表示：仅在后面是 y 的情况匹配 x
 
 ```javascript
 let str = "1 turkey costs 30€";
 
-alert( str.match(/\d+(?=€)/) ); // 30 （正确地跳过了单个的数字 1）
+alert( str.match(/\d+(?=€)/) );  // 30 （正确地跳过了单个的数字 1）
 ```
 
-- 前瞻否定断言：x(?!y)，意思是：查找 x, 但是仅在不被 y 跟随的情况下匹配成功。
+- 前瞻否定断言：`x(?!y)`，意思是：查找 x, 但是仅在不被 y 跟随的情况下匹配成功。
 
 ```javascript
 let str = "2 turkeys cost 60€";
 
-alert( str.match(/\d+(?!€)/) ); // 2（正确地跳过了价格）
+alert( str.match(/\d+(?!€)/) );  // 2（正确地跳过了价格）
 ```
 
 - 后瞻断言也是类似的，只不过它是在相反的方向上进行条件判断。也就是说，它只允许匹配前面有特定字符串的模式。
-- 后瞻肯定断言：(?<=y)x, 匹配 x, 仅在前面是 y 的情况。后瞻否定断言：(?<!y)x, 匹配 x, 仅在前面不是 y 的情况。
+- 后瞻肯定断言：`(?<=y)x`, 匹配 x, 仅在前面是 y 的情况。后瞻否定断言：`(?<!y)x`, 匹配 x, 仅在前面不是 y 的情况。
 - 但是如果想要捕捉整个环视表达式或其中的一部分，那也是有可能的，只需要将其包裹在另加的括号中。
 
 ```javascript
 let str = "1 turkey costs 30€";
-let reg = /\d+(?=(€|kr))/; // €|kr 两边有额外的括号
+let reg = /\d+(?=(€|kr))/;  // €|kr 两边有额外的括号
 
-alert( str.match(reg) ); // 30, €
+alert( str.match(reg) );  // 30, €
 ```
 
-- 灾难性回溯（catastrophic backtracking），又译作回溯陷阱，有 2 种处理它的思路：重写正则表达式，尽可能减少其中排列组合的数量；可以使用前瞻断言来防止回溯。 
-- y 标志允许在源字符串中的指定位置执行搜索。 
-- `regexp.exec` 是 `str.matchAll` 方法的替代方法，与其他方法不同可以设置自己的 `lastIndex`，从给定位置开始搜索。 
+- 灾难性回溯（catastrophic backtracking），又译作回溯陷阱，有 2 种处理它的思路：重写正则表达式，尽可能减少其中排列组合的数量；可以使用前瞻断言来防止回溯。
+- y 标志允许在源字符串中的指定位置执行搜索。
+- `regexp.exec` 是 `str.matchAll` 方法的替代方法，与其他方法不同可以设置自己的 `lastIndex`，从给定位置开始搜索。
 
 ```javascript
 let str = 'let varName = "value"';
 
-let regexp = /\w+/g; // 如果没有标志 "g"，属性 lastIndex 会被忽略
+let regexp = /\w+/g;  // 如果没有标志 "g"，属性 lastIndex 会被忽略
 
 regexp.lastIndex = 4;
 
 let word = regexp.exec(str);
-alert(word); // varName
+alert(word);  // varName
 ```
 
 - 标记 y 使 `regexp.exec` 正好在 `lastIndex` 位置，而不是在它之前，也不是在它之后。
@@ -4986,28 +4995,28 @@ let str = 'let varName = "value"';
 let regexp = /\w+/y;
 
 regexp.lastIndex = 3;
-alert( regexp.exec(str) ); // null（位置 3 有一个空格，不是单词）
+alert( regexp.exec(str) );  // null（位置 3 有一个空格，不是单词）
 
 regexp.lastIndex = 4;
-alert( regexp.exec(str) ); // varName（在位置 4 的单词）
+alert( regexp.exec(str) );  // varName（在位置 4 的单词）
 ```
 
-- `str.match(regexp)` 方法在字符串 str 中找到匹配 regexp 的字符。它有 3 种模式：如果 regexp 不带有 g 标记，则它以数组的形式返回第一个匹配项，其中包含分组和属性 index（匹配项的位置）、input（输入字符串，等于 str）。如果 regexp 带有 g 标记，则它将所有匹配项的数组作为字符串返回，而不包含分组和其他详细信息。如果没有匹配项，则无论是否带有标记 g ，都将返回 null。
-- 方法 `str.matchAll(regexp)` 是 `str.match` 变体，主要用来搜索所有组的所有匹配项。与 match 相比有 3 个区别：它返回包含匹配项的可迭代对象，而不是数组，可以用 `Array.from` 从中得到一个常规数组。每个匹配项均以包含分组的数组形式返回（返回格式与不带 g 标记的 `str.match` 相同）。如果没有结果，则返回的不是 null，而是一个空的可迭代对象。
-- `str.split(regexp|substr, limit)`，使用正则表达式（或子字符串）作为分隔符来分割字符串
-- `str.search(regexp)`，返回第一个匹配项的位置，如果未找到，则返回 -1、重要限制：search 仅查找第一个匹配项。
-- `str.replace(str|regexp, str|func)`，这是用于搜索和替换的通用方法，是最有用的方法之一。当 replace 的第一个参数是字符串时，它仅替换第一个匹配项，应使用带 g 标记的正则表达式 。第二个参数是一个替代字符串，对于需要“智能”替换的场景，第二个参数可以是一个函数。
+- `str.match(regexp)` 方法在字符串 `str` 中找到匹配 `regexp` 的字符。它有 3 种模式：如果 `regexp` 不带有 `g` 标记，则它以数组的形式返回第一个匹配项，其中包含分组和属性 `index`（匹配项的位置）、`input`（输入字符串，等于 `str`）。如果 `regexp` 带有 `g` 标记，则它将所有匹配项的数组作为字符串返回，而不包含分组和其他详细信息。如果没有匹配项，则无论是否带有标记 `g`，都将返回 `null`。
+- 方法 `str.matchAll(regexp)` 是 `str.match` 变体，主要用来搜索所有组的所有匹配项。与 `match` 相比有 3 个区别：它返回包含匹配项的可迭代对象，而不是数组，可以用 `Array.from` 从中得到一个常规数组。每个匹配项均以包含分组的数组形式返回（返回格式与不带 `g` 标记的 `str.match` 相同）。如果没有结果，则返回的不是 `null`，而是一个空的可迭代对象。
+- `str.split(regexp|substr, limit)`，使用正则表达式（或子字符串）作为分隔符来分割字符串。
+- `str.search(regexp)`，返回第一个匹配项的位置，如果未找到，则返回 -1、重要限制：`search` 仅查找第一个匹配项。
+- `str.replace(str|regexp, str|func)`，这是用于搜索和替换的通用方法，是最有用的方法之一。当 `replace` 的第一个参数是字符串时，它仅替换第一个匹配项，应使用带 `g` 标记的正则表达式 。第二个参数是一个替代字符串，对于需要“智能”替换的场景，第二个参数可以是一个函数。
 
 ```javascript
 let str = "html and css";
 
 let result = str.replace(/html|css/gi, str => str.toUpperCase());
 
-alert(result); // HTML and CSS
+alert(result);  // HTML and CSS
 ```
 
-- `regexp.exec(str)` 方法返回字符串 str 中的 regexp 匹配项。与以前的方法不同，它是在正则表达式而不是字符串上调用的。如果没有 g，那么 `regexp.exec(str)` 返回的第一个匹配与 `str.match(regexp)` 完全相同。如果有标记 g，那么用 `regexp.exec(str)` 会返回第一个匹配项，并将紧随其后的位置保存在属性 `regexp.lastIndex` 中。下一次同样的调用会从位置 `regexp.lastIndex` 开始搜索，返回下一个匹配项，并将其后的位置保存在 `regexp.lastIndex` 中。…以此类推。如果没有匹配项，则 `regexp.exec` 返回 null，并将 `regexp.lastIndex` 重置为 0。 重复调用会挨个返回所有的匹配项，属性 `regexp.lastIndex` 用来跟踪当前的搜索位置。
-- `regexp.test(str)` 查找匹配项，然后返回 `true/false` 表示是否存在。如果正则表达式带有标记 g，则 `regexp.test` 从 `regexp.lastIndex` 属性中查找，并更新此属性，就像 `regexp.exec` 一样。
+- `regexp.exec(str)` 方法返回字符串 `str` 中的 `regexp` 匹配项。与以前的方法不同，它是在正则表达式而不是字符串上调用的。如果没有 `g`，那么 `regexp.exec(str)` 返回的第一个匹配与 `str.match(regexp)` 完全相同。如果有标记 `g`，那么用 `regexp.exec(str)` 会返回第一个匹配项，并将紧随其后的位置保存在属性 `regexp.lastIndex` 中。下一次同样的调用会从位置 `regexp.lastIndex` 开始搜索，返回下一个匹配项，并将其后的位置保存在 `regexp.lastIndex` 中。…以此类推。如果没有匹配项，则 `regexp.exec` 返回 `null`，并将 `regexp.lastIndex` 重置为 0。 重复调用会挨个返回所有的匹配项，属性 `regexp.lastIndex` 用来跟踪当前的搜索位置。
+- `regexp.test(str)` 查找匹配项，然后返回 `true/false` 表示是否存在。如果正则表达式带有标记 `g`，则 `regexp.test` 从 `regexp.lastIndex` 属性中查找，并更新此属性，就像 `regexp.exec` 一样。
 - 如果在不同的源字符串上应用相同的全局表达式，可能会出现错误的结果，因为 `regexp.test` 的调用会增加 `regexp.lastIndex` 属性值，因此在另一个字符串中的搜索可能是从非 0 位置开始的。
 
 ## 肆 - Ajax
@@ -5280,7 +5289,8 @@ xhr.send([body])
 | user，password | HTTP 基本身份验证（如果需要的话）的登录名和密码 |
 | body | 包含了 request body |
 
-- 监听 xhr 事件以获取响应：
+- 监听 `xhr` 事件以获取响应：
+
 | xhr事件 | 描述 |
 | --- | --- |
 | load | 当请求完成（即使 HTTP 状态为 400 或 500 等），并且响应已完全下载 |
@@ -5299,10 +5309,11 @@ xhr.send();
 
 // 4. 当接收到响应后，将调用此函数
 xhr.onload = function() {
-  if (xhr.status != 200) { // 分析响应的 HTTP 状态
-    alert(`Error ${xhr.status}: ${xhr.statusText}`); // 例如 404: Not Found
-  } else { // 显示结果
-    alert(`Done, got ${xhr.response.length} bytes`); // response 是服务器响应
+  // 分析响应的 HTTP 状态
+  if (xhr.status != 200) {
+    alert(`Error ${xhr.status}: ${xhr.statusText}`);  // 例如 404: Not Found
+  } else {
+    alert(`Done, got ${xhr.response.length} bytes`);  // response 是服务器响应
   }
 };
 
@@ -5310,7 +5321,7 @@ xhr.onprogress = function(event) {
   if (event.lengthComputable) {
     alert(`Received ${event.loaded} of ${event.total} bytes`);
   } else {
-    alert(`Received ${event.loaded} bytes`); // 没有 Content-Length
+    alert(`Received ${event.loaded} bytes`);  // 没有 Content-Length
   }
 };
 
@@ -5319,7 +5330,7 @@ xhr.onerror = function() {
 };
 ```
 
-- 可以在以下 xhr 属性中接收结果：
+- 可以在以下 `xhr` 属性中接收结果：
 
 | xhr属性 | 描述 |
 | --- | --- |
@@ -5329,7 +5340,8 @@ xhr.onerror = function() {
 
 ```javascript
 // 如果在给定时间内请求没有成功执行，请求就会被取消，并且触发 timeout 事件
-xhr.timeout = 10000; // timeout 单位是 ms，此处即 10 秒
+// timeout 单位是 ms，此处即 10 秒
+xhr.timeout = 10000;
 ```
 
 - 使用 `xhr.responseType` 属性来设置响应格式：
@@ -5343,20 +5355,20 @@ xhr.timeout = 10000; // timeout 单位是 ms，此处即 10 秒
 | "document" | 响应格式为 XML document（可以使用 XPath 和其他 XML 方法）或 HTML document（基于接收数据的 MIME 类型） |
 | "json" | 响应格式为 JSON（自动解析） |
 
-- XMLHttpRequest 的状态（state）会随着它的处理进度变化而变化。可以通过 `xhr.readyState` 来了解当前状态：
+- `XMLHttpRequest` 的状态（`state`）会随着它的处理进度变化而变化。可以通过 `xhr.readyState` 来了解当前状态：
 
 ```javascript
-UNSENT = 0; // 初始状态
-OPENED = 1; // open 被调用
-HEADERS_RECEIVED = 2; // 接收到 response header
-LOADING = 3; // 响应正在被加载（接收到一个数据包）
-DONE = 4; // 请求完成
+UNSENT = 0;  // 初始状态
+OPENED = 1;  // open 被调用
+HEADERS_RECEIVED = 2;  // 接收到 response header
+LOADING = 3;  // 响应正在被加载（接收到一个数据包）
+DONE = 4;  // 请求完成
 ```
 
-- XMLHttpRequest 对象以 0 → 1 → 2 → 3 → … → 3 → 4 的顺序在它们之间转变，每当通过网络接收到一个数据包，就会重复一次状态 3。
-- 可以随时终止请求。调用 `xhr.abort()` ，它会触发 abort 事件，且 `xhr.status` 变为 0
-- 同步模式：在 open 方法中将第三个参数 async 设置为 false，那么请求就会以同步的方式进行，JavaScript 执行在 `send()` 处暂停，并在收到响应后恢复执行，但是很少使用同步调用，因为它们会阻塞页面内的 JavaScript，直到加载完成。
--  XMLHttpRequest 允许发送自定义 `header`，并且可以从响应中读取 `header`，HTTP-header 有三种方法：
+- `XMLHttpRequest` 对象以 0 → 1 → 2 → 3 → … → 3 → 4 的顺序在它们之间转变，每当通过网络接收到一个数据包，就会重复一次状态 3
+- 可以随时终止请求。调用 `xhr.abort()` ，它会触发 `abort` 事件，且 `xhr.status` 变为 0
+- 同步模式：在 `open` 方法中将第三个参数 `async` 设置为 `false`，那么请求就会以同步的方式进行，JavaScript 执行在 `send()` 处暂停，并在收到响应后恢复执行，但是很少使用同步调用，因为它们会阻塞页面内的 JavaScript，直到加载完成。
+-  `XMLHttpRequest` 允许发送自定义 `header`，并且可以从响应中读取 `header`，`HTTP-header` 有三种方法：
 
 | 方法 | 描述 |
 | --- | --- |
@@ -5364,8 +5376,8 @@ DONE = 4; // 请求完成
 | getResponseHeader(name) | 获取具有给定 name 的 header（Set-Cookie 和 Set-Cookie2 除外） |
 | getAllResponseHeaders() | 返回除 Set-Cookie 和 Set-Cookie2 外的所有 response header |
 
-- 一些 header 是由浏览器专门管理的，例如 `Referer` 和 `Host`。XMLHttpRequest 的另一个特点是不能撤销 setRequestHeader，一旦设置了 `header`，就无法撤销了，其他调用会向 header 中添加信息，但不会覆盖它。
-- 专门用于跟踪上传事件：`xhr.upload`，它会生成事件，类似于 xhr，但是 `xhr.upload` 仅在上传时触发它们：
+- 一些 `header` 是由浏览器专门管理的，例如 `Referer` 和 `Host`。`XMLHttpRequest` 的另一个特点是不能撤销 `setRequestHeader`，一旦设置了 `header`，就无法撤销了，其他调用会向 `header` 中添加信息，但不会覆盖它。
+- 专门用于跟踪上传事件：`xhr.upload`，它会生成事件，类似于 `xhr`，但是 `xhr.upload` 仅在上传时触发它们：
 
 | 属性 | 描述 |
 | --- | --- |
@@ -5377,7 +5389,7 @@ DONE = 4; // 请求完成
 | timeout | 上传超时（如果设置了 timeout 属性） |
 | loadend | 上传完成，无论成功还是 error |
 
-- XMLHttpRequest 可以使用和 fetch 相同的 CORS 策略进行跨源请求。默认情况下不会将 cookie 和 HTTP 授权发送到其他域。要启用它们，可以将 `xhr.withCredentials` 设置为 true
+- `XMLHttpRequest` 可以使用和 `fetch` 相同的 CORS 策略进行跨源请求。默认情况下不会将 `cookie` 和 HTTP 授权发送到其他域。要启用它们，可以将 `xhr.withCredentials` 设置为 `true`
 
 ### 10 - 恢复上传
 
@@ -5385,7 +5397,6 @@ DONE = 4; // 请求完成
 
 ```javascript
 class Uploader {
-
   constructor({file, onProgress}) {
     this.file = file;
     this.onProgress = onProgress;
@@ -5434,7 +5445,6 @@ class Uploader {
     // false —— 如果被中止
     // 出现 error 时将其抛出
     return await new Promise((resolve, reject) => {
-
       xhr.onload = xhr.onerror = () => {
         console.log("upload end status:" + xhr.status + " text:" + xhr.statusText);
 
@@ -5457,7 +5467,6 @@ class Uploader {
       this.xhr.abort();
     }
   }
-
 }
 ```
 
@@ -5683,7 +5692,7 @@ btn.addEventListener('click', function () {
 ### 08 - 跨域
 #### 01 - JSONP
 
-- 通过 `script` 标签本身可跨域的特性返回的结果应该是一个函数的执行，函数的参数就是服务端要给客户端的数据，函数本身的定义是在客户端中，数据和函数的调用在服务端中。仅支持GET 请求。
+- 通过 `script` 标签本身可跨域的特性返回的结果应该是一个函数的执行，函数的参数就是服务端要给客户端的数据，函数本身的定义是在客户端中，数据和函数的调用在服务端中。仅支持 GET 请求。
 
 ```javascript
   // 检测用户名是否存在
@@ -5792,7 +5801,7 @@ if (response.ok) {
 
 > `Response header` 位于 `response.headers` 中的一个类似于 `Map` 的 `header` 对象，它不是真正的 `Map`，但是它具有类似的方法，可以按名称（`name`）获取各个 `header`，或迭代它们。
 
-- 第二阶段：为了获取 `response body`，需要使用一个其他的方法调用。`Response` 提供了多种基于 `promise` 的方法，来以不同的格式访问 body：（只能选择一种读取 body 的方法）
+- 第二阶段：为了获取 `response body`，需要使用一个其他的方法调用。`Response` 提供了多种基于 `promise` 的方法，来以不同的格式访问 `body`：（只能选择一种读取 `body` 的方法）
 
 | 方法 | 描述 |
 | --- | --- |
@@ -5901,7 +5910,7 @@ let formData = new FormData([form]);
 - 一个表单可以包含多个具有相同 `name` 的字段。`set` 方法，语法与 `append` 相同，不同之处在于 `.set` 移除所有具有给定 `name` 的字段，然后附加一个新字段。
 - 可以使用 `for..of` 循环迭代 `formData` 字段。
 - 表单始终以 `Content-Type: multipart/form-data` 来发送数据，这个编码允许发送文件。因此 `<input type="file">` 字段也能被发送，类似于普通的表单提交。
-- 通常更方便的发送图片的方式不是单独发送，而是将其作为表单的一部分，并带有附加字段（例如 “name” 和其他 metadata）一起发送。
+- 通常更方便的发送图片的方式不是单独发送，而是将其作为表单的一部分，并带有附加字段（例如 `name` 和其他 `metadata`）一起发送。
 
 ### 03 - 下载进度
 
@@ -5925,8 +5934,8 @@ while(true) {
 }
 ```
 
-- 要将进度打印出来，只需要将每个接收到的片段 `value` 的长度（length）加到 `counter` 即可。
-- 流读取器（stream reader）`response.body.getReader()`
+- 要将进度打印出来，只需要将每个接收到的片段 `value` 的长度（`length`）加到 `counter` 即可。
+- 流读取器（`stream reader`）`response.body.getReader()`
 
 ### 04 - 中止
 
@@ -5950,7 +5959,7 @@ try {
     signal: controller.signal
   });
 } catch(err) {
-  if (err.name == 'AbortError') { // handle abort()
+  if (err.name == 'AbortError') {  // handle abort()
     alert("Aborted!");
   } else {
     throw err;
@@ -5981,10 +5990,10 @@ try {
 | Step 3 | 实际请求（actual request） |
 | Step 4 | 实际响应（actual response） |
 
-- 如果一个请求是跨源的，浏览器始终会向其添加 `Origin header`，`Origin` 包含了确切的源（domain/protocol/port），没有路径（path），服务器可以检查 `Origin`，如果同意接受这样的请求，就会在响应中添加一个特殊的 `header Access-Control-Allow-Origin`，该 `header` 包含了允许的源，或者一个星号 ，然后响应成功，否则报错。
-- 对于跨源请求，默认情况下，JavaScript 只能访问“安全的” response header：`Cache-Control`、`Content-Language`、`Content-Type`、`Expires`、`Last-Modified`、`Pragma`
+- 如果一个请求是跨源的，浏览器始终会向其添加 `Origin header`，`Origin` 包含了确切的源（`domain/protocol/port`），没有路径（path），服务器可以检查 `Origin`，如果同意接受这样的请求，就会在响应中添加一个特殊的 `header Access-Control-Allow-Origin`，该 `header` 包含了允许的源，或者一个星号 ，然后响应成功，否则报错。
+- 对于跨源请求，默认情况下，JavaScript 只能访问“安全的” `response header`：`Cache-Control`、`Content-Language`、`Content-Type`、`Expires`、`Last-Modified`、`Pragma`
 - 要授予 JavaScript 对任何其他 `response header` 的访问权限，服务器必须发送 `Access-Control-Expose-Headers header`。它包含一个以逗号分隔的应该被设置为可访问的非安全 `header` 名称列表。
-- 默认情况下，由 JavaScript 代码发起的跨源请求不会带来任何凭据（cookies 或者 HTTP 认证（HTTP authentication））
+- 默认情况下，由 JavaScript 代码发起的跨源请求不会带来任何凭据（`cookies` 或者 HTTP 认证（HTTP authentication））
 - 要在 `fetch` 中发送凭据，需要添加 `credentials: "include"` 选项：
 
 ```javascript
@@ -5999,24 +6008,24 @@ fetch('http://another.com', {
 
 ```javascript
 let promise = fetch(url, {
-  method: "GET", // POST，PUT，DELETE，等。
+  method: "GET",  // POST，PUT，DELETE，等。
   headers: {
     // 内容类型 header 值通常是自动设置的
     // 取决于 request body
     "Content-Type": "text/plain;charset=UTF-8"
   },
-  body: undefined // string，FormData，Blob，BufferSource，或 URLSearchParams
-  referrer: "about:client", // 或 "" 以不发送 Referer header，
+  body: undefined  // string，FormData，Blob，BufferSource，或 URLSearchParams
+  referrer: "about:client",  // 或 "" 以不发送 Referer header，
   // 或者是当前源的 url
-  referrerPolicy: "no-referrer-when-downgrade", // no-referrer，origin，same-origin...
-  mode: "cors", // same-origin，no-cors
-  credentials: "same-origin", // omit，include
-  cache: "default", // no-store，reload，no-cache，force-cache，或 only-if-cached
-  redirect: "follow", // manual，error
-  integrity: "", // 一个 hash，像 "sha256-abcdef1234567890"
-  keepalive: false, // true
-  signal: undefined, // AbortController 来中止请求
-  window: window // null
+  referrerPolicy: "no-referrer-when-downgrade",  // no-referrer，origin，same-origin...
+  mode: "cors",  // same-origin，no-cors
+  credentials: "same-origin",  // omit，include
+  cache: "default",  // no-store，reload，no-cache，force-cache，或 only-if-cached
+  redirect: "follow",  // manual，error
+  integrity: "",  // 一个 hash，像 "sha256-abcdef1234567890"
+  keepalive: false,  // true
+  signal: undefined,  // AbortController 来中止请求
+  window: window  // null
 });
 ```
 
@@ -6067,22 +6076,22 @@ alert(url.pathname); // /url
 ```javascript
 let url = new URL('https://google.com/search');
 
-url.searchParams.set('q', 'test me!'); // 添加带有一个空格和一个 ! 的参数
+url.searchParams.set('q', 'test me!');  // 添加带有一个空格和一个 ! 的参数
 
-alert(url); // https://google.com/search?q=test+me%21
+alert(url);  // https://google.com/search?q=test+me%21
 
-url.searchParams.set('tbs', 'qdr:y'); // 添加带有一个冒号 : 的参数
+url.searchParams.set('tbs', 'qdr:y');  // 添加带有一个冒号 : 的参数
 
 // 参数会被自动编码
-alert(url); // https://google.com/search?q=test+me%21&tbs=qdr%3Ay
+alert(url);  // https://google.com/search?q=test+me%21&tbs=qdr%3Ay
 
 // 遍历搜索参数（被解码）
 for(let [name, value] of url.searchParams) {
-  alert(`${name}=${value}`); // q=test me!，然后是 tbs=qdr:y
+  alert(`${name}=${value}`);  // q=test me!，然后是 tbs=qdr:y
 }
 ```
 
-- 用于编码/解码 URL 的内建函数：
+- 用于编码/解码 `URL` 的内建函数：
 
 | 方法 | 描述 |
 | --- | --- |
@@ -6095,7 +6104,7 @@ for(let [name, value] of url.searchParams) {
 
 ### 08 - 长轮询
 
-- 长轮询是与服务器保持持久连接的最简单的方式，它不使用任何特定的协议，例如 WebSocket 或者 Server Sent Event
+- 长轮询是与服务器保持持久连接的最简单的方式，它不使用任何特定的协议，例如 `WebSocket` 或者 `Server Sent Event`
 - 从服务器获取新信息的最简单的方式是定期轮询。
 - 长轮询的流程：
 	- 请求发送到服务器。
@@ -6135,14 +6144,14 @@ subscribe();
 
 ### 09 - WebSocket
 
-- WebSocket 协议，提供了一种在浏览器和服务器之间建立持久连接来交换数据的方法。数据可以作为“数据包”在两个方向上传递，而无需中段连接也无需额外的 HTTP 请求，WebSocket 没有跨源限制。
+- `WebSocket` 协议，提供了一种在浏览器和服务器之间建立持久连接来交换数据的方法。数据可以作为“数据包”在两个方向上传递，而无需中段连接也无需额外的 HTTP 请求，`WebSocket` 没有跨源限制。
 
 ```javascript
 let socket = new WebSocket("ws://javascript.info");
 ```
 
-- 同样也有一个加密的 `wss://` 协议。类似于 WebSocket 中的 `HTTPS`，`wss://` 协议不仅是被加密的，而且更可靠。因为 `ws://` 数据不是加密的，对于任何中间人来说其数据都是可见的，并且，旧的代理服务器不了解 WebSocket，它们可能会因为看到“奇怪的” `header` 而中止连接。另一方面，`wss://` 是基于 TLS 的 WebSocket，类似于 `HTTPS` 是基于 TLS 的 HTTP，传输安全层在发送方对数据进行了加密，在接收方进行解密。因此，数据包是通过代理加密传输的。它们看不到传输的里面的内容，且会让这些数据通过。
-- 一旦 socket 被建立，就应该监听 socket 上的事件。一共有 4 个事件：
+- 同样也有一个加密的 `wss://` 协议。类似于 `WebSocket` 中的 HTTPS，`wss://` 协议不仅是被加密的，而且更可靠。因为 `ws://` 数据不是加密的，对于任何中间人来说其数据都是可见的，并且，旧的代理服务器不了解 `WebSocket`，它们可能会因为看到“奇怪的” `header` 而中止连接。另一方面，`wss://` 是基于 TLS 的 `WebSocket`，类似于 HTTPS 是基于 TLS 的 HTTP，传输安全层在发送方对数据进行了加密，在接收方进行解密。因此，数据包是通过代理加密传输的。它们看不到传输的里面的内容，且会让这些数据通过。
+- 一旦 `socket` 被建立，就应该监听 `socket` 上的事件。一共有 4 个事件：
 
 | 事件 | 描述 |
 | --- | --- |
@@ -6152,8 +6161,8 @@ let socket = new WebSocket("ws://javascript.info");
 | close | 连接已关闭 |
 
 - 发送一些东西，使用 `socket.send(data)`
-- 如果服务器同意切换为 WebSocket 协议，服务器应该返回响应码 101
-- WebSocket 可能还有其他 header，它们（“The WebSocket Application Messaging Protocol”）
+- 如果服务器同意切换为 `WebSocket` 协议，服务器应该返回响应码 101
+- `WebSocket` 可能还有其他 `header`，它们（“The WebSocket Application Messaging Protocol”）
 
 | header | 描述 |
 | --- | --- |
@@ -6162,13 +6171,13 @@ let socket = new WebSocket("ws://javascript.info");
 | Sec-WebSocket-Extensions header | 由浏览器自动发送，其中包含其支持的所有扩展的列表 |
 | Sec-WebSocket-Protocol: soap, wamp | 表示不仅要传输任何数据，还要传输 SOAP 或 WAMP 协议中的数据，WebSocket 子协议已经在 IANA catalogue 中注册，因此，此 header 描述了将要使用的数据格式 |
 
-- 扩展与传输数据有关，扩展了 WebSocket 协议的功能。
+- 扩展与传输数据有关，扩展了 `WebSocket` 协议的功能。
 
 ```javascript
 let socket = new WebSocket("wss://javascript.info/chat", ["soap", "wamp"]);
 ```
 
-- WebSocket 通信由 `frames`（即数据片段）组成，可以从任何一方发送，并且有以下几种类型： —— 。“ —— 。。还有 “connection close frame” 以及其他服务 frames。在浏览器里，仅直接使用文本或二进制 frames。
+- `WebSocket` 通信由 `frames`（即数据片段）组成，可以从任何一方发送。在浏览器里，仅直接使用文本或二进制 `frames`。
 
 | 类型 | 描述 |
 | --- | --- |
@@ -6176,8 +6185,8 @@ let socket = new WebSocket("wss://javascript.info/chat", ["soap", "wamp"]);
 | “binary data frames” | 包含各方发送给彼此的二进制数据 |
 | “ping/pong frames” | 被用于检查从服务器发送的连接，浏览器会自动响应它们 |
 
-- `WebSocket .send()` 方法可以发送文本或二进制数据。`socket.send(body)` 调用允许 body 是字符串或二进制格式，包括 Blob，ArrayBuffer 等。
-- 当收到数据时，文本总是以字符串形式呈现。而对于二进制数据，可以在 Blob 和 ArrayBuffer 格式之间进行选择，它是由 `socket.binaryType` 属性设置的，默认为 "blob"，因此二进制数据通常以 Blob 对象呈现。
+- `WebSocket .send()` 方法可以发送文本或二进制数据。`socket.send(body)` 调用允许 body 是字符串或二进制格式，包括 `Blob`，`ArrayBuffer` 等。
+- 当收到数据时，文本总是以字符串形式呈现。而对于二进制数据，可以在 `Blob` 和 `ArrayBuffer` 格式之间进行选择，它是由 `socket.binaryType` 属性设置的，默认为 "`blob`"，因此二进制数据通常以 `Blob` 对象呈现。
 - `socket.bufferedAmount` 属性储存了目前已缓冲的字节数，等待通过网络发送。
 
 ```javascript
@@ -6196,7 +6205,7 @@ setInterval(() => {
 socket.close([code], [reason]);
 ```
 
-- `code` 是一个特殊的 WebSocket 关闭码（可选），reason 是一个描述关闭原因的字符串（可选）
+- `code` 是一个特殊的 `WebSocket` 关闭码（可选），`reason` 是一个描述关闭原因的字符串（可选）
 
 ```javascript
 // 关闭方：
@@ -6221,9 +6230,9 @@ socket.onclose = event => {
 
 ### 10 - Server Sent Events
 
-- Server-Sent Events 规范描述了一个内建的类 EventSource，它能保持与服务器的连接，并允许从中接收事件。与 WebSocket 类似，其连接是持久的。
+- `Server-Sent Events` 规范描述了一个内建的类 `EventSource`，它能保持与服务器的连接，并允许从中接收事件。与 `WebSocket` 类似，其连接是持久的。
 
-- 要开始接收消息，只需要创建 `new EventSource(url)` 即可。浏览器将会连接到 `url` 并保持连接打开，等待事件。服务器响应状态码应该为 200，`header` 为 `Content-Type: text/event-stream`，然后保持此连接并以一种特殊的格式写入消息。
+- 要开始接收消息，只需要创建 `new EventSource(url)` 即可。浏览器将会连接到 url 并保持连接打开，等待事件。服务器响应状态码应该为 200，header 为 `Content-Type: text/event-stream`，然后保持此连接并以一种特殊的格式写入消息。
 
 ```javascript
 let eventSource = new EventSource("/events/subscribe");
@@ -6236,10 +6245,10 @@ eventSource.onmessage = function(event) {
 // 或 eventSource.addEventListener('message', ...)
 ```
 
-- EventSource 支持跨源请求，就像 `fetch` 和任何其他网络方法。
-- 如果服务器想要浏览器停止重新连接，那么它应该使用 HTTP 状态码 204 进行响应。如果浏览器想要关闭连接，则应该调用 `eventSource.close()`。当连接最终被关闭时，就无法“重新打开”它。如果想要再次连接，只需要创建一个新的EventSource。
-- EventSource 对象有 `readyState` 属性，该属性具有下列值之一：
-  默认情况下 EventSource 对象生成三个事件：`message`，收到消息，可以用 `event.data` 访问。`open`，连接已打开。`error`，无法建立连接，例如，服务器返回 HTTP 500 状态码。
+- `EventSource` 支持跨源请求，就像 `fetch` 和任何其他网络方法。
+- 如果服务器想要浏览器停止重新连接，那么它应该使用 HTTP 状态码 204 进行响应。如果浏览器想要关闭连接，则应该调用 `eventSource.close()`。当连接最终被关闭时，就无法“重新打开”它。如果想要再次连接，只需要创建一个新的 `EventSource`
+- `EventSource` 对象有 `readyState` 属性，该属性具有下列值之一：
+  默认情况下 `EventSource` 对象生成三个事件：`message`，收到消息，可以用 `event.data` 访问。`open`，连接已打开。`error`，无法建立连接，例如，服务器返回 HTTP 500 状态码。
 
 | 属性值 | 描述 |
 | --- | --- |
@@ -6251,14 +6260,14 @@ eventSource.onmessage = function(event) {
 
 ### 11 - Cookie
 
-- Cookie 是直接存储在浏览器中的一小串数据。是 HTTP 协议的一部分，Cookie 通常是由 Web 服务器使用响应 Set-Cookie HTTP-header 设置的。然后浏览器使用 Cookie HTTP-header 将它们自动添加到（几乎）每个对相同域的请求中。
-- 最常见的用处之一就是身份验证：登录后，服务器在响应中使用 Set-Cookie HTTP-header 来设置具有唯一会话标识符（session identifier）的 cookie。下次当请求被发送到同一个域时，浏览器会使用 Cookie HTTP-header 通过网络发送 cookie。所以服务器知道是谁发起了请求。
-- 可以使用 `document.cookie` 属性从浏览器访问 cookie。`document.cookie` 的值由 name=value 对组成，以 ; 分隔。每一个都是独立的 cookie。
-- 可以写入 `document.cookie`。但这不是一个数据属性，它是一个 访问器（getter/setter）。对其的赋值操作会被特殊处理，对 `document.cookie` 的写入操作只会更新其中提到的 cookie，而不会涉及其他 cookie
+- `Cookie` 是直接存储在浏览器中的一小串数据。是 HTTP 协议的一部分，`Cookie` 通常是由 Web 服务器使用响应 `Set-Cookie HTTP-header` 设置的。然后浏览器使用 `Cookie HTTP-header` 将它们自动添加到（几乎）每个对相同域的请求中。
+- 最常见的用处之一就是身份验证：登录后，服务器在响应中使用 `Set-Cookie HTTP-header` 来设置具有唯一会话标识符（`session identifier`）的 `cookie`。下次当请求被发送到同一个域时，浏览器会使用 `Cookie HTTP-header` 通过网络发送 `cookie`。所以服务器知道是谁发起了请求。
+- 可以使用 `document.cookie` 属性从浏览器访问 `cookie`。`document.cookie` 的值由 `name=value` 对组成，以 `;` 分隔。每一个都是独立的 `cookie`。
+- 可以写入 `document.cookie`。但这不是一个数据属性，它是一个 访问器（`getter/setter`）。对其的赋值操作会被特殊处理，对 `document.cookie` 的写入操作只会更新其中提到的 `cookie`，而不会涉及其他 `cookie`
 
 ```javascript
-document.cookie = "user=John"; // 只会更新名称为 user 的 cookie
-alert(document.cookie); // 展示所有 cookie
+document.cookie = "user=John";  // 只会更新名称为 user 的 cookie
+alert(document.cookie);  // 展示所有 cookie
 ```
 
 - 为了保持有效的格式，它们应该使用内建的 `encodeURIComponent` 函数对其进行转义。
@@ -6271,10 +6280,10 @@ let value = "John Smith"
 // 将 cookie 编码为 my%20name=John%20Smith
 document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value);
 
-alert(document.cookie); // ...; my%20name=John%20Smith
+alert(document.cookie);  // ...; my%20name=John%20Smith
 ```
 
-- `encodeURIComponent` 编码后的 name=value 对，大小不能超过 4KB。因此不能在一个 cookie 中保存大的东西。每个域的 cookie 总数不得超过 20+ 左右，具体限制取决于浏览器。
+- `encodeURIComponent` 编码后的 `name=value` 对，大小不能超过 4KB。因此不能在一个 `cookie` 中保存大的东西。每个域的 `cookie` 总数不得超过 20+ 左右，具体限制取决于浏览器。
 
 ```javascript
 // 在 site.com
@@ -6287,7 +6296,7 @@ document.cookie = "user=John; domain=site.com"
 alert(document.cookie); // 有 cookie user=John
 ```
 
-- `expires`，`max-age`，默认情况下，如果一个 cookie 没有设置这两个参数中的任何一个，那么在关闭浏览器之后，它就会消失，此类 cookie 被称为 "session cookie”
+- `expires`，`max-age`，默认情况下，如果一个 `cookie` 没有设置这两个参数中的任何一个，那么在关闭浏览器之后，它就会消失，此类 `cookie` 被称为 "`session cookie`”
 
 ```javascript
 // 当前时间 +1 天
@@ -6296,7 +6305,7 @@ date = date.toUTCString();
 document.cookie = "user=John; expires=" + date;
 ```
 
-- 如果将 `expires` 设置为过去的时间，则 cookie 会被删除。
+- 如果将 `expires` 设置为过去的时间，则 `cookie` 会被删除。
 
 ```javascript
 // cookie 会在一小时后失效
@@ -6306,8 +6315,8 @@ document.cookie = "user=John; max-age=3600";
 document.cookie = "user=John; max-age=0";
 ```
 
-- 指明了 cookie 的过期时间距离当前时间的秒数，如果将其设置为 0 或负数，则 cookie 会被删除。
-- 默认情况下，如果在 `http://site.com` 上设置了 cookie，那么该 cookie 也会出现在 `https://site.com` 上，反之亦然。
+- 指明了 `cookie` 的过期时间距离当前时间的秒数，如果将其设置为 0 或负数，则 `cookie` 会被删除。
+- 默认情况下，如果在 `http://site.com` 上设置了 `cookie`，那么该 `cookie` 也会出现在 `https://site.com` 上，反之亦然。
 
 ```javascript
 // 假设现在在 HTTPS 环境下
@@ -6315,9 +6324,9 @@ document.cookie = "user=John; max-age=0";
 document.cookie = "user=John; secure";
 ```
 
-- `samesite`，旨在防止 XSRF（跨网站请求伪造）攻击。Cookie 的 samesite 选项提供了另一种防止此类攻击的方式，（理论上）不需要要求 “XSRF 保护 token”
-- `samesite=strict`（和没有值的 samesite 一样)，如果用户来自同一网站之外，那么设置了 `samesite=strict` 的 cookie 永远不会被发送。`samesite=lax`，宽松（lax）模式，和 strict 模式类似，当从外部来到网站，则禁止浏览器发送 cookie，但是增加了一个例外，如果以下两个条件均成立，则会发送含 `samesite=lax` 的 cookie，一是HTTP 方法是“安全的”（例如 GET 方法，而不是 POST），二是该操作执行顶级导航（更改浏览器地址栏中的 URL）。
-- Web 服务器使用 `Set-Cookie header` 来设置 cookie。并且，它可以设置 `httpOnly` 选项，这个选项禁止任何 JavaScript 访问 cookie。使用 `document.cookie` 看不到此类 cookie，也无法对此类 cookie 进行操作。
+- `samesite`，旨在防止 XSRF（跨网站请求伪造）攻击。`Cookie` 的 `samesite` 选项提供了另一种防止此类攻击的方式，（理论上）不需要要求 “XSRF 保护 token”
+- `samesite=strict`（和没有值的 `samesite` 一样)，如果用户来自同一网站之外，那么设置了 `samesite=strict` 的 `cookie` 永远不会被发送。`samesite=lax`，宽松（lax）模式，和 `strict` 模式类似，当从外部来到网站，则禁止浏览器发送 `cookie`，但是增加了一个例外，如果以下两个条件均成立，则会发送含 `samesite=lax` 的 `cookie`，一是HTTP 方法是“安全的”（例如 GET 方法，而不是 POST），二是该操作执行顶级导航（更改浏览器地址栏中的 URL）。
+- Web 服务器使用 `Set-Cookie header` 来设置 `cookie`。并且，它可以设置 `httpOnly` 选项，这个选项禁止任何 JavaScript 访问 `cookie`。使用 `document.cookie` 看不到此类 `cookie`，也无法对此类 `cookie` 进行操作。
 
 | 方法 | 描述 |
 | --- | --- |
@@ -6329,11 +6338,11 @@ document.cookie = "user=John; secure";
 
 ### 01 - 基础语法
 
-- `$(selector).action()`，美元符号($)定义 jQuery，选择符（selector）“查询”和“查找” HTML 元素，jQuery 的 action() 执行对元素的操作。
+- `$(selector).action()`，美元符号($)定义 jQuery，选择符（selector）“查询”和“查找” HTML 元素，jQuery 的 `action()` 执行对元素的操作。
 
 ### 02 - 选择器
 
-- jQuery 元素选择器和属性选择器允许通过标签名、属性名或内容对 HTML 元素进行选择，选择器允许对 HTML 元素组或单个元素进行操作，使用 CSS 选择器来选取 HTML 元素，使用 XPath 表达式来选择带有给定属性的元素：`$("p#demo")`选取所有 id="demo" 的元素`$("[href$='.jpg']")` 选取所有 href 值以 ".jpg" 结尾的元素
+- jQuery 元素选择器和属性选择器允许通过标签名、属性名或内容对 HTML 元素进行选择，选择器允许对 HTML 元素组或单个元素进行操作，使用 CSS 选择器来选取 HTML 元素，使用 XPath 表达式来选择带有给定属性的元素：`$("p#demo")`选取所有 `id="demo"` 的元素`$("[href$='.jpg']")` 选取所有 `href` 值以 ".jpg" 结尾的元素
 - jQuery CSS 选择器可用于改变 HTML 元素的 CSS 属性，`$("p").css("background-color","red");`
 
 ### 03 - 事件
@@ -6381,7 +6390,7 @@ document.cookie = "user=John; secure";
 | .val() | 设置或返回表单字段的值 |
 | .attr() | 设置或返回属性值 |
 
-text()、html() 以及 val()，拥有回调函数，回调函数由两个参数：被选元素列表中当前元素的下标，以及原始（旧的）值
+`text()`、`html()` 以及 `val()`，拥有回调函数，回调函数由两个参数：被选元素列表中当前元素的下标，以及原始（旧的）值。
 
 - 添加
 
@@ -6400,7 +6409,7 @@ text()、html() 以及 val()，拥有回调函数，回调函数由两个参数�
 | .empty() | 从被选元素中删除子元素 |
 | remove() | 方法也可接受一个参数，允许对被删元素进行过滤 |
 
-- 获取并设置CSS类
+- 获取并设置 CSS 类
 
 | 方法 | 描述 |
 | --- | --- |
@@ -6447,7 +6456,7 @@ text()、html() 以及 val()，拥有回调函数，回调函数由两个参数�
 | $.get(URL,callback); | 通过 HTTP GET 请求从服务器上请求数据 |
 | $.post(URL,data,callback); | 通过 HTTP POST 请求从服务器上请求数据 |
 
-- 回调函数可以设置不同的参数：_responseTxt_ - 包含调用成功时的结果内容；_statusTXT_ - 包含调用的状态；_xhr_ - 包含 XMLHttpRequest 对象。
+- 回调函数可以设置不同的参数：`_responseTxt_` - 包含调用成功时的结果内容；`_statusTXT_` - 包含调用的状态；`_xhr_` - 包含 `XMLHttpRequest` 对象。
 
 ```javascript
 // GET
@@ -6492,7 +6501,11 @@ $('button').eq(2).click(function() {
 
 ## 柒 - Canvas
 
+待更新...
+
 ## 捌 - Echarts
+
+待更新...
 
 <style>
 table {
