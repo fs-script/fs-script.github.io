@@ -33,7 +33,6 @@ next:
 <Badge text="📋 题库" />
 
 ::: tip
-
 [力扣](https://leetcode.cn/problemset/all/)
 
 [牛客](https://www.nowcoder.com/exam/company)
@@ -41,5 +40,4 @@ next:
 [前端 - 1](https://fe.ecool.fun/topic-list)
 
 [前端 - 2](http://www.h-camel.com/index.html)
-
 :::

@@ -12,16 +12,14 @@ next:
   link: /a-note/c-javascript.md
 ---
 
-> CSS (Cascading Stylesheet) 称为层叠样式表，让浏览器以指定的特性去绘制页面元素，由属性和值组成，声明按照块的形式被组合。
-
 ## 壹 - 基本语法
 
 **在简写属性中设置多个值时的情况：**
 
-- 一个值：用于四边
-- 两个值：上下、左右
-- 三个值：上、左右、下
-- 四个值：上、右、下、左
+- 一个值：用于四边。
+- 两个值：上下、左右。
+- 三个值：上、左右、下。
+- 四个值：上、右、下、左。
 
 ### 01 - 优先级
 
@@ -34,10 +32,10 @@ next:
 
 **其他优先级：**
 
-- ID选择器（高）
-- 类选择器（中）
-- 类型选择器与伪元素（低）
-- !important 将覆盖任何其他声明（不建议使用）
+- ID 选择器 (高)
+- 类选择器 (中)
+- 类型选择器与伪元素 (低)
+- `!important` 将覆盖任何其他声明 (不建议使用)
 
 ### 02 - 规则
 
@@ -72,8 +70,8 @@ next:
 
 | 名称 | 描述 |
 | --- | --- |
-| RGBA | rgba(red, green, blue, alpha)     红、绿、蓝、透明度 |
-| HSLA | hsla(hue, saturation, lightness, alpha)    色相、饱和度、明度、透明度 |
+| RGBA | rgba(red, green, blue, alpha) 红、绿、蓝、透明度 |
+| HSLA | hsla(hue, saturation, lightness, alpha) 色相、饱和度、明度、透明度 |
 | HEX | #rrggbb |
 
 ### 05 - 布局
@@ -81,19 +79,19 @@ next:
 - **块级格式化上下文 BFC**
 
   创建块格式化上下文：<br/>
-  根元素、浮动元素、绝对定位元素（absolute、fixed）、行内块元素、表格单元格、表格标题、匿名表格单元格元素、overflow值不为visible、clip的块元素、display值为flow-root的元素、contain值为layout、content、paint的元素、弹性元素、网格元素、多列容器。
+  根元素、浮动元素、绝对定位元素 (`absolute`、`fixed`)、行内块元素、表格单元格、表格标题、匿名表格单元格元素、`overflow` 值不为`visible`、`clip` 的块元素、`display` 值为 `flow-root` 的元素、`contain` 值为 `layout`、`content`、`paint` 的元素、弹性元素、网格元素、多列容器。
 
 - **盒模型**
 
-  所有元素表示为一个个矩形的盒子，CSS决定这些盒子的大小、位置、属性，盒子由四部分组成：<br/>
-  内容边界、内边距边界、边框边界、外边框边界。除可替换元素外，行内元素周围有内边距和边框，但是占用的空间则是由line-height属性决定的。
+  所有元素表示为一个个矩形的盒子，CSS 决定这些盒子的大小、位置、属性，盒子由四部分组成：<br/>
+  内容边界、内边距边界、边框边界、外边框边界。除可替换元素外，行内元素周围有内边距和边框，但是占用的空间则是由 `line-height` 属性决定的。
 
 - **包含块**
 
-	元素的尺寸和位置经常受到包含块的影响，包含块通常指的是最近的祖先块元素的内容区，一些属性设置的百分比是包含块计算而来的。确定一个包含块依赖于这个元素的 position 属性：<br/>
-  ① 属性为 static、relative、sticky ，包含块由它最近的祖先块元素的内容区边缘决定；<br/>
-  ② 属性为 absolute ，包含块是最近的值不是 static 的祖先元素的内边距的边缘决定；<br/>
-  ③ 属性为 fixed ，包含块是viewport。
+	元素的尺寸和位置经常受到包含块的影响，包含块通常指的是最近的祖先块元素的内容区，一些属性设置的百分比是包含块计算而来的。确定一个包含块依赖于这个元素的 `position` 属性：<br/>
+  ① 属性为 `static`、`relative`、`sticky`，包含块由它最近的祖先块元素的内容区边缘决定；<br/>
+  ② 属性为 `absolute`，包含块是最近的值不是 `static` 的祖先元素的内边距的边缘决定；<br/>
+  ③ 属性为 `fixed`，包含块是 `viewport`。
 
 - **布局模式**
 
@@ -102,15 +100,16 @@ next:
 - **外边距合并**
 
 	块的上下边距有时合并为单个边距，大小为边距最大的一方，这种行为称为边距折叠。解决方法：<br/>
-  ① 同一层相邻元素之间，可以通过最后一个元素添加 clear-fix 清除浮动来解决；<br/>
+  ① 同一层相邻元素之间，可以通过最后一个元素添加 `clear-fix` 清除浮动来解决；<br/>
   ② 父元素与后代元素之间，设置边框或内边距来解决。<br/>
   此现象发生在块级元素中，当设置了浮动、相对或绝对定位之后不会发生外边距合并。
 
 - **替换元素**
 
-	替换元素的展现效果不是CSS控制的，是一种外部对象，CSS只影响它的大小和位置而不能影响内容。iframe、video、embed、img，特定情况下可替代：option、audio、canvas、object
+	替换元素的展现效果不是 CSS 控制的，是一种外部对象，CSS 只影响它的大小和位置而不能影响内容。`iframe`、`video`、`embed`、`img`，特定情况下可替代：`option`、`audio`、`canvas`、`object`
 
 -  **层叠上下文**
+
 -  **视觉格式化模型**
 
 ### 06 - 选择器
@@ -195,7 +194,7 @@ next:
 | outline： |  |  |
 | outline-style | 同border-style | 轮廓样式 |
 | outline-width | px | 轮廓宽度 |
-| outline-offset | px | 轮廓偏移（间隙） |
+| outline-offset | px | 轮廓偏移 (间隙) |
 | outline-color | rgba/hsla/hex | 轮廓颜色 |
 
 ### 12 - 文本
@@ -210,7 +209,7 @@ next:
 | text-shadow | X轴、Y轴、模糊、颜色 | 文本阴影 |
 | text-overflow | clip、ellipsis | 文本溢出处理 |
 | line-height | px | 行高 |
-| direction | ltr、rtl | 文本方向（正、反） |
+| direction | ltr、rtl | 文本方向 (正、反) |
 | vertical-align | top、middle、bottom | 文本垂直对齐 |
 | word-spacing | px | 字间距 |
 | letter-spacing | px | 字母间距 |
@@ -266,9 +265,9 @@ next:
 | --- | --- | --- |
 | position | static | 默认静态，根据正常文档流定位 |
 |  | relative | 相对定位，相对于正常位置，会占据原来的位置 |
-|  | absolute | 绝对定位，相对于最近定位的祖先元素，不再占据原来的位置（移除文档流） |
-|  | fixed | 相对于视口定位（绝对定位）（移除文档流） |
-|  | sticky | 粘性定位，根据用户的滚动位置定位，在relative 和 fixed 之间切换 |
+|  | absolute | 绝对定位，相对于最近定位的祖先元素，不再占据原来的位置 (移除文档流) |
+|  | fixed | 相对于视口定位(绝对定位) (移除文档流) |
+|  | sticky | 粘性定位，根据用户的滚动位置定位，在 relative 和 fixed 之间切换 |
 | top | px |  |
 | bottom | px |  |
 | right | px |  |
@@ -289,7 +288,7 @@ next:
 
 | 属性 | 值 | 描述 |
 | --- | --- | --- |
-| float（移除文档流） | none | 无浮动 |
+| float (移除文档流) | none | 无浮动 |
 |  | left | 左浮动 |
 |  | right | 右浮动 |
 |  | inline-start | 容器开始一侧 |
@@ -298,7 +297,7 @@ next:
 |  | right | 清除右侧浮动 |
 |  | both | 清除两侧浮动 |
 
-**知识点：因浮动溢出容器之外时**
+**因浮动溢出容器之外时：**
 
 ```javascript
 ::after {
@@ -314,36 +313,36 @@ next:
 | --- | --- |
 | :link | 匹配未访问的链接 |
 | :visited | 匹配已访问的链接 |
-| :active | 匹配激活的元素（鼠标点下未松开时） |
-| :any-link | 匹配所有href属性 |
-| :checked | 匹配选中状态的radio、checkbox、option |
+| :active | 匹配激活的元素 (鼠标点下未松开时) |
+| :any-link | 匹配所有 href 属性 |
+| :checked | 匹配选中状态的 radio、checkbox、option |
 | :disabled | 匹配任何被禁用的元素 |
 | :enabled | 匹配任何启用的元素 |
-| :focus | 匹配获得焦点的元素 tab键 |
-| :in-rang | 匹配在指定范围的input元素 |
-| :out-of-child | 匹配在范围外的input元素 |
-| :valid | 匹配内容验证正确的input元素 |
-| :invalid | 匹配未通过验证的input元素 |
+| :focus | 匹配获得焦点的元素 tab 键 |
+| :in-rang | 匹配在指定范围的 input 元素 |
+| :out-of-child | 匹配在范围外的 input 元素 |
+| :valid | 匹配内容验证正确的 input 元素 |
+| :invalid | 匹配未通过验证的 input 元素 |
 | :hover | 鼠标悬停 |
 | :first-child | 匹配第一个子元素 |
 | :last-child | 匹配最后一个子元素 |
-| :nth-child(n) | 匹配第n个兄弟元素 |
-| :nth-last-child(n) | 匹配倒序第n个兄弟元素 |
+| :nth-child(n) | 匹配第 n 个兄弟元素 |
+| :nth-last-child(n) | 匹配倒序第 n 个兄弟元素 |
 | :first-of-type | 匹配兄弟元素中第一个此类型的元素 |
 | :last-of-type | 匹配兄弟元素中最后一个此类型的元素 |
-| :nth-of-type(n) | 匹配第n个相同类型的兄弟元素 |
-| :nth-last-of-type(n) | 匹配倒序第n个相同类型的兄弟元素 |
+| :nth-of-type(n) | 匹配第 n 个相同类型的兄弟元素 |
+| :nth-last-of-type(n) | 匹配倒序第 n 个相同类型的兄弟元素 |
 | :only-child | 匹配没有任何兄弟元素的元素 |
 | :only-of-type | 匹配没有其他元素类型的兄弟元素 |
 | :lang(en) | 匹配特定语言 |
-| :required | 匹配带required属性的元素 |
-| :optional | 匹配不带required属性的元素 |
-| :read-only | 匹配带readonly属性的元素 |
-| :read-write | 匹配不带readonly属性的元素 |
-| :root | 匹配元素的根元素html |
+| :required | 匹配带 required 属性的元素 |
+| :optional | 匹配不带 required 属性的元素 |
+| :read-only | 匹配带 readonly 属性的元素 |
+| :read-write | 匹配不带 readonly 属性的元素 |
+| :root | 匹配元素的根元素 html |
 | :empty | 匹配没有子元素的元素 |
 | :fullscreen | 匹配处于全屏显示的元素 |
-| :#news:target | 选择当前活动为news的元素 |
+| :#news:target | 选择当前活动为 news 的元素 |
 | :not() | 反选 |
 
 ### 20 - 伪元素
@@ -354,7 +353,7 @@ next:
 | ::first-letter | 块级元素首字母 |
 | ::before | 创建伪元素，作为选中元素的第一个子元素，默认为行内元素 |
 | ::after | 创建伪元素，作为选中元素的最后一个子元素，默认行内元素 |
-| content | 为元素添加装饰内容 |
+| > content | 为元素添加装饰内容 |
 | ::selection | 用户选择部分 |
 
 ### 21 - 阴影
@@ -410,7 +409,7 @@ next:
 |  | 0%{} 25%{} 50%{} 100%{} |  |
 | animation： |  | 指定一组或多组动画 |
 | animation-name | 动画名 | 绑定动画 |
-| animation-duration | s、ms | 动画周期（必） |
+| animation-duration | s、ms | 动画周期 (必) |
 | animation-delay | s、ms | 动画延迟时间 |
 | animation-iteration-count | number | 运行次数，infinite 无限次 |
 | animation-direction | reverse、alternate、alternate-reverse | 反向、交替执行、反向交替 |
@@ -544,9 +543,9 @@ next:
 
 ## 贰 - 精灵图
 
-- **什么是精灵图 ？**
+- **简介：**
 
-  精灵图就是图片拼合技术，把多张图标小图合成一张大图，通过 CSS 中的`background-position`定位图标位置来显示对应图（原点在图的左上角，X轴的右边是正值，左边是负值，Y轴同X轴），优势是减少图的请求次数。
+  精灵图就是图片拼合技术，把多张图标小图合成一张大图，通过 CSS 中的 `background-position` 定位图标位置来显示对应图 (原点在图的左上角，X轴的右边是正值，左边是负值，Y轴同X轴)，优势是减少图的请求次数。
 
 ## 叁 - Less
 
@@ -632,7 +631,7 @@ next:
 ## 肆 - Sass
 
 - Node 环境中使用：
-  - `npm install -g sass`
+  - 安装：`npm install -g sass`
 
 ```scss
 📂 .scss
