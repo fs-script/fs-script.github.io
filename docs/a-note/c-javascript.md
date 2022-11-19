@@ -173,23 +173,23 @@ let result = condition ? value1 : value2;
 ```javascript
 // ---------
 if (...) {
-    ...;
+  ...;
 }
 
 // ----------
 if (...) {
-    ...;
+  ...;
 } else {
-    ...;
+  ...;
 }
 
 // ---------
 if (...) {
-    ...;
+  ...;
 } else if (...) {
-    ...;
+  ...;
 } else {
-    ...;
+  ...;
 }
 ```
 
@@ -199,14 +199,14 @@ if (...) {
 
 ```javascript
 switch (...) {
-    case n:
-    ...;
-    break;
-    case n:
-    ...;
-    break;
-    default:
-    ...;
+  case n:
+  ...;
+  break;
+  case n:
+  ...;
+  break;
+  default:
+  ...;
 }
 ```
 
@@ -217,12 +217,12 @@ switch (...) {
 ```javascript
 // ----------
 while (...) {
-    ...;
+  ...;
 }
 
 // ----------
 do {
-    ...;
+  ...;
 } while (...)
 ```
 
@@ -232,7 +232,7 @@ do {
 
 ```javascript
 for (let i = 0; i < 9; i++) {
-    ...;
+  ...;
 }
 ```
 
@@ -270,7 +270,7 @@ outer: for (let b = 1; b <= 9; b++) {
 
 ```javascript
 function funcName(parameter1, parameter2, ...) {
-    return ...;
+  return ...;
 }
 
 funcName();
@@ -280,7 +280,7 @@ funcName();
 
 ```javascript
 let x = function (parameter1, parameter2, ...) {
-    ...;
+  ...;
 };
 
 x();
@@ -325,8 +325,8 @@ let double = (n) => n * 2;
 double(8);
 
 let sayHi = (...) => {
-    ...;
-    return ...;
+  ...;
+  return ...;
 }
 ```
 
@@ -339,9 +339,9 @@ let sayHi = (...) => {
 
 ```javascript
 function hello(...) {
-    ...;
-    debugger; // 调试器会在此处暂停
-    ...;
+  ...;
+  debugger; // 调试器会在此处暂停
+  ...;
 }
 ```
 
@@ -455,13 +455,13 @@ for (let value of user1) {
 
 ```javascript
 function User(name) {
-    this.name = name;
-    this.isAdmin = false;
+  this.name = name;
+  this.isAdmin = false;
 
-    this.sayHi = function () {
-      console.log("Myname is " + this.name);
-    };
-  }
+  this.sayHi = function () {
+    console.log("Myname is " + this.name);
+  };
+}
 
 let user = new User("Jack");
 ```
