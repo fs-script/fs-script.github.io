@@ -14,9 +14,9 @@ next:
 
 ## 一、Vue2
 
-**使用：**
+### 01 - 使用
 
-- 使用 script 标签引入：
+- 使用 `script` 标签引入：
 
 ```javascript
 // 开发环境
@@ -26,12 +26,13 @@ next:
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10"></script>
 ```
 
-- 使用 npm 配合打包工具：
-
-```javascript
-// 最新稳定版
-npm install vue
-```
+- 使用 npm 配合打包工具：`npm install vue`
+- npm 标签及版本：
+  - `@latest`，默认标签，最近更新的
+  - `@next`，下一个大版本
+  - `@alpha`，内测版
+  - `@beta`，公测版
+  - `@rc`，候选版
 
 **指令：**
 
@@ -1195,27 +1196,18 @@ store.commit
 
 ## 七、Vue CLI
 
-**安装：**
+### 01 - 安装
 
 - `npm install -g @vue/cli`
 - `yarn add global @vue/cli`
 
-```javascript
-// 创建一个新的项目
-vue create 项目名
+### 02 - 创建项目
 
-// 启用图形化界面
-vue ui
-
-// 启动服务
-npm run serve
-
-// 安装插件
-vue add 插件名
-
-// 打包
-npm run build
-```
+- 创建一个新的项目：`vue create 项目名`
+- 启用图形化界面：`vue ui`
+- 启动服务：`npm run serve`
+- 安装插件：`vue add 插件名`
+- 打包程序：`npm run build`
 
 ## 八、Vite
 
