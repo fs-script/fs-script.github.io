@@ -12,7 +12,7 @@ next:
   link: /a-note/d-typescript.md
 ---
 
-## 壹 - ECMAScript
+## 一、ECMAScript
 
 > `script` 标签：如果设置了 `src` 属性，`script` 标签内容将会被忽略，可以设置多个 `script` 标签。
 
@@ -2412,7 +2412,7 @@ function curry(func) {
 - 安排一个新的宏任务：使用零延迟的 `setTimeout(f)`，它可被用于将繁重的计算任务拆分成多个部分，以使浏览器能够对用户事件作出反应，并在任务的各部分之间显示任务进度。此外，也被用于在事件处理程序中，将一个行为安排在事件被完全处理（冒泡完成）后。
 - 安排一个新的微任务：使用 `queueMicrotask(f)`，`promise` 处理程序也会通过微任务队列，在微任务之间没有 UI 或网络事件的处理。它们一个立即接一个地执行，所以可以使用 `queueMicrotask` 来在保持环境状态一致的情况下，异步地执行一个函数。
 
-## 贰 - DOM/BOM
+## 二、DOM/BOM
 
 ### 01 - DOM
 
@@ -4536,7 +4536,7 @@ inner.dispatchEvent(new CustomEvent('test', {
 </script>
 ```
 
-## 叁 - 正则表达式
+## 三、正则表达式
 
 - 正则表达式是搜索和替换字符串的一种强大方式，在 JavaScript 中，正则表达式通过内建的 `RegExp` 类的对象来实现，并与字符串集成。正则表达式（可叫作“`regexp`”或者“`reg`”）包含模式和可选的修饰符
 - 创建一个正则表达式对象有两种语法，较长一点的语法：`regexp = new RegExp("pattern", "flags");`较短一点的语法，使用斜杠 "`/`"：`regexp = /pattern/gmi;`
@@ -5019,7 +5019,7 @@ alert(result);  // HTML and CSS
 - `regexp.test(str)` 查找匹配项，然后返回 `true/false` 表示是否存在。如果正则表达式带有标记 `g`，则 `regexp.test` 从 `regexp.lastIndex` 属性中查找，并更新此属性，就像 `regexp.exec` 一样。
 - 如果在不同的源字符串上应用相同的全局表达式，可能会出现错误的结果，因为 `regexp.test` 的调用会增加 `regexp.lastIndex` 属性值，因此在另一个字符串中的搜索可能是从非 0 位置开始的。
 
-## 肆 - Ajax
+## 四、Ajax
 
 > Ajax (Asynchronous JavaScript And XML) 称为异步的 JS 和 XML，可以在浏览器中向服务器发送异步请求，最大优势是无刷新获取数据。
 
@@ -5470,7 +5470,7 @@ class Uploader {
 }
 ```
 
-## 伍 - Axios
+## 五、Axios
 
 > 基于 promise 的网络请求库
 
@@ -5760,7 +5760,7 @@ btn.addEventListener('click', function () {
 - Cross-Origin Resource Sharing 跨域资源共享，是官方的跨域解决方案。跨域资源共享标准新增了一组 HTTP 首部字段，允许服务器声明哪些站点可以访问哪些资源
 - [跨源资源共享（CORS） - HTTP | MDN (mozilla.org)](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS)
 
-## 陆 - Fetch
+## 六、Fetch
 
 ### 01 - 使用
 
@@ -6334,7 +6334,7 @@ document.cookie = "user=John; secure";
 | setCookie(name, value, options) | 将 cookie 的 name 设置为具有默认值 path=/（可以修改以添加其他默认值）和给定值 value |
 | deleteCookie(name) | 要删除一个 cookie，也可以给它设置一个负的过期时间来调用它 |
 
-## 陆 - jQuery
+## 七、jQuery
 
 ### 01 - 基础语法
 
@@ -6499,11 +6499,11 @@ $('button').eq(2).click(function() {
 })
 ```
 
-## 柒 - Canvas
+## 八、Canvas
 
 待更新...
 
-## 捌 - Echarts
+## 九、Echarts
 
 待更新...
 

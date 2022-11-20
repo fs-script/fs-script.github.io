@@ -14,8 +14,8 @@ next:
 
 ## Use
 
-npm 更换最新淘宝源：
-npm config set registry https://registry.npmmirror.com/ 
+- npm 更换最新淘宝源：
+  - `npm config set registry https://registry.npmmirror.com/`
 
-目录树生成 tree-node-cli
-treee -L 5 -I "node_modules|.vuepress|.git" > README.md
+- tree-node-cli 目录树生成：
+  - `treee -L 5 -I "node_modules|.vuepress|.git" > README.md`

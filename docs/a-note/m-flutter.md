@@ -8,8 +8,8 @@ prev:
   text: MicroFrontends
   link: /a-note/l-microFrontends.md
 next:
-  text: Rust
-  link: /a-note/n-rust.md
+  text: Electron
+  link: /a-note/n-electron.md
 ---
 
 ## Flutter

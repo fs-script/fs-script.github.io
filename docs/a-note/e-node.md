@@ -12,7 +12,7 @@ next:
   link: /a-note/f-vue.md
 ---
 
-## 壹 - Node
+## 一、Node
 
 ### 01 - nvm 的使用
 
@@ -140,7 +140,7 @@ server.listen(8080, function () {
 -  内置模块得加载优先级是最高的。
 -  加载自定义模块的时候需要添加 `./` 或 `../` 否则会被当做内置模块或者第三方模块。
 
-## 贰 - Express
+## 二、Express
 
 ### 01 - 使用
 
@@ -421,7 +421,7 @@ module.exports = router;
    - StatusCode：100、101、103、200...
 - 总结：通过语义化的方式请求资源 URL，并根据返回的语义来判断本次操作的返回类型和效果。
 
-## 叁 - Koa
+## 三、Koa
 
 ```javascript
 const Koa = require('koa')

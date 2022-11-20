@@ -12,7 +12,7 @@ next:
   link: /a-note/c-javascript.md
 ---
 
-## 壹 - 基本语法
+## 一、基本语法
 
 **在简写属性中设置多个值时的情况：**
 
@@ -541,13 +541,13 @@ next:
 | caret-color |  | 光标颜色 |
 | mask |  | 使用遮罩或裁切隐藏元素 |
 
-## 贰 - 精灵图
+## 二、精灵图
 
 - **简介：**
 
   精灵图就是图片拼合技术，把多张图标小图合成一张大图，通过 CSS 中的 `background-position` 定位图标位置来显示对应图 (原点在图的左上角，X轴的右边是正值，左边是负值，Y轴同X轴)，优势是减少图的请求次数。
 
-## 叁 - Less
+## 三、Less
 
 - Node 环境中使用：
   - 安装：`npm install -g less`
@@ -628,7 +628,7 @@ next:
 }
 ```
 
-## 肆 - Sass
+## 四、Sass
 
 - Node 环境中使用：
   - 安装：`npm install -g sass`
@@ -695,11 +695,11 @@ a {
 }
 ```
 
-## 伍 - Bootstrap
+## 五、Bootstrap
 
 待更新...
 
-## 陆 - TailwindCSS
+## 六、TailwindCSS
 
 待更新...
 

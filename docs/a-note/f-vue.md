@@ -12,7 +12,7 @@ next:
   link: /a-note/g-react.md
 ---
 
-## 壹 - Vue2
+## 一、Vue2
 
 **使用：**
 
@@ -700,7 +700,7 @@ new Vue({
 // 用户提供的内容需要过滤
 ```
 
-## 贰 - Vue3
+## 二、Vue3
 
 **使用：**
 - `npm init vue@latest`
@@ -923,7 +923,7 @@ const myPlugin = {
 <Suspense />
 ```
 
-## 叁 - 代码风格
+## 三、代码风格
 
 - 组件名使用多个单词，单词小写，单词间用 - 隔开。
 - 组件的 `data` 必须是一个返回对象的函数。
@@ -946,7 +946,7 @@ const myPlugin = {
 
 ![Mind](/images/mind.jpg)
 
-## 肆 - Vue Router
+## 四、Vue Router
 
 **安装：**
 
@@ -1132,7 +1132,7 @@ router.addRoute()\ router.removeRoute()
 
 - `router` 是路由实例对象，`route` 是当前正在跳转的路由对象。
 
-## 伍 - Vuex
+## 五、Vuex
 
 **安装：**
 
@@ -1191,9 +1191,9 @@ store.commit
 // 将 store 分割为模块
 ```
 
-## 陆 - Pinia
+## 六、Pinia
 
-## 柒 - Vue CLI
+## 七、Vue CLI
 
 **安装：**
 
@@ -1217,10 +1217,10 @@ vue add 插件名
 npm run build
 ```
 
-## 捌 - Vite
+## 八、Vite
 
-## 玖 - SSR
+## 九、SSR
 
-## 拾 - 国际化
+## 十、国际化
 
-## 拾壹 - 源码分析
+## 十一、源码分析

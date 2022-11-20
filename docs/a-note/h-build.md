@@ -12,23 +12,25 @@ next:
   link: /a-note/i-uniapp.md
 ---
 
-## 01 - Babel
-JS编译器，用于将采用 ECMAScript 2015+ 语法编写的代码转换为向后兼容的 JavaScript 语法：
+## 一、Babel
+
+> JS 编译器，用于将采用 ECMAScript 2015+ 语法编写的代码转换为向后兼容的 JavaScript 语法：
 
 - 语法转换；
 - 通过 Polyfill 方式在目标环境中添加缺失的特性；
-- 源码转换 codemods；
+- 源码转换 `codemods`；
 - 转换 React 中的 JSX 语法；
-1. 安装
-```javascript
-npm install --save-dev @babel/core @babel/cli @babel/preset-env
-```
 
-2. 配置：babel.config.json
+### 01 - 安装
+
+- `npm install --save-dev @babel/core @babel/cli @babel/preset-env`
+
+### 02 - 配置：babel.config.json
+
 ```json
 {
   // 预设
-  "presets": [ 
+  "presets": [
     [
       "@babel/preset-env",
       {
@@ -49,55 +51,57 @@ npm install --save-dev @babel/core @babel/cli @babel/preset-env
 }
 ```
 
-3. 编译
+### 03 - 编译
+
+- `npx babel src --out-dir lib`
+
+### 04 - 预设 Presets 和插件 Plugins
+
+- `npm install --save-dev @babel/plugin-transform-arrow-functions` 转换为ES5的官方插件
+- `npm install --save-dev @babel/preset-env` 预设，启用一组插件
+
+**官方提供的预设：**
+
+- `@babel/preset-env for compiling ES2015+ syntax`
+- `@babel/preset-typescript for TypeScript`
+- `@babel/preset-react for React`
+- `@babel/preset-flow for Flow`
+
+### 05 - Polyfill
+
 ```javascript
-npx babel src --out-dir lib
-```
-
-4. 预设 Presets 和插件 Plugins
-```javascript
-npm install --save-dev @babel/plugin-transform-arrow-functions 转换为ES5的官方插件
-
-npm install --save-dev @babel/preset-env 预设，启用一组插件
-
-官方提供的预设：
-@babel/preset-env for compiling ES2015+ syntax
-@babel/preset-typescript for TypeScript
-@babel/preset-react for React
-@babel/preset-flow for Flow
-```
-
-5. Polyfill
-```javascript
-建议使用：
+// 建议使用：
 import "core-js/stable";
 ```
-## 02 - **Browserify**
-JS 编译打包工具，使浏览器可以支持 CommodJS 模块化规范。
 
-1. 安装
-```javascript
-npm install -g browserify
-```
+## 二、Browserify
 
-2. 编译
-```javascript
-browserify main.js -o bundle.js
-```
-## 03 - Grunt
-自动化构建工具，支持大量插件。
+> JS 编译打包工具，使浏览器可以支持 CommodJS 模块化规范。
 
-1. 安装
-```javascript
-npm install -g grunt-cli
-npm install grunt --save-dev 
-```
+### 01 - 安装
 
-2. 配置 Gruntfile.js
+- `npm install -g browserify`
+
+### 02 - 编译
+
+- `browserify main.js -o bundle.js`
+
+## 三、Grunt
+
+> 自动化构建工具，支持大量插件。
+
+### 01 - 安装
+
+- `npm install -g grunt-cli`
+- `npm install grunt --save-dev`
+
+### 02 - 配置 Gruntfile.js
+
 - "wrapper" 函数
 - 项目与任务配置
 - 加载 grunt 插件和任务
 - 自定义任务
+
 ```javascript
 // 举例：
 module.exports = function(grunt) {
@@ -121,21 +125,22 @@ module.exports = function(grunt) {
 
   // 默认被执行的任务列表。
   grunt.registerTask('default', ['uglify']);
-
 };
 ```
 
-3. 选择插件，查看npm的配置示例。
-## 04 - Gulp
-自动化构建工具，支持大量插件。
+### 03 - 选择插件
 
-1. 安装
-```javascript
-npm install --g gulp-cli
-npm install --save-dev gulp
-```
+## 四、Gulp
 
-2. 配置 gulpfile.js
+> 自动化构建工具，支持大量插件。
+
+### 01 - 安装
+
+- `npm install --g gulp-cli`
+- `npm install --save-dev gulp`
+
+### 02 - 配置 gulpfile.js
+
 ```javascript
 // 举例：
 const { src, dest } = require('gulp');
@@ -152,59 +157,64 @@ exports.default = function() {
 }
 ```
 
-3. 选择插件，查看npm配置示例。
-## 05 - Parcel
-Web 应用打包工具，零配置，内置服务支持热更新
+### 03 - 选择插件
 
-1. 安装
-```javascript
-npm install parcel-bundler --save-dev
-```
+## 五、Parcel
 
-2. 启动支持热更新的服务，设置一个入口文件
-```javascript
-parcel index.html
-```
+> Web 应用打包工具，零配置，内置服务支持热更新
 
-3. 打包到生产模式
-```javascript
-parcel build index.js
-```
-## 06 - Rollup
-JS模块打包器，可以将小块代码编译成大块复杂代码，使用ES6模块规范
+### 01 - 安装
 
-1. 安装
-```javascript
-npm install --save-dev rollup
-```
+- `npm install parcel-bundler --save-dev`
 
-2. 打包
+### 02 - 热更新的服务
+
+- 设置一个入口文件：`parcel index.html`
+
+### 03 - 打包到生产模式
+
+- `parcel build index.js`
+
+## 六、Rollup
+
+> JS模块打包器，可以将小块代码编译成大块复杂代码，使用 ES6 模块规范
+
+### 01 - 安装
+
+- `npm install --save-dev rollup`
+
+### 02 - 打包
+
 ```javascript
 # UMD format requires a bundle name
 $ rollup main.js --file bundle.js --format umd --name "myBundle"
 ```
 
-3. 配置文件可选，roullup.config.js
-## 07 - webpack
-JS应用程序静态模块打包器，可以不引入配置文件，但 webpack 仍然是高度可配置的，有一个或多个文件作为打包入口，输出的文件叫做 bundle
+### 03 - 配置文件 roullup.config.js
 
-1. 安装
-```javascript
-npm install webpack-cli webpack --save-dev
-```
+## 七、Webpack
 
-2. 打包：development 开发环境、production 生产环境
-```javascript
-npx webpack ./src/main --mode=development
-// 默认打包至 dist 目录下
-```
+> JS应用程序静态模块打包器，可以不引入配置文件，但 webpack 仍然是高度可配置的，有一个或多个文件作为打包入口，输出的文件叫做 bundle
 
-3. 配置
+### 01 - 安装
+
+- `npm install webpack-cli webpack --save-dev`
+
+### 02 - 打包：
+
+- development 开发环境
+- production 生产环境
+
+- 默认打包至 dist 目录下：`npx webpack ./src/main --mode=development`
+
+### 03 - 配置
+
 - 入口 entry
 - 输出 output
 - 加载器 loader
 - 插件 plugins
 - 模式 mode 开发、生产
+
 ```javascript
 const path = require('path')
 
@@ -231,6 +241,4 @@ module.exports = {
   // 模式
   mode: 'development',
 }
-
 ```
-加载器和插件查阅官方文档，加载器：文件、JSON、转换编译、模板、样式、清理和测试、框架

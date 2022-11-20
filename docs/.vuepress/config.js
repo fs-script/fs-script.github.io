@@ -139,6 +139,10 @@ export default defineUserConfig({
           },
         ],
       },
+      {
+        text: "😺 - Blockchain",
+        link: "/e-blockchain/",
+      },
     ],
   }),
 })

@@ -1,6 +1,6 @@
 ---
-title: Rust
-description: Rust
+title: Electron
+description: Electron
 editLink: false
 lastUpdated: false
 contributors: false
@@ -12,4 +12,4 @@ next:
   link: /a-note/o-web3.md
 ---
 
-## Rust
+## Electron
