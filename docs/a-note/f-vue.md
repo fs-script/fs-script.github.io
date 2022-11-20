@@ -12,10 +12,12 @@ next:
   link: /a-note/g-react.md
 ---
 
-## 01 - 基础
-### 1.1 - 使用
+## 壹 - Vue2
 
-- **使用 script 标签引入：**
+**使用：**
+
+- 使用 script 标签引入：
+
 ```javascript
 // 开发环境
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
@@ -24,12 +26,15 @@ next:
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10"></script>
 ```
 
-- **使用 npm 配合打包工具：**
+- 使用 npm 配合打包工具：
+
 ```javascript
 // 最新稳定版
 npm install vue
 ```
-### 1.2 - 指令
+
+**指令：**
+
 ```html
 <!-- 所有的数据绑定都支持JS单个表达式的解析，如简单计算、三元表达式、字符串数组的方法... -->
 <!-- 指令 attribute 冒号后的参数，可以使用 [...] 绑定为动态参数，需要对参数值做约束 -->
@@ -112,7 +117,9 @@ npm install vue
 <!-- 等价于上面的方式 -->
 <... v-text="..."></...>
 ```
-### 1.3 - 创建
+
+**创建：**
+
 ```javascript
 // 创建 Vue 实例
 var vm = new Vue({
@@ -168,14 +175,16 @@ var vm = new Vue({
   beforeDestroy: function() { ... },  // 实例销毁前执行
   destroyed: function() { ... },  // 销毁后执行
   errorCaptured: function() { ... }, // 捕获到后代的错误之后执行
-  
+
   // --- 非响应式的 property ---
   methods: { ... },  // 方法
 })
 ```
-### 1.4 - 组件基础
 
-- **一个组件本质上是一个拥有预定义选项的一个 Vue 实例**
+**组件基础：**
+
+- 一个组件本质上是一个拥有预定义选项的一个 Vue 实例。
+
 ```javascript
 // 全局注册
 Vue.component('todo-item', {
@@ -200,7 +209,7 @@ Vue.component('todo-item', {
 })
 
 var app = new Vue({ ... })
-  
+
 //----------------------------
 <todo-item
  v-for="(item, index) in items"
@@ -209,7 +218,7 @@ var app = new Vue({ ... })
  :index="index"
  // 监听自定义事件并处理，$event 访问抛出的值（可选）；事件处理是一个方法，则抛出的值用第一个参数接收
  @enlarge-text="... $event"
- // 
+ //
  v-modle='searchText'
 >
   // 内容将会插入插槽中
@@ -222,7 +231,9 @@ var app = new Vue({ ... })
 // 切换时组件会重新渲染，不会保存状态
 <component v-bind:is="currentTabComponent"></component>
 ```
-### 1.5 - 深入组件
+
+**深入组件：**
+
 ```javascript
 // 全局注册
 Vue.component('my-component-name', {
@@ -238,7 +249,7 @@ Vue.component('my-component-name', {
   comments: true,  // 保留 HTML 注释
 
   // --- 接口 ---
-  // 禁止根元素继承 没有被prop 的attribute，不影响 class style  
+  // 禁止根元素继承 没有被prop 的attribute，不影响 class style
   inheritAttrs: false,
   // 组件上的 v-model 会默认利用名为 value 的 prop， 和名为 input 的事件
   // 单选 复选框类型 使用 v-modle时
@@ -319,7 +330,7 @@ new Vue({
 // 父级模板里的内容都是在父级作用域中编译的，子模板的所有内容都是在子作用域中编译的
 // 将一个对象的所有 property 都作为 prop 传入
 // props 是单向下行数据绑定的
-<my-component-name 
+<my-component-name
  // 绑定多个 prop
  v-bind="带有props设置内容的对象"
  // 监听根元素的事件
@@ -353,7 +364,9 @@ new Vue({
 
 // 异步组件，设置一个工厂函数，分割为小一些的代码块，需要时从服务器下载
 ```
+
 **建议顺序：**
+
 ```javascript
 // --- 副作用 ---
 el: "#...",
@@ -417,7 +430,9 @@ render(h, [context]) { ... },
 renderError(h, err) { ... },
 template: ' ... '
 ```
-### 1.6 - 过渡动画
+
+**过渡动画：**
+
 ```javascript
 // 默认渲染为 <span>
 <transition
@@ -450,7 +465,7 @@ template: ' ... '
  v-on:before-appear="..."
  v-on:appear="..."
   ...
-  
+
   // 过渡模式
   // 新元素先进行过渡之后当前元素离开
   mode="in-out"
@@ -502,7 +517,9 @@ methods: {
 // 通过侦听器 监听数据的变化 调用过渡动画
 // 可以把状态过渡封装在组件里
 ```
-### 1.7 - 复用性
+
+**复用性：**
+
 ```javascript
 // 混入 mixin 提升组件的复用性
 // 定义一个混入对象
@@ -601,7 +618,9 @@ filters: {
 // 定义全局过滤器
 Vue.filters('...', function() { ... })
 ```
-### 1.8 - 工具
+
+**工具：**
+
 ```javascript
 // 单文件组件
 <template>
@@ -643,7 +662,8 @@ module.exports = {
 // 测试：单元测试、组件测试、端到端测试
 // 生产环境部署
 ```
-### 1.9 - 规模化
+**规模化：**
+
 ```javascript
 // 路由
 // 推荐使用 vue-router
@@ -679,291 +699,17 @@ new Vue({
 // 安全
 // 用户提供的内容需要过滤
 ```
-## 02 - 代码风格
 
-- 组件名使用多个单词，单词小写，单词间用 - 隔开
-- 组件的 data 必须是一个返回对象的函数
-- props 要尽可能的详细，至少是要指定类型的（类型、是否必须、默认值、校验）
-- 使用 v-for 要配合 key
-- 避免 v-if 和 v-for 在同一个元素上使用
-- 单文件时组件的css 要设置 scoped 指定作用域
-- 使用模块作用域保持不允许外部访问函数的私有性，为插件、混入的不考虑对外公共 API 的自定义私有属性使用 $_ 前缀，并附带一个命名空间
+## 贰 - Vue3
 
-- 使用构建系统时，把每个组件单独分成文件
-- 组件文件名一般化描述开头，描述性修饰结尾：搜索输入框 查询、设置检查 条款...
-- 单文件的文件名使用大驼峰命名或单词小写，单词间用 - 隔开
-- 对于展示类无逻辑无状态的组件文件名，使用 Base、App、V 开头的前缀开头
-- 不会被复用，不接受 prop 的组件文件名，使用 The 开头的前缀开头，以示前缀
-- 父组件在某些场合下的子组件文件名，使用父组件的名作为前缀开头，紧密耦合
-- 在单文件中 `<MyComponent/>`，在 DOM 模板中，`<my-compont></my-component>`
-- 声明 prop 时，使用小驼峰命名
-- 多个 attribute 换行书写
-- 总结： JS 中使用驼峰命名，HTML中使用 - 分隔
-- :  @  # 缩写要么都用要么都不用 
-## 03 - Vue CLI 5.x
-```javascript
-// 安装
-npm install -g @vue/cli
-yarn add global @vue/cli
+**使用：**
+- `npm init vue@latest`
+- `npm install`
+- `npm run dev`
+- `npm run build`
 
-// 创建一个新的项目
-vue create 项目名
+**创建：**
 
-// 启用图形化界面
-vue ui
-
-// 启动服务
-npm run serve
-
-// 安装插件
-vue add 插件名
-
-// 打包
-npm run build
-```
-![](https://cdn.nlark.com/yuque/0/2022/jpeg/22152478/1667199017334-089576d3-1f91-435c-847c-23de7e55c67f.jpeg)
- 
-## 04 - Vue Loader
-## 05 - Vue Router 4.x
-```javascript
-// 安装
-npm install vue-router@4
-yarn add vue-router@4
-
-// HTML 使用
-<script src="https://unpkg.com/vue@3"></script>
-<script src="https://unpkg.com/vue-router@4"></script>
-
-<div id="app">
-  <h1>Hello App!</h1>
-  <p>
-    <!--使用 router-link 组件进行导航 -->
-    <!--通过传递 `to` 来指定链接 -->
-    <!--`<router-link>` 将呈现一个带有正确 `href` 属性的 `<a>` 标签-->
-    <router-link to="/">Go to Home</router-link>
-    <router-link to="/about">Go to About</router-link>
-  </p>
-  <!-- 路由出口 -->
-  <!-- 路由匹配到的组件将渲染在这里 -->
-  <router-view name="..."></router-view>
-</div>
-
-// ----------------------------------------
-
-// 1. 定义路由组件.
-// 也可以从其他文件导入
-const Home = { template: '<div>Home</div>' }
-const About = { template: '<div>About</div>' }
-
-// 2. 定义一些路由
-// 每个路由都需要映射到一个组件。
-const routes = [
-  { path: '/', component: Home },
-  { path: '/about', component: About },
-]
-
-// 3. 创建路由实例并传递 `routes` 配置
-const router = VueRouter.createRouter({
-  // 4. 内部提供了 history 模式的实现。这里使用 hash 模式。
-  history: VueRouter.createWebHashHistory(),
-  routes, // `routes: routes` 的缩写
-})
-
-// 5. 创建并挂载根实例
-const app = Vue.createApp({})
-//确保 _use_ 路由实例使
-//整个应用支持路由。
-app.use(router)
-
-app.mount('#app')
-```
-this.$route （当前路由）与 直接使用通过 createRouter 创建的 router 实例完全相同
-```javascript
-// 动态路由
-
-// 路由匹配之后 params 的值以 this.$route.params 暴露出来
-
-// 响应路由参数的变化
-// 或使用导航守卫
-
-// 捕获所有路由或 404 路由 使用正则表达式
-
-// 路由匹配语法：在参数中自定义正则，可重复参数匹配0-n个参数 + *，sensitive 和 strict 控制匹配是灵活或严格的，? 可选参数
-
-// 嵌套路由
-
-// 编程式导航：导航到不同的位置、替换当前位置、横跨历史、篡改历史
-
-// 命名路由
-
-// 命名视图 components s s
-
-// 重定向和别名，相对重定向
-
-// 路由组件传参 props
-
-// 不同的历史模式
-const router = createRouter({
-  // Hash 模式 #
-  history: createWebHashHistory(),
-  // HTML5 模式
-  history: createWebHistory(),
-})
-
-const routes = [
-  {
-    path: '/.../:...',
-    name: '...',
-    component: ...,
-    // 重定向 也可以是一个命名路由 { name: '...' } 同时也可以是一个方法
-    redirect: '...',
-    // 别名
-    alias: '...',
-    // 组件传参
-    props: true,
-    // 嵌套路由
-    children: [
-      // 上一层匹配成功时
-      {
-        path: '',
-        component: '...',
-        meta: { ... }
-      },
-      {
-        path: '...',
-        name: '...',
-        component: '...'
-      }
-    ]
-  }
-]
-
-router.push()
-router.replace()
-router.go()
-```
-```javascript
-// 导航守卫：通过跳转或取消的方式守卫导航
-
-// 全局前置守卫：
-router.beforeEach(async (to, from, [next]) => { return false })
-// 全局解析守卫
-router.beforeResolve(async to => {})
-// 全局后置钩子
-router.beforeEach((to, from) => {})
-
-router.onError()
-
-// 路由独享的守卫：在路由配置中。只有在从不同的导航时才触发
-beforeEnter:(to, from) => {}
-
-// 组件内的守卫，可用的配置 API：beforeRouteEnter、beforeRouteUpdate、beforeRouterLeave
-
-// 完整导航解析流程：
-1、导航被触发。
-2、在失活的组件里调用 beforeRouteLeave 守卫。
-3、调用全局的 beforeEach 守卫。
-4、在重用的组件里调用 beforeRouteUpdate 守卫(2.2+)。
-5、在路由配置里调用 beforeEnter。
-6、解析异步路由组件。
-7、在被激活的组件里调用 beforeRouteEnter。
-8、调用全局的 beforeResolve 守卫(2.5+)。
-9、导航被确认。
-10、调用全局的 afterEach 钩子。
-11、触发 DOM 更新。
-12、调用 beforeRouteEnter 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。
-
-
-// 路由元信息 meta 附加信息：过渡名称、谁可以访问...
-$route.meta()
-
-
-// 数据获取：导航完成之后获取（接下来用生命周期钩子去获取数据，过程中显示加载中）、导航完成之前获取（在守卫中获取数据成功后执行导航）
-
-// 过渡动效
-使用 v-slot API
-// 单个路由的过渡：元信息+动态name
-// 基于路由的动态过渡
-// key 强制复用过渡
-
-
-// 滚动行为
-scrollBehavior(to, from, savedPosition) { return { ...} }
-
-// 路由懒加载：将静态导入替换为动态导入，进行缓存
-
-// 导航故障
-Promise
-
-// 动态路由
-router.addRoute()\ router.removeRoute()
-
-// router.hasRoute() 检查路由是否存在
-// router.getRoutes() 获取一个包含所有路由记录的数组
-```
-router 是路由实例对象，route 是当前正在跳转的路由对象
-## 06 - Vuex 4.x
-```javascript
-// 安装使用
-npm install vuex --save
-yarn add vuex
-
-Vue.use(Vuex)
-
-// 如果浏览器不支持 promise
-npm install es6-promise --save
-
-const store = new Vuex.Store({
-  state: {
-    count: 0
-  },
-  mutations: {
-    increment (state) {
-      state.count++
-    }
-  },
-  actions: {
-    increment (context) {
-      context.commit('increment')
-    }
-  }
-})
-
-// 核心为 store（仓库），其中包含了应用中大部分的 state 它是响应式的，不能够直接被修改，需要显示的提交 mutation
-store.state
-store.commit
-
-// State
-// 单一状态数
-// 在组件中以计算属性返回某个状态
-// 多个状态使用 mapState
-// 组件仍然具有局部状态
-
-// Getter 相当于 store 的计算属性
-// mapGetters
-
-// Mutation
-// 提交载荷 （大多数情况下应该是一个对象）
-// 对象风格提交
-// mutation 需要是同步函数
-// 在组件中提交 mutation
-
-// Action
-// 提交的是 mutation
-// 可以包含任意异步操作
-// 分发 store.dispatch('')，支持载荷和对象的方式进行分发
-// mapActions
-
-// Module
-// 将 store 分割为模块
-
-```
-
-## 01 - 基础
-`npm init vue@latest`
-`npm install`
-`npm run dev`
-`npm run build`
 ```javascript
 import { createApp } from 'vue'
 
@@ -995,7 +741,9 @@ app.provide()
   ...
 </script>
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/22152478/1666324931444-0179eeeb-06cc-4119-a8b7-5fdcd8581f44.png#averageHue=%23fffefe&clientId=u91903278-1320-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=241&id=u5ddc6184&margin=%5Bobject%20Object%5D&name=image.png&originHeight=212&originWidth=657&originalType=binary&ratio=1&rotation=0&showTitle=false&size=28705&status=done&style=none&taskId=u1fc47b3f-a9c3-4d22-9779-ac3c079d7ab&title=&width=747.6000366210938)
+
+**响应式：**
+
 ```javascript
 // 响应式数据
 const 代理对象 = reactive({ 原始对象 })
@@ -1039,7 +787,9 @@ input.value.focus()
 components: { ... },
 setup() { ... return ... }
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/22152478/1666422543107-46cca656-57f3-4744-8ad4-aa04e7047aa1.png#averageHue=%23f3f3f3&clientId=uc2ad907b-cc0b-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=255&id=u977662c3&margin=%5Bobject%20Object%5D&name=image.png&originHeight=269&originWidth=787&originalType=binary&ratio=1&rotation=0&showTitle=false&size=13944&status=done&style=none&taskId=u3e2c31a1-d569-4182-b427-5f40714a4e0&title=&width=746.6000366210938)
+
+**Setup：**
+
 ```javascript
 // 单文件组件中使用<PascalCase />的标签名，DOM 中书写模板使用<kabab-case></kabab-case>
 // 单独写
@@ -1053,7 +803,7 @@ setup() { ... return ... }
   defineProps(['...', ...])
 	// 返回的是实例对象，对象或数组需要从工厂函数产出
 	const props = defineProps({...: String, ...: Number, ...: {type: String, required: true, default: ...}})
-  
+
   // 编译宏命令 不需要显示导入
 	defineEmits(['...'])
 	// 返回一个 emit() 函数
@@ -1133,12 +883,16 @@ setup() { ... return ... }
 // 异步组件
 <AsyncComp />
 ```
+
 ```javascript
 // 组合式函数（复用相同的逻辑）：抽取单独的 .js 文件，组合式函数以 use... 开头，通过返回值暴露所管理的状态
 // 纯逻辑时使用组合式函数，逻辑和需要视图更新时使用基于作用域插槽的无渲染组件
-// 
+//
 ```
+
 > 复用代码：组件、组合式函数、自定义指令、插件
+
+**指令、插件：**
 
 ```javascript
 // 自定义指令
@@ -1158,53 +912,315 @@ const myPlugin = {
   install(app, options) { ... }
 }
 ```
+
+**内置组件：**
+
 ```javascript
-// 内置组件
 <Transition />
 <TransitionGroup />
 <KeepAlive />
 <Teleport />
 <Suspense />
 ```
-SSR 与 SSG
-`vue-tsc`
-## 02 - Vue Router
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/22152478/1667101607456-9e3d6c04-40a4-43af-a7e2-9a76e6ae7ff3.png#averageHue=%23fefdfc&clientId=ub1d9067e-6cdb-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=363&id=uc83c88a1&margin=%5Bobject%20Object%5D&name=image.png&originHeight=454&originWidth=818&originalType=binary&ratio=1&rotation=0&showTitle=false&size=49159&status=done&style=none&taskId=ua3a24718-bad1-44d0-b528-6176ebaaa39&title=&width=654.4)
-## 03 - Pinia
-三个概念：state、getter、action，相当于组件中的 data、computed、methods
-## 04 - Vite
 
+## 叁 - 代码风格
 
+- 组件名使用多个单词，单词小写，单词间用 - 隔开。
+- 组件的 `data` 必须是一个返回对象的函数。
+- `props` 要尽可能的详细，至少是要指定类型的（类型、是否必须、默认值、校验）
+- 使用 `v-for` 要配合 `key`
+- 避免 `v-if` 和 `v-for` 在同一个元素上使用。
+- 单文件时组件的 css 要设置 `scoped` 指定作用域。
+- 使用模块作用域保持不允许外部访问函数的私有性，为插件、混入的不考虑对外公共 API 的自定义私有属性使用 `$_` 前缀，并附带一个命名空间。
+- 使用构建系统时，把每个组件单独分成文件。
+- 组件文件名一般化描述开头，描述性修饰结尾：搜索输入框 查询、设置检查 条款...
+- 单文件的文件名使用大驼峰命名或单词小写，单词间用 - 隔开。
+- 对于展示类无逻辑无状态的组件文件名，使用 `Base`、`App`、`V` 开头的前缀开头。
+- 不会被复用，不接受 `prop` 的组件文件名，使用 `The` 开头的前缀开头，以示前缀。
+- 父组件在某些场合下的子组件文件名，使用父组件的名作为前缀开头，紧密耦合。
+- 在单文件中 `<MyComponent/>`，在 DOM 模板中，`<my-compont></my-component>`
+- 声明 `prop` 时，使用小驼峰命名。
+- 多个 `attribute` 换行书写。
+- 总结： JS 中使用驼峰命名，HTML 中使用 - 分隔。
+- `:` `@` `#` 缩写要么都用要么都不用。
 
+![Mind](/images/mind.jpg)
 
-## Vue2
+## 肆 - Vue Router
 
-## Vue3
+**安装：**
 
-## Vue CLI
+- `npm install vue-router@4`
+- `yarn add vue-router@4`
 
-## Vite
+**使用：**
 
-## Vue Router
+```javascript
+// HTML 使用
+<script src="https://unpkg.com/vue@3"></script>
+<script src="https://unpkg.com/vue-router@4"></script>
 
-## Vuex
+<div id="app">
+  <h1>Hello App!</h1>
+  <p>
+    <!--使用 router-link 组件进行导航 -->
+    <!--通过传递 `to` 来指定链接 -->
+    <!--`<router-link>` 将呈现一个带有正确 `href` 属性的 `<a>` 标签-->
+    <router-link to="/">Go to Home</router-link>
+    <router-link to="/about">Go to About</router-link>
+  </p>
+  <!-- 路由出口 -->
+  <!-- 路由匹配到的组件将渲染在这里 -->
+  <router-view name="..."></router-view>
+</div>
 
-## Pinia
+// ----------------------------------------
 
-## 国际化
+// 1. 定义路由组件.
+// 也可以从其他文件导入
+const Home = { template: '<div>Home</div>' }
+const About = { template: '<div>About</div>' }
 
-## Element
+// 2. 定义一些路由
+// 每个路由都需要映射到一个组件。
+const routes = [
+  { path: '/', component: Home },
+  { path: '/about', component: About },
+]
 
-## Vant
+// 3. 创建路由实例并传递 `routes` 配置
+const router = VueRouter.createRouter({
+  // 4. 内部提供了 history 模式的实现。这里使用 hash 模式。
+  history: VueRouter.createWebHashHistory(),
+  routes, // `routes: routes` 的缩写
+})
 
-## 地图
+// 5. 创建并挂载根实例
+const app = Vue.createApp({})
+//确保 _use_ 路由实例使
+//整个应用支持路由。
+app.use(router)
 
-## 三方登录&支付
+app.mount('#app')
+```
 
-## 即时通讯
+- `this.$route` （当前路由）与 直接使用通过 `createRouter` 创建的 `router` 实例完全相同。
 
-## Excel 导入导出
+```javascript
+// 动态路由
 
-## 性能分析
+// 路由匹配之后 params 的值以 this.$route.params 暴露出来
 
-## 源码分析
+// 响应路由参数的变化
+// 或使用导航守卫
+
+// 捕获所有路由或 404 路由 使用正则表达式
+
+// 路由匹配语法：在参数中自定义正则，可重复参数匹配0-n个参数 + *，sensitive 和 strict 控制匹配是灵活或严格的，? 可选参数
+
+// 嵌套路由
+
+// 编程式导航：导航到不同的位置、替换当前位置、横跨历史、篡改历史
+
+// 命名路由
+
+// 命名视图 components s s
+
+// 重定向和别名，相对重定向
+
+// 路由组件传参 props
+
+// 不同的历史模式
+const router = createRouter({
+  // Hash 模式 #
+  history: createWebHashHistory(),
+  // HTML5 模式
+  history: createWebHistory(),
+})
+
+const routes = [
+  {
+    path: '/.../:...',
+    name: '...',
+    component: ...,
+    // 重定向 也可以是一个命名路由 { name: '...' } 同时也可以是一个方法
+    redirect: '...',
+    // 别名
+    alias: '...',
+    // 组件传参
+    props: true,
+    // 嵌套路由
+    children: [
+      // 上一层匹配成功时
+      {
+        path: '',
+        component: '...',
+        meta: { ... }
+      },
+      {
+        path: '...',
+        name: '...',
+        component: '...'
+      }
+    ]
+  }
+]
+
+router.push()
+router.replace()
+router.go()
+```
+
+**导航守卫：**
+
+```javascript
+// 导航守卫：通过跳转或取消的方式守卫导航
+
+// 全局前置守卫：
+router.beforeEach(async (to, from, [next]) => { return false })
+// 全局解析守卫
+router.beforeResolve(async to => {})
+// 全局后置钩子
+router.beforeEach((to, from) => {})
+
+router.onError()
+
+// 路由独享的守卫：在路由配置中。只有在从不同的导航时才触发
+beforeEnter:(to, from) => {}
+
+// 组件内的守卫，可用的配置 API：beforeRouteEnter、beforeRouteUpdate、beforeRouterLeave
+
+// 完整导航解析流程：
+1、导航被触发。
+2、在失活的组件里调用 beforeRouteLeave 守卫。
+3、调用全局的 beforeEach 守卫。
+4、在重用的组件里调用 beforeRouteUpdate 守卫(2.2+)。
+5、在路由配置里调用 beforeEnter。
+6、解析异步路由组件。
+7、在被激活的组件里调用 beforeRouteEnter。
+8、调用全局的 beforeResolve 守卫(2.5+)。
+9、导航被确认。
+10、调用全局的 afterEach 钩子。
+11、触发 DOM 更新。
+12、调用 beforeRouteEnter 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。
+
+// 路由元信息 meta 附加信息：过渡名称、谁可以访问...
+$route.meta()
+
+// 数据获取：导航完成之后获取（接下来用生命周期钩子去获取数据，过程中显示加载中）、导航完成之前获取（在守卫中获取数据成功后执行导航）
+
+// 过渡动效
+使用 v-slot API
+// 单个路由的过渡：元信息+动态name
+// 基于路由的动态过渡
+// key 强制复用过渡
+
+// 滚动行为
+scrollBehavior(to, from, savedPosition) { return { ...} }
+
+// 路由懒加载：将静态导入替换为动态导入，进行缓存
+
+// 导航故障
+Promise
+
+// 动态路由
+router.addRoute()\ router.removeRoute()
+
+// router.hasRoute() 检查路由是否存在
+// router.getRoutes() 获取一个包含所有路由记录的数组
+```
+
+- `router` 是路由实例对象，`route` 是当前正在跳转的路由对象。
+
+## 伍 - Vuex
+
+**安装：**
+
+- `npm install vuex --save`
+- `yarn add vuex`
+- 如果浏览器不支持 promise：`npm install es6-promise --save`
+
+**使用：**
+
+```javascript
+// 安装使用
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  },
+  actions: {
+    increment (context) {
+      context.commit('increment')
+    }
+  }
+})
+
+// 核心为 store（仓库），其中包含了应用中大部分的 state 它是响应式的，不能够直接被修改，需要显示的提交 mutation
+store.state
+store.commit
+
+// State
+// 单一状态数
+// 在组件中以计算属性返回某个状态
+// 多个状态使用 mapState
+// 组件仍然具有局部状态
+
+// Getter 相当于 store 的计算属性
+// mapGetters
+
+// Mutation
+// 提交载荷 （大多数情况下应该是一个对象）
+// 对象风格提交
+// mutation 需要是同步函数
+// 在组件中提交 mutation
+
+// Action
+// 提交的是 mutation
+// 可以包含任意异步操作
+// 分发 store.dispatch('')，支持载荷和对象的方式进行分发
+// mapActions
+
+// Module
+// 将 store 分割为模块
+```
+
+## 陆 - Pinia
+
+## 柒 - Vue CLI
+
+**安装：**
+
+- `npm install -g @vue/cli`
+- `yarn add global @vue/cli`
+
+```javascript
+// 创建一个新的项目
+vue create 项目名
+
+// 启用图形化界面
+vue ui
+
+// 启动服务
+npm run serve
+
+// 安装插件
+vue add 插件名
+
+// 打包
+npm run build
+```
+
+## 捌 - Vite
+
+## 玖 - SSR
+
+## 拾 - 国际化
+
+## 拾壹 - 源码分析
