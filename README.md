@@ -1,12 +1,8 @@
-<div align="center" style="font-size: 5rem">🔥</div>
-
-<h1 align="center">前端摸金手册</h1>
+<h1 align="center">🔥 前端摸金手册</h1>
 
 <div align="center">
   <a href="https://fs-script.github.io/">🧿 开始摸金 🧿</a>
 </div>
-
----
 
 <h2>◾ 文档结构</h2>
 
