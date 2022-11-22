@@ -1,14 +1,14 @@
 ---
-title: Git / SVN
-description: Git / SVN
+title: Git
+description: Git
 editLink: false
 lastUpdated: false
 contributors: false
 prev:
-  text: Icon
-  link: /d-tools/d-icon.md
+  text: 设计
+  link: /d-tools/f-design.md
 next:
-  text: Use
+  text: 配置
   link: /d-tools/b-use.md
 ---
 

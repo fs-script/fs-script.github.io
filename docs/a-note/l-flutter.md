@@ -5,11 +5,9 @@ editLink: false
 lastUpdated: false
 contributors: false
 prev:
-  text: MicroFrontends
-  link: /a-note/l-microFrontends.md
+  text: UniApp
+  link: /a-note/k-uniapp.md
 next:
   text: Electron
-  link: /a-note/n-electron.md
+  link: /a-note/m-electron.md
 ---
-
-## Flutter

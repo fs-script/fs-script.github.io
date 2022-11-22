@@ -1,13 +1,13 @@
 ---
-title: 图标
-description: 图标
+title: 设计
+description: 设计
 editLink: false
 lastUpdated: false
 contributors: false
 prev:
-  text: 配色
-  link: /d-tools/c-color.md
-next:
   text: 动画
   link: /d-tools/e-animation.md
+next:
+  text: Git
+  link: /d-tools/a-git.md
 ---

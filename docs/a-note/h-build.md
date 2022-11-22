@@ -1,6 +1,6 @@
 ---
-title: BuildTools
-description: BuildTools
+title: 工程化
+description: 工程化
 editLink: false
 lastUpdated: false
 contributors: false
@@ -8,8 +8,8 @@ prev:
   text: React.js
   link: /a-note/g-react.md
 next:
-  text: UniApp
-  link: /a-note/i-uniapp.md
+  text: 小程序
+  link: /a-note/i-wechat.md
 ---
 
 ## 一、Babel

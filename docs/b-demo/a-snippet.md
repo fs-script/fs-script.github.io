@@ -1,15 +1,13 @@
 ---
-title: Snippet
-description: Snippet
+title: 片段
+description: 片段
 editLink: false
 lastUpdated: false
 contributors: false
 prev:
-  text: Project
+  text: 项目
   link: /b-demo/b-project.md
 next:
-  text: Project
+  text: 项目
   link: /b-demo/b-project.md
 ---
-
-## Snippet

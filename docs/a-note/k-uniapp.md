@@ -5,11 +5,9 @@ editLink: false
 lastUpdated: false
 contributors: false
 prev:
-  text: BuildTools
-  link: /a-note/h-build.md
+  text: 可视化
+  link: /a-note/j-visualization.md
 next:
-  text: WeChat
-  link: /a-note/j-wechat.md
+  text: Flutter
+  link: /a-note/l-flutter.md
 ---
-
-## UniApp

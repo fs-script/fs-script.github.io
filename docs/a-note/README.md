@@ -5,17 +5,11 @@ sidebar: false
 editLink: false
 lastUpdated: false
 contributors: false
-prev:
-  text: 工具归纳
-  link: /d-tools/
-next:
-  text: 案例目录
-  link: /b-demo/
 ---
 
-<div style="margin: 0 auto; padding-top: 30px; width: 200px; text-align: center;">
-  <h1>笔记总览</h1>
+<div style="margin: 0 auto; padding: 20px 0; width: 200px; text-align: center;">
   <img src="/images/note.png" />
+  <h1>笔记总览</h1>
 </div>
 
 <Badge text="站内" />
@@ -36,19 +30,19 @@ next:
 
 - [React.js](/a-note/g-react.md)
 
-- [Build](/a-note/h-build.md)
+- [工程化](/a-note/h-build.md)
 
-- [UniApp](/a-note/i-uniapp.md)
+- [小程序](/a-note/i-wechat.md)
 
-- [WeChat](/a-note/j-wechat.md)
+- [可视化](/a-note/j-visualization.md)
 
-- [Visualization](/a-note/k-visualization.md)
+- [UniApp](/a-note/k-uniapp.md)
 
-- [MicroFrontends](/a-note/l-microFrontends.md)
+- [Flutter](/a-note/l-flutter.md)
 
-- [Flutter](/a-note/m-flutter.md)
+- [Electron](/a-note/m-electron.md)
 
-- [Electron](/a-note/n-electron.md)
+- [微前端](/a-note/n-microFrontends.md)
 
 - [Web3](/a-note/o-web3.md)
 
@@ -60,16 +54,26 @@ next:
 
 - [TypeScript](https://www.typescriptlang.org/zh/)
 
+- [Node](https://nodejs.org/zh-cn/docs/)
+
 - [Vue](https://cn.vuejs.org/)
 
 - [React](https://zh-hans.reactjs.org/)
 
+- [React Native](https://www.reactnative.cn/)
+
 - [Angular](https://angular.cn/)
+
+- [UniApp](https://uniapp.dcloud.net.cn/)
+
+- [weChat](https://developers.weixin.qq.com/doc/)
 
 - [Flutter](https://flutter.cn/)
 
 - [Electron](https://www.electronjs.org/zh/)
 
-- [uni-app](https://uniapp.dcloud.net.cn/)
+- [Qiankun](https://qiankun.umijs.org/zh)
 
-- [weChat](https://developers.weixin.qq.com/doc/)
+- [Webpack](https://webpack.docschina.org/)
+
+- [Vite](https://vitejs.cn/vite3-cn/)

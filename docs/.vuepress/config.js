@@ -16,131 +16,143 @@ export default defineUserConfig({
     colorModeSwitch: false,
     navbar: [
       {
-        text: "😈 - Home",
+        text: "😈 - 首页",
         link: "/",
       },
       {
-        text: "🤠 - Note",
+        text: "🤠 - 笔记",
         children: [
           {
-            text: "HTML",
+            text: "◾ HTML",
             link: "/a-note/a-html.md",
           },
           {
-            text: "CSS",
+            text: "◾ CSS",
             link: "/a-note/b-css.md",
           },
           {
-            text: "JavaScript",
+            text: "◾ JavaScript",
             link: "/a-note/c-javascript.md",
           },
           {
-            text: "TypeScript",
+            text: "◾ TypeScript",
             link: "/a-note/d-typescript.md",
           },
           {
-            text: "Node.js",
+            text: "◾ Node.js",
             link: "/a-note/e-node.md",
           },
           {
-            text: "Vue.js",
+            text: "◾ Vue.js",
             link: "/a-note/f-vue.md",
           },
           {
-            text: "React.js",
+            text: "◾ React.js",
             link: "/a-note/g-react.md",
           },
           {
-            text: "Build",
+            text: "◾ 工程化",
             link: "/a-note/h-build.md",
           },
           {
-            text: "UniApp",
-            link: "/a-note/i-uniapp.md",
+            text: "◾ 小程序",
+            link: "/a-note/i-wechat.md",
           },
           {
-            text: "WeChat",
-            link: "/a-note/j-wechat.md",
+            text: "◾ 可视化",
+            link: "/a-note/j-visualization.md",
           },
           {
-            text: "Visualization",
-            link: "/a-note/k-visualization.md",
+            text: "◾ UniApp",
+            link: "/a-note/k-uniapp.md",
           },
           {
-            text: "MicroFrontends",
-            link: "/a-note/l-microFrontends.md",
+            text: "◾ Flutter",
+            link: "/a-note/l-flutter.md",
           },
           {
-            text: "Flutter",
-            link: "/a-note/m-flutter.md",
+            text: "◾ Electron",
+            link: "/a-note/m-electron.md",
           },
           {
-            text: "Electron",
-            link: "/a-note/n-electron.md",
+            text: "◾ 微前端",
+            link: "/a-note/n-microFrontends.md",
           },
           {
-            text: "Web3",
+            text: "◾ Web3",
             link: "/a-note/o-web3.md",
           },
         ],
       },
       {
-        text: "😎 - Demo",
+        text: "😎 - 实战",
         children: [
           {
-            text: "Snippet",
+            text: "◾ 片段",
             link: "/b-demo/a-snippet.md",
           },
           {
-            text: "Project",
+            text: "◾ 项目",
             link: "/b-demo/b-project.md",
           },
         ],
       },
       {
-        text: "🧐 - Interview",
+        text: "🧐 - 面试",
         children: [
           {
-            text: "Theory",
+            text: "◾ 理论",
             link: "/c-interview/a-theory.md",
           },
           {
-            text: "Operation",
+            text: "◾ 手写",
             link: "/c-interview/b-operation.md",
           },
           {
-            text: "Browser",
-            link: "/c-interview/c-browser.md",
+            text: "◾ 算法",
+            link: "/c-interview/c-algorithm.md",
           },
           {
-            text: "Network",
+            text: "◾ 网络",
             link: "/c-interview/d-network.md",
+          },
+          {
+            text: "◾ 浏览器",
+            link: "/c-interview/e-browser.md",
           },
         ],
       },
       {
-        text: "🤓 - Tools",
+        text: "🤓 - 工具",
         children: [
           {
-            text: "Git",
+            text: "◾ Git",
             link: "/d-tools/a-git.md",
           },
           {
-            text: "Use",
+            text: "◾ 配置",
             link: "/d-tools/b-use.md",
           },
           {
-            text: "Color",
+            text: "◾ 配色",
             link: "/d-tools/c-color.md",
           },
           {
-            text: "Icon",
+            text: "◾ 图标",
             link: "/d-tools/d-icon.md",
+          },
+          {
+            text: "◾ 动画",
+            link: "/d-tools/e-animation.md",
+          },
+          {
+            text: "◾ 设计",
+            link: "/d-tools/f-design.md",
           },
         ],
       },
       {
-        text: "😺 - Blockchain",
+        text: "😺 - 区块链",
         link: "/e-blockchain/",
       },
     ],

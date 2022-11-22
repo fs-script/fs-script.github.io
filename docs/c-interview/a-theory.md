@@ -1,15 +1,13 @@
 ---
-title: Theory
-description: Theory
+title: 理论
+description: 理论
 editLink: false
 lastUpdated: false
 contributors: false
 prev:
-  text: NetWork
-  link: /c-interview/d-network.md
+  text: 浏览器
+  link: /c-interview/e-browser.md
 next:
-  text: Operation
+  text: 手写
   link: /c-interview/b-operation.md
 ---
-
-## Theory
