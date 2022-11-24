@@ -13,6 +13,7 @@ export default defineUserConfig({
 
   theme: defaultTheme({
     home: "/",
+    colorMode: "light",
     colorModeSwitch: false,
     navbar: [
       {

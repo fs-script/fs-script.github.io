@@ -12,58 +12,57 @@ next:
   link: /a-note/b-css.md
 ---
 
-## ◾ 标签语法
+## 📣 标签语法
 
-### 01 - 根
+### ◾ 根
 
 | 元素 | 描述 |
 | --- | --- |
 | html | 根元素 (顶级元素)，所有元素为其后代 |
+| ☯ lang="zh-CN" | 默认语言 |
 | > head | 头部配置元素 |
 | > body | 文档主体元素 |
 
-### 02 - 头部
+### ◾ 头部
 
 | 元素 | 描述 |
 | --- | --- |
 | base | 所有相对 URL 的根 URL |
-| > href | 相对地址的 URL |
-| > target | 新页面的打开方式 |
-| link | 外部资源链接 |
+| ☯ href="..." | 相对地址的 URL |
+| ☯ target : | 新页面的打开方式 |
+| ☯ target="_self" | 在当前页面打开 |
+| ☯ target="_blank" | 在新页面打开 |
+| ☯ target="_parent" | 在内联框架下在父级页面打开 |
+| ☯ target="_top" | 在顶级页面中打开 |
 | meta | 文档级元数据 |
-| > charset | 编码格式 UTF-8 |
-| > http-equiv | 编译指示指令 |
-| > http-equiv="refresh" | 重定向用户 |
-| > name | 元数据的名称 |
-| > > author | 作者信息 |
-| > > description | 文档描述 |
-| > > generator | 软件标识符 |
-| > > keywords | 文档关键词 |
-| > > referrer | HTTP Referer 请求头 |
-| > > theme-color | 页面建议颜色 |
-| > > viewport | 设备初始大小提供指示 |
-| > content | http-equiv 或 name 属性的值 |
+| ☯ charset="UTF-8" | 编码格式 |
+| ☯ http-equiv" : | 编译指示指令 |
+| ☯ http-equiv="X-UA-Compatible" content="IE=edge" | 兼容性模式设置 |
+| ☯ http-equiv="refresh" content="3; url='...'" | 重定向用户 |
+| ☯ name : | 元数据的名称 |
+| ☯ name="viewport" | 设备初始大小提供指示 |
+| ☯ name="author" | 作者信息 |
+| ☯ name="description" | 文档描述 |
+| ☯ name="generator" | 软件标识符 |
+| ☯ name="keywords" | 文档关键词 |
+| ☯ name="referrer" | HTTP Referer 请求头 |
+| ☯ name="theme-color" | 页面建议颜色 |
+| ☯ content="..." | http-equiv/name 属性的值 |
+| link | 外部资源链接 |
+| ☯ rel : | 链接资源与当前文档的关系 |
+| ☯ rel="stylesheet" | 样式表关系 |
+| ☯ rel="icon" | 图标关系 |
+| ☯ type : | 链接资源的类型 |
+| ☯ type="text/css" | 样式表类型 |
+| ☯ type="image/png" | 图片类型 |
+| ☯ href="..." | 链接资源的 URL |
+| ☯ media="screen and (max-width: 666px)" | 媒体类型或条件，满足时加载 |
+| ☯ sizes="36x36" | 图标大小 |
 | title | 文档标题 |
 | style | 样式表 |
 | script | 脚本 |
 
-**link 属性：**
-
-- `type="text/css"`：链接资源的类型。
-- `href`：链接资源的 `URL`
-- `rel="icon"`：链接资源与当前文档的关系。
-- `sizes="114x114"`：图标大小。
-- `media="screen and (max-width: 600px)"`：提供媒体类型或条件，满足时加载。
-- `as`：设置`rel="preload"`后，指定加载的内容类型。
-
-**target 属性：**
-
-- `_self`：在当前页面打开。
-- `_blank`：在新页面打开。
-- `_parent`：在内联框架下在父级页面打开，没有则为 `_self`
-- `_top`：在顶级页面中打开，没有则为 `_self`
-
-### 03- 标题
+### ◾ 标题
 
 | 元素 | 描述 |
 | --- | --- |
@@ -75,96 +74,91 @@ next:
 | h6 | 六级标题 |
 | hr / | 水平线 |
 
-### 04 - 段落
+### ◾ 段落
 
 | 元素 | 描述 |
 | --- | --- |
 | p | 段落 |
 | br / | 换行 |
 
-### 05 - 表格
+### ◾ 表格
 
 | 元素 | 描述 |
 | --- | --- |
 | table | 表格 |
+| ☯ border="..." | 表格边框 |
 | > caption | 表格标题 |
 | > tr | 定义表格的行 |
 | > th | 定义表头单元格 |
 | > td | 定义单元格 |
 | > thead | 一组表格的表头 |
-| > tfoot | 一组表格的表尾 |
 | > tbody | 一组表格的单元格 |
+| > tfoot | 一组表格的表尾 |
 
-### 06 - 列表
+### ◾ 列表
 
 | 元素 | 描述 |
 | --- | --- |
 | ul | 无序列表 |
+| ☯ type="disc" | 实心圆 |
+| ☯ type="circle" | 空心圆 |
+| ☯ type="square" | 正方形 |
 | ol | 有序列表 |
-| > li | 表示列表里的条目 |
+| ☯ type="A" | 大写字母 |
+| ☯ type="a" | 小写字母 |
+| ☯ type="Ⅰ" | 罗马字符 |
+| ☯ type="1" | 数值 |
+| ☯ start="..." | 起始数值 |
+| ☯ reversed="ture" | 倒序 |
+| > li | 列表里的条目 |
 | dl | 自定义列表 |
 | > dt | 声明一个术语 |
-| > dd | 作为描述术语的子元素与dt搭配 |
-| menu | 定义一组用户可执行或激活的命令 |
+| > dd | 描述术语的子元素与dt搭配 |
+| menu | 一组用户可执行或激活的命令 |
 
-- 可嵌套使用
+> 可嵌套使用
 
-**ul 属性：**
-
-- `type`：`circle` 空心圆、`square` 正方形、`disc` 实心圆。
-
-**ol 属性：**
-
-- `type`：大小写字母、罗马编号、数值。
-- `start`：定义起始数值。
-- `reversed`：布尔属性，倒序排列。
-
-### 07 - 链接
+### ◾ 链接
 
 | 元素 | 描述 |
 | --- | --- |
 | a | 超链接 |
-| > href="mailto: ..." | 电子邮件 |
-| > href="tel: ..." | 电话 |
+| ☯ href : | 跳转链接 |
+| ☯ href="..." | URL 或 本地 |
+| ☯ href="mailto: ..." | 电子邮件 |
+| ☯ href="tel: ..." | 电话 |
+| ☯ target="..." | 新页面打开方式 |
 
-**a 属性：**
-
-- `href`：跳转地址。
-- `target`：如何打开新页面。
-
-### 08 - 图像
+### ◾ 图像
 
 | 元素 | 描述 |
 | --- | --- |
 | img | 图像 |
+| ☯ src="..." | 图像路径 |
+| ☯ alt="..." | 替代文本 |
+| ☯ title="..." | 图像描述 |
+| ☯ width="..." | 图像宽度 |
+| ☯ height="..." | 图像高度 |
+| ☯ loading="eager、lazy" | 立即加载、延迟加载 |
 | map > area | 图片中定义一个热点区域 |
+| ☯ coords="..." | 热点区域的具体坐标值 |
+| ☯ shape="..." | 热点的形状 |
+| ☯ href="..." | 关联的资源 |
+| ☯ target="..." | 显示资源的方式 |
 
-**img 属性：**
-
-- `src`：图片路径。
-- `alt`：替代文本。
-- `title`：描述。
-- `width`：图像宽度。
-- `height`：图像高度。
-- `loading`：eager 立即加载、lazy 延迟加载。
-
-**area 属性：**
-
-- `coords`：热点区域的具体坐标值。
-- `shape`：热点的形状。
-- `href`：关联的资源。
-- `target`：显示资源的方式。
-
-### 09 - 格式化
+### ◾ 格式化
 
 | 元素 | 描述 |
 | --- | --- |
 | q | 短引用 |
 | blockquote | 长引用 |
 | abbr | 缩略词 |
+| ☯ title="..." | 提供完整的描述 |
 | cite | 作品的引用 |
 | bdi | 双向隔离 |
 | bdo | 双向重写 |
+| ☯ dir="rtl" | 从右向左 |
+| ☯ dir="ltr" | 从左向右 |
 | b | 粗体 |
 | big | 大号 |
 | small | 小号 |
@@ -184,165 +178,54 @@ next:
 | dfn | 定义术语 |
 | mark | 标记引用 |
 
-**abbr 属性：**
-
-- `title`：提供完整的描述。
-
-**bdo 属性**
-
-- `dir`：`rtl` 从右向左、`ltr` 从左向右。
-
-### 10 - 块与内联
-
-| 元素 | 描述 |
-| --- | --- |
-| div | 块级容器 |
-| span | 内联容器 |
-
-### 11 - 类与ID
-
-| 名称 | 描述 |
-| --- | --- |
-| .class | 不唯一 |
-| #id | 唯一 |
-
-### 12 - 样式与脚本
-
-| 名称 | 描述 |
-| --- | --- |
-| 内联样式 CSS | `<div style="..."></div>` |
-| 内部样式 CSS | `<style>...</style>` |
-| 外部样式 CSS | `<link rel="stylesheet" href="..." />` |
-| 内部脚本 | `<script>...</script>` |
-| 外部脚本 | `<script src="..."></script>` |
-| 禁用脚本替代 | `<noscript>...</noscript>` |
-
-**区分：**
-
-- `href`：标识超文本引用，用在`link`、`a`等元素上，是引用和页面关联，在当前元素和引用资源之间建立联系。
-- `src`：标识资源引用，用在`script`、`img`、`iframe`等元素上，表示替换当前元素。
-
-### 13 - 注释
-
-| 名称 | 描述 |
-| --- | --- |
-| 常规注释 | `<!-- 注释 -->` |
-| 条件注释 | `<!-- [if IE]> 仅在IE中可见 <![endif]-->` |
-
-### 14 - 路径
-
-| 名称 | 描述 |
-| --- | --- |
-| 绝对路径 | 指向本地文件或者网络文件的完整 URL |
-| 相对路径 | 相对于当前页面的文件（./open 代表根目录下、open 代表当前目录下、../open 代表上一级目录下） |
-
-**备注：**
-
-- `URL`：统一资源定位器，语法规则：`scheme://host.damain:port/path/filename`
-
-### 15 - 框架
-
-| 元素 | 描述 |
-| --- | --- |
-| frameset > frame src="" | 框架集不可与 body 同用，cols 垂直设置，rows 水平设置，可混合使用 |
-| noframes > body | 不支持框架集 |
-| iframe | 内联框架 |
-
-**备注：**
-
-- `target="showframe"` 用于在框架集中打开链接，也可以用过锚点跳转到网页的具体位置。
-
-### 16 - 多媒体
-
-| 元素 | 描述 |
-| --- | --- |
-| object | 插件 |
-| embed | 内嵌对象 |
-| audio > source type="audio/mpeg" | 音频 |
-| video > source type="video/mp4" | 视频 |
-| track | 字幕 |
-| picture > source / img | 为不同的设备提供图像 |
-
-**object 属性：**
-
-- `width`：资源宽度。
-- `height`：资源高度。
-- `type`：指定资源的类型。
-- `src`：和 `data` 至少设置一个。
-- `data`：`URL` 作为资源地址。
-
-**embed 属性：**
-
-- `width`：资源宽度。
-- `height`：资源高度。
-- `type`：选择插件实例化类型。
-- `src`：被嵌套资源URL。
-
-**audio 属性：**
-
-- `controls`：浏览器提供一个控制面板。
-- `autoplay`：布尔属性，尽早自动播放。
-- `loop`：布尔属性，循环播放。
-- `src`：嵌入音频URL。
-
-**video 属性：**
-
-- `controls`：浏览器提供一个控制面板。
-- `autoplay`：布尔属性，尽早自动播放。
-- `autopictureinpicture`：切换到画中画模式。
-- `loop`：布尔属性，循环播放。
-- `muted`：布尔属性，开启静音。
-- `playsinline`：内联播放。
-- `poster`：海报帧图片URL。
-- `src`：嵌入视频URL。
-
-### 17 - 表单
+### ◾ 表单
 
 | 元素 | 描述 |
 | --- | --- |
 | form |  |
-| > input： |  |
-| > type="text" | 文本输入 |
-| > type="password" | 密码输入 |
-| > type="button" | 按钮 |
-| > type="radio" | 单选按钮 |
-| > type="checkbox" | 复选按钮 |
-| > type="submit" | 提交按钮 |
-| > type="image" | 带图像的提交按钮 |
-| > type="number" min="" max="" | 数值 |
-| > type="range" min="" max="" step="" | 范围 |
-| > type="date" | 日期 |
-| > type="time" | 时间 |
-| > type="datetime-local" | 时间（有时区） |
-| > type="color" | 颜色 |
-| > type="email" | 邮件 |
-| > type="search" | 搜索 |
-| > type="url" | URL |
-| > type="file" | 文件 |
-| list="id" > datalist > option value="" | 预定义选项列表 |
-| button | 按钮 |
-| select > option value="" | 下拉列表 |
-| optgroup | select 元素的选项创建分组 |
-| textarea > rows="" cols="" | 文本域 |
-| label > for="name" | 获取焦点 |
-| fieldest > legend 标题 | 组合表单数据 |
-| output | 表示计算或用户操作的结果 |
-| progress > max="" value="" | 进度条 |
+| > input : | 各类型表单 |
+| ☯ type="text" | 文本输入 |
+| ☯ type="password" | 密码输入 |
+| ☯ type="radio" | 单选按钮 |
+| ☯ type="checkbox" | 复选按钮 |
+| ☯ type="button" | 按钮 |
+| ☯ type="submit" | 提交按钮 |
+| ☯ type="image" | 带图像的提交按钮 |
+| ☯ type="date" | 日期 |
+| ☯ type="time" | 时间 |
+| ☯ type="datetime-local" | 时间（有时区） |
+| ☯ type="color" | 颜色 |
+| ☯ type="email" | 邮件 |
+| ☯ type="search" | 搜索 |
+| ☯ type="url" | URL |
+| ☯ type="file" | 文件 |
+| ☯ type="number" min="..." max="..." | 数值 |
+| ☯ type="range" min="..." max="..." step="..." | 范围 |
+| ☯ list="hello" | 选项列表 |
+| > datalist ☯ id="hello" > option ☯ value="数据" | 列表对应的选项 |
+| > button | 按钮 |
+| > textarea ☯ rows="..." cols="..." | 文本域 |
+| > select > option ☯ value="数据" | 下拉列表 |
+| > select > optgroup ☯ label="分组名" > option ☯ value="数据" | 下拉分组 |
+| > label ☯ for="input的id" | 获取焦点 |
+| > fieldest > legend > ... | 组合表单数据 |
+| > output | 表示计算或用户操作的结果 |
+| > progress ☯ max="..." value="..." | 进度条 |
 
 **form 属性：**
 
-- `action`：处理表单提交的URL
-- `method`：`post` 表单数据会被包含在表单体内然后发送给服务器、`get` 表单数据会附加在 `action` 属性的 `URL` 中。
-- `name`：需要独一无二。
-- `target`：表单提交后在哪里显示信息。
-- `accept-charset`：字符编码。
+- `action`：处理表单提交的 URL
+- `method`：请求方法，`GET` `POST` 等。
+- `name`：唯一名称。
+- `target`：表单提交跳转方式。
 - `autocomplete`：默认值自动补全。
 - `novalidata`：提交时不需要验证表单。
+- `accept-charset`：字符编码。
 
 **input 属性：**
 
-- `name`：以名字/值的对提交表单。
-- `value`：表单控件的值。
+- `name`：唯一名称，键值对的键。
+- `value`：表单控件的值，键值对的值。
 - `required`：必填项。
 - `checked`：控制控件是否被选中。
 - `selected`：默认选中。
@@ -356,12 +239,99 @@ next:
 
 **button属性：**
 
+- `name`：唯一名称。
 - `disabled`：布尔属性，不准交互。
-- `name`：`button` 的名称，与表单数据一起提交。
 - `type`：`submit` 数据提交、`reset` 重置、`menu` 打开一个 `menu` 定义的弹出菜单。
 - `value`：初始值。
 
-## 二、语义化
+### ◾ 多媒体
+
+| 元素 | 描述 |
+| --- | --- |
+| object | 插件 |
+| ☯ data="..." | 资源地址 |
+| ☯ type="..." | 资源类型 |
+| ☯ width="..." | 资源宽度 |
+| ☯ height="..." | 资源高度 |
+| embed | 内嵌对象 |
+| ☯ src="..." | 资源地址 |
+| ☯ type="..." | 资源类型 |
+| ☯ width="..." | 资源宽度 |
+| ☯ height="..." | 资源高度 |
+| audio > source | 音频 |
+| ☯ src="..." | 音频地址 |
+| ☯ type="audio/mpeg" | 音频类型 |
+| ☯ loop="true" | 循环播放 |
+| ☯ autoplay="true" | 自动播放 |
+| ☯ controls | 浏览器提供一个控制面板 |
+| video > source | 视频 |
+| ☯ src="..." | 视频地址 |
+| ☯ type="video/mp4" | 视频类型 |
+| ☯ loop="true" | 循环播放 |
+| ☯ autoplay="true" | 自动播放 |
+| ☯ muted="true" | 开启静音 |
+| ☯ playsinline | 内联播放 |
+| ☯ autopictureinpicture | 切换到画中画模式 |
+| ☯ poster="..." | 海报帧图片 URL |
+| ☯ controls | 浏览器提供一个控制面板 |
+| > track | 字幕 |
+| picture > source / img | 为不同的设备提供图像 |
+
+### ◾ 容器
+
+| 元素 | 描述 |
+| --- | --- |
+| div | 块级容器 |
+| span | 内联容器 |
+
+### ◾ 框架
+
+| 元素 | 描述 |
+| --- | --- |
+| frameset >  | 框架集不可与 body 同用 |
+| ☯ cols="..." | 垂直占比 |
+| ☯ rows="..." | 水平占比 |
+| > frame ☯ src="..." | 要展示的页面 |
+| noframes > body | 不支持框架集 |
+| iframe ☯ src="..." | 内联框架 |
+
+> `target="showframe"` 用于在框架集中打开链接，也可以用过锚点跳转到网页的具体位置。
+
+### ◾ 注释
+
+| 名称 | 描述 |
+| --- | --- |
+| 常规注释 | `<!-- 注释 -->` |
+| 条件注释 | `<!-- [if IE]> 仅在IE中可见 <![endif]-->` |
+
+### ◾ 路径
+
+| 名称 | 描述 |
+| --- | --- |
+| 绝对路径 | 指向本地文件或者网络文件的完整 URL |
+| 相对路径 | 相对于当前页面的文件（./open 代表根目录下、open 代表当前目录下、../open 代表上一级目录下） |
+
+> URL：统一资源定位器，语法规则：`scheme://host.damain:port/path/filename`
+
+### ◾ 外部
+
+| 名称 | 描述 |
+| --- | --- |
+| CSS: 内联样式 | `<div style="..."></div>` |
+| CSS: 内部样式 | `<style>...</style>` |
+| CSS: 外部样式 | `<link rel="stylesheet" href="..." />` |
+| JS: 内部脚本 | `<script>...</script>` |
+| JS: 外部脚本 | `<script src="..."></script>` |
+| JS: 禁用脚本替代 | `<noscript>...</noscript>` |
+
+### ◾ 其他
+
+::: tip 区分 href 与 src
+`href`：标识超文本引用，用在`link`、`a`等元素上，是引用和页面关联，在当前元素和引用资源之间建立联系。<br />
+`src`：标识资源引用，用在`script`、`img`、`iframe`等元素上，表示替换当前元素。
+:::
+
+## 📣 语义化
 
 | 元素 | 描述 |
 | --- | --- |
