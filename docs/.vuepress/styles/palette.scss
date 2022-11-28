@@ -1,0 +1,116 @@
+:root {
+  --c-brand: #002FA7;
+  --c-brand-light: #002FA7;
+
+  --c-bg: #FFFFFF;
+  --c-bg-light: #FFFFFF;
+  --c-bg-lighter: #EEEEEE;
+  --c-bg-navbar: var(--c-bg);
+  --c-bg-sidebar: var(--c-bg);
+  --c-bg-arrow: #A42E2D;
+
+  --c-text: #2B2B2B;
+  --c-text-accent: var(--c-brand);
+  --c-text-light: #3A5169;
+  --c-text-lighter: #4E6E8E;
+  --c-text-lightest: #6A8BAD;
+  --c-text-quote: #999999;
+
+  --c-border: #EEEEEE;
+  --c-border-dark: #999999;
+
+  --c-tip: #EA5506;
+  --c-tip-bg: var(--c-bg-light);
+  --c-tip-title: var(--c-text);
+  --c-tip-text: var(--c-text);
+  --c-tip-text-accent: var(--c-text-accent);
+  --c-warning: #FFEA00;
+  --c-warning-bg: #FFFEA3;
+  --c-warning-title: #AD9000;
+  --c-warning-text: #746000;
+  --c-warning-text-accent: var(--c-text);
+  --c-danger: #B7282E;
+  --c-danger-bg: #ffE0E0;
+  --c-danger-title: #990000;
+  --c-danger-text: #660000;
+  --c-danger-text-accent: var(--c-text);
+  --c-details-bg: #EEEEEE;
+
+  --c-badge-tip: var(--c-tip);
+  --c-badge-warning: var(--c-warning);
+  --c-badge-danger: var(--c-danger);
+
+  --t-color: 0.3s ease;
+  --t-transform: 0.3s ease;
+
+  --code-bg-color: #2B2B2B;
+  --code-hl-bg-color: #FFFFFF;
+  --code-ln-color: #9E9E9E;
+  --code-ln-wrapper-width: 3.5rem;
+
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-family-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+
+  --navbar-height: 3.6rem;
+  --navbar-padding-v: 0.7rem;
+  --navbar-padding-h: 1.5rem;
+  --sidebar-width: 20rem;
+  --sidebar-width-mobile: calc(var(--sidebar-width) * 0.82);
+  --content-width: 800px;
+  --homepage-width: 1000px;
+}
+
+.back-to-top {
+  --back-to-top-color: var(--c-brand);
+  --back-to-top-color-hover: var(--c-brand-light);
+}
+
+.DocSearch {
+  --docsearch-primary-color: var(--c-brand);
+  --docsearch-text-color: var(--c-text);
+  --docsearch-highlight-color: var(--c-brand);
+  --docsearch-muted-color: var(--c-text-quote);
+  --docsearch-container-background: rgba(9, 10, 17, 0.8);
+  --docsearch-modal-background: var(--c-bg-light);
+  --docsearch-searchbox-background: var(--c-bg-lighter);
+  --docsearch-searchbox-focus-background: var(--c-bg);
+  --docsearch-searchbox-shadow: inset 0 0 0 2px var(--c-brand);
+  --docsearch-hit-color: var(--c-text-light);
+  --docsearch-hit-active-color: var(--c-bg);
+  --docsearch-hit-background: var(--c-bg);
+  --docsearch-hit-shadow: 0 1px 3px 0 var(--c-border-dark);
+  --docsearch-footer-background: var(--c-bg);
+}
+
+.external-link-icon {
+  --external-link-icon-color: var(--c-text-quote);
+}
+
+.medium-zoom-overlay {
+  --medium-zoom-bg-color: var(--c-bg);
+}
+
+#nprogress {
+  --nprogress-color: var(--c-brand);
+}
+
+.pwa-popup {
+  --pwa-popup-text-color: var(--c-text);
+  --pwa-popup-bg-color: var(--c-bg);
+  --pwa-popup-border-color: var(--c-brand);
+  --pwa-popup-shadow: 0 4px 16px var(--c-brand);
+  --pwa-popup-btn-text-color: var(--c-bg);
+  --pwa-popup-btn-bg-color: var(--c-brand);
+  --pwa-popup-btn-hover-bg-color: var(--c-brand-light);
+}
+
+.search-box {
+  --search-bg-color: var(--c-bg);
+  --search-accent-color: var(--c-brand);
+  --search-text-color: var(--c-text);
+  --search-border-color: var(--c-border);
+
+  --search-item-text-color: var(--c-text-lighter);
+  --search-item-focus-bg-color: var(--c-bg-light);
+}

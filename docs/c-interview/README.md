@@ -26,7 +26,7 @@ contributors: false
 
 - [浏览器](/c-interview/e-browser.md)
 
-::: tip 📋 题库
+::: tip 题库收集
 [力扣](https://leetcode.cn/problemset/all/)
 
 [牛客](https://www.nowcoder.com/exam/company)

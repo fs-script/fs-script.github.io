@@ -28,7 +28,7 @@ contributors: false
 
 - [SwiftAdmin 后台管理](https://gitee.com/meystack/swiftadmin)
 
-::: tip 🎯 API
+::: tip AIP 收集
 [Awesome-API](https://github.com/TonnyL/Awesome_APIs/blob/master/README-zh.md)
 
 [云析 API 铺](https://fe.ecool.fun/topic-list)
