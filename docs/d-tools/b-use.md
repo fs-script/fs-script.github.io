@@ -19,3 +19,5 @@ next:
 
 - tree-node-cli 目录树生成：
   - `tree -L 5 -I "node_modules|.vuepress|.git" > README.md`
+
+## wangEditor 5
