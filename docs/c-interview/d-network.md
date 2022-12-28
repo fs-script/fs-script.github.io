@@ -11,7 +11,3 @@ next:
   text: 浏览器
   link: /c-interview/e-browser.md
 ---
-
-## 搞懂 DNS
-
-## 搞懂 TCP 连接
