@@ -14,11 +14,11 @@ next:
 
 ## （一）ECMAScript
 
-### 01 - 代码结构
+### 01 - 注释
 
-- `<script></script>` 标签：如果设置了 `src` 属性，`script` 标签内容将会被忽略；可以设置多个 `script` 标签。
-- `"use strict"`：开启严格模式并激活新特性，需要在代码最顶部添加；`class` 与 `module` 中会自动开启该模式。
-- 语句：可以省略分号，一个换行代表一个分号（自动插入分号），但有些情况下无法正确识别，例如上一句的结尾为括号或中括号时。
+- `<script>` 标签如果设置了 `src` 属性，`<script>` 标签的内容将会被忽略，可以设置多个 `<script>` 标签。
+- `"use strict"` 将开启严格模式并激活新特性，需要在代码最顶部添加，`class` 与 `module` 中会自动开启该模式。
+- 语句可以省略分号，一个换行代表一个分号（自动插入分号），但有些情况下无法正确识别，例如上一句的结尾为括号或中括号时。
 - 单行注释：
 
 ```javascript
@@ -35,19 +35,14 @@ next:
 
 ### 02 - 变量
 
-- 一个变量只能被声明（定义）一次。
-- 一次可以声明多个变量。
-- 变量可以被修改。
-- 变量可以被拷贝。
-- 命名仅可字母、数字、$、_
-- 命名首字符非数字，使用小驼峰命名法。
-- 常量赋值后不能被修改，采用大写形式。
+- 命名仅可字母、数字、$、_ 且命名首字符非数字，建议使用小驼峰命名法。
+- 常量赋值后不能被修改，建议使用大写形式。
 
 | 关键字 | 描述 |
 | --- | --- |
 | let | 声明变量 |
 | const | 声明常量 |
-| var | 老旧，不建议使用 |
+| var | 老旧（不建议使用） |
 
 ### 03 - 数据类型
 
@@ -55,7 +50,7 @@ next:
 
 | 类型 | 描述 |
 | --- | --- |
-| Number | 整数、浮点数、Infinity（无穷大）、NaN（非数值，具有粘性），注：数值运算是安全的，可以除0 |
+| Number | 整数、浮点数、Infinity（无穷大）、NaN（非数值），数值运算是安全的，可以除0 |
 | BigInt | 用于表示大于2的253次方-1和小于2的-253次方的整数，数字尾部加n，代表此类型 |
 | String | "字符串"、'字符串'、'反引号用于功能扩展${变量名}' |
 | Boolean | true、false |
@@ -64,8 +59,8 @@ next:
 | Object | 存储数据集合和更复杂的实体 |
 | Symbol | 创建对象的唯一标识符 |
 
-- `typeof` 用于返回数据类型。
-- `null` 返回对象类型，是 `typeof` 的错误，并非真正的对象。
+- `typeof(...)` 用于返回数据类型。
+- `null` 返回对象类型，是 `typeof(...)` 的错误，并非真正的对象。
 - 函数返回 `function` ，函数隶属于对象。
 
 ### 04 - 类型转换
@@ -74,10 +69,10 @@ next:
 | --- | --- |
 | String(...) | 转换为字符串类型 |
 | Number(...) | 转换为数字型类型 |
-|  | undefined 转换为 NaN、null 转换为 0 |
+|  | undefined 转换为 NaN |
+|  | null 转换为 0 |
 | Boolean(...) | 转换为布尔类型 |
-
-- 非空字符串转布尔为 `true`
+|  | 非空字符串均为 `true` |
 
 ### 05 - 运算符
 
@@ -95,7 +90,7 @@ next:
 | a % b | 取余 |
 | a ** b | 幂运算 |
 
-- 从左向右运算。
+- 遵循从左向右运算。
 
 | 赋值运算符 | 描述 |
 | --- | --- |
@@ -148,7 +143,7 @@ next:
 
 ```javascript
 // 结果为真，返回 value1，否则返回 value2
-let result = condition ? value1 : value2;
+let result = condition ? value1 : value2
 ```
 
 - 可以使用多个问号。
@@ -163,7 +158,7 @@ let result = condition ? value1 : value2;
 | ！ | 布尔非运算，!!可用于转布尔值 |
 | ?? | 空值合并运算，返回第一个非 null 与 undefined 的值，否则返回最后一个值 |
 
-- `??` 常用于：提供默认值。
+- `??` 常用于提供默认值。
 - `??` 与 `&& ||` 一块使用需要添加括号标记优先级。
 
 ### 09 - if
@@ -171,23 +166,23 @@ let result = condition ? value1 : value2;
 ```javascript
 // ---------
 if (...) {
-  ...;
+  ...
 }
 
 // ----------
 if (...) {
-  ...;
+  ...
 } else {
-  ...;
+  ...
 }
 
 // ---------
 if (...) {
-  ...;
+  ...
 } else if (...) {
-  ...;
+  ...
 } else {
-  ...;
+  ...
 }
 ```
 
@@ -197,14 +192,14 @@ if (...) {
 
 ```javascript
 switch (...) {
-  case n:
-  ...;
-  break;
-  case n:
-  ...;
-  break;
+  case n1:
+  ...
+  break
+  case n2:
+  ...
+  break
   default:
-  ...;
+  ...
 }
 ```
 
@@ -215,12 +210,12 @@ switch (...) {
 ```javascript
 // ----------
 while (...) {
-  ...;
+  ...
 }
 
 // ----------
 do {
-  ...;
+  ...
 } while (...)
 ```
 
@@ -230,7 +225,7 @@ do {
 
 ```javascript
 for (let i = 0; i < 9; i++) {
-  ...;
+  ...
 }
 ```
 
@@ -250,55 +245,56 @@ let num = 0;
 // outer 标签
 outer: for (let b = 1; b <= 9; b++) {
   for (let c = 1; c <= 9; c++) {
-    num = b * c;
-    console.log(num);
-    if (num == 18) break outer;
+    num = b * c
+    console.log(num)
+    if (num == 18) break outer
   }
 }
 ```
 
 ### 13 - 函数
 
-- 函数就是行为，字符串或数字等常规值代表数据；函数也是值，表示一个“行为”的值。
+- 函数即行为，字符串或数字等常规值代表数据，同时函数也是值，表示一个行为的值。
 - 局部变量：在函数内声明，仅在函数内可见。
-- 全局变量（外部变量）：函数之外声明，全局可用，单应尽量减少使用。
+- 全局变量（外部变量）：函数之外声明，全局可用，但应尽量减少使用。
 - 声明同名变量，函数会遮蔽外部变量使用局部变量。
 
-**1、“函数声明”，声明在定义之前就可以被调用：**
+**（1）“函数声明”，声明在定义之前就可以被调用：**
 
 ```javascript
+funcName()
+
 function funcName(parameter1, parameter2, ...) {
-  return ...;
+  return ...
 }
 
-funcName();
+funcName()
 ```
 
-**2、“函数表达式”，代码执行到达时被创建，仅从那一刻起可用：**
+**（2）“函数表达式”，代码执行到达时被创建，仅从那一刻起可用：**
 
 ```javascript
-let x = function (parameter1, parameter2, ...) {
-  ...;
+let funcName = function(parameter1, parameter2, ...) {
+  ...
 };
 
-x();
+funcName()
 
 // 可以被拷贝
-let y = x;
-y();
+let copyFunc = funcName;
+copyFunc();
 ```
 
 - 未被传递值的参数，被赋予 `undefined`
 - 可以为参数设置默认值。
 - 空值 `return` 或没有 `return` 返回值为 `undefined`
 - 命名常用前缀：`get...`、`calc...`、`create...`、`check...`
-
 - 回调函数/匿名函数：
 
 ```javascript
 function ask(question, yes, no) {
-  if (confirm(question)) yes();
-  else no();
+  if (confirm(question)) yes()
+  else no()
 }
 
 ask(
@@ -310,21 +306,21 @@ ask(
   function () {
     console.log("你没吃");
   }
-);
+)
 ```
 
-**3、“箭头函数”，优于函数表达式：**
+**（3）“箭头函数”，优于函数表达式：**
 
 ```javascript
-let sum = (a, b) => a + b;
-sum(1, 2);
+let sum = (a, b) => a + b
+sum(1, 2)
 
-let double = (n) => n * 2;
-double(8);
+let double = (n) => n * 2
+double(8)
 
 let sayHi = (...) => {
-  ...;
-  return ...;
+  ...
+  return ...
 }
 ```
 
@@ -337,9 +333,9 @@ let sayHi = (...) => {
 
 ```javascript
 function hello(...) {
-  ...;
-  debugger; // 调试器会在此处暂停
-  ...;
+  ...
+  debugger // 调试器会在此处暂停
+  ...
 }
 ```
 
@@ -355,23 +351,22 @@ function hello(...) {
 
 - 对象是用来存储键值对和更复杂的实体，是具有一些特殊特性的关联数组。
 
-**1、构造函数方式创建对象：**
+**（1）构造函数方式创建对象：**
 
 ```javascript
-let user1 = new Object();
+let user1 = new Object()
 ```
 
-**2、字面量方式创建对象：**
+**（2）字面量方式创建对象：**
 
 ```javascript
-let user2 = {};
+let user2 = {}
 ```
 
-- 属性：键值对的形式，可以多个词汇命名属性的键，但是需要添加引号。
+- 属性以键值对的形式存在，可以多个词汇命名属性的键，但是需要添加引号。
 - 访问属性：`user1.name` 点方法、`user1["likes birds"]` 方括号访问多词属性。
 - 添加属性：`user1.age = 30`
 - 删除属性：`delete user1.age`
-
 - 判断属性是否存在：
 
 ```javascript
@@ -381,11 +376,11 @@ console.log("age" in user1);
 - 计算属性：方括号比点符号更加强大，允许任何属性名和变量。
 
 ```javascript
-let fruit = prompt("你喜欢吃什么水果？", "apple");
+let fruit = prompt("你喜欢吃什么水果？", "apple")
 
 let bag = {
   [fruit]: 5,
-};
+}
 ```
 
 - 属性值简写：对象的属性名不受限制，可以为保留字，其他类型会被自动地转换为字符串。
@@ -396,7 +391,7 @@ function makeUser(name, age) {
     name, // 与 name: name 相同
     age, // 与 age: age 相同
     // ...
-  };
+  }
 }
 ```
 
@@ -425,16 +420,17 @@ for (let value of user1) {
 - 当一个对象变量被复制，是引用被复制，而该对象自身并没有被复制。
 - 仅当两个对象为同一对象时，两者才相等。
 - 想要真正的复制对象本身，需要拷贝该对象：使用 `Object.assign(dest, [src1, src2, src3...])`，被拷贝的项目中没有对象类型，这种拷贝称为“浅拷贝”，如果被拷贝的属性的属性名已经存在，那么它会被覆盖。
-- 使用一个拷贝循环来检查 `user[key]` 的每个值，如果它是一个对象，那么也复制它的结构，使用 `_.cloneDeep(obj)`，这种拷贝方式称为“深拷贝”。
+- 如果属性值也是一个对象，那么也复制它的结构而不是其引用地址，使用 `structuredClone(value)`，这种拷贝方式称为“深拷贝”。
 - 使用 `const` 声明的对象也是可以被修改的，作为一个整体进行赋值时才会报错。
 
 ### 19 - 垃圾回收
 
 - JavaScript 的内存管理是自动的、无形的。
 - 可达性：
-  - 1、当前执行的函数，它的局部变量和参数。
-  - 2、当前嵌套调用链上的其他函数、它们的局部变量和参数。
-  - 3、全局变量。
+  - （1）当前执行的函数，它的局部变量和参数。
+  - （2）当前嵌套调用链上的其他函数、它们的局部变量和参数。
+  - （3）全局变量。
+- 不可达便会被回收。
 - 如果一个值可以通过引用链从根访问任何其他值，则认为该值是可达的。
 - 对外引用不重要，只有传入引用才可以使对象可达。
 - 几个对象相互引用，但外部没有对其任意对象的引用，这些对象也可能是不可达的，将会被从内存中删除。
@@ -449,19 +445,19 @@ for (let value of user1) {
 
 ### 21 - 构造器与new
 
-- 构造函数：它们的命名以大写字母开头，它们只能由 `new` 操作符来执行，实现可重用的对象创建代码。
+- 构造函数的命名以大写字母开头，只能由 `new` 操作符来执行，实现可重用的对象创建代码。
 
 ```javascript
 function User(name) {
-  this.name = name;
-  this.isAdmin = false;
+  this.name = name
+  this.isAdmin = false
 
   this.sayHi = function () {
     console.log("Myname is " + this.name);
-  };
+  }
 }
 
-let user = new User("Jack");
+let user = new User("Jack")
 ```
 
 - 构造函数被调用时，隐式的创建了一个空对象，并且分配了 `this`，通过 `this` 添加新的属性，最后隐式的返回了 `this`
@@ -471,11 +467,10 @@ let user = new User("Jack");
 ### 22 - 可选链
 
 - 可选链 `?.` 前面的值为 `undefined` 或者 `null`，它会停止运算并返回 `undefined`
-
 - 安全地访问 `user.address.street` 的方式：
 
 ```javascript
-let user = {};
+let user = {}
 console.log(user?.address?.street);
 ```
 
@@ -6507,7 +6502,7 @@ $('button').eq(2).click(function() {
 
 <style>
 table {
-  display: table !important;
-  width: 100% !important;
+  display: table;
+  width: 100%;
 }
 </style>

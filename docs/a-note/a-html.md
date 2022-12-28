@@ -351,7 +351,7 @@ next:
 
 <style>
 table {
-  display: table !important;
-  width: 100% !important;
+  display: table;
+  width: 100%;
 }
 </style>
