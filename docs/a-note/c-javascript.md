@@ -481,11 +481,11 @@ console.log(user?.address?.street);
 
 ### 23 - Symbol类型
 
-- 只有两种原始类型可以用作对象属性键：字符串类型、`Symbol`类型。
-- `Symbol` 值表示唯一的标识符，是带有可选描述的原始唯一值，保证是唯一的，不会被自动转换为字符串。
+- 只有两种原始类型可以用作对象属性的键：字符串类型、`Symbol`类型。
+- `Symbol` 的值表示唯一的标识符，是带有可选描述的原始唯一值，保证是唯一的，不会被自动转换为字符串。
 
 ```javascript
-let id = Symbol("id");
+let id = Symbol("id")
 ```
 
 - 允许创建对象的“隐藏”属性，代码的任何其他部分都不能意外访问或重写这些属性。
@@ -493,40 +493,40 @@ let id = Symbol("id");
 ```javascript
 let user = {
   name: "John",
-};
+}
 
-let id = Symbol("id");
+let id = Symbol("id")
+
 // 第三方代码看不到
-user[id] = 1;
+user[id] = 1
+
 // 可以使用 symbol 作为键来访问数据
 console.log(user[id]);
 ```
 
 - `Symbol` 总是不同的，即使它们有相同的名字。
 - `Symbol` 属性不参与 `for..in...` 循环。
-- 从全局注册表中读取，如果不存在就创建它：全局注册表中的 `Symbol` 再读取复制是相同的。
+- `Symbol.for(...)` 从全局注册表中读取，如果不存在就创建它，全局注册表中的 `Symbol` 再读取复制是相同的：
 
 ```javascript
-let sym1 = Symbol.for("name");
-let sym2 = Symbol.for("id");
+let sym1 = Symbol.for("name")
+let sym2 = Symbol.for("id")
 ```
 
-- 通过全局 symbol 返回一个名字。
+- `Symbol.keyFor(...)` 通过全局 `symbol` 返回一个名字，不存在则返回 `undefined`：
 
 ```javascript
 console.log(Symbol.keyFor(sym1));  // name
 console.log(Symbol.keyFor(sym2));  // id
 ```
 
-- `Symbol.keyFor`内部使用全局 `Symbol` 注册表来查找 `Symbol` 的键。
-
 ### 24 - 原始值转换
 
 - 转换规则：
   - 布尔值没有转换。
   - 数字转换发生在对象相减或应用数学函数时。
-  - 字符串转换通常发生在像`alert(obj)`这样输出一个对象和类似的上下文中。
-- `Symbol.toPrimitive`用来给转换方法命名：
+  - 字符串转换通常发生在像 `alert(...)` 这样输出一个对象和类似的上下文中。
+- `Symbol.toPrimitive` 用来给转换方法命名：
 
 ```javascript
 let user = {
@@ -535,13 +535,13 @@ let user = {
 
   [Symbol.toPrimitive](hint) {
     console.log(`hint:${hint}`);
-    return hint == "string" ? `{name: "${this.name}"}` : this.money;
-  },
-};
+    return hint == "string" ? `{name: "${this.name}"}` : this.money
+  }
+}
 
-console.log(String(user));
-console.log(+user);
-console.log(user + 500);
+console.log(String(user));  // hint:string '{name: "John"}'
+console.log(+user);  // hint:number 1000
+console.log(user + 500);  // hint:default 1500
 ```
 
 - 过程：
@@ -555,10 +555,10 @@ console.log(user + 500);
 
 | 方法 | 参数 | 描述 |
 | --- | --- | --- |
-| num.toString(base) | base 指定进制 2-36 默认 10 | 返回给定进制形式的字符串 |
-| num.toFixed(n) |  | 返回指定小数位数，字符串形式，最近舍入，不够添0 |
-| parseInt(str) | 可选参数，指定进制 | 返回字符串中读取的整数，直到第一个非数字结束 |
-| parseFloat(str) | 可选参数，指定进制 | 返回字符串中读取的浮点数，直到第一个非数字结束 |
+| num.toString(base) | 指定进制 2-36 默认为 10 | 返回指定进制形式的字符串 |
+| num.toFixed(n) | 指定小数位数 | 返回字符串形式，最近舍入，不够添0 |
+| parseInt(str) |  | 返回读取的整数，直到第一个非数字结束 |
+| parseFloat(str) |  | 返回读取的浮点数，直到第一个非数字结束 |
 | Math.random() |  | 返回一个 0 - 1 的随机数 |
 | Math.floor(num) |  | 向下舍入 |
 | Math.ceil(num) |  | 向上舍入 |
@@ -575,9 +575,9 @@ console.log(user + 500);
 
 | 方法 | 参数 | 描述 |
 | --- | --- | --- |
-| str.length | 数字属性，而不是函数 | 获取字符串的长度 |
-| str[n] |  | 访问字符串，未找到返回undefined |
-| str.charAt(n) | 建议使用上面的方式 | 访问字符串，未找到返回空字符串 |
+| str.length |  | 获取字符串的长度 |
+| str[n] |  | 访问字符串，未找到返回 undefined |
+| str.charAt(n) |  | 访问字符串，未找到返回空字符串 |
 | str.toUpperCase() |  | 转大写 |
 | str.toLowerCase() |  | 转小写 |
 | str.indexOf(substr, [n]) | 可选参数，指定开始位置 | 返回匹配成功子字符串的位置，大小写敏感，失败返回 -1 |
@@ -585,16 +585,16 @@ console.log(user + 500);
 | str.includes(substr, [n]) | 可选参数，指定开始位置 | 是否包含某个子字符串 |
 | str.startsWith(str1) |  | 是否以某字符串开头 |
 | str.endsWith(str1) |  | 是否以某字符串结尾 |
-| str.slice(start, end) |  | 返回[start end) 部分的字符串，省略end则到结尾，可取负值 |
-| str.substring(start, end) |  | 返回[start end) 部分的字符串，允许start大于end，不支持负值 |
-| str.substr(start, length) |  | 返回start开始指定长度的字符串，start允许负值 |
-| str.codePointAt(pos) |  | 返回pos位置的字符代码 |
-| str.localeCompare(str1) |  | str排在str1前面返回负数、str排在str1后面返回正数、相同返回0 |
+| str.slice(start, end) |  | 返回 [start end) 部分的字符串，省略end则到结尾，可取负值 |
+| str.substring(start, end) |  | 返回 [start end) 部分的字符串，允许 start 大于 end，不支持负值 |
+| str.substr(start, length) |  | 返回 start 开始指定长度的字符串，start 允许负值 |
+| str.codePointAt(pos) |  | 返回 pos 位置的字符代码 |
+| str.localeCompare(str1) |  | str 排在 str1 前面返回负数、str 排在 str1 后面返回正数、相同返回0 |
 | str.trim() |  | 删除字符串前后的空格 |
-| str.repeat(n) |  | 重复字符串n次 |
+| str.repeat(n) |  | 重复字符串 n 次 |
 
 - `for (let ... of ...) { ... }` 遍历字符串。
-- 字符串是不可以被修改的，需要创建新的字符串。
+- 字符串是不可以直接被修改的，需要创建新的字符串。
 
 ### 27 - 数组
 
@@ -603,28 +603,28 @@ console.log(user + 500);
 | arr.length |  | 获取元素数量，实际是最大数字索引+1，可写，小于实际则数组被截断，不可逆 |
 | arr[n] |  | 访问数组元素 |
 | arr[n] = ... |  | 替换或增加数组元素 |
-| arr.at(-1) |  | 访问最后一个元素 |
+| arr.at(n) |  | 访问第 n 个元素，-1 表示最后一个元素 |
 | arr.pop() |  | 末端，取出并返回最后一个元素，取出即被删除 |
-| arr.push(...) |  | 末端，添加元素 |
+| arr.push(...) |  | 末端，添加元素，返回数组的长度 |
 | arr.shift() |  | 首端，取出并返回第一个元素，取出即被删除 |
-| arr.unshift(...) |  | 首端，添加元素 |
+| arr.unshift(...) |  | 首端，添加元素，返回数组的长度 |
 | delete arr[n] |  | 元素被删除，但位置依然存在 |
-| arr.splice(n, n, "...") | 起始位置，删除个数，此后插入的新内容 | 返回被删除的元素 |
+| arr.splice(n, n, ...) | 起始位置，删除个数，此后插入的新内容 | 返回被删除的元素 |
 | arr.slice(start, end) |  | 返回一个按起始位置截取复制的新数组 |
 | arr.concat(arr1, arr2...) |  | 返回一个合并的新数组 |
 | arr.forEach((item, index, array) => {...}) | 每个元素，每个元素的索引，数组本身 | 遍历数组的每个元素，并为每个元素运行相关函数，无返回 |
-| arr.indexOf(item, n) |  | 从n位置搜索item元素，找到返回索引，否则返回-1 |
+| arr.indexOf(item, n) |  | 从 n 位置搜索 item 元素，找到返回索引，否则返回-1 |
 | arr.lastIndexOf(item, n) |  | 同上，从右向左搜索 |
-| arr.includes(item, n) |  | 从n位置搜索item元素，找到返回true，否则返回false |
-| arr.find(...) |  | 返回查找到的指定元素，未找到返回undefined |
-| arr.findIndex() |  | 返回查找到的指定元素的索引，未找到返回undefined |
-| arr.filter(...) |  | 返回所有匹配元素组成的新数组 |
-| arr.map(...) |  | 对数组的每个元素都调用相关函数，返回结果数组 |
-| arr.sort(...) | 可设置函数参数，提供规则 | 对数组进行原位排序，默认按字符串排序 |
+| arr.includes(item, n) |  | 从 n 位置搜索 item 元素，找到返回 true，否则返回 false |
+| arr.find(func) |  | 返回符合函数条件的元素，未找到返回 undefined |
+| arr.findIndex(func) |  | 返回符合函数条件的元素索引，未找到返回 undefined |
+| arr.filter(func) |  | 返回所有匹配元素组成的新数组，浅拷贝 |
+| arr.map(func) |  | 对数组的每个元素都调用相关函数，返回结果数组 |
+| arr.sort(func) | 可设置函数参数，提供规则 | 对数组进行原位排序，默认按字符串排序 |
 | arr.reverse() |  | 对数组进行原位颠倒顺序 |
-| str.split(...) | ... 指定分隔符，可选参数对数组的长度做出限制，空参则分隔为每个字母 | 返回，通过给定分隔符把字符串分隔为数组 |
-| arr.join(...) | ... 指定分隔符 | 返回，通过给定分隔符把数组组合为字符串 |
-| arr.reduce((acc, item, index, arry)) | acc 是上一个函数的调用结果，可选参数：初始值 | 返回最后值，函数调用结果作为第一个参数传递 |
+| str.split("...") | ... 指定分隔符，可选参数对数组的长度做出限制，空参则分隔为每个字母 | 返回给定分隔符把字符串分隔的数组 |
+| arr.join("...") | ... 指定分隔符 | 返回给定分隔符把数组组合为字符串 |
+| arr.reduce(callback(prev, item, index, array), init) | 回调函数、初始值 | 返回最后值，函数调用结果作为第一个参数传递 |
 | arr.reduceRight(...) |  | 返回最后值，遍历时从右向左 |
 | Array.isArray(arr) |  | 判断是否为数组 |
 | Object.values(obj) |  | 返回一个给定对象自身的所有可枚举属性值的数组 |
@@ -633,7 +633,6 @@ console.log(user + 500);
 - `for (let ... of ...) { ... }` 遍历数组。
 - `let arr = [ [...], [...]...]` 多维数组。
 - 数组有自己的 `toString` 方法，会返回以逗号分隔的元素列表。
-- 可选的附加参数 `thisArg` 参数的值在 `func` 中变为 `this`
 
 ### 28 - 可迭代对象
 
