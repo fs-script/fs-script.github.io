@@ -636,19 +636,19 @@ console.log(user + 500);  // hint:default 1500
 
 ### 28 - 可迭代对象
 
-- 可以应用 `for..of` 的对象被称为可迭代对象。
+- 可以应用 `for..of...` 的对象被称为可迭代对象。
 - 数组是可迭代的，字符串也是可迭代的，数组和字符串是使用最广泛的内建可迭代对象。
-- `Symbol.iterator` 专门用于使对象可迭代的内建 `Symbol`
+- `Symbol.iterator` 是专门用于使对象可迭代的内建 `Symbol`
 
 ```javascript
 let range = {
   from: 1,
   to: 5,
-};
+}
 
-// 1. for..of 调用首先会调用这个：
+// 1. for..of 首先会调用这个方法：
 range[Symbol.iterator] = function () {
-  // ……它返回迭代器对象（iterator object）：
+  // 它返回迭代器对象（iterator object）：
   // 2. 接下来，for..of 仅与下面的迭代器对象一起工作，要求它提供下一个值
   return {
     current: this.from,
@@ -664,8 +664,8 @@ range[Symbol.iterator] = function () {
         return { done: true };
       }
     },
-  };
-};
+  }
+}
 
 // 简化：返回 range 对象自身
 let range = {
@@ -684,28 +684,28 @@ let range = {
       return { done: true };
     }
   },
-};
+}
 ```
 
-- `Array.from(...)` 可以接受一个可迭代或类数组的值，并从中获取一个“真正的”数组，然后就可以对其调用数组方法了（有索引，有长度）。
+- `Array.from(...)` 接受一个可迭代对象或类数组的值，并从中获取一个真正的数组，然后就可以对其调用数组方法了（有索引，有长度）。
 
 ### 29 - 映射与集合
 
-- `Map` 是一个带键的数据项的集合，就像一个 `Object` 一样，但是它们最大的差别是 `Map` 允许任何类型的键（`key`）。
+- `Map` 是一个带键的数据项的集合，就像一个 `Object` 一样，但是它们最大的差别是 `Map` 允许任何类型的键，包括对象。
 
 | 方法 | 描述 |
 | --- | --- |
-| new Map() | 创建 map 映射 |
+| new Map() | 创建 Map 映射 |
 | map.set(key, value) | 根据键存储值 |
 | map.get(key) | 根据键返回值，不存在返回 undefined |
 | map.has(key) | 是否存在 key |
-| map.delete(key) | 删除指定键的值 |
+| map.delete(key) | 删除指定键的值，返回布尔值 |
 | map.clear() | 清空 map |
 | map.size | 返回当前元素个数 |
 | map.keys() | 遍历并返回一个包含所有键的可迭代对象 |
 | map.values() | 遍历并返回一个包含所有值的可迭代对象 |
 | map.entries() | 遍历并返回一个包含所有实体的可迭代对象 |
-| Object.entries(obj) | 返回对象的键值对数组，数组的格式按照map所需格式，用于对象创建映射 |
+| Object.entries(obj) | 返回对象的键值对数组，数组的格式按照 Map 所需格式，用于对象创建映射 |
 | Object.fromEntries([[...], [...]]) | 返回给定一个键值对数组来创建一个相应的对象 |
 
 - 与对象不同，键不会被转换成字符串，键可以是任何类型。
@@ -713,6 +713,7 @@ let range = {
 - `Map` 有内建的 `forEach` 方法。
 
 ```javascript
+// 通过指定形式的数组创建映射
 let recipeMap = new Map([
   ["cucumber", 500],
   ["tomatoes", 350],
@@ -720,36 +721,31 @@ let recipeMap = new Map([
 ]);
 ```
 
-- `Set` 是一个特殊的类型集合，“值的集合”（没有键），它的每一个值只能出现一次。
+- `Set` 是一个特殊的类型集合，值的集合没有键，它的每一个值只能出现一次。
 
 | 方法 | 描述 |
 | --- | --- |
-| new Set(通常可以传入一个数组，创建集合) | 创建一个 Set 集合 |
-| set.add(value) | 添加一个值，返回set本身 |
-| set.delete(value) | 删除相应的值，返回一个布尔值 |
+| new Set() | 创建 Set 集合，可以传入数组创建集合 |
+| set.add(value) | 添加值 |
+| set.delete(value) | 删除相应的值，返回布尔值 |
 | set.has(value) | 是否存在该值 |
 | set.clear() | 清空 set |
 | set.size | 返回元素个数 |
 | set.keys() | 遍历并返回一个包含所有值的可迭代对象 |
-| set.values() | 与上诉的方法一致，目的是兼容Map |
-| set.entries() | 遍历并返回一个包含所有实体的可迭代对象，也是为了兼容Map |
+| set.values() | 与上诉的方法一致，目的是兼容 Map |
+| set.entries() | 遍历并返回一个包含所有实体的可迭代对象，为了兼容 Map |
 
--  可以使用 `for...of..` 或者 `forEach` 来遍历 `Set`
+- 可以使用 `for...of..` 或者 `forEach` 来遍历 `Set`
 
-### 30- 弱映射与弱集合
+### 30 - 弱映射与弱集合
 
-- 使用对象作为常规 `Map` 的键，那么当 `Map` 存在时，该对象也将存在，它会占用内存，并且不会被（垃圾回收机制）回收。
-- `weakMap` 和 `Map` 的第一个不同点就是，`weakMap` 的键必须是对象，不能是原始值。
-
-```javascript
-let weakMap = new WeakMap();
-```
-
--  在 `weakMap` 中使用一个对象作为键，并且没有其他对这个对象的引用，该对象将会被从内存（和 `map`）中自动清除。
--  `weakMap` 不支持迭代以及 `keys()`，`values()` 和 `entries()` 方法,所以没有办法获取 `weakMap` 的所有键或值。
--  `weakMap` 的主要应用场景是额外数据的存储，可能是第三方库，并想存储一些与之相关的数据，那么这些数据就应该与这个对象共存亡，再有就是缓存的应用。
--  与 `Set` 类似，但是只能向 `weakSet` 添加对象。
--  对象只有在其它某个（些）地方能被访问的时候，才能留在 `weakSet` 中。
+- 使用对象作为常规 `Map` 的键，那么当 `Map` 存在时，该对象也将存在，它会占用内存，并且不会被垃圾回收机制回收。
+- `weakMap` 和 `Map` 的不同点就是 `weakMap` 的键必须是对象，不能是原始值，`let weakMap = new WeakMap()`
+- 在 `weakMap` 中使用一个对象作为键，并且没有其他对这个对象的引用，该对象将会被从内存和 `map` 中自动清除。
+- `weakMap` 不支持迭代以及 `keys()`，`values()` 和 `entries()` 方法，所以没有办法获取 `weakMap` 的所有键或值。
+- `weakMap` 的主要应用场景是额外数据的存储，可能是第三方库，并想存储一些与之相关的数据，那么这些数据就应该与这个对象共存亡，再有就是缓存的应用。
+- `weakSet` 与 `Set` 类似，但是只能向 `weakSet` 添加对象。
+- 对象只有在其它某些地方能被访问的时候，才能留在 `weakSet` 中。
 
 ### 31 - 解构赋值
 
