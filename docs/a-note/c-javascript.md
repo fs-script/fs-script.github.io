@@ -16,9 +16,9 @@ next:
 
 ### 01 - 注释
 
+- 语句可以省略分号会自动插入分号，但有些情况下无法正确识别，例如上一句的结尾为括号或中括号时。
 - `<script>` 标签如果设置了 `src` 属性，`<script>` 标签的内容将会被忽略，可以设置多个 `<script>` 标签。
-- `"use strict"` 将开启严格模式并激活新特性，需要在代码最顶部添加，`class` 与 `module` 中会自动开启该模式。
-- 语句可以省略分号，一个换行代表一个分号（自动插入分号），但有些情况下无法正确识别，例如上一句的结尾为括号或中括号时。
+- `"use strict"` 开启严格模式并激活新特性，要在代码顶部添加，`class` 与 `module` 中会自动开启该模式。
 - 单行注释：
 
 ```javascript
@@ -50,14 +50,14 @@ next:
 
 | 类型 | 描述 |
 | --- | --- |
-| Number | 整数、浮点数、Infinity（无穷大）、NaN（非数值），数值运算是安全的，可以除0 |
-| BigInt | 用于表示大于2的253次方-1和小于2的-253次方的整数，数字尾部加n，代表此类型 |
-| String | "字符串"、'字符串'、'反引号用于功能扩展${变量名}' |
-| Boolean | true、false |
 | null | 无、空、值未知，是个特殊值 |
 | undefined | 未赋值、未定义 |
-| Object | 存储数据集合和更复杂的实体 |
+| Number | 整数、浮点数、Infinity（无穷大）、NaN（非数值），数值运算是安全的，可以除0 |
+| String | "字符串"、'字符串'、'反引号用于功能扩展${变量名}' |
+| Boolean | true、false |
+| BigInt | 用于表示大于2的253次方-1和小于2的-253次方的整数，数字尾部加n，代表此类型 |
 | Symbol | 创建对象的唯一标识符 |
+| Object | 存储数据集合和更复杂的实体 |
 
 - `typeof(...)` 用于返回数据类型。
 - `null` 返回对象类型，是 `typeof(...)` 的错误，并非真正的对象。
@@ -427,9 +427,9 @@ for (let value of user1) {
 
 - JavaScript 的内存管理是自动的、无形的。
 - 可达性：
-  - （1）当前执行的函数，它的局部变量和参数。
-  - （2）当前嵌套调用链上的其他函数、它们的局部变量和参数。
-  - （3）全局变量。
+  - 当前执行的函数，它的局部变量和参数。
+  - 当前嵌套调用链上的其他函数、它们的局部变量和参数。
+  - 全局变量。
 - 不可达便会被回收。
 - 如果一个值可以通过引用链从根访问任何其他值，则认为该值是可达的。
 - 对外引用不重要，只有传入引用才可以使对象可达。
@@ -555,20 +555,20 @@ console.log(user + 500);  // hint:default 1500
 
 | 方法 | 参数 | 描述 |
 | --- | --- | --- |
-| num.toString(base) | 指定进制 2-36 默认为 10 | 返回指定进制形式的字符串 |
+| num.toString(base) | 指定进制 2-36，默认为 10 | 返回指定进制形式的字符串 |
 | num.toFixed(n) | 指定小数位数 | 返回字符串形式，最近舍入，不够添0 |
-| parseInt(str) |  | 返回读取的整数，直到第一个非数字结束 |
-| parseFloat(str) |  | 返回读取的浮点数，直到第一个非数字结束 |
+| parseInt(str) | 字符串 | 返回读取的整数，直到第一个非数字结束 |
+| parseFloat(str) | 字符串 | 返回读取的浮点数，直到第一个非数字结束 |
 | Math.random() |  | 返回一个 0 - 1 的随机数 |
-| Math.floor(num) |  | 向下舍入 |
-| Math.ceil(num) |  | 向上舍入 |
-| Math.round(num) |  | 最近整数舍入 |
-| Math.trunc(num) |  | 移除小数点后无舍入 |
-| Math.max(...) | 任意数量参数 | 返回一个最大值 |
-| Math.min(...) | 任意数量参数 | 返回一个最小值 |
-| Math.pow(n, power) |  | 返回 n 的 power 次幂 |
-| isNaN(value) |  | 将参数转换为数字，判断是否为NaN |
-| isFinite(value) |  | 将参数转换为数字，判断是否为常规数字 |
+| Math.floor(num) | 数值 | 向下舍入 |
+| Math.ceil(num) | 数值 | 向上舍入 |
+| Math.round(num) | 数值 | 最近整数舍入 |
+| Math.trunc(num) | 数值 | 移除小数点后无舍入 |
+| Math.max(...) | 任意数量数值 | 返回一个最大值 |
+| Math.min(...) | 任意数量数值 | 返回一个最小值 |
+| Math.pow(n, power) | 底数，幂 | 返回 n 的 power 次幂 |
+| isNaN(...) |  | 将参数转换为数字，判断是否为NaN |
+| isFinite(...) |  | 将参数转换为数字，判断是否为常规数字 |
 | Object.is(value1, value2) |  | 类似 === 对值进行比较，可以 NaN === NaN |
 
 ### 26 - 字符串类型
@@ -580,16 +580,16 @@ console.log(user + 500);  // hint:default 1500
 | str.charAt(n) |  | 访问字符串，未找到返回空字符串 |
 | str.toUpperCase() |  | 转大写 |
 | str.toLowerCase() |  | 转小写 |
-| str.indexOf(substr, [n]) | 可选参数，指定开始位置 | 返回匹配成功子字符串的位置，大小写敏感，失败返回 -1 |
-| str.lastIndexOf(subsrt, [n]) | 可选参数，指定开始位置 | 从末尾开始搜索子字符串 |
-| str.includes(substr, [n]) | 可选参数，指定开始位置 | 是否包含某个子字符串 |
-| str.startsWith(str1) |  | 是否以某字符串开头 |
-| str.endsWith(str1) |  | 是否以某字符串结尾 |
-| str.slice(start, end) |  | 返回 [start end) 部分的字符串，省略end则到结尾，可取负值 |
-| str.substring(start, end) |  | 返回 [start end) 部分的字符串，允许 start 大于 end，不支持负值 |
-| str.substr(start, length) |  | 返回 start 开始指定长度的字符串，start 允许负值 |
-| str.codePointAt(pos) |  | 返回 pos 位置的字符代码 |
-| str.localeCompare(str1) |  | str 排在 str1 前面返回负数、str 排在 str1 后面返回正数、相同返回0 |
+| str.indexOf(substr, [n]) | 子串，指定开始位置 | 返回匹配成功子字符串的位置，大小写敏感，失败返回 -1 |
+| str.lastIndexOf(subsrt, [n]) | 子串，指定开始位置 | 从末尾开始搜索子字符串 |
+| str.includes(substr, [n]) | 子串，指定开始位置 | 是否包含某个子字符串 |
+| str.startsWith(str1) | 字符串 | 是否以某字符串开头 |
+| str.endsWith(str1) | 字符串 | 是否以某字符串结尾 |
+| str.slice(start, end) | 开始位置，结束位置 | 返回 [start end) 部分的字符串，省略 end 则到结尾，可取负值 |
+| str.substring(start, end) | 开始位置，结束位置 | 返回 [start end) 部分的字符串，允许 start 大于 end，不支持负值 |
+| str.substr(start, length) | 开始位置，长度 | 返回 start 开始指定长度的字符串，start 允许负值 |
+| str.codePointAt(pos) | 位置 | 返回 pos 位置的字符代码 |
+| str.localeCompare(str1) | 字符串 | str 排在 str1 前面返回负数、str 排在 str1 后面返回正数、相同返回0 |
 | str.trim() |  | 删除字符串前后的空格 |
 | str.repeat(n) |  | 重复字符串 n 次 |
 
@@ -609,21 +609,21 @@ console.log(user + 500);  // hint:default 1500
 | arr.shift() |  | 首端，取出并返回第一个元素，取出即被删除 |
 | arr.unshift(...) |  | 首端，添加元素，返回数组的长度 |
 | delete arr[n] |  | 元素被删除，但位置依然存在 |
-| arr.splice(n, n, ...) | 起始位置，删除个数，此后插入的新内容 | 返回被删除的元素 |
-| arr.slice(start, end) |  | 返回一个按起始位置截取复制的新数组 |
-| arr.concat(arr1, arr2...) |  | 返回一个合并的新数组 |
+| arr.splice(n, n, ...) | 起始位置，删除个数，插入的新内容 | 返回被删除的元素 |
+| arr.slice(start, end) | 起始位置，结束位置 | 返回一个按起始位置截取复制的新数组 |
+| arr.concat(arr1, arr2...) | 数组... | 返回一个合并的新数组 |
 | arr.forEach((item, index, array) => {...}) | 每个元素，每个元素的索引，数组本身 | 遍历数组的每个元素，并为每个元素运行相关函数，无返回 |
-| arr.indexOf(item, n) |  | 从 n 位置搜索 item 元素，找到返回索引，否则返回-1 |
-| arr.lastIndexOf(item, n) |  | 同上，从右向左搜索 |
-| arr.includes(item, n) |  | 从 n 位置搜索 item 元素，找到返回 true，否则返回 false |
-| arr.find(func) |  | 返回符合函数条件的元素，未找到返回 undefined |
-| arr.findIndex(func) |  | 返回符合函数条件的元素索引，未找到返回 undefined |
-| arr.filter(func) |  | 返回所有匹配元素组成的新数组，浅拷贝 |
-| arr.map(func) |  | 对数组的每个元素都调用相关函数，返回结果数组 |
-| arr.sort(func) | 可设置函数参数，提供规则 | 对数组进行原位排序，默认按字符串排序 |
+| arr.indexOf(item, n) | 元素，位置 | 从 n 位置搜索 item 元素，找到返回索引，否则返回-1 |
+| arr.lastIndexOf(item, n) | 元素，位置 | 同上，从右向左搜索 |
+| arr.includes(item, n) | 元素，位置 | 从 n 位置搜索 item 元素，找到返回 true，否则返回 false |
+| arr.find(func) | 函数 | 返回符合函数条件的元素，未找到返回 undefined |
+| arr.findIndex(func) | 函数 | 返回符合函数条件的元素索引，未找到返回 undefined |
+| arr.filter(func) | 函数 | 返回所有匹配元素组成的新数组，浅拷贝 |
+| arr.map(func) | 函数 | 对数组的每个元素都调用相关函数，返回结果数组 |
+| arr.sort(func) | 函数（提供排序规则） | 对数组进行原位排序，默认按字符串排序 |
 | arr.reverse() |  | 对数组进行原位颠倒顺序 |
-| str.split("...") | ... 指定分隔符，可选参数对数组的长度做出限制，空参则分隔为每个字母 | 返回给定分隔符把字符串分隔的数组 |
-| arr.join("...") | ... 指定分隔符 | 返回给定分隔符把数组组合为字符串 |
+| str.split("...") | 指定分隔符，可选参数对数组的长度做出限制，空参则分隔为每个字母 | 返回给定分隔符把字符串分隔的数组 |
+| arr.join("...") | 指定分隔符 | 返回给定分隔符把数组组合为字符串 |
 | arr.reduce(callback(prev, item, index, array), init) | 回调函数、初始值 | 返回最后值，函数调用结果作为第一个参数传递 |
 | arr.reduceRight(...) |  | 返回最后值，遍历时从右向左 |
 | Array.isArray(arr) |  | 判断是否为数组 |
@@ -749,35 +749,37 @@ let recipeMap = new Map([
 
 ### 31 - 解构赋值
 
-- 解构赋值是一种特殊的语法，可以将数组或对象“拆包”至一系列变量中，原来的数组或对象自身没有被修改。
+- 一种特殊的语法，可以将数组或对象拆包至一系列变量中，原来的数组或对象自身没有被修改。
 
 ```javascript
-// 额外的逗号，实现不需要第二个元素
+// 额外的逗号，可以实现不需要第二个元素
 let [firstName, , title] = [
   "Julius",
   "Caesar",
   "Consul",
-  "of the Roman Republic",
-];
+  "of the Roman Republic"
+]
 ```
 
 - 等号右侧可以是任何可迭代对象。
 
 ```javascript
-let guest = "Jane";
-let admin = "Pete";
+// 不借助中间变量实现数据交换
+let guest = "Jane"
+let admin = "Pete"
 
-[guest, admin] = [admin, guest];
+[guest, admin] = [admin, guest]
 ```
 
+- `...rest` 接收剩余的值存入数组中。
+
 ```javascript
-// ...rest 是包含从第三项开始的其余数组项的数组
 let [name1, name2, ...rest] = [
   "Julius",
   "Caesar",
   "Consul",
-  "of the Roman Republic",
-];
+  "of the Roman Republic"
+]
 ```
 
 - 缺少对应值的变量都会被赋 `undefined`
@@ -788,49 +790,49 @@ let [name1, name2, ...rest] = [
 let options = {
   size: {
     width: 100,
-    height: 200,
+    height: 200
   },
   items: ["Cake", "Donut"],
-  extra: true,
-};
+  extra: true
+}
 
 let {
   size: { width, height },
   items: [item1, item2],
-  title = "Menu",
-} = options;
+  title = "Menu"
+} = options
 ```
 
 ```javascript
 // 智能函数参数
 let options = {
   title: "My menu",
-  items: ["item1", "item2"],
-};
+  items: ["item1", "item2"]
+}
 
 function showMenu({
   title = "Untitled",
   width = 200,
   height = 300,
-  items = [],
+  items = []
 }) {
   console.log(`${title} ${width} ${height}`);
   console.log(items);
 }
 
-showMenu(options);
+showMenu(options)
 ```
 
 ### 32 - 日期和时间
 
-- 不带参数，创建的是一个表示当前日期和时间的 `Date` 对象。
-
 ```javascript
-let now = new Date();
+let now = new Date()
 ```
 
-- 传入整数参数，代表的是自 `1970-01_01 00 : 00 : 00` 以来经过的毫秒数，该整数被称为时间戳。
-- 如果只有一个参数，并且是字符串，那么它会被自动解析，`new Date(year, month, date, hours, minutes, seconds, ms)`。
+- `new Date()` 不带参数，创建的是一个表示当前日期和时间的 `Date` 对象。
+- 传入整数参数，代表的是自 `1970-01-01 00 : 00 : 00` 以来经过的毫秒数，该整数被称为时间戳。
+- 传入字符串参数，那么它会被自动解析，`new Date(year, month, date, hours, minutes, seconds, ms)`
+- 日期可以相减，相减的结果是以毫秒为单位的时间差。
 
 | 方法 | 描述 |
 | --- | --- |
@@ -845,22 +847,21 @@ let now = new Date();
 | date.getTime() | 返回日期的时间戳，毫秒 |
 | date.getTimezoneOffset() | 返回UTC与本地之间的时差，分钟 |
 | **设置日期：** |  |
-| date.setFullYear(year, [month], [date]) |  |
-| date.setMonth(month, [date]) |  |
-| date.setDate(date) |  |
-| date.setHours(hour, [min], [sec], [ms]) |  |
-| date.setMinutes(min, [sec], [ms]) |  |
-| date.setSeconds(sec, [ms]) |  |
-| date.setMilliseconds(ms) |  |
-| date.setTime(milliseconds) |  |
+| date.setFullYear(year, [month], [date]) | 设置年份 |
+| date.setMonth(month, [date]) | 设置月份 |
+| date.setDate(date) | 设置日 |
+| date.setHours(hour, [min], [sec], [ms]) | 设置小时 |
+| date.setMinutes(min, [sec], [ms]) | 设置分钟 |
+| date.setSeconds(sec, [ms]) | 设置秒 |
+| date.setMilliseconds(ms) | 设置毫秒 |
+| date.setTime(milliseconds) | 设置时间戳 |
 | Date.now() | 返回当前的时间戳 |
-| Date.parse(str) | 从字符串中读取日期，YYYY-MM-DDTHH :mm :ss .sssZ |
-
-- 日期可以相减，相减的结果是以毫秒为单位的时间差。
+| Date.parse(str) | 从字符串中读取日期，'YYYY-MM-DD hh:mm:ss' |
 
 ### 33 - JSON
 
-- JSON（JavaScript Object Notation）是表示值和对象的通用格式。
+- 全称 JavaScript Object Notation，是表示值和对象的通用格式。
+- JSON 支持以下数据类型：`Objects`、`Arrays`、`Primitives`（`strings`、`numbers`、`boolean`、`true/false`、`null`）
 - `JSON.stringify(obj)` 将对象转换为 JSON
 
 ```javascript
@@ -869,60 +870,42 @@ let student = {
   age: 30,
   isAdmin: false,
   courses: ["html", "css", "js"],
-  spouse: null,
-};
+  spouse: null
+}
 
-let json = JSON.stringify(student);
+let json = JSON.stringify(student)
 ```
 
-- JSON 支持以下数据类型：`Objects`、`Arrays`、`Primitives`（`strings`、`numbers`、`boolean`、`true/false`、`null`）。
 - JSON 是语言无关的纯数据规范，因此一些特定于 JavaScript 的对象属性会被 `JSON.stringify` 跳过：函数属性（方法）、`Symbol` 类型的键和值、存储 `undefined` 的属性。
+- `JSON.parse(json)` 解码 JSON 为对象。
 
 ```javascript
-// 自定义 “toJSON”
-let room = {
-  number: 23,
-  toJSON() {
-    return this.number;
-  },
-};
-
-let meetup = {
-  title: "Conference",
-  room,
-};
-```
-
-- `JSON.parse(json)` 解码 JSON 为字符串。
-
-```javascript
-let userData = '{ "name": "John", "age": 35, "isAdmin": false, "friends": [0,1,2,3] }';
-let user = JSON.parse(userData);
+let userData = '{ "name": "John", "age": 35, "isAdmin": false, "friends": [0,1,2,3] }'
+let user = JSON.parse(userData)
 ```
 
 ```javascript
-// reviver 也适用于嵌套对象
-let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+// 处理日期
+let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}'
 
-let meetup1 = JSON.parse(str, function (key, value) {
-  if (key == "date") return new Date(value);
-  return value;
-});
+let meetup = JSON.parse(str, function (key, value) {
+  if (key == "date") return new Date(value)
+  return value
+})
 
-console.log(meetup1.date.getDate());
+console.log(meetup.date.getDate());
 ```
 
 ### 34 - 递归与堆栈
 
-- 递归：调用函数自身。
+- 递归即调用函数自身。
 
 ```javascript
-// 递归调用
 function pow(x, n) {
   if (n == 1) {
-    return x;
+    return x
   } else {
-    return x * pow(x, n - 1);
+    return x * pow(x, n - 1)
   }
 }
 
@@ -930,14 +913,14 @@ console.log(pow(2, 10));
 ```
 
 - 最大的嵌套调用次数（包括首次）被称为递归深度。
-- 执行上下文是一个内部数据结构，它包含有关函数执行时的详细细节：当前控制流所在的位置，当前的变量，`this` 的值，以及其它的一些内部细节。
+- 执行上下文是一个内部数据结构，它包含有关函数执行时的详细细节，包括：当前控制流所在的位置、当前的变量、`this` 的值、其它的一些内部细节。
 - 函数嵌套调用时：当前函数被暂停，与它关联的执行上下文被一个叫做执行上下文堆栈的特殊数据结构保存，执行嵌套调用，嵌套调用结束后，从堆栈中恢复之前的执行上下文，并从停止的位置恢复外部函数。
 - 任何递归都可以用循环来重写，通常循环变体更有效。
 - 递归的一个重要应用是递归遍历。
 
 ### 35 - Rest参数与Spread语法
 
-- 在 JS 中，无论函数是如何定义的，都可以在调用它时传入任意数量的参数。
+- 在 JS 中无论函数是如何定义的，都可以在调用它时传入任意数量的参数。
 - `...变量名`，这将会声明一个数组并指定其名称，其中存有剩余的参数。
 - `rest` 参数必须放到参数列表的末尾。
 
