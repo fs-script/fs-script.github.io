@@ -276,13 +276,13 @@ funcName()
 ```javascript
 let funcName = function(parameter1, parameter2, ...) {
   ...
-};
+}
 
 funcName()
 
 // 可以被拷贝
-let copyFunc = funcName;
-copyFunc();
+let copyFunc = funcName
+copyFunc()
 ```
 
 - 未被传递值的参数，被赋予 `undefined`
@@ -301,10 +301,10 @@ ask(
   "你吃饭了吗?",
   // 回调，匿名
   function () {
-    console.log("你吃了");
+    console.log("你吃了")
   },
   function () {
-    console.log("你没吃");
+    console.log("你没吃")
   }
 )
 ```
@@ -370,7 +370,7 @@ let user2 = {}
 - 判断属性是否存在：
 
 ```javascript
-console.log("age" in user1);
+console.log("age" in user1)
 ```
 
 - 计算属性：方括号比点符号更加强大，允许任何属性名和变量。
@@ -399,7 +399,7 @@ function makeUser(name, age) {
 
 ```javascript
 for (let key in user1) {
-  console.log(key);
+  console.log(key)
 }
 ```
 
@@ -407,7 +407,7 @@ for (let key in user1) {
 
 ```javascript
 for (let value of user1) {
-  console.log(value);
+  console.log(value)
 }
 ```
 
@@ -453,7 +453,7 @@ function User(name) {
   this.isAdmin = false
 
   this.sayHi = function () {
-    console.log("Myname is " + this.name);
+    console.log("Myname is " + this.name)
   }
 }
 
@@ -471,7 +471,7 @@ let user = new User("Jack")
 
 ```javascript
 let user = {}
-console.log(user?.address?.street);
+console.log(user?.address?.street)
 ```
 
 - 如果 `?.`左边部分不存在，就会立即停止运算，“短路效应”。
@@ -501,7 +501,7 @@ let id = Symbol("id")
 user[id] = 1
 
 // 可以使用 symbol 作为键来访问数据
-console.log(user[id]);
+console.log(user[id])
 ```
 
 - `Symbol` 总是不同的，即使它们有相同的名字。
@@ -516,8 +516,8 @@ let sym2 = Symbol.for("id")
 - `Symbol.keyFor(...)` 通过全局 `symbol` 返回一个名字，不存在则返回 `undefined`：
 
 ```javascript
-console.log(Symbol.keyFor(sym1));  // name
-console.log(Symbol.keyFor(sym2));  // id
+console.log(Symbol.keyFor(sym1))  // name
+console.log(Symbol.keyFor(sym2))  // id
 ```
 
 ### 24 - 原始值转换
@@ -534,14 +534,14 @@ let user = {
   money: 1000,
 
   [Symbol.toPrimitive](hint) {
-    console.log(`hint:${hint}`);
+    console.log(`hint:${hint}`)
     return hint == "string" ? `{name: "${this.name}"}` : this.money
   }
 }
 
-console.log(String(user));  // hint:string '{name: "John"}'
-console.log(+user);  // hint:number 1000
-console.log(user + 500);  // hint:default 1500
+console.log(String(user))  // hint:string '{name: "John"}'
+console.log(+user)  // hint:number 1000
+console.log(user + 500)  // hint:default 1500
 ```
 
 - 过程：
@@ -659,9 +659,9 @@ range[Symbol.iterator] = function () {
       // 4. 它将会返回 {done:.., value :...} 格式的对象
       // 当 done=true 时，表示循环结束，否则 value 是下一个值
       if (this.current <= this.last) {
-        return { done: false, value: this.current++ };
+        return { done: false, value: this.current++ }
       } else {
-        return { done: true };
+        return { done: true }
       }
     },
   }
@@ -673,15 +673,15 @@ let range = {
   to: 5,
 
   [Symbol.iterator]() {
-    this.current = this.from;
-    return this;
+    this.current = this.from
+    return this
   },
 
   next() {
     if (this.current <= this.to) {
-      return { done: false, value: this.current++ };
+      return { done: false, value: this.current++ }
     } else {
-      return { done: true };
+      return { done: true }
     }
   },
 }
@@ -718,7 +718,7 @@ let recipeMap = new Map([
   ["cucumber", 500],
   ["tomatoes", 350],
   ["onion", 50],
-]);
+])
 ```
 
 - `Set` 是一个特殊的类型集合，值的集合没有键，它的每一个值只能出现一次。
@@ -757,7 +757,7 @@ let [firstName, , title] = [
   "Julius",
   "Caesar",
   "Consul",
-  "of the Roman Republic"
+  "of the Roman Republic",
 ]
 ```
 
@@ -778,7 +778,7 @@ let [name1, name2, ...rest] = [
   "Julius",
   "Caesar",
   "Consul",
-  "of the Roman Republic"
+  "of the Roman Republic",
 ]
 ```
 
@@ -790,16 +790,16 @@ let [name1, name2, ...rest] = [
 let options = {
   size: {
     width: 100,
-    height: 200
+    height: 200,
   },
   items: ["Cake", "Donut"],
-  extra: true
+  extra: true,
 }
 
 let {
   size: { width, height },
   items: [item1, item2],
-  title = "Menu"
+  title = "Menu",
 } = options
 ```
 
@@ -807,17 +807,17 @@ let {
 // 智能函数参数
 let options = {
   title: "My menu",
-  items: ["item1", "item2"]
+  items: ["item1", "item2"],
 }
 
 function showMenu({
   title = "Untitled",
   width = 200,
   height = 300,
-  items = []
+  items = [],
 }) {
-  console.log(`${title} ${width} ${height}`);
-  console.log(items);
+  console.log(`${title} ${width} ${height}`)
+  console.log(items)
 }
 
 showMenu(options)
@@ -870,7 +870,7 @@ let student = {
   age: 30,
   isAdmin: false,
   courses: ["html", "css", "js"],
-  spouse: null
+  spouse: null,
 }
 
 let json = JSON.stringify(student)
@@ -893,7 +893,7 @@ let meetup = JSON.parse(str, function (key, value) {
   return value
 })
 
-console.log(meetup.date.getDate());
+console.log(meetup.date.getDate())
 ```
 
 ### 34 - 递归与堆栈
@@ -909,7 +909,7 @@ function pow(x, n) {
   }
 }
 
-console.log(pow(2, 10));
+console.log(pow(2, 10))
 ```
 
 - 最大的嵌套调用次数（包括首次）被称为递归深度。
@@ -921,134 +921,135 @@ console.log(pow(2, 10));
 ### 35 - Rest参数与Spread语法
 
 - 在 JS 中无论函数是如何定义的，都可以在调用它时传入任意数量的参数。
-- `...变量名`，这将会声明一个数组并指定其名称，其中存有剩余的参数。
-- `rest` 参数必须放到参数列表的末尾。
+- `...rest`，这将会声明一个数组并指定其名称，其中存有剩余的参数，`rest` 参数必须放到参数列表的末尾。
+- `arguments` 是一个特殊类数组对象，可以在函数中被访问，该对象以参数在参数列表中的索引作为键，存储所有参数，箭头函数没有 `arguments`
 
 ```javascript
 // rest 参数
 function sumAll(...args) {
-  let sum = 0;
-  for (let arg of args) sum += arg;
-  return sum;
+  let sum = 0
+  for (let arg of args) sum += arg
+  return sum
 }
 
-console.log(sumAll(1, 2, 3, 4, 5, 6));
+console.log(sumAll(1, 2, 3, 4, 5, 6))
+
+// arguments 类数组对象
+function num(one, two, three) {
+  console.log(arguments)
+  console.log(typeof arguments)
+  for (let i of arguments) console.log(i)
+}
+
+num(1, 2, 3, 4, 5, 6)
 ```
 
-- `arguments` 是一个特殊类数组对象，可以在函数中被访问，该对象以参数在参数列表中的索引作为键，存储所有参数，箭头函数没有`arguments`
-- `spread` 语法：使用 `...可迭代对象`，可以把可迭代对象展开到参数列表中。
+- `spread` 语法是使用 `...可迭代对象`，把可迭代对象展开到参数列表中。
+- `spread` 语法内部使用了迭代器来收集元素，与 `for..of` 的方式相同，可用于复制 `array/object`
 
 ```javascript
 // Spread 语法
-let arr = [3, 5, 6, 9, 8, 4];
+let arr = [3, 5, 6, 9, 8, 4]
 // 可以使用逗号分隔，传入多个可迭代对象
 console.log(Math.max(...arr));
 ```
 
-- `spread` 语法内部使用了迭代器来收集元素，与 `for..of` 的方式相同，可用于复制 `array/object`
-
 ### 36 - 变量作用域与闭包
 
-- `let\const` 如果在代码块 `{...}` 内声明了一个变量，那么这个变量只在该代码块内可见。
-- `if`，`for` 和 `while` 等，在 `{...}` 中声明的变量也仅在内部可见。
-- 闭包是指：一个函数可以记住其外部变量并可以访问这些变量，在 JavaScript 中，几乎所有函数都是天生闭包的（有一个例外），JavaScript 中的函数会自动通过隐藏的 `[[Environment]]` 属性记住创建它们的位置，所以它们都可以访问外部变量，函数中创建的函数可以访问外部函数的变量。
-- 闭包就是指有权访问另一个函数作用域中的变量的函数。
+- `let` 与 `const` 如果在代码块 `{...}` 内声明了一个变量，那么这个变量只在该代码块内可见，`if` 、 `for` 、 `while` 等，在 `{...}` 中声明的变量也仅在内部可见。
+- （1）闭包是指一个嵌套内部函数可以记住其外部变量并可以访问这些变量，在 JS 中几乎所有函数都是天生闭包的（有一个例外），函数会自动通过隐藏的 `[[Environment]]` 属性记住创建它们的位置，所以它们都可以访问外部变量，即函数中创建的函数可以访问外部函数的变量。
+- （2）闭包就是指有权访问另一个函数作用域中的变量的函数。
 - 函数将从内到外依次在对应的词法环境中寻找目标变量，它使用最新的值。
-- 通常，函数调用完成后，会将词法环境和其中的所有变量从内存中删除，但是，如果有一个嵌套的函数在函数结束后仍可达，则它将具有引用词法环境的 `[[Environment]]` 属性。
+- 一般情况下函数调用完成后，会将词法环境和其中的所有变量从内存中删除，但是如果有一个嵌套的函数在函数结束后仍可达，则它将具有引用词法环境的 `[[Environment]]` 属性。
 
-### 37 - var
+### 37 - 关于var
 
-- `var` 没有块级作用域，用 `var` 声明的变量，不是函数作用域就是全局作用域。
-- 使用 `var` ，可以重复声明一个变量，不管多少次都行。
-- `var` 声明的变量，可以在其声明语句前被使用，被提升，声明会被提升，但是赋值不会。
-- 所有的 `var` 声明都是在函数开头处理的，可以在任何地方引用它们，但是在它们被赋值之前都是 `undefined`
-- 全局对象提供可在任何地方使用的变量和函数，默认情况下，这些全局变量内建于语言或环境中，在浏览器中，它的名字是 “window”，对 Node.js 而言，它的名字是 “global”
-- `globalThis` 被作为全局对象的标准名称加入到了 JavaScript 中，所有环境都应该支持该名称。
+- `var` 没有块级作用域，用 `var` 声明的变量为函数作用域或全局作用域。
+- 使用 `var` ，可以重复声明一个变量，新声明的将覆盖旧的。
+- `var` 声明的变量，可以在其声明语句前被使用，声明会被提升，但是赋值不会。
+- `var` 声明都是在函数开头处理的，可以在任何地方引用它们，但是在它们被赋值之前都是 `undefined`
+- 全局对象提供可在任何地方使用的变量和函数，默认情况下这些全局变量内建于语言或环境中；在浏览器中，它的名字是 `window`，在 Node.js 中，它的名字是 `global`
+- `globalThis` 被作为全局对象的标准名称加入到了 JS 中，所有环境都应该支持该名称。
 
 ### 38 - 函数对象与NFE
 
-- 命名函数表达式（NFE，Named Function Expression），指带有名字的函数表达式的术语。
+- 命名函数表达式（NFE：Named Function Expression），指带有名字的函数表达式的术语。
 
 ```javascript
 let sayHi = function func(who) {
   if (who) {
-    alert(`Hello, ${who}`);
+    alert(`Hello, ${who}`)
   } else {
-    func("Guest");  // 使用 func 再次调用函数自身
+    func("Guest")
   }
-};
+}
 
-sayHi();  // Hello, Guest
+sayHi()  // Hello, Guest
 
-// 但这不工作：
-func();  // Error, func is not defined（在函数外不可见）
+func()  // Error, func is not defined（在函数外不可见）
 ```
 
-- 它允许函数在内部引用自己，它在函数外是不可见的。
+- 它允许函数在内部引用自己，但在函数外是不可见的。
 
 ```javascript
 // 属性 name
 function sayHi() {
-  console.log("Hi");
+  console.log("Hi")
 }
 
-console.log(sayHi.name);
+console.log(sayHi.name)
 
 // 属性 lenght
 function f1(a) {}
 function f2(a, b) {}
 
 // 返回的是参数的个数，rest 参数不参与计数
-console.log(f1.length);
-console.log(f2.length);
+console.log(f1.length)
+console.log(f2.length)
 ```
 
 ### 39 - new Function
 
-```javascript
-let sum = new Function('a', 'b', 'return a + b');
+- `new Function` 允许将任意字符串变为函数。
+- 使用 `new Function` 创建的函数，该函数的 `[[Environment]]` 并不指向当前的词法环境，而是指向全局环境，因此此类函数无法访问外部（outer）变量，只能访问全局变量，即无法实现闭包。
 
-console.log( sum(1, 2) );
+```javascript
+let sum = new Function('a', 'b', 'return a + b')
+
+console.log(sum(1, 2))
 ```
 
-- `new Function` 允许将任意字符串变为函数。
-- 使用 `new Function` 创建一个函数，那么该函数的 `[[Environment]]` 并不指向当前的词法环境，而是指向全局环境，因此，此类函数无法访问外部（outer）变量，只能访问全局变量。
 ### 40 - setTimeout与setInterval
 
 - `setTimeout` 允许将函数推迟到一段时间间隔之后再执行。
-- `setTimeout` 在调用时会返回一个“定时器标识符“（timer identifier）。
-- 任何 `setTimeout` 都只会在当前代码执行完毕之后才会执行。
-- `clearTimeout`(返回值) 取消调度。
+- `setTimeout` 在调用时会返回一个定时器标识符（timer identifier）
+- 任何 `setTimeout` 都只会在当前代码执行完毕之后才会执行，原因是事件循环机制。
+- `clearTimeout(timeoutID)` 取消调度。
 
 ```javascript
-// setTimeout()
 function sayHi(phrase, who) {
-  console.log(phrase + ", " + who);
+  console.log(phrase + ", " + who)
 }
 
-setTimeout(sayHi, 5000, "Hello", "John");
-
-// 箭头函数简写
-setTimeout(() => console.log("Hello Xiaofan"), 2000);
+// 箭头函数
+setTimeout(() => console.log("Hello Xiaofan"), 2000)
 ```
 
 - `setInterval` 允许重复运行一个函数，从一段时间间隔之后开始运行，之后以该时间间隔连续重复运行该函数。
-- `clearInterval`(返回值) 取消调度。
+- `clearInterval(timeoutID)` 取消调度。
 
 ```javascript
-// setInterval()
-let timerId = setInterval(() => console.log("xiaofan"), 3000);
+let timeoutID = setInterval(() => console.log("xiaofan"), 3000)
 
 setTimeout(() => {
-  clearInterval(timerId);
-  console.log("stop");
-}, 9000);
+  clearInterval(timeoutID)
+  console.log("stop")
+}, 9000)
 ```
 
 - 嵌套的 `setTimeout` 要比 `setInterval` 灵活得多，采用这种方式可以根据当前执行结果来调度下一次调用，因此下一次调用可以与当前这一次不同，嵌套的 `setTimeout` 能够精确地设置两次执行之间的延时，而 `setInterval` 却不能。
-- 使用 `setInterval` 时，`func` 函数的实际调用间隔要比代码中设定的时间间隔要短。
-- 嵌套的 `setTimeout` 就能确保延时的固定，这是因为下一次调用是在前一次调用完成时再调度的。
-- 当不再需要调度函数时，最好取消它。
+- 使用 `setInterval` 时，`func` 函数的实际调用间隔要比代码中设定的时间间隔要短，嵌套的 `setTimeout` 就能确保延时的固定，这是因为下一次调用是在前一次调用完成时再调度的。
+- 当不再需要调度函数时最好取消它。
 - 在浏览器环境下，嵌套定时器的运行频率是受限制的，时间间隔被强制设定为至少 4 毫秒。
 
 ### 41 - 装饰器模式与转发
