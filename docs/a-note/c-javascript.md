@@ -1054,163 +1054,184 @@ setTimeout(() => {
 
 ### 41 - 装饰器模式与转发
 
-- 装饰器是一个围绕改变函数行为的包装器，主要工作仍由该函数来完成。
-- 装饰器（decorator）：一个特殊的函数，它接受另一个函数并改变它的行为。
+- 装饰器（decorator）是一个围绕改变函数行为的包装器，主要工作仍由该函数来完成。
+- 装饰器一个特殊的函数，它接受另一个函数并改变它的行为。
 
 ```javascript
 function slow(x) {
   // 这里可能会有重负载的 CPU 密集型工作
-  console.log(`Called with ${x}`);
-  return x;
+  console.log(`Called with ${x}`)
+  return x
 }
 
 function cachingDecorator(func) {
-  let cache = new Map();
+  let cache = new Map()
 
   return function (x) {
+    // 如果缓存中有对应的结果
     if (cache.has(x)) {
-      // 如果缓存中有对应的结果
-      return cache.get(x); // 从缓存中读取结果
+      // 从缓存中读取结果
+      return cache.get(x)
     }
 
-    let result = func(x); // 否则就调用 func
-    cache.set(x, result); // 然后将结果缓存（记住）下来
-    return result;
-  };
+    // 否则就调用 func
+    let result = func(x)
+    // 然后将结果缓存（记住）下来
+    cache.set(x, result)
+    return result
+  }
 }
 
-slow = cachingDecorator(slow);
+slow = cachingDecorator(slow)
 
-console.log(slow(1)); // slow(1) 被缓存下来了，并返回结果
-console.log("Again: " + slow(1)); // 返回缓存中的 slow(1) 的结果
+console.log(slow(1))  // slow(1) 被缓存下来了，并返回结果
+console.log("Again: " + slow(1))  // 返回缓存中的 slow(1) 的结果
 
-console.log(slow(2)); // slow(2) 被缓存下来了，并返回结果
-console.log("Again: " + slow(2)); // 返回缓存中的 slow(2) 的结果
+console.log(slow(2))  // slow(2) 被缓存下来了，并返回结果
+console.log("Again: " + slow(2))  // 返回缓存中的 slow(2) 的结果
 ```
 
-- 它们调用的都是 `func`，参数是 `1`、`2` 和 `3`，唯一的区别是 `func.call` 还会将 `this` 设置为 `obj`
+- 将所有参数连同上下文一起传递给另一个函数被称为呼叫转移（call forwarding）
+
+| 方法 | 描述 |
+| --- | --- |
+| func.call(obj, 参数列表) | 调用函数时会将 this 设置为传入的对象 |
+| func.apply(obj, 类数组对象) | 调用函数时会将 this 设置为传入的对象 |
 
 ```javascript
-// 二者几乎等效
-func(1, 2, 3);
-func.call(obj, 1, 2, 3)
-```
+func.call(context, ...args)
+func.apply(context, args)
 
-```javascript
-func.call(context, ...args);
-func.apply(context, args);
-```
-
-- `call` 期望一个参数列表，而 `apply` 期望一个包含这些参数的类数组对象。
-- 将所有参数连同上下文一起传递给另一个函数被称为“呼叫转移”（call forwarding）。
-
-```javascript
 // 方法借用
 function hash() {
-  console.log([].join.call(arguments));
+  console.log([].join.call(arguments))
 }
 ```
 
-- 防抖：`debounce` 会在“冷却（cooldown）”期后运行函数一次，适用于处理最终结果。在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。用户触发时间过于频繁，只要最后一次请求的操作就叫做防抖。
-- 节流：`throttle` 运行函数的频率不会大于所给定的时间 `ms` 毫秒，适用于不应该经常进行的定期更新。当持续触发事件时，保证在一定时间内只调用一次事件处理函数，意思就是说，假设一个用户一直触发这个函数，且每次触发小于既定值，函数节流会每隔这个时间调用一次。
-- 防抖是将多次执行变为最后一次执行，节流是将多次执行变为每隔一段时间执行。
+- 防抖（debounce）会在冷却期后运行函数一次，适用于处理最终结果；在事件被触发 n 秒后再执行回调，如果在这 n 秒内又被触发，则重新计时；用户触发时间过于频繁，只要最后一次请求的操作就叫做防抖
+
+```javascript
+// 简单的防抖函数
+function debounce(func, wait) {
+  let timeout = null
+
+  return function () {
+    // 先清除定时器
+    clearTimeout(timeout)
+    // 设置多久后执行回调
+    timeout = setTimeout(() => {
+      func.apply(this, arguments)
+    }, wait)
+  }
+}
+```
+
+- 节流（throttle）运行函数的频率不会大于所给定的时间（毫秒），适用于不应该经常进行的定期更新；当持续触发事件时，保证在一定时间内只调用一次事件处理函数，假设一个用户一直触发这个函数，且每次触发小于既定值，函数节流会每隔这个时间调用一次。
+
+```javascript
+// 简单的节流函数
+function throttle(func, wait) {
+  let timeout = null
+
+  return function () {
+    // 时间未到会退出执行
+    if (timeout) return
+    // 设置每次执行的间隔时间
+    timeout = setTimeout(() => {
+      func.apply(this, arguments)
+      timeout = null
+    }, wait)
+  }
+}
+```
+
+- 总结，防抖是将多次执行变为最后一次执行，节流是将多次执行变为每隔一段时间执行。
 
 ### 42 - 函数绑定
 
-- 丢失 `this`，一旦方法被传递到与对象分开的某个地方 `this` 就丢失。
+- 丢失 `this` 是指一旦方法被传递到与对象分开的某个地方 `this` 就会丢失。
 - 解决方法1：包装器，它从外部词法环境中获取到了需要的变量。
-- 解决方法2： `bind` 方法，它可以绑定 `this`，不能重新绑定。
+- 解决方法2：`bind` 方法，它可以绑定 `this`，该方法会创建一个新函数，新函数的 `this` 被指定为第一个参数，其余参数作为新函数的参数。
+- 备注：`call`、`apply` 用于调用函数传递上下文，`bind` 用于创建函数传递上下文，它们都来自 `Function.prototype` 都是为了解决 `this` 问题。
 
 ```javascript
 let user = {
   firstName: "John",
-};
-
-function func() {
-  console.log(this.firstName);
 }
 
-let funcUser = func.bind(user);
-funcUser();
+function func() {
+  console.log(this.firstName)
+}
+
+let funcUser = func.bind(user)
+funcUser()
 ```
 
-- 一个对象有很多方法，并且都打算将它们都传递出去，那么可以在一个循环中完成所有方法的绑定：
+- 一个对象有很多方法，并且都打算将它们都传递出去，那么可以在一个循环中完成所有方法的绑定。
 
 ```javascript
 for (let key in user) {
   if (typeof user[key] == 'function') {
-    user[key] = user[key].bind(user);
+    user[key] = user[key].bind(user)
   }
 }
 ```
 
-- 偏函数：通过绑定先有函数的一些参数来创建一个新函数。
+- 偏函数是指通过绑定先有函数的一些参数来创建一个新函数。
 
 ```javascript
 function mul(a, b) {
-  return a * b;
+  return a * b
 }
 
 let double = mul.bind(null, 2);
 
-console.log(double(3)); // 6
-console.log(double(4)); // 8
+console.log(double(3))  // 6
+console.log(double(4))  // 8
 ```
 
-- `partial(func[, arg1, arg2...])` 调用的结果是一个包装器。
-
-```javascript
-function partial(func, ...argsBound) {
-  return function(...args) {
-    return func.call(this, ...argsBound, ...args);
-  }
-}
-```
-
-- `.bind(this)` 创建了一个该函数的“绑定版本”。
-- 箭头函数 `=>` 没有创建任何绑定，箭头函数只是没有 `this`，`this` 的查找与常规变量的搜索方式完全相同：在外部词法环境中查找。箭头函数也没有 `arguments` 变量。
-- 箭头函数是针对那些没有自己的“上下文”，但在当前上下文中起作用的短代码的。
+- `.bind(this)` 创建一个该函数的绑定版本。
+- 箭头函数没有创建任何绑定，箭头函数只是没有 `this`，`this` 的查找与常规变量的搜索方式完全相同，即在外部词法环境中查找。箭头函数也没有 `arguments` 变量。总之，箭头函数是针对那些没有自己的上下文，但在当前上下文中起作用的短代码的。
 
 ### 43 - 属性标志与描述符
 
-- 属性标志：`writable` 如果为 `true`，则为可写的，否则不可写；`enumerable` 如果为 `true`，则会在循环中列出，否则不可以；`configurable` 如果为 `true`，则是可以被删除/修改，否则不可以；用“常用的方式”创建一个属性时，它们都为 `true`
+- 属性标志 `writable` 如果为 `true`，则为可写的，否则不可写；`enumerable` 如果为 `true`，则会在循环中列出，否则不可以；`configurable` 如果为 `true`，则是可以被删除/修改，否则不可以；用常用的方式创建一个属性时，它们都为 `true`
 
 | 方法 | 描述 |
 | --- | --- |
-| Object.getOwnPropertyDescriptor(obj, propertyName) | 查询有关属性的完整信息 |
 | Object.getOwnPropertyDescriptors(obj) | 一次获取所有属性的描述 |
-| Object.defineProperety(obj, propertyName, descriptor) | 如果该属性存在，会更新其标志，否则，它会使用给定的值和标志创建属性，没有提供标志，则会假定它是 false |
+| Object.getOwnPropertyDescriptor(obj, propertyName) | 查询有关属性的完整信息 |
 | Object.defineProperties(obj, descriptors) | 允许一次定义多个属性 |
-| 限制整个对象的方法 |  |
+| Object.defineProperety(obj, propertyName, descriptor) | 如果该属性存在会更新其标志，否则它会使用给定的值和标志创建属性，没有提供标志，则会假定它是 false |
+| **限制整个对象的方法：** |  |
 | Object.preventExtensions(obj) | 禁止向对象添加新属性 |
 | Object.seal(obj) | 禁止添加/删除属性，为所有现有的属性设置 `configurable: false` |
 | Object.freeze(obj) | 禁止添加/删除/更改属性，为所有现有的属性设置 `configurable: false, writable: false` |
-| 针对测试： |  |
+| **针对测试的方法：** |  |
 | Object.isExtensible(obj) | 如果添加属性被禁止，则返回 false，否则返回 true |
-| Object.isSealed(obj) | 如果添加/删除属性被禁止，并且所有现有的属性都具有 `configurable: false`
-则返回 true |
-| Object.isFrozen(obj) | 如果添加/删除/更改属性被禁止，并且所有当前属性都是 `configurable: false, writable: false`
-，则返回 true |
+| Object.isSealed(obj) | 如果添加/删除属性被禁止，并且所有现有的属性都具有 `configurable: false` 则返回 true |
+| Object.isFrozen(obj) | 如果添加/删除/更改属性被禁止，并且所有当前属性都是 `configurable: false, writable: false` 则返回 true |
 
 ```javascript
 Object.defineProperties(user, {
   name: { value: "John", writable: false },
   surname: { value: "Smith", writable: false },
   // ...
-});
+})
 ```
 
-- 完全克隆对象，包括属性、`Symbol`、不可枚举类型。
+- 完全克隆对象，包括属性、`Symbol`、不可枚举类型：
 
 ```javascript
-let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj));
+let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj))
 ```
 
 ### 44 - getter与setter
 
-- 两种类型的对象属性：第一种是数据属性；第二种是访问器属性，本质上是用于获取和设置值的函数。
+- 存在两种类型的对象属性，一种是数据属性，另一种是访问器属性本质上是用于获取和设置值的函数。
 - 对于访问器属性，没有 `value` 和 `writable`，但是有 `get` 和 `set` 函数。
 - 一个属性要么是访问器（具有 `get/set` 方法），要么是数据属性（具有 `value`），但不能两者都是。
+- 访问器属性的分配操作是由 `setter` 函数处理的，因此写入此类属性实际上与调用函数相同。
 
 ```javascript
 let user = {
@@ -1218,216 +1239,212 @@ let user = {
   surname: "Smith",
 
   get fullName() {
-    return `${this.name} ${this.surname}`;
+    return `${this.name} ${this.surname}`
   },
 
   set fullName(value) {
     [this.name, this.surname] = value.split(" ");
   },
-};
+}
 
 // 访问器属性看起来就像一个普通属性
-// 不以函数的方式调用 user.fullName，正常读取它：getter 在幕后运行
-console.log(user.fullName);
+// 不以函数的方式调用，而使用 user.fullName，正常读取 getter 会在幕后运行
+console.log(user.fullName)
 
-user.fullName = "Alice Cooper";
-console.log(user.fullName);
+user.fullName = "Alice Cooper"
+console.log(user.fullName)
 ```
 
 ### 45 - 原型继承
 
-- 在 JS 中，对象有一个特殊的隐藏属性 `[[Prototype]]`，它要么为 `null`，要么就是对另一个对象的引用，该对象被称为“原型”。
+- 对象有一个特殊的隐藏属性 `[[Prototype]]`，它要么为 `null` 要么就是对另一个对象的引用，该对象被称为原型。
 
 ```javascript
 // 将 animal 设置为 rabbit 的原型
 // rabbit 的原型是从 animal 继承而来的
 let animal = {
   eats: true,
-};
+}
 
 let rabbit = {
   jumps: true,
-};
+}
 
 // 设置 rabbit.[[Prototype]] = animal
-rabbit.__proto__ = animal;
+rabbit.__proto__ = animal
 
 // let rabbit = {
 //   jumps: true,
 //   __proto__: animal,
-// };
+// }
 
-console.log(rabbit.eats);
-console.log(rabbit.jumps);
+console.log(rabbit.eats)
+console.log(rabbit.jumps)
 ```
 
-- 从 `object` 中读取一个缺失的属性时，JavaScript 会自动从原型中获取该属性。
-- 引用不能形成闭环，如果试图在一个闭环中分配 `__proto__`，JavaScript 会抛出错误。
+- 从对象中读取一个缺失的属性时，JS 会自动从原型中获取该属性。
+- 引用不能形成闭环，如果试图在一个闭环中分配 `__proto__`，JS 会抛出错误。
 - `__proto__` 的值可以是对象，也可以是 `null`，而其他的类型都会被忽略。
-- 只能有一个 `[[Prototype]]`，一个对象不能从其他两个对象获得继承。
 - `__proto__` 是 `[[Prototype]]` 的因历史原因而留下来的 `getter/setter`
-- 访问器（accessor）属性是一个例外，因为分配（assignment）操作是由 `setter` 函数处理的。因此，写入此类属性实际上与调用函数相同。
-- 无论在哪里找到方法，在一个对象还是在原型中。在一个方法调用中，`this` 始终是点符号 `.` 前面的对象（调用者）。
+- 建议应该使用函数 `Object.getPrototypeOf/Object.setPrototypeOf` 来取代 `__proto__` 的 `get/set` 原型。
+- 只能有一个 `[[Prototype]]`，一个对象不能从其他两个对象获得继承。
+- 无论在哪里找到方法，在一个对象还是在原型中，`this` 始终是点符号 `.` 前面的对象（调用者）
 - 当继承的对象运行继承的方法时，它们将仅修改自己的状态，而不会修改大对象的状态。
 - 方法是共享的，但对象状态不是。
-- 现代编程语言建议应该使用函数 `Object.getPrototypeOf/Object.setPrototypeOf` 来取代 `__proto__` 去 `get/set` 原型。
-- `for..in` 循环也会迭代继承的属性。
+- 几乎所有键/值获取方法都会忽略继承的属性，`for..in` 循环会迭代继承的属性。
 
 | 方法 | 描述 |
 | --- | --- |
-| obj.hasOwnProperty(key) | 如果 `obj`具有自己的（非继承的）名为 `key`的属性，则返回 `true` |
+| obj.hasOwnProperty(key) | 如果 obj 具有自己的（非继承的）名为 key 的属性，则返回 true |
 
 ```javascript
 let animal = {
-  eats: true
-};
+  eats: true,
+}
 
 let rabbit = {
   jumps: true,
-  __proto__: animal
-};
+  __proto__: animal,
+}
 
 for(let prop in rabbit) {
-  let isOwn = rabbit.hasOwnProperty(prop);
+  let isOwn = rabbit.hasOwnProperty(prop)
 
   if (isOwn) {
-    alert(`Our: ${prop}`);  // Our: jumps
+    alert(`Our: ${prop}`)
   } else {
-    alert(`Inherited: ${prop}`);  // Inherited: eats
+    alert(`Inherited: ${prop}`)
   }
 }
 ```
 
-- 几乎所有其他键/值获取方法都忽略继承的属性。
-
 ### 46 - F.prototype
 
 - `F.prototype` 属性仅在 `new F` 被调用时使用，它为新对象的 `[[Prototype]]` 赋值。
-- `F.prototype` 的值要么是一个对象，要么就是 `null`：其他值都不起作用。
+- `F.prototype` 的值要么是一个对象，要么就是 `null` 其他值都不起作用。
 - `prototype` 属性仅当设置在一个构造函数上，并通过 `new` 调用时，才具有这种特殊的影响。
-- 默认情况下，所有函数都有 `F.prototype = {constructor：F}`，所以可以通过访问它的 `constructor` 属性来获取一个对象的构造器，属性 `constructor` 指向函数自身，当有一个对象，但不知道它使用了哪个构造器（例如它来自第三方库），并且需要创建另一个类似的对象时，用这种方法就很方便。
+- 默认情况下，所有函数都有 `F.prototype = {constructor：F}` 所以可以通过访问它的 `constructor` 属性来获取一个对象的构造器，属性 `constructor` 指向函数自身，当有一个对象但不知道它使用了哪个构造器（例如它来自第三方库），并且需要创建另一个类似的对象时，用这种方法就很方便 `F.prototype.constructor`。
 
 ```javascript
 // 通过构造函数创建的对象设置 [[Prototype]] 的方法
 let animal = {
   eats: true,
-};
+}
 
 function Rabbit(name) {
-  this.name = name;
+  this.name = name
 }
 
 // 当创建了一个 new Rabbit 时，把它的 [[Prototype]] 赋值为 animal
-Rabbit.prototype = animal;
+Rabbit.prototype = animal
 
-//  rabbit.__proto__ == animal
-let rabbit = new Rabbit("White Rabbit");
+// rabbit.__proto__ == animal
+let rabbit = new Rabbit("White Rabbit")
 
-console.log(rabbit.eats);  // true
+console.log(rabbit.eats)  // true
 ```
 
 ### 47 - 原生的原型
 
-- 所有的内建对象都遵循相同的模式（pattern）：方法都存储在 `prototype` 中，对象本身只存储数据，原始数据类型也将方法存储在包装器对象的 `prototype` 中。
+- 所有的内建对象都遵循相同的模式：方法都存储在 `prototype` 中，对象本身只存储数据，原始数据类型也将方法存储在包装器对象的 `prototype` 中。
 - `obj = {}` 和 `obj = new Object()` 是一个意思，其中 `Object` 就是一个内建的对象构造函数，其自身的 `prototype` 指向一个带有 `toString` 和其他方法的一个巨大的对象。
 - `Array`、`Date`、`Function` 及其他，都在 `prototype` 上挂载了方法。
 - 访问基本数据类型的属性，那么临时包装器对象将会通过内建的构造器 `String`、`Number` 和 `Boolean` 被创建。它们提供操作字符串、数字和布尔值的方法然后消失。
 - 值 `null` 和 `undefined` 没有对象包装器。
-- 修改原生原型：`Polyfilling` 是一个术语，表示某个方法在 JavaScript 规范中已存在，但是特定的 JavaScript 引擎尚不支持该方法，那么可以通过手动实现它，并用以填充内建原型。
+- 修改原生原型 Polyfilling 是一个术语，表示某个方法在 JS 规范中已存在，但是特定的 JS 引擎尚不支持该方法，那么可以通过手动实现它，并用以填充内建原型。
 
 ```javascript
-console.dir([1, 2, 3]);
+console.dir([1, 2, 3])
 
 // 原型借用
 let obj = {
   0: "Hello",
   1: "xiaofan",
   length: 2,
-};
+}
 
-obj.join = Array.prototype.join;
+obj.join = Array.prototype.join
 
-console.log(obj.join(", "));
+console.log(obj.join(", "))
 ```
 
 ### 48 - 原型方法
 
-- `Object.getPrototypeOf(obj)` ： 返回对象 `obj` 的 `[[Prototype]]`
-- `Object.setPrototypeOf(obj, proto)` ：将对象 `obj` 的 `[[Prototype]]` 设置为 `proto`
-- `Object.create(proto, [descriptors])` ：利用给定的 `proto` 作为 `[[Prototype]]` 和可选的属性描述来创建一个空对象。
+| 方法 | 描述 |
+| --- | --- |
+| Object.getPrototypeOf(obj) | 返回对象 obj 的 [[Prototype]] |
+| Object.setPrototypeOf(obj, proto) | 将对象 obj 的 [[Prototype]] 设置为 proto |
+| Object.create(proto, [descriptors]) | 利用给定的 proto 作为 [[Prototype]] 和可选的属性描述来创建一个空对象 |
 
 ```javascript
 let animal = {
-  eats: true
-};
+  eats: true,
+}
 
-// 创建一个以 animal 为原型的新对象
-let rabbit = Object.create(animal);  // 与 {__proto__: animal} 相同
+// 创建一个以 animal 为原型的新对象，与 {__proto__: animal} 相同
+let rabbit = Object.create(animal)
 
-alert(rabbit.eats);  // true
-
-alert(Object.getPrototypeOf(rabbit) === animal);  // true
-
-Object.setPrototypeOf(rabbit, {});  // 将 rabbit 的原型修改为 {}
+alert(rabbit.eats)
+alert(Object.getPrototypeOf(rabbit) === animal)
+Object.setPrototypeOf(rabbit, {})
 ```
 
-- `Object.create` 方法更强大，因为它有一个可选的第二参数：属性描述器，可以在此处为新对象提供额外的属性。
-- 使用描述器创建一个属性，它的标识默认是 `false`
+- `Object.create()` 方法更强大，因为它有一个可选的第二参数，属性描述器，可以在此处为新对象提供额外的属性。
+- 使用描述器创建的属性，它的标识默认是 `false`
 
 ```javascript
 // 更加强大的准确拷贝（浅拷贝）
 let clone = Object.create(
   Object.getPrototypeOf(obj),
-  Object.getOwnPropertyDescriptors(obj)
-);
+  Object.getOwnPropertyDescriptors(obj),
+)
 ```
 
+**注意点：**
 - `__proto__` 不是对象的属性，而是 `Object.prototype` 的访问器属性。
 - `__proto__` 是一种访问 `[[Prototype]]` 的方式，而不是 `[[prototype]]` 本身。
-- 大多数与对象相关的方法都是 `Object.something(...)`，例如 `Object.keys(obj)` ，它们不在 `prototype` 中，因此在 “very plain” 对象中它们还是可以继续使用。
-- ![原型.png](https://pic.jitudisk.com/public/2022/11/16/953738a9e5030.png)
+- 大多数与对象相关的方法都是 `Object.something(...)`，例如 `Object.keys(obj)`，它们不在 `prototype` 中。
+![原型链.png](https://pic.img.ski/1672816523.png)
 
 ### 49 - Class
 
--  在 JavaScript 中，类是一种函数。
--  `class` 是用于创建对象的可扩展的程序代码模版，它为对象提供了状态（成员变量）的初始值和行为（成员函数或方法）的实现。
--  类的方法之间没有逗号。
+- 在 JS 中，类是一种函数。
+- Class 是用于创建对象的可扩展的程序代码模版，它为对象提供了状态（成员变量）的初始值和行为（成员函数或方法）的实现。
+- 类的方法之间没有逗号。
 
 ```javascript
 class User {
-  constructor(name) { this.name = name; }
-  sayHi() { alert(this.name); }
+  constructor(name) { this.name = name }
+  sayHi() { alert(this.name) }
 }
 
-// class 是一个函数
-console.log(typeof User);  // function
+// Class 是一个函数
+console.log(typeof User)
 
-// ...或者，更确切地说，是 constructor 方法
-console.log(User === User.prototype.constructor);  // true
+// 更确切地说是 constructor 方法
+console.log(User === User.prototype.constructor)
 
-// 方法在 User.prototype 中，例如：
-console.log(User.prototype.sayHi);  // sayHi 方法的代码
+// 方法在 User.prototype 中
+console.log(User.prototype.sayHi)
 
 // 在原型中实际上有两个方法
-console.log(Object.getOwnPropertyNames(User.prototype));  // constructor, sayHi
+console.log(Object.getOwnPropertyNames(User.prototype))  // ['constructor', 'sayHi']
 ```
 
-- 通过 `class` 创建的函数具有特殊的内部属性标记 `[[IsClassConstructor]]: true`。因此它与手动创建并不完全相同。
-- 类方法不可枚举。
 - 类总是使用 `"use strict"`
+- 类的方法不可枚举。
 - 类字段的不同之处在于，它们会在每个独立对象中被设置，而不是设在 `User.prototype`，可以用于函数绑定。
+- 通过 `class` 创建的函数具有特殊的内部属性标记 `[[IsClassConstructor]]: true` 因此它与手动创建并不完全相同。
 
 ```javascript
 // 类表达式
+// class 之后可以跟一个名字，只有内部可见
 let User = class {
   sayHi() {
-    console.log("Hello");
+    console.log("Hello")
   }
-};
-// class 之后可以跟一个名字，只有内部可见
-```
+}
 
-```javascript
 // get / set
 class User {
   constructor(name) {
@@ -1441,10 +1458,10 @@ class User {
 
   set name(value) {
     if (value.length < 4) {
-      console.log("Name is too short.");
-      return;
+      console.log("Name is too short.")
+      return
     }
-    this._name = value;
+    this._name = value
   }
 }
 ```
@@ -1457,38 +1474,38 @@ class User {
 ```javascript
 function f(phrase) {
   return class {
-    sayHi() { console.log(phrase); }
-  };
+    sayHi() { console.log(phrase) }
+  }
 }
 
 class User extends f("Hello") {}
 
-new User().sayHi(); // Hello
+new User().sayHi()  // Hello
 ```
 
 - 执行 `super.method(...)` 来调用一个父类方法。
-- 执行 `super(...)` 来调用一个父类 `constructor`（只能在 `constructor` 中）。
-- 箭头函数没有`super`，如果被访问，它会从外部函数获取。
-- 继承时如果没有写自己的 `constructor`：
+- 执行 `super(...)` 来调用一个父类 `constructor`（只能在 `constructor` 中）
+- 箭头函数没有 `super`，如果被访问，它会从外部函数获取。
 
 ```javascript
+// 当继承时没有写自己的 constructor
 class Rabbit extends Animal {
   // 为没有自己的 constructor 的扩展类生成的
   constructor(...args) {
-    super(...args);
+    super(...args)
   }
 }
 ```
 
-- 继承类的 constructor 必须调用 `super(...)`，并且一定要在使用 `this` 之前调用。
-- 派生类的 constructor 必须调用 `super()`，否则 `"this"` 不会被定义。
+- 继承类的 `constructor` 必须调用 `super(...)`，并且一定要在使用 `this` 之前调用。
+- 派生类的 `constructor` 必须调用 `super()`，否则 `this` 不会被定义。
 
 ```javascript
 class Rabbit extends Animal {
 
   constructor(name, earLength) {
-    super(name);
-    this.earLength = earLength;
+    super(name)
+    this.earLength = earLength
   }
 
   // ...
@@ -1497,111 +1514,110 @@ class Rabbit extends Animal {
 
 - 当父类构造器在派生的类中被调用时，它会使用被重写的方法。
 - 父类构造器总是会使用它自己字段的值，而不是被重写的那一个。
-- 类字段初始化：对于基类（还未继承任何东西的那种），在构造函数调用前初始化，对于派生类，在 `super()` 后立刻初始化。
-- 当一个函数被定义为类或者对象方法时，它的 `[[HomeObject]]` 属性就成为了该对象，然后 `super` （仅用于）使用它来解析（resolve）父原型及其方法。
+- 类字段初始化，对于基类（还未继承任何东西的那种），在构造函数调用前初始化，对于派生类，在 `super()` 后立刻初始化。
+- 当一个函数被定义为类或者对象方法时，它的 `[[HomeObject]]` 属性就成为了该对象，然后 `super` （仅用于）使用它来解析父原型及其方法。
 - `[[HomeObject]]` 是为类和普通对象中的方法定义的，不是函数属性。
 
 ### 51 - 静态属性与方法
 
 - 静态方法被用于实现属于整个类的功能，它与具体的类实例无关。
-- 把一个方法作为一个整体赋值给类，这样的方法被称为静态的（static）。
+- 把一个方法作为一个整体赋值给类，这样的方法被称为静态的（static）
 - 通常静态方法用于实现属于整个类，但不属于该类任何特定对象的函数。
 - 静态方法也被用于与数据库相关的公共类，可以用于搜索/保存/删除数据库中的条目。
 - 静态方法可以在类上调用，而不是在单个对象上。
 - 静态属性和方法是可被继承的。
-- 内建的 `Object` 构造函数，`Object.__proto__ === Function.prototype`
-- class Rabbit： `Rabbit.__proto__ === Function.prototype`
+- 内建的 `Object` 构造函数 `Object.__proto__ === Function.prototype`
+- class Rabbit：`Rabbit.__proto__ === Function.prototype`
 - class Rabbit extends Object： `Rabbit.__proto__ === Object`
 
 ```javascript
-// 近期新规 静态属性
+// 静态属性
 class Article {
-  static publisher = "levi Ding";
+  static publisher = "levi Ding"
 }
 
-console.log(Article.publisher);
+console.log(Article.publisher)
 ```
 
 ### 52 - 私有的与受保护的
 
 - 内部接口：可以通过该类的其他方法访问，但不能从外部访问的方法和属性。
-- 外部接口：也可以从类的外部访问的方法和属性。
+- 外部接口：可以从类的外部访问的方法和属性。
 - 公有的：可从任何地方访问，它们构成了外部接口。
 - 私有的：只能从类的内部访问，这些用于内部接口。
-- 受保护的：（不是JS语言级别实现的），私有的，但可以从继承的类进行访问。
+- 受保护的：（不是JS语言级别实现的）私有的，但可以从继承的类进行访问。
 - 受保护的属性通常以下划线 `_` 作为前缀。
 
 ```javascript
 // 受保护的
 class CoffeeMachine {
-  _waterAmount = 0;
+  _waterAmount = 0
 
   set waterAmount(value) {
     if (value < 0) {
-      value = 0;
+      value = 0
     }
-    this._waterAmount = value;
+    this._waterAmount = value
   }
 
   get waterAmount() {
-    return this._waterAmount;
+    return this._waterAmount
   }
 
   constructor(power) {
-    this._power = power;
+    this._power = power
   }
 
-  // 设置为只读 没有setter
+  // 设置为只读 没有 setter
   get power() {
-    return this._power;
+    return this._power
   }
 }
 
-let coffeeMachine = new CoffeeMachine(100);
+let coffeeMachine = new CoffeeMachine(100)
 
-coffeeMachine.waterAmount = -10;
-console.log(coffeeMachine.waterAmount);
+coffeeMachine.waterAmount = -10
+console.log(coffeeMachine.waterAmount)
 
-console.log(coffeeMachine.power);
-coffeeMachine.power = 250;
-console.log(coffeeMachine.power);
+console.log(coffeeMachine.power)
+coffeeMachine.power = 250
+console.log(coffeeMachine.power)
 ```
 
-- 新增语言级私有语法：私有属性和方法应该以 `#` 开头。它们只在类的内部可被访问，无法从外部或从继承的类中访问它。
+- 新增语言级私有语法，私有属性和方法应该以 `#` 开头，它们只在类的内部可被访问，无法从外部或从继承的类中访问它。
 - 私有字段与公共字段不会发生冲突，可以同时拥有私有的 `#waterAmount` 和公共的 `waterAmount` 字段。
 - 私有字段不能通过 `this[name]` 访问。
 
 ### 53 - 扩展内建类
 
-- 内建的方法例如 `filter`，`map` 等，返回的正是子类 `PowerArray` 的新对象，它们内部使用了对象的 `constructor` 属性来实现这一功能。
-- 添加一个特殊的静态 getter `Symbol.species`，如果存在，则应返回 JavaScript 在内部用来在 `map` 和 `filter` 等方法中创建新实体的 `constructor`
+- 内建的方法例如 `filter`、`map` 等，返回的正是子类 `PowerArray` 的新对象，它们内部使用了对象的 `constructor` 属性来实现这一功能。
+- 添加一个特殊的静态 getter `Symbol.species`，如果存在，则应返回 JS 在内部用来在 `map` 和 `filter` 等方法中创建新实体的 `constructor`
 - 内建类却是一个例外，它们相互间不继承静态方法。
 - `Date` 和 `Object` 之间没有连结，它们是独立的，只有 `Date.prototype` 继承自 `Object.prototype`
 
 ### 54 - 类检查
 
-- `instanceof` 操作符用于检查一个对象是否属于某个特定的 class，同时它还考虑了继承。
-- 多态性（polymorphic） 的函数，该函数根据参数的类型对参数进行不同的处理。
-- `instanceof` 并不关心函数，而是关心函数的与原型链匹配的 `prototype`，真正决定类型的是 `prototype`，而不是构造函数。
-- 可以将 `obj instanceof Class` 检查改为 `Class.prototype.isPrototypeOf(obj)`
+- `instanceof` 操作符用于检查一个对象是否属于某个特定的 Class，同时它还考虑了继承。
+- `instanceof` 并不关心函数，而是关心函数的与原型链匹配的 `prototype`，真正决定类型的是 `prototype`，而不是构造函数。- 可以将 `obj instanceof Class` 检查改为 `Class.prototype.isPrototypeOf(obj)`
 - 使用特殊的对象属性 `Symbol.toStringTag` 自定义对象的 `toString` 方法的行为：
 
 ```javascript
 let user = {
   [Symbol.toStringTag]: "User"
-};
+}
 
-alert( {}.toString.call(user) );
+alert({}.toString.call(user))
 ```
 
-- 类型检查方法。
+- 类型检查方法：
 
-|  | 用于 | 返回值 |
+| 方法 | 用于 | 返回值 |
 | --- | --- | --- |
 | typeof | 原始数据类型 | string |
-| {}.toString | 原始数据类型，内建对象，包含 Symbol.toStringTag
- 属性的对象 | string |
+| {}.toString | 原始数据类型、内建对象、包含 Symbol.toStringTag 属性的对象 | string |
 | instanceof | 对象，考虑继承时更出色 | true/false |
+
+- 多态性（polymorphic）的函数，该函数根据参数的类型对参数进行不同的处理。
 
 ### 55 - Mixin模式
 
