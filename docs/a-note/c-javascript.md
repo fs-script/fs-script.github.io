@@ -1621,57 +1621,73 @@ alert({}.toString.call(user))
 
 ### 55 - Mixin模式
 
-- `mixin` 是一个包含可被其他类使用而无需继承的方法的类。
-- JavaScript 不支持多重继承，但是可以通过将方法拷贝到原型中来实现 `mixin`
+- Mixin 模式是一个包含可被其他类使用而无需继承的方法的类。
+- JS 不支持多重继承，但是可以通过将方法拷贝到原型中来实现 Mixin
 
 ```javascript
-// 这里没有继承，只有一个简单的方法拷贝。所以 User 可以从另一个类继承
-// mixin
 let sayHiMixin = {
   sayHi() {
-    console.log(`Hello ${this.name}`);
+    console.log(`Hello ${this.name}`)
   },
   sayBye() {
-    console.log(`Bye ${this.name}`);
-  },
-};
+    console.log(`Bye ${this.name}`)
+  }
+}
 
-// 用法：
 class User {
   constructor(name) {
-    this.name = name;
+    this.name = name
   }
 }
 
 // 拷贝方法
-Object.assign(User.prototype, sayHiMixin);
+Object.assign(User.prototype, sayHiMixin)
 
-// 现在 User 可以打招呼了
-new User("Dude").sayHi(); // Hello Dude!
+new User("Dude").sayHi()  // Hello Dude
 ```
 
-- `mixin` 提供 `.trigger(name, [...data])` 方法，以在发生重要的事情时“生成一个事件”，`name` 参数（arguments）是事件的名称，`[...data]` 是可选的带有事件数据的其他参数（arguments）。
-- `.on(name, handler)` 方法，它为具有给定名称的事件添加了 `handler` 函数作为监听器（listener），当具有给定 `name` 的事件触发时将调用该方法，并从 `.trigger` 调用中获取参数（arguments）。
-- `.off(name, handler)` 方法，它会删除 `handler` 监听器（listener）。
+| 方法 | 参数 | 描述 |
+| --- | --- | --- |
+| .trigger(name, [...data]) | 事件名称， 带有事件数据的其他参数 | 在发生重要的事情时生成一个事件 |
+| .on(name, handler) | 给定的事件， 监听器函数 | 为具有给定名称的事件添加 handler 函数作为监听器，当具有给定 name 的事件触发时将调用该方法，并从 .trigger 调用中获取参数 |
+| .off(name, handler) | 删除 handler 监听器 |
+
+```javascript
+class Menu {
+  choose(value) {
+    this.trigger("select", value)
+  }
+}
+// 添加带有事件相关方法的 mixin
+Object.assign(Menu.prototype, eventMixin)
+
+let menu = new Menu()
+
+// 添加一个事件处理程序（handler），在被选择时被调用：
+menu.on("select", value => alert(`Value selected: ${value}`))
+
+// 触发事件 => 运行上述的事件处理程序（handler）并显示：
+// 被选中的值：123
+menu.choose("123")
+```
 
 ### 56 - 错误处理
 
--  `try...catch...`：首先，执行 `try {...}` 中的代码，如果这里没有错误，则忽略 `catch (err)`：执行到 `try` 的末尾并跳过 `catch` 继续执行，如果这里出现错误，则 `try` 执行停止，控制流转向 `catch (err)` 的开头，变量 `err`（可以使用任何名称）将包含一个 `error` 对象，该对象包含了所发生事件的详细信息。
--  `try...catch` 仅对运行时的 `error` 有效，只能处理有效代码中出现的错误，这类错误被称为“运行时的错误（runtime errors）”，有时被称为“异常（exceptions）”。
--  发生错误时，JavaScript 生成一个包含有关其详细信息的对象，然后将该对象作为参数传递给 `catch`。
--  `error` 对象的常用属性：`name/message/stack`
--  `throw` 操作符会生成一个 `error` 对象，在 `try` 中不符合要求时，主动抛出一个异常。
--  JavaScript 中有很多内建的标准 `error` 的构造器：`Error`，`SyntaxError`，`ReferenceError`，`TypeError` 等，也可以使用它们来创建 `error` 对象。
+- `try...catch...` 首先执行 `try {...}` 中的代码，如果这里没有错误则忽略 `catch (err)`，即执行到 `try` 的末尾并跳过 `catch` 继续执行；如果这里出现错误，则 `try` 执行停止，控制流转向 `catch (err)` 的开头，变量 `err`（可以使用任何名称）将包含一个 `error` 对象，该对象包含了所发生事件的详细信息。
+- `try...catch...` 仅对运行时的 `error` 有效，只能处理有效代码中出现的错误，这类错误被称为运行时的错误（runtime errors），有时被称为异常（exceptions）
+- 发生错误时，JS 生成一个包含有关其详细信息的对象，然后将该对象作为参数传递给 `catch`
+- `error` 对象的常用属性有 `name`、`message`、`stack`
+- `throw` 操作符会生成一个 `error` 对象，在 `try` 中不符合要求时主动抛出一个异常。
+- JS 中有很多内建的标准 `error` 的构造器 `Error`（错误）、`SyntaxError`（语法错误）、`ReferenceError`（引用错误）、`TypeError`（类型错误） 等，也可以使用它们来创建 `error` 对象。
 
 ```javascript
-let error = new Error(message);
-// 或
-let error = new SyntaxError(message);
-let error = new ReferenceError(message);
+let error = new Error(message)
+let error = new SyntaxError(message)
+let error = new ReferenceError(message)
 // ...
 ```
 
-- 再次抛出：`catch` 应该只处理它知道的 `error`，并“抛出”所有其他 `error`，可以接由外部的 `try...catch` 处理。
+- 再次抛出时 `catch` 应该只处理它知道的 `error`，并抛出所有其他 `error`，可以接由外部的 `try...catch` 处理。
 - `try...catch...finally...`
 
 ```javascript
@@ -1685,154 +1701,158 @@ try {
 ```
 
 - `finally` 子句适用于 `try...catch` 的任何出口，这包括显式的 `return`，`finally` 会在控制转向外部代码前被执行，在跳出之前需要执行 `finally` 中的代码。
-- 全局 `catch`，将一个函数赋值给特殊的 `window.onerror` 属性，该函数将在发生未捕获的 `error` 时执行。
+- 全局 `catch` 将一个函数赋值给特殊的 `window.onerror` 属性，该函数将在发生未捕获的 `error` 时执行。
 
 ```javascript
 // 自定义错误
 class ValidationError extends Error {
   constructor(message) {
-    super(message);
-    this.name = "ValidationError";
+    super(message)
+    this.name = "ValidationError"
   }
 }
 
 // 用法
 function readUser(json) {
-  let user = JSON.parse(json);
+  let user = JSON.parse(json)
 
   if (!user.age) {
-    throw new ValidationError("No field: age");
+    throw new ValidationError("No field: age")
   }
 
   if (!user.name) {
-    throw new ValidationError("No field: name");
+    throw new ValidationError("No field: name")
   }
 
-  return user;
+  return user
 }
 
 // try..catch 的工作示例
 
 try {
-  let user = readUser('{ "age": 25 }');
+  let user = readUser('{ "age": 25 }')
 } catch (err) {
   if (err instanceof ValidationError) {
-    alert("Invalid data: " + err.message);
+    alert("Invalid data: " + err.message)
   } else if (err instanceof SyntaxError) {
-    alert("JSON Syntax Error: " + err.message);
+    alert("JSON Syntax Error: " + err.message)
   } else {
-    throw err;  // 未知的 error，再次抛出
+    // 未知的 error，再次抛出
+    throw err
   }
 }
 ```
 
-- “包装异常（wrapping exceptions）”，将“低级别”的异常“包装”到了更抽象的 `ReadError` 中。
+- 包装异常指将低级别的异常包装到了更抽象的 `ReadError` 中。
 
 ### 57 - 回调
 
-- 基于回调的异步编程风格，异步执行某项功能的函数应该提供一个 `callback` 参数用于在相应事件完成时调用。
-- 可以在回调中回调。
+- 基于回调的异步编程风格，异步执行某项功能的函数应该提供一个 Callback 参数用于在相应事件完成时调用，可以在回调中回调。
 
 ```javascript
 function loadScript(src, callback) {
-  let script = document.createElement('script');
-  script.src = src;
+  let script = document.createElement('script')
+  script.src = src
 
-  script.onload = () => callback(null, script);
-  script.onerror = () => callback(new Error(`Script load error for ${src}`));
+  script.onload = () => callback(null, script)
+  script.onerror = () => callback(new Error(`Script load error for ${src}`))
 
-  document.head.append(script);
+  document.head.append(script)
 }
 
-// Error 优先回调（error-first callback）
+// Error 优先回调
 loadScript('/my/script.js', function(error, script) {
   if (error) {
     // 处理 error
   } else {
     // 脚本加载成功
   }
-});
+})
 ```
 
-- “回调地狱”或“厄运金字塔”：过多的嵌套调用，可以通过使每个行为都成为一个独立的函数来尝试减轻这种问题，最好的方法之一就是 “promise”。
+- 回调地狱或厄运金字塔是指过多的嵌套调用，可以通过使每个行为都成为一个独立的函数来尝试减轻这种问题，最好的方法之一就是使用 Promise
 
 ### 58 - Promise
 
-- `Promise` 是将“生产者代码”和“消费者代码”连接在一起的一个特殊的 JavaScript 对象。
-- 在前端编程中，`promise` 通常被用于网络请求。
+- Promise 是将生产者代码和消费者代码连接在一起的一个特殊的 JS 对象，它表示一个异步操作的最终结果与值。
+- Promise 使得异步方法可以像同步方法那样返回值，但异步方法并不会立即返回最终的值，而是会返回一个 Promise 对象，以便在未来某个时候把值交给使用者。
+- Promise 通常被用于网络请求。
 
 ```javascript
-// Promise 对象的构造器（constructor）语法
+// Promise 对象的构造器语法
 let promise = new Promise(function(resolve, reject) {
   // executor（生产者代码）
-});
+})
 ```
 
-- 传递给 `new Promise` 的函数被称为 `executor`，当 `new Promise` 被创建，`executor` 会自动运行，它包含最终应产出结果的生产者代码，它的参数 `resolve` 和 `reject` 是由 JavaScript 自身提供的回调。
-- 当 `executor` 获得了结果，调用以下回调之一：`resolve(value)` ，如果任务成功完成并带有结果 `value；reject(error)`如果出现了 `error`，`error` 即为 `error` 对象。总之，`executor` 会自动运行并尝试执行一项工作，尝试结束后，如果成功则调用 `resolve`，如果出现 `error` 则调用 `reject`
-- 构造器返回的 `promise` 对象具有以下内部属性：`state`最初是 `"pending"`，然后在 `resolve` 被调用时变为 `"fulfilled"`，或者在 `reject` 被调用时变为 `"rejected"`；`result`  最初是 `undefined`，然后在 `resolve(value)` 被调用时变为 `value`，或者在 `reject(error)` 被调用时变为 `error`
-- `executor` 只能调用一个 `resolve` 或一个 `reject`，任何状态的更改都是最终的，`resolve/reject` 只需要一个参数（或不包含任何参数），并且将忽略额外的参数。
+- 传递给 `new Promise()` 的函数被称为 executor，当 `new Promise()` 被创建 executor 会自动运行，它包含最终应产出结果的生产者代码，它的参数 `resolve` 和 `reject` 是由 JS 自身提供的回调。
+- 当 executor 获得了结果，将调用以下回调之一：`resolve(value)` 如果任务成功完成并带有结果 value，`reject(error)` 如果出现了 error 即为 error 对象。总之 executor 会自动运行并尝试执行一项工作，尝试结束后，如果成功则调用 `resolve(value)` 如果出现 error 则调用 `reject(error)`
+- 构造器返回的 Promise 对象具有以下内部属性：`state` 最初是 pending，然后在 `resolve(value)` 被调用时变为 fulfilled，在 `reject(error)` 被调用时变为 rejected；`result` 最初是 undefined，然后在 `resolve(value)` 被调用时变为 value，在 `reject(error)` 被调用时变为 error
+- executor 只能调用一个 `resolve(value)` 或一个 `reject(error)`，任何状态的更改都是最终的，`resolve/reject` 只需要一个参数（或不包含任何参数）并且将忽略额外的参数。
 
 ```javascript
 promise.then(
   function(result) { /* handle a successful result */ },
   function(error) { /* handle an error */ }
-);
+)
 ```
 
-- `.then` 的第一个参数是一个函数，该函数将在 `promise resolved` 且接收到结果后执行，`.then` 的第二个参数也是一个函数，该函数将在 `promise rejected` 且接收到 `error` 信息后执行。
+- `.then()` 的第一个参数是一个函数，该函数将在 promise resolved 且接收到结果后执行，`.then()` 的第二个参数也是一个函数，该函数将在 promise rejected 且接收到 error 信息后执行。
 
 ```javascript
 let promise = new Promise((resolve, reject) => {
-  setTimeout(() => reject(new Error("Whoops!")), 1000);
-});
+  setTimeout(() => reject(new Error("Whoops!")), 1000)
+})
 
 // .catch(f) 与 promise.then(null, f) 一样
-promise.catch(alert);  // 1 秒后显示 "Error: Whoops!"
+promise.catch(alert)
 ```
 
-- `.catch(f)` 调用是 `.then(null, f)` 的完全的模拟，它只是一个简写形式。
-- 调用 `.finally(f)` 类似于 `.then(f, f)`，因为当 `promise settled` 时 `f` 就会执行：无论 `promise` 被 `resolve` 还是 `reject`，`finally` 的功能是设置一个处理程序在前面的操作完成后，执行清理/终结。
+- `.catch()` 调用是 `.then(null, f)` 的完全的模拟，它只是一个简写形式。
+- `.finally()` 类似于 `.then(f, f)`，因为当 promise settled 时 f 就会执行，即无论 Promise 被 `resolve` 还是 `reject`，`finally` 的功能是设置一个处理程序在前面的操作完成后，执行清理/终结。
 
 ```javascript
 new Promise((resolve, reject) => {
   /* 做一些需要时间的事儿，之后调用可能会 resolve 也可能会 reject */
 })
+
 // 在 promise 为 settled 时运行，无论成功与否
 .finally(() => stop loading indicator)
 // 所以，加载指示器（loading indicator）始终会在继续之前停止
 .then(result => show result, err => show error)
 ```
 
-- `finally` 处理程序（handler）没有参数，`finally` 处理程序也不应该返回任何内容。
-- `finally` 处理程序没有得到前一个处理程序的结果（它没有参数），而这个结果被传递给了下一个合适的处理程序，如果 `finally` 处理程序返回了一些内容，那么这些内容会被忽略，当 `finally` 抛出 `error` 时，执行将转到最近的 `error` 的处理程序。
-- 如果 `promise` 为 `pending` 状态，`.then/catch/finally` 处理程序（handler）将等待它的结果，`Promise` 则更加灵活，可以随时添加处理程序（handler）：如果结果已经在了，它们就会执行。
+- `.finally()` 处理程序没有参数，`.finally()` 处理程序也不应该返回任何内容。
+- `.finally()` 处理程序没有得到前一个处理程序的结果（它没有参数），而这个结果被传递给了下一个合适的处理程序，如果 `.finally()` 处理程序返回了一些内容，那么这些内容会被忽略，当 `.finally()` 抛出 error 时，执行将转到最近的 error 的处理程序。
+- 如果 Promise 为 pending 状态，`.then()/catch()/finally()` 处理程序将等待它的结果。
 
-**Promise链：**
+**Promise链**
 
-- `.then(handler)` 中所使用的处理程序（handler）可以创建并返回一个 `promise`，返回 `promise` 使能够构建异步行为链。
-- 确切地说，处理程序（handler）返回的不完全是一个 `promise`，而是返回的被称为 “thenable” 对象，一个具有方法 `.then` 的任意对象，它会被当做一个 `promise` 来对待。
-- `fetch(url)`方法从远程服务器加载用户信息。
-- `response.text()` 方法：当全部文字（full text）内容从远程服务器下载完成后，它会返回一个 `promise`，该 `promise` 以刚刚下载完成的这个文本作为 `result` 进行 `resolve`
--  `fetch` 返回的 `response` 对象还包括 `response.json()` 方法，该方法读取远程数据并将其解析为 JSON
--  作为一个好的做法，异步行为应该始终返回一个 `promise`
--  总结：如果 `.then`（或 `catch/finally` 都可以）处理程序（handler）返回一个 `promise`，那么链的其余部分将会等待，直到它状态变为 `settled`，当它被 `settled` 后，其 `result`（或 `error` ）将被进一步传递下去。
--  捕获所有 `error` 的最简单的方法是，将 `.catch` 附加到链的末尾。
--  在 `executor` 周围的隐式 `try..catch`自动捕获了 `error`，并将其变为 `rejected promise`，`.then` 处理程序（handler）中 `throw`，这意味着 `promise` 被 `rejected`，因此控制权移交至最近的 `error` 处理程序（handler）。
--  在 `.catch` 中 `throw`，那么控制权就会被移交到下一个最近的 `error` 处理程序（handler），处理该 `error` 并正常完成，那么它将继续到最近的成功的 `.then` 处理程序（handler）。
--  在任何情况下都应该有 `unhandledrejection` 事件处理程序（用于浏览器，以及其他环境的模拟），以跟踪未处理的 `error` 并告知用户（可能还有的服务器）有关信息，以使应用程序永远不会“死掉”。
+- 作为一个好的方法，异步行为应该始终返回一个 Promise
+- `.then()` 中所使用的处理程序可以创建并返回一个 Promise，返回 Promise 使能够构建异步行为链，确切地说处理程序返回的不完全是一个 Promise，而是返回的被称为 thenable 对象，一个具有方法 `.then()` 的任意对象，它会被当做一个 Promise 来对待。
+- 在 executor 周围的隐式 `try..catch...` 自动捕获了 error，并将其变为 rejected promise，`.then()` 处理程序中 `throw()`，这意味着 Promise 被 rejected，因此控制权移交至最近的 error 处理程序。
+- 在 `.catch()` 中 `throw()` 那么控制权就会被移交到下一个最近的 error 处理程序，处理该 error 并正常完成，那么它将继续到最近的成功的 `.then()` 处理程序。
+- 捕获所有 error 的最简单的方法是将 `.catch()` 附加到链的末尾。
+- 在任何情况下都应该有 `unhandledrejection` 事件处理程序，以跟踪未处理的 error 并告知用户（可能还有的服务器）有关信息，以使应用程序永远不会死掉。
+- 总结，如果 `.then()` 或 `.catch()` `.finally()` 处理程序返回一个 Promise，那么链的其余部分将会等待，直到它状态变为 settled，当它被 settled 后，其 result 或 error 将被进一步传递下去。
 
 ```javascript
 window.addEventListener('unhandledrejection', function(event) {
   // 这个事件对象有两个特殊的属性：
-  alert(event.promise);  // [object Promise] - 生成该全局 error 的 promise
-  alert(event.reason);  // Error: Whoops! - 未处理的 error 对象
-});
+  alert(event.promise)  // [object Promise] - 生成该全局 error 的 promise
+  alert(event.reason)  // Error: Whoops! - 未处理的 error 对象
+})
 
+// 没有用来处理 error 的 catch
 new Promise(function() {
-  throw new Error("Whoops!");
-});  // 没有用来处理 error 的 catch
+  throw new Error("Whoops!")
+})
 ```
+
+**Fetch()**
+
+- `fetch(url)` 方法从远程服务器加载用户信息。
+- `fetch(url)` 返回的 response 对象还包括 `response.json()` 方法，该方法读取远程数据并将其解析为 JSON，`response.text()` 方法，当全部文字内容从远程服务器下载完成后，它会返回一个 Promise，该 Promise 以刚刚下载完成的这个文本作为 result 进行 `resolve()`
 
 ### 59 - Promise API
 
