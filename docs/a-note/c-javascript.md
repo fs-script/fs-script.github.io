@@ -436,14 +436,14 @@ for (let value of user1) {
 - 几个对象相互引用，但外部没有对其任意对象的引用，这些对象也可能是不可达的，将会被从内存中删除。
 - 垃圾回收的基本算法被称为 “mark-and-sweep”（标记与扫描）。
 
-### 20 - 对象方法与this
+### 20 - 对象方法与 this
 
 - 作为对象属性的函数被称为方法。
 - `this` 的值就是在点之前的这个对象，即调用该方法的对象。
 - 没有调用对象时，严格模式下的 `this` 值为 `undefined`，非严格模式的情况下，`this` 将会是全局对象。
 - 箭头函数没有自己的 `this`，`this` 值取决于外部非箭头函数。
 
-### 21 - 构造器与new
+### 21 - 构造器与 new
 
 - 构造函数的命名以大写字母开头，只能由 `new` 操作符来执行，实现可重用的对象创建代码。
 
@@ -479,7 +479,7 @@ console.log(user?.address?.street)
 - `?.[]` 从一个可能不存在的对象上安全地读取属性。
 - 可以使用 `?.` 安全地读取或删除，但不能写入，不能用在赋值语句的左侧。
 
-### 23 - Symbol类型
+### 23 - Symbol 类型
 
 - 只有两种原始类型可以用作对象属性的键：字符串类型、`Symbol`类型。
 - `Symbol` 的值表示唯一的标识符，是带有可选描述的原始唯一值，保证是唯一的，不会被自动转换为字符串。
@@ -918,7 +918,7 @@ console.log(pow(2, 10))
 - 任何递归都可以用循环来重写，通常循环变体更有效。
 - 递归的一个重要应用是递归遍历。
 
-### 35 - Rest参数与Spread语法
+### 35 - Rest 参数与 Spread 语法
 
 - 在 JS 中无论函数是如何定义的，都可以在调用它时传入任意数量的参数。
 - `...rest`，这将会声明一个数组并指定其名称，其中存有剩余的参数，`rest` 参数必须放到参数列表的末尾。
@@ -962,7 +962,7 @@ console.log(Math.max(...arr));
 - 函数将从内到外依次在对应的词法环境中寻找目标变量，它使用最新的值。
 - 一般情况下函数调用完成后，会将词法环境和其中的所有变量从内存中删除，但是如果有一个嵌套的函数在函数结束后仍可达，则它将具有引用词法环境的 `[[Environment]]` 属性。
 
-### 37 - 关于var
+### 37 - 关于 var
 
 - `var` 没有块级作用域，用 `var` 声明的变量为函数作用域或全局作用域。
 - 使用 `var` ，可以重复声明一个变量，新声明的将覆盖旧的。
@@ -971,7 +971,7 @@ console.log(Math.max(...arr));
 - 全局对象提供可在任何地方使用的变量和函数，默认情况下这些全局变量内建于语言或环境中；在浏览器中，它的名字是 `window`，在 Node.js 中，它的名字是 `global`
 - `globalThis` 被作为全局对象的标准名称加入到了 JS 中，所有环境都应该支持该名称。
 
-### 38 - 函数对象与NFE
+### 38 - 函数对象与 NFE
 
 - 命名函数表达式（NFE：Named Function Expression），指带有名字的函数表达式的术语。
 
@@ -1019,7 +1019,7 @@ let sum = new Function('a', 'b', 'return a + b')
 console.log(sum(1, 2))
 ```
 
-### 40 - setTimeout与setInterval
+### 40 - setTimeout 与 setInterval
 
 - `setTimeout` 允许将函数推迟到一段时间间隔之后再执行。
 - `setTimeout` 在调用时会返回一个定时器标识符（timer identifier）
@@ -1226,7 +1226,7 @@ Object.defineProperties(user, {
 let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj))
 ```
 
-### 44 - getter与setter
+### 44 - getter 与 setter
 
 - 存在两种类型的对象属性，一种是数据属性，另一种是访问器属性本质上是用于获取和设置值的函数。
 - 对于访问器属性，没有 `value` 和 `writable`，但是有 `get` 和 `set` 函数。
@@ -1619,7 +1619,7 @@ alert({}.toString.call(user))
 
 - 多态性（polymorphic）的函数，该函数根据参数的类型对参数进行不同的处理。
 
-### 55 - Mixin模式
+### 55 - Mixin 模式
 
 - Mixin 模式是一个包含可被其他类使用而无需继承的方法的类。
 - JS 不支持多重继承，但是可以通过将方法拷贝到原型中来实现 Mixin
@@ -1858,129 +1858,128 @@ new Promise(function() {
 
 | 方法 | 参数 | 描述 |
 | --- | --- | --- |
-| Promise.all(iterable) | 通常是一个数组项为 promise 的数组 | 并行执行多个 promise，并等待所有 promise 都准备就绪，返回存放它们结果的数组 |
-| Promise.allSettled(iterable) | 通常是一个数组项为 promise 的数组 | 等待所有的 promise 都被 settle，无论结果如何，返回结果的对象数组 |
-| Promise.race(iterable) | 通常是一个数组项为 promise 的数组 | 只等待第一个 settled 的 promise 并获取其结果（或 error），将其 result/error 作为结果返回 |
-| Promise.any(iterable) | 通常是一个数组项为 promise 的数组 | 等待第一个 fulfilled 的 promise，并将这个 fulfilled 的 promise 返回，如果给出的 promise 都 rejected，那么则返回 rejected 的 promise 和 `AggregateError`
-错误类型的 error 实例，并将其结果作为结果返回 |
-| Promise.resolve(value) | 现在很少被使用 | 用结果 `value`
- 创建一个 resolved 的 promise |
-| Promise.reject(error) | 基本没被使用 | 用 `error`
- 创建一个 rejected 的 promise |
+| Promise.all(iterable) | 由 Promise 项组成的数组 | 并行执行多个 Promise 并等待所有 Promise 准备就绪，返回存放它们结果的数组 |
+| Promise.allSettled(iterable) | 由 Promise 项组成的数组 | 等待所有的 Promise 被 settle 无论结果如何，返回结果的对象数组 |
+| Promise.race(iterable) | 由 Promise 项组成的数组 | 只等待第一个 settled 的 Promise 并获取其结果，将其 result/error 作为结果返回 |
+| Promise.any(iterable) | 由 Promise 项组成的数组 | 等待第一个 fulfilled 的 Promise，并将这个 fulfilled 的 Promise 返回，如果给出的 Promise 都 rejected，那么则返回 rejected 的 Promise 和 AggregateError 错误类型的 error 实例，并将其结果作为结果返回 |
+| Promise.resolve(value) | 结果数据 | 用结果 value 创建一个 resolved 的 Promise |
+| Promise.reject(error) | 错误对象 | 用 error 创建一个 rejected 的 Promise |
 
--  一个常见的技巧是，将一个任务数据数组映射（`map`）到一个 `promise` 数组，然后将其包装到 `Promise.all`
--  任意一个 `promise` 被 `reject`，由 `Promise.all` 返回的 `promise` 就会立即 `reject`，并且带有的就是这个 `error`，如果出现 `error`，其他 `promise` 将被忽略。
--  `Promise.all(...)` 接受含有 `promise` 项的可迭代对象（大多数情况下是数组）作为参数，但是如果这些对象中的任何一个不是 `promise`，那么它将被“按原样”传递给结果数组。
--  `Promise.allSettled`，对于每个 `promise`，都得到了其状态（`status`）和 `value/reason`，以对象数组的形式返回它们的结果：`status`: `"fulfilled"` 或 `"rejected"`、`value`（如果 `fulfilled` ）或 `reason`（如果 rejected）。
--  `Promisification`：指将一个接受回调的函数转换为一个返回 `promise` 的函数，但不是回调的完全替代。
--  在实际开发中，可能需要 `promisify` 很多函数，所以使用一个 `helper`（辅助函数）很有意义，将其称为 `promisify(f)`：它接受一个需要被 `promisify` 的函数 `f`，并返回一个包装（ `wrapper` ）函数。
+- 一个常见的技巧是，将一个任务数据数组映射到一个 Promise 数组，然后将其包装到 `Promise.all()`
+- 任意一个 Promise 被 `reject()`，由 `Promise.all()` 返回的 Promise 就会立即 `reject()`，并且带有的就是这个 error，如果出现 error，其他 Promise 将被忽略。
+- `Promise.all()` 接受含有 Promise 项的可迭代对象（大多数情况下是数组）作为参数，但是如果这些对象中的任何一个不是 Promise，那么它将被按原样传递给结果数组。
+- `Promise.allSettled()`，对于每个 Promise，都得到了其状态 `status` 和 `value/reason`，以对象数组的形式返回它们的结果: `status` 为 fulfilled 或 rejected、`value`（如果为 fulfilled）或 `reason`（如果为 rejected）
+- Promisification 是指将一个接受回调的函数转换为一个返回 Promise 的函数，但不是回调的完全替代。
+- 在实际开发中，可能需要 promisify 很多函数，所以使用一个 helper（辅助函数）很有意义，将其称为 `promisify(f)`：它接受一个需要被 promisify 的函数 f，并返回一个包装函数。
 
 ```javascript
 function promisify(f) {
-  return function (...args) {  // 返回一个包装函数（wrapper-function） (*)
+  // 返回一个包装函数
+  return function (...args) {
     return new Promise((resolve, reject) => {
-      function callback(err, result) {  // 对 f 的自定义的回调 (**)
+      // 对 f 的自定义的回调
+      function callback(err, result) {
         if (err) {
-          reject(err);
+          reject(err)
         } else {
-          resolve(result);
+          resolve(result)
         }
       }
 
-      args.push(callback);  // 将自定义的回调附加到 f 参数（arguments）的末尾
+      // 将自定义的回调附加到 f 参数的末尾
+      args.push(callback)
 
-      f.call(this, ...args);  // 调用原始的函数
-    });
-  };
+      // 调用原始的函数
+      f.call(this, ...args)
+    })
+  }
 }
 
-// 用法：
-let loadScriptPromise = promisify(loadScript);
-loadScriptPromise(...).then(...);
+let loadScriptPromise = promisify(loadScript)
+loadScriptPromise(...).then(...)
 ```
 
-- `promisification` 仅适用于调用一次回调的函数，进一步的调用将被忽略。
+- Promisification 仅适用于调用一次回调的函数，进一步的调用将被忽略。
 
-### 60 - 微任务
+### 60 - Promise 微任务
 
-- `Promise` 处理始终是异步的，内部队列 `PromiseJobs`，通常被称为“微任务队列（microtask queue）”。
-- 当一个 `promis`e 准备就绪时，它的 `.then/catch/finally` 处理程序（handler）就会被放入队列中：但是它们不会立即被执行，当 JavaScript 引擎执行完当前的代码，它会从队列中获取任务并执行它。
-- 如果需要确保一段代码在 `.then/catch/finally` 之后被执行，可以将它添加到链式调用的 `.then` 中。
+- Promise 处理始终是异步的，内部队列 PromiseJobs，通常被称为微任务队列（microtask queue）
+- 当一个 Promise 准备就绪时，它的 `.then()/catch()/finally()` 处理程序就会被放入队列中，但是它们不会立即被执行，当 JS 引擎执行完当前的代码，它会从队列中获取任务并执行它。
+- 如果需要确保一段代码在 `.then()/catch()/finally()` 之后被执行，可以将它添加到链式调用的 `.then()` 中。
 
-### 61 - Async/await
+### 61 - async/await
 
-- `Async/await` 是以更舒适的方式使用 `promise` 的一种特殊语法。
+- `async/await` 是以更舒适的方式使用 Promise 的一种特殊语法。
 
 ```javascript
 async function f() {
-  return 1;
+  return 1
 }
 ```
 
-- 这个函数总是返回一个 `promise`，其他值将自动被包装在一个 `resolved` 的 `promise` 中。
+- 加上 `async` 的函数总是返回一个 Promise，其他值将自动被包装在一个 resolved 的 Promise 中。
 
 ```javascript
 // 只在 async 函数内工作
-let value = await promise;
+let value = await promise
 ```
 
-- `await` 让 JavaScript 引擎等待直到 `promise` 完成（ `settle` ）并返回结果，不能在普通函数中使用 `await`
-- `await` 实际上会暂停函数的执行，直到 `promise` 状态变为 `settled`，然后以 `promise` 的结果继续执行。
-- 现代浏览器在 `modules` 里允许顶层的 `await`，也可以包装到匿名的异步函数中。
-- `await` 允许使用 `thenable` 对象（那些具有可调用的 `then` 方法的对象）。
-- 当使用 `async/await` 时，几乎就不会用到 `.then` 了，因为 `await` 处理了等待，并且使用常规的 `try..catch` 而不是 `.catch`，在所有 `async` 函数之外，在语法上就不能使用 `await` 了，所以这时候通常的做法是添加 `.then/catch` 来处理最终的结果（ `result` ）或掉出来的（falling-through）`error`
+- `await` 让 JS 引擎等待直到 Promise 完成并返回结果，不能在普通函数中使用 `await`
+- `await` 实际上会暂停函数的执行，直到 Promise 状态变 settled，然后以 Promise 的结果继续执行。
+- 现代浏览器在 modules 里允许顶层的 `await`，也可以包装到匿名的异步函数中。
+- `await` 允许使用 thenable 对象（那些具有可调用的 `.then()` 方法的对象）
+- 当使用 `async/await` 时，几乎就不会用到 `.then()` 了，因为 `await` 处理了等待，并且使用常规的 `try..catch...` 而不是 `.catch()` 在所有 `async` 函数之外，在语法上就不能使用 `await` 了，所以这时候通常的做法是添加 `.then()/catch()` 来处理最终的结果或掉出来的 error
 
 ### 62 - Generator
 
-- `Generator` 可以按需一个接一个地返回（ `yield` ）多个值。它们可与 `iterable` 完美配合使用，从而可以轻松地创建数据流。
+- Generator 可以按需一个接一个地返回 `yield` 多个值，它们可与 iterable 完美配合使用，从而轻松地创建数据流。
 
 ```javascript
 function* generateSequence() {
-  yield 1;
-  yield 2;
-  return 3;
+  yield 1
+  yield 2
+  return 3
 }
 
-let generator = generateSequence();
-let one = generator.next();
-let two = generator.next();
-let three = generator.next();
+let generator = generateSequence()
+let one = generator.next()  // {value: 1, done: false}
+let two = generator.next()  // {value: 2, done: false}
+let three = generator.next()  // {value: 3, done: true}
 ```
 
-- 此类函数被调用时，它不会运行其代码。而是返回一个被称为 “generator object” 的特殊对象（生成器对象），来管理执行流程。
-- `generator` 的主要方法就是 `next()`：`next()` 的结果始终是一个具有两个属性的对象，`value`: 产出的（yielded）的值，`done`: 如果 `generator` 函数已执行完成则为 `true`，否则为 `false`
-- `function* f(…)` 或 `function *f(…)`，两种语法都是对的，更倾向第一种。
-- `Generator` 是可迭代的，当 `done: true` 时，`for..of` 循环会忽略最后一个 `value`，想要通过 `for..of` 循环显示所有的结果，必须使用 `yield` 返回它们，可以使用 `iterator` 的所有相关功能，例如：`spread` 语法 `...`
-- `Generator` 组合（composition）是 `generator` 的一个特殊功能，它允许透明地（transparently）将 `generator` 彼此“嵌入（embed）”到一起。使用 `yield*` 这个特殊的语法来将一个 `generator` “嵌入”（组合）到另一个 `generator` 中。
-- `yield*` 指令将执行委托给另一个 `generator`。
-- `yield` 是一条双向路（two-way street）：它不仅可以向外返回结果，而且还可以将外部的值传递到 `generator` 内。
+- 此类函数被调用时，它不会运行其代码，而是返回一个被称为 generator object 的特殊对象（生成器对象）来管理执行流程。
+- Generator 的主要方法就是 `.next()` 其结果始终是一个具有两个属性的对象：`value` 产出的的值，`done` 如果 Generator 函数已执行完成则为 true，否则为 false
+- `function* f()` 或 `function *f()` 两种语法都是对的，但更倾向第一种。
+- Generator 是可迭代的，当 `{..., done: true}` 时 `for..of...` 循环会忽略最后一个 value，想要通过 `for..of...` 循环显示所有的结果必须使用 `yield` 返回它们，另外可以使用 iterator 的所有相关功能，例如 spread 语法 `...`
+- Generator 组合是一个特殊功能，它允许透明地将 Generator 彼此嵌入到一起，使用 `yield*` 这个特殊的语法来将一个 Generator 嵌入组合到另一个 Generator 中。
+- `yield` 是一条双向路，它不仅可以向外返回结果，而且还可以将外部的值传递到 Generator 内。
 
 ```javascript
 for (let value of generator) {
-  console.log(value);
+  console.log(value)
 }
 
 function* gen() {
-  let result = yield "2 + 2 = ?";
+  let result = yield "2 + 2 = ?"
 
-  console.log(result);
+  console.log(result)
 }
 
-let generators = gen();
+let generators = gen()
 
-let question = generators.next().value;
+let question = generators.next().value
 
-generators.next(4);
+generators.next(4)
 ```
 
-- 向 `yield` 传递一个 `error`，应该调用 `generator.throw(err)`。在这种情况下，`error` 将被抛到对应的 `yield` 所在的那一行。
-- `generator.return(value)` 完成 `generator` 的执行并返回给定的 `value`，在已完成的 `generator` 上再次使用 `generator.return()`，它将再次返回该值。
+- 向 `yield` 传递一个 error，应该调用 `generator.throw(err)` 在这种情况下 error 将被抛到对应的 `yield` 所在的那一行。
+- `generator.return(value)` 完成 Generator 的执行并返回给定的 value，在已完成的 Generator 上再次使用 `generator.return()`，它将再次返回该值。
 
-### 63 - 异步迭代与generator
+### 63 - 异步迭代与 Generator
 
 - 异步迭代允许对按需通过异步请求而得到的数据进行迭代。
-- 异步可迭代对象：使用 `Symbol.asyncIterator` 取代 `Symbol.iterator`。`next()` 方法应该返回一个 `promise`（带有下一个值，并且状态为 `fulfilled`），关键字 `async` 可以实现这一点，可以简单地使用 `async next()`。应该使用 `for await (let item of iterable)` 循环来迭代这样的对象。
-- `Spread` 语法 `...` 无法异步工作。
+- 异步可迭代对象使用 `Symbol.asyncIterator` 取代 `Symbol.iterator` `next()` 方法应该返回一个 Promise 且带有下一个值，状态为 fulfilled 关键字 `async` 可以实现这一点，可以简单地使用 `async next()` ，然后应该使用 `for await (let item of iterable)` 循环来迭代这样的对象。
+- Spread 语法 `...` 无法异步工作。
 
 ```javascript
 let range = {
@@ -1993,79 +1992,77 @@ let range = {
       last: this.to,
 
       async next() {
-        // 注意：可以在 async next 内部使用 "await"
-        await new Promise((resolve) => setTimeout(resolve, 1000));  // (3)
+        // 可以在 async next 内部使用 await
+        await new Promise((resolve) => setTimeout(resolve, 1000))
 
         if (this.current <= this.last) {
-          return { done: false, value: this.current++ };
+          return { done: false, value: this.current++ }
         } else {
-          return { done: true };
+          return { done: true }
         }
       },
-    };
+    }
   },
-};
+}
 
 (async () => {
   for await (let value of range) {
-    console.log(value);  // 1,2,3,4,5
+    console.log(value)  // 1 2 3 4 5
   }
-})();
+})()
 ```
 
-- 在 `function` 前面加上 `async`，这即可使 `generator` 变为异步的，使用 `for await (...)` 来遍历它。
-- 异步 `generator` 和常规的 `generator` 在内部是有区别的，对于异步 `generator`，`generator.next()` 方法是异步的，它返回 `promise`。在一个常规的 `generator` 中，使用 `result = generator.next()` 来获得值。但在一个异步 `generator` 中，应该添加 `await` 关键字。
+- 在 function 前面加上 `async` 这即可使 Generator 变为异步的，使用 `for await (...)` 来遍历它。
+- 异步 Generator 和常规的 Generator 在内部是有区别的，对于异步 Generator `generator.next()` 方法是异步的，它返回 Promise，在一个常规的 Generator 中，使用 `result = generator.next()` 来获得值，但在一个异步 Generator 中，应该添加 `await` 关键字。
 
 ```javascript
 async function* generateSequence(start, end) {
   for (let i = start; i <= end; i++) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    yield i;
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    yield i
   }
 }
 
 (async () => {
-  let generator = generateSequence(1, 5);
+  let generator = generateSequence(1, 5)
   for await (let value of generator) {
-    console.log(value);  // 1，然后 2，然后 3，然后 4，然后 5（在每个 alert 之间有延迟）
+    console.log(value)  // 1 2 3 4 5
   }
-})();
+})()
 ```
 
 ### 64 - 模块
 
-- 随着应用越来越大，想要将其拆分成多个文件，即所谓的“模块（module）”。一个模块可以包含用于特定目的的类或函数库，一个模块（module）就是一个文件。一个脚本就是一个模块。
+- 随着应用越来越大，想要将其拆分成多个文件，即所谓的模块（module）。一个模块可以包含用于特定目的的类或函数库，一个模块就是一个文件，一个脚本就是一个模块。
 - `export` 关键字标记了可以从当前模块外部访问的变量和函数。
 - `import` 关键字允许从其他模块导入功能。
 
 ```javascript
 // 📁 sayHi.js
 export function sayHi(user) {
-  alert(`Hello, ${user}!`);
+  alert(`Hello, ${user}!`)
 }
 ```
 
 ```javascript
 // 📁 main.js
-import { sayHi } from './sayHi.js';
+import { sayHi } from './sayHi.js'
 
-console.log(sayHi);  // function...
-sayHi('John');  // Hello, John!
+console.log(sayHi)
+sayHi('John')
 ```
 
-- 使用 `<script type="module">` 特性（attribute）来告诉浏览器，此脚本应该被当作模块（module）来对待。
+- 使用 `<script type="module">` 特性来告诉浏览器，此脚本应该被当作模块来对待。
 - 模块只通过 HTTP(s) 工作，而非本地。
 - 模块始终在严格模式下运行。
-- 每个模块都有自己的顶级作用域（top-level scope）。一个模块中的顶级作用域变量和函数在其他脚本中是不可见的，模块应该 `export` 它们想要被外部访问的内容，并 `import` 它们所需要的内容。
+- 每个模块都有自己的顶级作用域，一个模块中的顶级作用域变量和函数在其他脚本中是不可见的，模块应该 `export` 它们想要被外部访问的内容，并 `import` 它们所需要的内容。
 - 可以通过将变量显式地分配给 `window` 的一个属性，使其成为窗口级别的全局变量，这样所有脚本都会看到它，无论脚本是否带有 `type="module"`，但应尽量避免创建全局变量。
 - 模块代码仅在第一次导入时被解析。
 - `import.meta` 对象包含关于当前模块的信息，它的内容取决于其所在的环境。
-- 在一个模块中，顶级 `this` 是 `undefined`，非模块脚本的顶级 `this` 是全局对象。
+- 在一个模块中顶级 this 是 undefined，非模块脚本的顶级 this 是全局对象。
 - 在浏览器中，模块脚本是被延迟的，所以要等到 HTML 文档被处理完成才会执行它。
-- 对于非模块脚本，`async` 特性（attribute）仅适用于外部脚本，异步脚本会在准备好后立即运行，独立于其他脚本或 HTML 文档，对于模块脚本，它也适用于内联脚本。
-- 具有 `type="module"` 的外部脚本，相同 `src` 的外部脚本仅运行一次。
-- 在浏览器中，`import` 必须给出相对或绝对的 URL 路径。没有任何路径的模块被称为“裸（bare）”模块。
+- 对于非模块脚本 `async` 特性仅适用于外部脚本，异步脚本会在准备好后立即运行，独立于其他脚本或 HTML 文档，对于模块脚本，它也适用于内联脚本。
+- 在浏览器中 `import` 必须给出相对或绝对的 URL 路径，没有任何路径的模块被称为裸模块。
 
 ### 65 - 导出与导入
 
@@ -2074,353 +2071,313 @@ sayHi('John');  // Hello, John!
 
 ```javascript
 // 导出数组
-export let months = ['Jan', 'Feb', 'Mar','Apr', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+export let months = ['Jan', 'Feb', 'Mar','Apr', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 // 导出 const 声明的变量
-export const MODULES_BECAME_STANDARD_YEAR = 2015;
+export const MODULES_BECAME_STANDARD_YEAR = 2020
 
 // 导出类
 export class User {
   constructor(name) {
-    this.name = name;
+    this.name = name
   }
 }
 ```
 
-- 大部分 JavaScript 样式指南都不建议在函数和类声明后使用分号。
-
-- 导出与声明分开：
+- 导出与声明可以分开。
 
 ```javascript
 // 📁 say.js
 function sayHi(user) {
-  alert(`Hello, ${user}!`);
+  alert(`Hello, ${user}!`)
 }
 
 function sayBye(user) {
-  alert(`Bye, ${user}!`);
+  alert(`Bye, ${user}!`)
 }
 
 // 导出变量列表
-export {sayHi, sayBye};
+export {sayHi, sayBye}
 ```
 
-- 通常，把要导入的东西列在花括号 `import {...}` 中：
+- 把要导入的东西列在花括号 `import {...}` 中。
 
 ```javascript
 // 📁 main.js
-import {sayHi, sayBye} from './say.js';
+import {sayHi, sayBye} from './say.js'
 
-sayHi('John');  // Hello, John!
-sayBye('John');  // Bye, John!
+sayHi('John')
+sayBye('John')
 ```
 
-- 如果有很多要导入的内容，可以使用 `import * as <obj>` 将所有内容导入为一个对象：
+- 如果有很多要导入的内容，可以使用 `import * as <obj>` 将所有内容导入为一个对象。
 
 ```javascript
 // 📁 main.js
-import * as say from './say.js';
+import * as say from './say.js'
 
-say.sayHi('John');
-say.sayBye('John');
+say.sayHi('John')
+say.sayBye('John')
 ```
 
-- Import “as”，可以使用 `as` 让导入具有不同的名字。Export “as”，与之类似：
+- `import as`，可以使用 `as` 让导入具有不同的名字 `export as` 与之类似。
 
 ```javascript
 ...
-export {sayHi as hi, sayBye as bye};
+export {sayHi as hi, sayBye as bye}
 ```
 
 - 模块提供了一个特殊的默认导出 `export default` 语法，将 `export default` 放在要导出的实体前，每个文件应该只有一个 `export default`，然后将其导入而不需要花括号。
-- 在某些情况下，`default` 关键词被用于引用默认的导出。
-- 重新导出：语法 `export ... from ...` 允许导入内容，并立即将其导出：
+- 在某些情况下 `default` 关键词被用于引用默认的导出。
+- 重新导出，语法 `export ... from ...` 允许导入内容，并立即将其导出。
+- 要重新导出默认导出，必须明确写出 `export {default as User}` `export * from './user.js'` 重新导出只导出了命名的导出，但是忽略了默认的导出。
+- 动态导入 `import(module)` 表达式加载模块并返回一个 Promise，该 Promise resolve 为一个包含其所有导出的模块对象，可以在代码中的任意位置调用这个表达式，它不是一个函数。
 
 ```javascript
-// 📁 auth/index.js
-// 导入 login/logout 然后立即导出它们
-import {login, logout} from './helpers.js';
-export {login, logout};
-
-// 将默认导出导入为 User，然后导出它
-import User from './user.js';
-export {User};
-...
-
-// 📁 auth/index.js
-// 重新导出 login/logout
-export {login, logout} from './helpers.js';
-
-// 将默认导出重新导出为 User
-export {default as User} from './user.js';
-```
-
-- 要重新导出默认导出，必须明确写出 `export {default as User}`，`export * from './user.js'` 重新导出只导出了命名的导出，但是忽略了默认的导出。
-
-- 动态导入：`import(module)` 表达式加载模块并返回一个 `promise`，该 `promise resolve` 为一个包含其所有导出的模块对象，可以在代码中的任意位置调用这个表达式，它不是一个函数。
-
-```javascript
-let modulePath = prompt("Which module to load?");
+let modulePath = prompt("Which module to load?")
 
 import(modulePath)
   .then(obj => <module object>)
   .catch(err => <loading error, e.g. if no such module>)
 ```
 
-```javascript
-export function hi() {
-  alert(`Hello`);
-}
+- 动态导入在常规脚本中工作时不需要 `script type="module"`
 
-export function bye() {
-  alert(`Bye`);
-}
+### 66 - Proxy 与 Reflect
 
-let {hi, bye} = await import('./say.js');
-
-hi();
-bye();
-```
-
-- 动态导入在常规脚本中工作时，不需要 `script type="module"`
-
-### 66 - Proxy与Reflect
-
-- `Proxy` 对象包装另一个对象并拦截诸如读取/写入属性和其他操作，可以选择自行处理它们，或者透明地允许该对象处理它们，`Proxy` 是对象的包装器，将代理上的操作转发到对象，并可以选择捕获其中一些操作。
+- Proxy 对象包装另一个对象并拦截诸如读取/写入属性和其他操作，可以选择自行处理它们，或者透明地允许该对象处理它们，Proxy 是对象的包装器，将代理上的操作转发到对象，并可以选择捕获其中一些操作。
 
 ```javascript
 let proxy = new Proxy(target, handler)
 ```
 
-- `target`：要包装的对象，可以是任何东西，包括函数。`**handler**`：代理配置，带有“捕捉器”（“traps”，即拦截操作的方法）的对象。比如 `get` 捕捉器用于读取 `target` 的属性，`set` 捕捉器用于写入 `target` 的属性。
-- 没有捕捉器，所有对 `proxy` 的操作都直接转发给了 `target`，没有任何捕捉器，`proxy` 是一个 `target` 的透明包装器。
-- 常见的捕捉器是用于读取/写入的属性，要拦截读取操作，`handler` 应该有 `get(target, property, receiver)` 方法。
+- `target` 是要包装的对象，可以是任何东西，包括函数。
+- `handler` 是代理配置，带有捕捉器（traps，即拦截操作的方法）的对象，比如 `get` 捕捉器用于读取 `target` 的属性，`set` 捕捉器用于写入 `target` 的属性。
+- 没有捕捉器时所有对 Proxy 的操作都直接转发给了 `target`，没有任何捕捉器 Proxy 是一个 `target` 的透明包装器。
+- 常见的捕捉器是用于读取/写入的属性，要拦截读取操作 `handler` 应该有 `get(target, property, receiver)` 方法。
+- `get(target, property, receiver)`
 
-| get(target, property, receiver) |  |
+| 参数 | 描述 |
 | --- | --- |
-| target | 目标对象，该对象被作为第一个参数传递给 new Proxy |
+| target | 目标对象 |
 | property | 目标属性名 |
-| receiver | 如果目标属性是一个 getter 访问器属性，则 receiver 就是本次读取属性所在的 this 对象 |
+| receiver | 当目标属性是 getter 访问器属性则 receiver 就是本次读取属性所在的 this 对象 |
 
-- 代理应该在所有地方都完全替代目标对象。目标对象被代理后，任何人都不应该再引用目标对象。
+- 代理应该在所有地方都完全替代目标对象，目标对象被代理后，任何人都不应该再引用目标对象。
 
 ```javascript
-let numbers = [0, 1, 2];
+let numbers = [0, 1, 2]
 
 numbers = new Proxy(numbers, {
   get(target, prop) {
     if (prop in target) {
-      return target[prop];
+      return target[prop]
     } else {
-      return 0;
+      return 0
     }
   }
-});
+})
 
-console.log(numbers[1]);  // 1
-console.log(numbers[123]);  // 0
+console.log(numbers[1])  // 1
+console.log(numbers[123])  // 0
 ```
 
-- 当写入属性时 `set` 捕捉器被触发，`set(target, property, value, receiver)`。
+- 当写入属性时 `set` 捕捉器被触发 `set(target, property, value, receiver)`
 
-| set(target, property, value, receiver) |  |
+| 参数 | 描述 |
 | --- | --- |
-| target | 目标对象，该对象被作为第一个参数传递给 new Proxy |
+| target | 目标对象 |
 | property | 目标属性名称 |
 | value | 目标属性的值 |
 | receiver | 与 get 捕捉器类似，仅与 setter 访问器属性相关，对于 set 操作，它必须在成功写入时返回 true |
 
 ```javascript
-let numbers = [];
+let numbers = []
 
 numbers = new Proxy(numbers, {
   set(target, prop, val) {
     if (typeof val == 'number') {
-      target[prop] = val;
-        return true;
+      target[prop] = val
+      return true
     } else {
-      return false;
+      return false
     }
   }
-});
+})
 
-numbers.push(1);
-console.log(numbers);
+numbers.push(1)
+console.log(numbers)  // Proxy {0: 1}
 
-numbers.push("test");
+numbers.push("test")  // TypeError
 ```
 
-- 使用 `ownKeys` 捕捉器拦截 `for..in` 的遍历。
-- 使用 `in` 操作符来检查一个数字是否在 `range` 范围内，`has` 捕捉器会拦截 `in` 调用。
+- 使用 `ownKeys` 捕捉器拦截 `for..in...` 的遍历。
+- 使用 `in` 操作符来检查一个数字是否在 `range` 范围内 `has` 捕捉器会拦截 `in` 调用。
 - `apply(target, thisArg, args)` 捕捉器能使代理以函数的方式被调用。
 
-| apply(target, thisArg, args) |  |
+| 参数 | 描述 |
 | --- | --- |
 | target | 目标对象 |
 | thisArg | this 的值 |
 | args | 参数列表 |
 
-- `Reflect` 是一个内建对象，可简化 `Proxy` 的创建，`Reflect` 对象使调用这些内部方法成为了可能。它的方法是内部方法的最小包装。
-- 对于每个可被 `Proxy` 捕获的内部方法，在 `Reflect` 中都有一个对应的方法，其名称和参数与 `Proxy` 捕捉器相同，所以可以使用 `Reflect` 来将操作转发给原始对象。
+- Reflect 是一个内建对象，可简化 Proxy 的创建，Reflect 对象使调用这些内部方法成为了可能，它的方法是内部方法的最小包装。
+- 对于每个可被 Proxy 捕获的内部方法，在 Reflect 中都有一个对应的方法，其名称和参数与 Proxy 捕捉器相同，所以可以使用 Reflect 来将操作转发给原始对象。
 
 ```javascript
 let user = {
-  name: "John",
-};
+  name: "John"
+}
 
 user = new Proxy(user, {
   get(target, prop, receiver) {
-    console.log(`GET ${prop}`);
-    return Reflect.get(target, prop, receiver);  // (1)
+    console.log(`GET ${prop}`)
+    return Reflect.get(target, prop, receiver)
   },
   set(target, prop, val, receiver) {
-    console.log(`SET ${prop}=${val}`);
-    return Reflect.set(target, prop, val, receiver);  // (2)
+    console.log(`SET ${prop}=${val}`)
+    return Reflect.set(target, prop, val, receiver)
   }
-});
+})
 
-let name = user.name;  // 显示 "GET name"
-user.name = "Pete";  // 显示 "SET name=Pete"
+let name = user.name  // 打印 GET name 返回 'John'
+user.name = "Pete"  // 打印 SET name=Pete 返回 'Pete'
 ```
 
-- 如果一个捕捉器想要将调用转发给对象，则只需使用相同的参数调用 `Reflect`. 就足够了。
-- 第三个参数 `receiver`，它保证将正确的 `this` 传递给 `getter`
-- `Reflect` 调用的命名与捕捉器的命名完全相同。
+- 如果一个捕捉器想要将调用转发给对象，则只需使用相同的参数调用 Reflect 就足够了。
+- 第三个参数 `receiver` 它保证将正确的 this 传递给 `getter`
+- Reflect 调用的命名与捕捉器的命名完全相同。
 
 ```javascript
 get(target, prop, receiver) {
-  return Reflect.get(...arguments);
+  return Reflect.get(...arguments)
 }
 ```
 
-- 许多内建对象，都使用了所谓的“内部插槽”，内建方法可以直接访问它们，而不通过 `[[Get]]/[[Set]]` 内部方法。所以 `Proxy` 无法拦截它们，内建对象被代理后，代理对象没有这些内部插槽，因此内建方法将会失败，但是可以通过 `Reflect` 和 `.bind` 解决。内建 `Array` 没有使用内部插槽，代理数组时没有这种问题。
+- 许多内建对象，都使用了所谓的内部插槽，内建方法可以直接访问它们，而不通过 `[[Get]]/[[Set]]` 内部方法，所以 Proxy 无法拦截它们，内建对象被代理后，代理对象没有这些内部插槽，因此内建方法将会失败，但是可以通过 Reflect 和 `.bind` 解决，内建 Array 没有使用内部插槽，代理数组时没有这种问题。
 
 ```javascript
 class User {
-  #name = "Guest";
+  #name = "Guest"
 
   getName() {
-    return this.#name;
+    return this.#name
   }
 }
 
-let user = new User();
+let user = new User()
 
 user = new Proxy(user, {
   get(target, prop, receiver) {
-    let value = Reflect.get(...arguments);
-    return typeof value == 'function' ? value.bind(target) : value;
+    let value = Reflect.get(...arguments)
+    return typeof value == 'function' ? value.bind(target) : value
   }
-});
+})
 
-alert(user.getName()); // Guest
+alert(user.getName())  // Guest
 ```
 
-- `Proxy` 无法拦截严格相等性检查 `===`，没有办法拦截对于对象的严格相等性检查。一个对象只严格等于其自身，没有其他值。
-
-- 一个可撤销的代理是可以被禁用的代理，`Proxy.revocable()` 方法可以用来创建一个可撤销的代理对象：
+- Proxy 无法拦截严格相等性检查 ===，没有办法拦截对于对象的严格相等性检查，一个对象只严格等于其自身，没有其他值。
+- 一个可撤销的代理是可以被禁用的代理，`Proxy.revocable()` 方法可以用来创建一个可撤销的代理对象。
 
 ```javascript
-let {proxy, revoke} = Proxy.revocable(target, handler)
 // 该调用返回一个带有 proxy 和 revoke 函数的对象以将其禁用
+let {proxy, revoke} = Proxy.revocable(target, handler)
 ```
 
 ```javascript
 let object = {
   data: "Valuable data"
-};
+}
 
-let {proxy, revoke} = Proxy.revocable(object, {});
+let {proxy, revoke} = Proxy.revocable(object, {})
 
-// 将 proxy 传递到其他某处，而不是对象...
-alert(proxy.data); // Valuable data
+alert(proxy.data)  // Valuable data
 
-// 稍后，在代码中
-revoke();
+revoke()
 
-// proxy 不再工作（revoked）
-alert(proxy.data); // Error
+// proxy 不再工作
+alert(proxy.data)  // TypeError
 ```
 
-- 对 `revoke()` 的调用会从代理中删除对目标对象的所有内部引用，因此它们之间再无连接。
+- `.revoke()` 的调用会从代理中删除对目标对象的所有内部引用，因此它们之间再无连接。
 
 ### 67 - Eval
 
-- 内建函数 `eval` 允许执行一个代码字符串。
+- 现代编程中，已经很少使用 `eval()`
+- 内建函数 `eval()` 允许执行一个代码字符串。
 
 ```javascript
-let code = 'console.log("Hello")';
-eval(code);  // Hello
+let code = 'console.log("Hello")'
+eval(code)  // Hello
 ```
 
-- `eval` 的结果是最后一条语句的结果，`eval` 内的代码在当前词法环境（lexical environment）中执行。
-- 严格模式下，`eval` 有属于自己的词法环境。因此不能从外部访问在 `eval` 中声明的函数和变量，如果不启用严格模式，`eval` 没有属于自己的词法环境，因此可以从外部访问变量。
-- 现代编程中，已经很少使用 `eval` 了。
-- 如果 `eval` 中的代码没有使用外部变量，请以 `window.eval(...)` 的形式调用 `eval`通过这种方式，该代码便会在全局作用域内执行。
-- 如果 `eval` 中的代码需要访问局部变量，可以使用 `new Function` 替代 `eval`，并将它们作为参数传递。
+- `eval()` 的结果是最后一条语句的结果，`eval()` 内的代码在当前词法环境中执行。
+- 严格模式下 `eval()` 有属于自己的词法环境，因此不能从外部访问在 `eval()` 中声明的函数和变量，如果不启用严格模式，`eval()` 没有属于自己的词法环境，因此可以从外部访问变量。
+- 如果 `eval()` 中的代码没有使用外部变量，请以 `window.eval()` 的形式调用 `eval()` 通过这种方式，该代码便会在全局作用域内执行。
+- 如果 `eval()` 中的代码需要访问局部变量，可以使用 `new Function` 替代 `eval()`，并将它们作为参数传递。
 
 ### 68 - 柯里化
 
-- 柯里化是一种函数的转换，是一种关于函数的高阶技术。
-- 指将一个函数从可调用的 `f(a, b, c)` 转换为可调用的 `f(a)(b)(c)`。柯里化不会调用函数，它只是对函数进行转换。
+- 柯里化是一种函数的转换，是一种关于函数的高阶技术，指将一个函数从可调用的 `f(a, b, c)` 转换为可调用的 `f(a)(b)(c)`，柯里化不会调用函数，它只是对函数进行转换。
 
 ```javascript
 function curry(f) {
   return function(a) {
     return function(b) {
-      return f(a, b);
-    };
-  };
+      return f(a, b)
+    }
+  }
 }
 
 // 用法
 function sum(a, b) {
-  return a + b;
+  return a + b
 }
 
-let curriedSum = curry(sum);
+let curriedSum = curry(sum)
 
-alert( curriedSum(1)(2) );  // 3
+alert(curriedSum(1)(2))  // 3
 ```
 
 - `curry(func)` 的结果就是一个包装器 `function(a)`
-- 柯里化要求函数具有固定数量的参数，使用 `rest` 参数的函数，例如 `f(...args)`，不能以这种方式进行柯里化。
-- 它们使得函数可以被多参数变体调用，JavaScript 实现通常都保持该函数可以被正常调用，并且如果参数数量不足，则返回偏函数。
+- 柯里化要求函数具有固定数量的参数，使用 `...rest` 参数的函数，例如 `f(...args)` 不能以这种方式进行柯里化。
+- 柯里化使得函数可以被多参数变体调用，JS 实现通常都保持该函数可以被正常调用，并且如果参数数量不足，则返回偏函数。
 
 ```javascript
 function curry(func) {
   return function curried(...args) {
     if (args.length >= func.length) {
-      return func.apply(this, args);
+      return func.apply(this, args)
     } else {
       return function(...args2) {
-        return curried.apply(this, args.concat(args2));
+        return curried.apply(this, args.concat(args2))
       }
     }
-  };
+  }
 }
 ```
 
 ### 69 - Reference Type
 
-- `obj.method()` 语句中，点 `'.'` 返回的不是一个函数，而是一个特殊的 `Reference Type` 的值。
-- `Reference Type` 是 ECMA 中的一个“规范类型”。不能直接使用它，但它被用在 JavaScript 语言内部。
-- `Reference Type` 的值是一个三个值的组合 `(base, name, strict)`，其中 `base` 是对象，`name` 是属性名，`strict` 在 `use strict` 模式下为 `true`
-- `Reference Type` 是一个特殊的“中间人”内部类型，目的是从 `.` 传递信息给 `()` 调用，当 `()` 被在 `Reference Type` 上调用时，它们会接收到关于对象和对象的方法的完整信息，然后可以设置正确的 `this`。任何例如赋值 `hi = user.hi` 等其他的操作，都会将 `Reference Type` 作为一个整体丢弃掉，而会取 `user.hi`（一个函数）的值并继续传递，所以任何后续操作都“丢失”了 `this`，因此，`this` 的值仅在函数直接被通过点符号 `obj.method()` 或方括号 `obj[method]` 语法（此处它们作用相同）调用时才被正确传递。还有很多种解决这个问题的方式，例如 `func.bind()`
+- Reference Type 是 ECMA 中的一个规范类型，不能直接使用它，但它被用在 JS 语言内部。
+- Reference Type 的值是一个三个值的组合(base, name, strict)，其中 base 是对象，name 是属性名，strict 在 use strict 模式下为 true
+- `obj.method()` 语句中，点 `.` 返回的不是一个函数，而是一个特殊的 Reference Type 的值。
+- Reference Type 是一个特殊的中间人内部类型，目的是从 `.` 传递信息给 `()` 调用，当 `()` 被在 Reference Type 上调用时，它们会接收到关于对象和对象的方法的完整信息，然后可以设置正确的 this。任何例如赋值 `hi = user.hi` 等其他的操作，都会将 Reference Type 作为一个整体丢弃掉，而会取 `user.hi`（一个函数）的值并继续传递，所以任何后续操作都丢失了 this，因此 this 的值仅在函数直接被通过点符号 `obj.method()` 或方括号 `obj[method]` 语法（此处它们作用相同）调用时才被正确传递，还有很多种解决这个问题的方式，例如 `func.bind()`
 
 ### 70 - 微任务与宏任务
 
-- 浏览器中 JavaScript 的执行流程和 Node.js 中的流程都是基于事件循环的，是一个在 JavaScript 引擎等待任务，执行任务和进入休眠状态等待更多任务这几个状态之间转换的无限循环。
-- 多个任务组成了一个队列，即所谓的“宏任务队列”，队列中的任务基于“先进先出”的原则执行。
-- 引擎执行任务时永远不会进行渲染（render）。如果任务执行需要很长一段时间也没关系。仅在任务完成后才会绘制对 DOM 的更改。如果一项任务执行花费的时间过长，浏览器将无法执行其他任务，例如处理用户事件。因此，在一定时间后，浏览器会抛出一个如“页面未响应”之类的警报，建议你终止这个任务。这种情况常发生在有大量复杂的计算或导致死循环的程序错误时。
-- 微任务仅来自于的代码。它们通常是由 `promise` 创建的：对 `.then/catch/finally` 处理程序的执行会成为微任务。微任务也被用于 `await` 的“幕后”，因为它是 `promise` 处理的另一种形式。
-- 每个宏任务之后，引擎会立即执行微任务队列中的所有任务，然后再执行其他的宏任务，或渲染，或进行其他任何操作。
-- 微任务会在执行任何其他事件处理，或渲染，或执行任何其他宏任务之前完成。
-- 有一个特殊的函数 `queueMicrotask(func)`，它对 `func` 进行排队，以在微任务队列中执行。
-- 安排一个新的宏任务：使用零延迟的 `setTimeout(f)`，它可被用于将繁重的计算任务拆分成多个部分，以使浏览器能够对用户事件作出反应，并在任务的各部分之间显示任务进度。此外，也被用于在事件处理程序中，将一个行为安排在事件被完全处理（冒泡完成）后。
-- 安排一个新的微任务：使用 `queueMicrotask(f)`，`promise` 处理程序也会通过微任务队列，在微任务之间没有 UI 或网络事件的处理。它们一个立即接一个地执行，所以可以使用 `queueMicrotask` 来在保持环境状态一致的情况下，异步地执行一个函数。
+- 浏览器中 JS 的执行流程和 Node.js 中的流程都是基于事件循环的，是一个在 JS 引擎等待任务、执行任务和进入休眠状态等待更多任务这几个状态之间转换的无限循环。
+- 多个任务组成了一个队列，即所谓的宏任务队列，队列中的任务基于先进先出的原则执行。
+- 引擎执行任务时永远不会进行渲染，如果任务执行需要很长一段时间也没关系，仅在任务完成后才会绘制对 DOM 的更改，如果一项任务执行花费的时间过长，浏览器将无法执行其他任务，例如处理用户事件。因此，在一定时间后，浏览器会抛出一个如页面未响应之类的警报，建议你终止这个任务，这种情况常发生在有大量复杂的计算或导致死循环的程序错误时。
+- 每个宏任务之后，引擎会立即执行微任务队列中的所有任务，然后再执行其他的宏任务或渲染或进行其他任何操作。
+- 微任务仅来自于的代码，它们通常是由 Promise 创建的，对 `.then()/catch()/finally()` 处理程序的执行会成为微任务，微任务也被用于 `async/await` 的幕后，因为它是 Promise 处理的另一种形式。
+- 微任务会在执行任何其他事件处理或渲染或执行任何其他宏任务之前完成。
+- 有一个特殊的函数 `queueMicrotask(func)` 它对 `func` 进行排队，以在微任务队列中执行。
+- 安排一个新的宏任务，使用零延迟的 `setTimeout(f)`，它可被用于将繁重的计算任务拆分成多个部分，以使浏览器能够对用户事件作出反应，并在任务的各部分之间显示任务进度。此外，也被用于在事件处理程序中，将一个行为安排在事件被完全处理（冒泡完成）后。
+- 安排一个新的微任务，使用 `queueMicrotask(f)`，Promise 处理程序也会通过微任务队列，在微任务之间没有 UI 或网络事件的处理，它们一个立即接一个地执行，所以可以使用 `queueMicrotask()` 来在保持环境状态一致的情况下，异步地执行一个函数。
 
-## 二、DOM/BOM
+## （二）DOM 与 BOM
 
 ### 01 - DOM
 
