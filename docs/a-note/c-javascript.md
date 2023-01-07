@@ -2379,108 +2379,132 @@ function curry(func) {
 
 ## （二）DOM 与 BOM
 
-### 01 - DOM
+### 01 - 介绍
 
-- window 的“根”，它代表“浏览器窗口”，并提供了控制它的方法，文档对象模型（Document Object Model），简称 DOM，将所有页面内容表示为可以修改的对象。浏览器对象模型（Browser Object Model），简称 BOM，表示由浏览器（主机环境）提供的用于处理文档（document）之外的所有内容的其他对象。
-- 每个 HTML 标签都是一个对象，标签内的文本也是一个对象，DOM 将 HTML 表示为标签的树形结构，每个树的节点都是一个对象，标签被称为“元素节点”，元素内的文本形成“文本节点”。
-- 字符串开头/结尾处的空格，以及只有空格的文本节点，通常会被工具隐藏。
-- 按照 DOM 规范，必须具有 `<tbody>` 标签，但 HTML 文本可能会忽略它。然后浏览器在创建 DOM 时，自动地创建了 `<tbody>`
-- HTML 中的所有内容，甚至注释，都会成为 DOM 的一部分， `#comment`
-- 一共有 12 种节点类型，通常用到的是其中的 4 种：
+- Window 的根代表着浏览器窗口，并提供了控制它的方法；文档对象模型（Document Object Model）简称 DOM，将所有页面内容表示为可以修改的对象；浏览器对象模型（Browser Object Model）简称 BOM，表示由浏览器（主机环境）提供的用于处理文档之外的所有内容的其他对象。
+- 按照 DOM 规范，必须具有 `<tbody>` 标签，但 HTML 文本可能会忽略它，然后浏览器在创建 DOM 时，自动地创建了 `<tbody>`
+- HTML 中的所有内容，甚至注释，都会成为 DOM 的一部分。
+- 每个 HTML 标签都是一个对象，标签内的文本也是一个对象，DOM 将 HTML 表示为标签的树形结构，每个树的节点都是一个对象，标签被称为元素节点，元素内的文本称为文本节点。
+- 一共有 12 种节点类型，通常用到的是其中的 4 种。
 
-| 节点类型 | 描述 |
+| 类型 | 描述 |
 | --- | --- |
 | document | DOM 的入口点 |
-| 元素节点 | HTML 标签，树构建块 |
-| 文本节点 | 包含文本 |
-| 注释 | 可以将一些信息放入其中，不会显示，但 JS 可以从 DOM 中读取 |
+| 元素节点 | HTML 标签 |
+| 文本节点 | 标签中的文本、空格 |
+| 注释节点 | 不会显示，但 JS 可以从 DOM 中读取 |
 
-### 02 - 遍历DOM
+**关于 Node （节点）和 Element （元素）**
 
-- 对 DOM 的所有操作都是以 `document` 对象开始：
+- Node 中包含不同类型的节点，Element 是 Node 的一种，Element 继承于 Node，具有 Node 的方法，Element 一定是 Node 而 Node 不一定是 Element
+- Node 包括有：Element、Text、Comment...
+
+**关于 NodeList 和 HTMLCollection**
+
+- NodeList 是节点的集合，既包含元素节点，也包括文本节点、注释节点等；HTMLCollection 是元素的集合，只包含元素节点。
+
+### 02 - 访问 DOM
+
+- 对 DOM 的所有操作都是以 `document` 对象开始的。
+- 如果一个脚本是在 `<head>` 中，那么脚本是访问不到 `document.body` 元素的，因为浏览器还没有读到它。
 - `<html> == document.documentElement`
 - `<body> == document.body`
 - `<head> == document.head`
-- 如果一个脚本是在 `<head>` 中，那么脚本是访问不到 `document.body` 元素的，因为浏览器还没有读到它。
-- `childNodes` 集合列出了所有子节点，包括文本节点。
-- `firstChild` 和 `lastChild` 属性是访问第一个和最后一个子元素的快捷方式。
-- 函数 `elem.hasChildNodes()` 用于检查节点是否有子节点。
-- `childNodes` 看起来就像一个数组，但实际上它并不是一个数组，而是一个集合，一个类数组的可迭代对象，可以使用 `for..of` 来迭代它。
-- DOM 集合是只读的，DOM 集合是实时的，不要使用 `for..in` 来遍历集合（`for..in` 循环遍历的是所有可枚举的（ `enumerable` ）属性）。
-- 兄弟节点（Sibling） 是指有同一个父节点的节点，下一个兄弟节点在 `nextSibling` 属性中，上一个是在 `previousSibling` 属性中，通过 `parentNode` 来访问父节点。
 
-### 03 - 搜索DOM
-
-| 搜索方法 | 描述 |
+| 属性 | 描述 |
 | --- | --- |
-| document.getElementById(id) | 通过元素ID特性获取该元素 |
-| document.getElementsByName(name) | 返回在文档范围内具有给定 name 特性的元素 |
-| elem.getElementsByTagName(tag) | 返回具有给定标签元素的集合，tag可以是对于任何标签的星号 "*" |
-| elem.getElementsByClassName(className) | 返回具有给定CSS类的元素 |
-| elem.querySelectorAll(css) | 返回 elem 中与给定 CSS 选择器匹配的所有元素 |
-| elem.querySelector(css) | 返回给定 CSS 选择器的第一个元素 |
-| elem.matches(css) | 检查 elem 是否与给定的 CSS 选择器匹配，返回 true 或 false |
-| elem.closest(css) | 查找与 CSS 选择器匹配的最近的祖先，elem 自己也会被搜索 |
+| Node.childNodes | 返回指定节点的子节点集合，该集合为即时更新的集合 |
+| Node.firstChild | 返回指定节点的第一个子节点，如果无子节点，返回 null |
+| Node.lastChild | 返回指定节点的最后一个子节点，如果无子节点，返回 null |
+| Node.nextSibling | 返回其父节点的 childNodes 列表中的后一个节点，如果节点为最后一个节点，返回 null |
+| Node.previousSibling | 返回其父节点的 childNodes 列表中的前一个节点，如果节点为第一个节点，返回 null |
+| Node.parentNode | 返回指定的节点在 DOM 树中的父节点 |
+| **方法** | **描述** |
+| Node.hasChildNodes() | 检查指定节点是否有子节点 |
 
--  不要使用以 `id` 命名的全局变量来访问元素。
--  所有的 `getElementsBy*` 方法都会返回一个 实时的（live） 集合。这样的集合始终反映的是文档的当前状态，并且在文档发生更改时会“自动更新”。
--  相反，`querySelectorAll` 返回的是一个静态的 集合。像元素的固定数组。
+- `Node.childNodes` 的返回结果是一个集合，一个类数组的可迭代对象，可以使用 `for..of...` 来迭代它。
 
-### 04 - 节点属性
-
-- 每个 DOM 节点都属于相应的内建类。
-- DOM 节点是常规的 JavaScript 对象。它们使用基于原型的类进行继承。
-- `console.log(elem)` 显示元素的 DOM 树。
-- `console.dir(elem)` 将元素显示为 DOM 对象，非常适合探索其属性。
-- 在规范中，DOM 类不是使用 JavaScript 来描述的，而是一种特殊的接口描述语言（Interface description language），简写为 IDL
-- 给定一个 DOM 节点，可以从 `nodeName` 或者 `tagName` 属性中读取它的标签名，`tagName` 属性仅适用于 Element 节点，`nodeName` 是为任意 Node 定义的。
-- `innerHTML` 属性允许将元素中的 HTML 获取为字符串形式，也可以修改它。因此，它是更改页面最有效的方法之一，脚本不会执行。
-- `outerHTML` 属性包含了元素的完整 HTML。就像 `innerHTML` 加上元素本身一样，与 `innerHTML` 不同，写入 `outerHTML` 不会改变元素。而是在 DOM 中替换它。
-- `nodeValue` 和 `data` 属性，获取文本节点内容。
-- `textContent` 提供了对元素内的文本的访问权限：仅文本，去掉所有 `<tags>`，写入 `textContent` 要有用得多，因为它允许以“安全方式”写入文本。
-- `“hidden”` 特性（attribute）和 DOM 属性`property`指定元素是否可见，`hidden` 与 `style="display:none"` 做的是相同的事，但 hidden 写法更简洁。
-- 其他属性：`value` ：`<input>，<select>，<textarea>`，`href`:`<a href="...">`，`id`：所有元素`HTMLElement`的 “id” 特性`attribute`的值。
-
-### 05 - 特性和属性
-
-- DOM 节点是常规的 JavaScript 对象，可以更改它们。
-- 当浏览器加载页面时，它会“读取”（或者称之为：“解析”）HTML 并从中生成 DOM 对象。对于元素节点，大多数标准的 HTML 特性（attributes）会自动变成 DOM 对象的属性（properties），所以，当一个元素有 id 或其他标准的特性，那么就会生成对应的 DOM 属性。但是非标准的特性则不会，特性—属性映射并不是一一对应的。
-- 所有特性都可以通过使用以下方法进行访问：
+### 03 - 搜索 DOM
 
 | 方法 | 描述 |
 | --- | --- |
-| elem.hasAttribute(name) | 检查特性是否存在 |
-| elem.getAttribute(name) | 获取这个特性值 |
-| elem.setAttribute(name, value) | 设置这个特性值 |
-| elem.removeAttribute(name) | 移除这个特性 |
-| elem.attributes | 读取所有特性，属于内建 Attr 类的对象的集合，具有 name 和 value 属性 |
+| Document.getElementById('id') | 匹配给定 ID 的元素，返回值是 Element 对象 |
+| Document.getElementsByClassName('class') | 匹配给定 class 的元素，返回值是匹配元素的实时集合 HTMLCollection |
+| Document.getElementsByTagName('tag') | 匹配给定标签的元素，返回值是匹配元素的实时集合 HTMLCollection |
+| Document.getElementsByName('name') | 匹配给定 name 的节点，返回值是匹配节点的实时集合 NodeList |
+| Document.querySelectorAll('selectors') | 匹配给定 CSS 选择器的节点，返回值是所有匹配节点的静态集合 NodeList |
+| Document.querySelector('selectors') | 匹配给定 CSS 选择器的第一个元素，返回值是 Element 对象 |
+| Element.matches('selectors') | 检查给定元素是否与给定的 CSS 选择器匹配，返回 true 或 false |
+| Element.closest('selectors') | 查找给定元素的该 CSS 选择器的最近祖先，元素自身也会被搜索 |
 
-- 特性的名称是大小写不敏感的，可以将任何东西赋值给特性，但是这些东西会变成字符串类型的。
-- DOM 属性不总是字符串类型的。
-- attributes 集合是可迭代对象，该对象将所有元素的特性（标准和非标准的）作为 `name` 和 `value` 属性存储在对象
+- 不要使用以 ID 命名的全局变量来访问元素。
+- `.getElementsBy*` 方法都会返回一个实时的（live）集合，这样的集合始终反映的是文档的当前状态，并且在文档发生更改时会自动更新。
+- `.querySelector*` 返回的是一个静态的集合，像元素的固定数组。
+
+### 04 - 节点属性
+
+- 在规范中 DOM 类不是使用 JS 来描述的，而是一种特殊的接口描述语言（Interface description language），简写为 IDL
+- 每个 DOM 节点都属于相应的内建类，DOM 节点是常规的 JS 对象，它们使用基于原型的类进行继承。
+- `console.log(elem)` 显示元素的 DOM 树。
+- `console.dir(elem)` 将元素显示为 DOM 对象，非常适合探索其属性。
+
+| 属性 | 描述 |
+| --- | --- |
+| Node.nodeName | 返回当前节点的名称 |
+| Element.tagName | 返回当前元素的名称 |
+| Element.innerHTML | 获取或设置 HTML 语法表示的元素的后代 |
+| Element.outerHTML | 获取或设置 HTML 语法表示的元素及其后代 |
+| Element.innerText | 返回节点及其后代的渲染文本内容，只展示页面出现的 |
+| Node.textContent | 返回节点及其后代的所有文本内容，包括 `<script>` 和 `<style>` 元素中的内容 |
+| Element.data | 返回当前元素的值 |
+| Node.nodeValue | 返回当前节点的值 |
+| Element.hidden | 元素的可见性 |
+| Element.value | 表单元素中的数据 |
+| Element.href | 超链接元素中的地址 |
+| Element.id | 元素的 ID |
+
+- `Element.insertAdjacentHTML('local', 'HTML')` 将指定的文本解析为 Element 元素，并将结果节点插入到 DOM 树中的指定位置：beforebegin、afterbegin、beforeend、afterend
+
+### 05 - 特性和属性
+
+- DOM 节点是常规的 JS 对象，可以更改它们。
+- 当浏览器加载页面时，它会解析 HTML 并从中生成 DOM 对象。对于元素节点，大多数标准的 HTML 特性（attributes）会自动变成 DOM 对象的属性（properties），所以当一个元素有 id 或其他标准的特性，那么就会生成对应的 DOM 属性，但非标准的特性则不会，特性与属性映射并不是一一对应的。
+- 所有特性都可以通过使用以下方法进行访问。
+
+| 方法 | 描述 |
+| --- | --- |
+| Element.hasAttribute('name') | 检查特性是否存在 |
+| Element.getAttribute('name') | 返回元素上指定的特性值 |
+| Element.setAttribute('name', value) | 设置元素上指定的特性值 |
+| Element.removeAttribute('name') | 移除元素上指定的特性值 |
+| Element.attributes | 返回元素上指定特性的集合 |
+
+- 特性的名称是大小写不敏感的，可以将任何东西赋值给特性，但是这些东西都会变成字符串类型的，而 DOM 属性不总是字符串类型的。
+- Attributes 集合是可迭代对象，该对象将所有元素的特性（标准和非标准的）作为 `name` 和 `value` 属性存储在对象中。
 - 当一个标准的特性被改变，对应的属性也会自动更新。
 
-```javascript
-<input />
+```html
+<input type="text" />
 
 <script>
-  let input = document.querySelector('input');
+  let input = document.querySelector('input')
 
   // 特性 => 属性
-  input.setAttribute('id', 'id');
-  alert(input.id); // id（被更新了）
+  input.setAttribute('id', 'id')
+  // id（被更新了）
+  alert(input.id)
 
   // 属性 => 特性
-  input.id = 'newId';
-  alert(input.getAttribute('id')); // newId（被更新了）
+  input.id = 'newId'
+  // newId（被更新了）
+  alert(input.getAttribute('id'))
 </script>
 ```
 
-- 也有些例外，例如 `input.value` 只能从特性同步到属性，反过来则不行，如果想从 HTML 中恢复“原始”值，那么该值就在特性中。
-- `href` DOM 属性一直是一个完整的 URL，即使该特性包含一个相对路径或者包含一个 `#hash`
-- 非标准的特性常常用于将自定义的数据从 HTML 传递到 JavaScript，或者用于为 JavaScript “标记” HTML 元素。
+- 存在一些例外，例如 `input.value` 只能从特性同步到属性，反过来则不行，如果想从 HTML 中恢复原始值，那么该值就在特性中。
+- 非标准的特性常常用于将自定义的数据从 HTML 传递到 JS，或者用于为 JS 标记 HTML 元素。
 
-```javascript
+```html
 <!-- 标记这个 div 以在这显示 "name" -->
 <div show-info="name"></div>
 <!-- 标记这个 div 以在这显示 "age" -->
@@ -2491,28 +2515,30 @@ function curry(func) {
   let user = {
     name: "Pete",
     age: 25
-  };
+  }
 
   for(let div of document.querySelectorAll('[show-info]')) {
     // 在字段中插入相应的信息
-    let field = div.getAttribute('show-info');
-    div.innerHTML = user[field]; // 首先 "name" 变为 Pete，然后 "age" 变为 25
+    let field = div.getAttribute('show-info')
+    // 首先 "name" 变为 Pete，然后 "age" 变为 25
+    div.innerHTML = user[field]
   }
 </script>
 ```
 
-- 以 “data-” 开头的特性均被保留供程序员使用，它们可在 `dataset` 属性中使用。
+- 以 `data-` 开头的特性均被保留供程序员使用，它们可在 `dataset` 属性中使用。
 
-```javascript
+```html
 <body data-about="Elephants">
 
 <script>
-  alert(document.body.dataset.about); // Elephants
+  // 以驼峰形式调用
+  alert(document.body.dataset.about)  // Elephants
 </script>
 ```
 
-- 像 `data-order-state` 这样的多词特性可以以驼峰式进行调用：`dataset.orderState`
-- 特性（attribute）： 写在 HTML 中的内容，属性（property）：DOM 对象中的内容。
+- 像 `data-order-state` 这样的多词特性可以以驼峰式进行调用 `dataset.orderState`
+- 总结：特性（attribute）是写在 HTML 中的内容，属性（property）是 DOM 对象中的内容，特性会同步到属性中，属性不一定同步到特性中。
 
 ### 06 - 修改文档
 
