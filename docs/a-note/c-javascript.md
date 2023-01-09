@@ -2463,8 +2463,6 @@ function curry(func) {
 | Element.href | 超链接元素中的地址 |
 | Element.id | 元素的 ID |
 
-- `Element.insertAdjacentHTML('local', 'HTML')` 将指定的文本解析为 Element 元素，并将结果节点插入到 DOM 树中的指定位置：beforebegin、afterbegin、beforeend、afterend
-
 ### 05 - 特性和属性
 
 - DOM 节点是常规的 JS 对象，可以更改它们。
@@ -2544,78 +2542,59 @@ function curry(func) {
 
 | 方法 | 描述 |
 | --- | --- |
-| document.createElement(tag) | 用给定的标签创建一个新元素节点（element node） |
-| document.createTextNode(text) | 用给定的文本创建一个 文本节点 |
-| document.body.append(div) | 将其插入到 document 中的某处，可以在其他任何元素上调用 append 方法 |
-| document.write(html) | 将 html 就地马上写入页面（古老的用法）调用只在页面加载时工作 |
-| node.append(...nodes or strings) | 在 node 末尾 插入节点或字符串 |
-| node.prepend(...nodes or strings) | 在 node 开头 插入节点或字符串 |
-| node.before(...nodes or strings) | 在 node 前面 插入节点或字符串 |
-| node.after(...nodes or strings) | 在 node 后面 插入节点或字符串 |
-| node.replaceWith(...nodes or strings) | 将 node 替换为给定的节点或字符串 |
-| node.remove() | 移除节点 |
-| elem.insertAdjacentHTML/Text/Element(where, html) | 将内容作为 HTML 代码插入 |
-| elem.insertAdjacentText(where, text) | 将 text 字符串作为文本插入而不是作为 HTML |
-| elem.insertAdjacentElement(where, elem) | 插入的是一个元素 |
-| elem.cloneNode(true) | 创建元素的一个“深”克隆：具有所有特性（attribute）和子元素 |
-| elem.cloneNode(false) | 克隆但不包括子元素 |
-| where -> | "beforebegin" ：将 html 插入到 elem 之前；"afterbegin" ：将 html 插入到 elem 开头；"beforeend" ：将 html 插入到 elem 末尾；"afterend" ：将 html 插入到 elem 之后 |
+| Document.createElement('tagName') | 创建给定名称的 HTML 元素节点 |
+| Document.createTextNode('text') | 创建给定内容的文本节点，可用于转义 HTML 字符 |
+| Element.append(...) | 在子元素列表末尾插入给定的 Node 或 DOMString 对象 |
+| Element.prepend(...) | 在子元素列表开头插入给定的 Node 或 DOMString 对象 |
+| Element.before(...) | 在该元素之前插入给定的 Node 或 DOMString 对象 |
+| Element.after(...) | 在该元素之后插入给定的 Node 或 DOMString 对象 |
+| Element.replaceWith(...) | 把该元素替换为给定的 Node 或 DOMString 对象 |
+| Element.remove() | 把对象从它所属的 DOM 树中删除 |
+| Node.appendChild(obj) | 在子节点列表末尾插入给定的 Node 对象，并返回该追加的对象 |
+| Document.write('html') | 将 html 就地马上写入页面，调用只在页面加载时工作 |
+| Element.insertAdjacentHTML(where, html) | 将内容作为 HTML 代码插入 |
+| Element.insertAdjacentText(where, text) | 将 text 字符串作为文本插入 |
+| elem.insertAdjacentElement(where, elem) | 将内容作为元素插入 |
+| Node.cloneNode(true) | 创建节点的副本，具有所有特性和子元素 |
+| Node.cloneNode(false) | 创建节点的副本，但不包括子元素 |
+
+**关于 where**
+
+- `beforebegin` 将内容插入到 elem 之前。
+- `afterend` 将内容插入到 elem 之后。
+- `afterbegin` 将内容插入到 elem 开头。
+- `beforeend` 将内容插入到 elem 末尾。
 
 ```javascript
-// 1. 创建 <div> 元素
-let div = document.createElement('div');
+let div = document.createElement('div')
 
-// 2. 将元素的类设置为 "alert"
-div.className = "alert";
+div.className = "alert"
 
-// 3. 填充消息内容
-div.innerHTML = "<strong>Hi there!</strong> You've read an important message.";
+div.innerHTML = "<strong>Hi there!</strong> You've read an important message."
 
-// 4. 插入
-document.body.append(div);
+document.body.append(div)
 ```
 
-- 这些方法可以在单个调用中插入多个节点列表和文本片段。
-- 文字都被“作为文本”插入，而不是“作为 HTML 代码”。因此像 <> 这样的符号都会被作转义处理来保证正确显示。
 - 如果要将一个元素移动到另一个地方，则无需将其从原来的位置中删除，所有插入方法都会自动从旧位置删除该节点。
-- `DocumentFragment` 是一个特殊的 DOM 节点，用作来传递节点列表的包装器（wrapper）：
+- `DocumentFragment` 是一个特殊的 DOM 节点，用作来传递节点列表的包装器。
 
 ```javascript
 <ul id="ul"></ul>
 
 <script>
 function getListContent() {
-  let fragment = new DocumentFragment();
+  let result = []
 
   for(let i=1; i<=3; i++) {
-    let li = document.createElement('li');
-    li.append(i);
-    fragment.append(li);
+    let li = document.createElement('li')
+    li.append(i)
+    result.push(li)
   }
 
-  return fragment;
+  return result
 }
 
-ul.append(getListContent()); 
-</script>
-
-// 上述较少的使用，重写：
-<ul id="ul"></ul>
-
-<script>
-function getListContent() {
-  let result = [];
-
-  for(let i=1; i<=3; i++) {
-    let li = document.createElement('li');
-    li.append(i);
-    result.push(li);
-  }
-
-  return result;
-}
-
-ul.append(...getListContent()); // append + "..." operator = friends!
+ul.append(...getListContent())
 </script>
 ```
 
@@ -2623,24 +2602,24 @@ ul.append(...getListContent()); // append + "..." operator = friends!
 
 | 方法 | 描述 |
 | --- | --- |
-| elem.className | 获取class，赋值将替换整个字符串 |
-| elem.classList： | 是一个特殊的对象，可迭代的 |
-| elem.classList.add/remove(class) | 添加/移除类 |
-| elem.classList.toggle(class) | 如果类不存在就添加类，存在就移除它 |
-| elem.classList.contains(class) | 检查给定类，返回 true/false |
-| elem.style | 是一个对象，它对应于 "style" 特性中所写的内容 |
-| style.cssText | 使用反引号列出所有样式，它删除所有现有样式替换它们 |
-| getComputedStyle(element, [pseudo]) | element 需要被读取样式值的元素，pseudo 伪元素，结果是一个具有样式属性的对象，可以读取设置的样式 |
+| Element.className | 获取或设置指定元素的 class 属性的值 |
+| Element.classList | 返回元素 class 属性的动态 DOMTokenList 集合 |
+| Element.classList.add(class) | 将给定的标记添加到列表中 |
+| Element.classList.remove(class) | 将给定的标记移除列表 |
+| Element.classList.replace(class) | 将给定的标记替换为新标记 |
+| Element.classList.toggle(class) | 存在则删除标记并返回 false 不存在则添加标记并返回 true |
+| Node.contains(class) | 检查传入的节点是否为该节点的后代节点 |
+| Element.style | style 特性中所写内容的对象 |
+| Window.getComputedStyle(element, [pseudo]) | 该对象在应用活动样式表并解析这些值可能包含的任何基本计算后报告元素的所有 CSS 属性的值，element 需要被读取样式值的元素，pseudo 伪元素结果是一个具有样式属性的对象，可以读取设置的样式 |
 
-- 像 `-moz-border-radius` 和 `-webkit-border-radius` 这样的浏览器前缀属性，也遵循同样的规则：连字符 - 表示大写。
+- `-moz-border-radius` 和 `-webkit-border-radius` 这样的浏览器前缀属性，遵循同样的规则：连字符 - 表示大写。
+- `.getComputedStyle` 实际上返回的是属性的解析值。
+- JS 看不到 `:visited` 所应用的样式，此外 CSS 中也有一个限制，即禁止在 `:visited` 中应用更改几何形状的样式，这是为了确保一个不好的页面无法测试链接是否被访问，进而窥探隐私。
 
 ```javascript
-button.style.MozBorderRadius = '5px';
-button.style.WebkitBorderRadius = '5px';
+button.style.MozBorderRadius = '5px'
+button.style.WebkitBorderRadius = '5px'
 ```
-
-- 现在 getComputedStyle 实际上返回的是属性的解析值（resolved）。
-- JavaScript 看不到 `:visited` 所应用的样式。此外，CSS 中也有一个限制，即禁止在 `:visited` 中应用更改几何形状的样式，这是为了确保一个不好的页面无法测试链接是否被访问，进而窥探隐私。
 
 ### 08 - 元素大小与滚动
 
