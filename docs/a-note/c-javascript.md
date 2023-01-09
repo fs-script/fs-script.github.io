@@ -2623,62 +2623,58 @@ button.style.WebkitBorderRadius = '5px'
 
 ### 08 - 元素大小与滚动
 
-![盒模型.png](https://pic.jitudisk.com/public/2022/11/16/f51e0d6ea9f55.png)
+- 元素具有以下几何属性。
 
-- 元素具有以下几何属性：
-
-![几何属性.png](https://pic.jitudisk.com/public/2022/11/16/c2a1f9de49d4e.png)
+![元素几何属性.jpg](https://pic.img.ski/1673228421.jpg)
 
 | 几何属性 | 描述 |
 | --- | --- |
-| offsetParent | 最接近的 CSS 定位的祖先，或者是 td，th，table，body |
-| offsetLeft/offsetTop | 相对于 offsetParent 的左上角边缘的坐标 |
-| offsetWidth/offsetHeight | 元素的“外部” width/height，边框（border）尺寸计算在内 |
-| clientLeft/clientTop | 从元素左上角外角到左上角内角的距离，对于从左到右显示内容的操作系统来说，它们始终是左侧/顶部 border 的宽度。而对于从右到左显示内容的操作系统来说，垂直滚动条在左边，所以 clientLeft 也包括滚动条的宽度 |
-| clientWidth/clientHeight | 内容的 width/height，包括 padding，但不包括滚动条（scrollbar） |
-| scrollWidth/scrollHeight | 内容的 width/height，就像 clientWidth/clientHeight 一样，但还包括元素的滚动出的不可见的部分 |
-| scrollLeft/scrollTop | 从元素的左上角开始，滚动出元素的上半部分的 width/height |
+| HTMLElement.offsetParent | 返回指向最近的（指包含层级上的最近）包含该元素的定位元素或者最近的 table, td, th, body 元素 |
+| HTMLElement.offsetLeft/offsetTop | 相对于 offsetParent 的左上角边缘的坐标 |
+| HTMLElement.offsetWidth/offsetHeight | 元素的外部 width/height 边框尺寸计算在内 |
+| HTMLElement.clientLeft/clientTop | 元素左边框的宽度，某些情况下也包括滚动条的宽度 |
+| HTMLElement.clientWidth/clientHeight | 内容的 width/height 包括 padding 但不包括滚动条 |
+| HTMLElement.scrollLeft/scrollTop | 从元素的左上角开始，滚动出元素的上半部分的 width/height |
+| HTMLElement.scrollWidth/scrollHeight | 内容的 width/height 就像 clientWidth/clientHeight 一样，但还包括元素的滚动出的不可见的部分 |
 
-- 除了 `scrollLeft/scrollTop` 外，所有属性都是只读的。如果修改 `scrollLeft/scrollTop`，浏览器会滚动对应的元素。
+- 除了 `scrollLeft/scrollTop` 外，所有属性都是只读的，如果修改 `scrollLeft/scrollTop`，浏览器会滚动对应的元素。
 
 ### 09 - Window 大小与滚动
 
 | 方法 | 描述 |
 | --- | --- |
-| document.documentElement.clientWidth/clientHeight | 提供没有滚动条（减去它）的 width/height，即它们返回的是可用于内容的文档的可见部分的 |
-| window.innerWidth/innerHeight | 包括了滚动条 |
-| documentElement.scrollWidth/scrollHeight | 测量文档的完整大小 |
-| window.pageXOffset/pageYOffset | 获取页面当前滚动信息，这些属性是只读的 |
-| document.documentElement.scrollLeft/scrollTop | 元素的当前滚动状态 |
-| window.pageXOffset | window.scrollX的别名 |
-| window.pageYOffset | window.scrollY的别名 |
-| window.scrollBy(x,y) | 将页面滚动至相对于当前位置的 (x, y) 位置 |
-| window.scrollTo(pageX,pageY) | 将页面滚动至绝对坐标，使得可见部分的左上角具有相对于文档左上角的坐标 (pageX, pageY) |
-| elem.scrollIntoView(top) | 将滚动页面以使 elem 可见，如果 top=true（默认值），页面滚动，使 elem 出现在窗口顶部，元素的上边缘将与窗口顶部对齐，如果 top=false，页面滚动，使 elem 出现在窗口底部，元素的底部边缘将与窗口底部对齐 |
-| document.body.style.overflow = "hidden" | 使文档不可滚动 |
-
-- 整个文档的`width`、`height`:
+| document.documentElement.clientWidth/clientHeight | 文档的可见部分大小（不包括滚动条） |
+| document.documentElement.scrollWidth/scrollHeight | 文档的完整大小（不包括滚动条） |
+| document.documentElement.scrollLeft/scrollTop | 文档的滚动状态 |
+| window.innerWidth/innerHeight | 窗口的可见部分大小（包括滚动条） |
+| window.pageXOffset/pageYOffset | 页面当前滚动信息，window.scrollX/Y的别名 |
+| window.scrollBy(x, y, [behavior]) | 将页面滚动至相对于当前位置的 (x, y) 位置，可设置滚动行为：smooth、instant、auto |
+| window.scrollTo(pageX, pageY) | 将页面滚动至绝对坐标，使得可见部分的左上角具有相对于文档左上角的坐标 (pageX, pageY) |
+| Element.scrollIntoView(top) | 将滚动页面以使 Element 可见，如果 top=true 页面滚动，使 Element 出现在窗口顶部，如果 top=false 页面滚动，使 Element 出现在窗口底部 |
 
 ```javascript
+// 整个文档的 width height
 let scrollHeight = Math.max(
   document.body.scrollHeight, document.documentElement.scrollHeight,
   document.body.offsetHeight, document.documentElement.offsetHeight,
   document.body.clientHeight, document.documentElement.clientHeight
-);
+)
 ```
 
 ### 10 - 坐标
 
 - 相对于窗口：类似于 `position:fixed`，从窗口的顶部/左侧边缘计算得出，将这些坐标表示为 `clientX/clientY`
-- 相对于文档：与文档根（document root）中的 `position:absolute` 类似，从文档的顶部/左侧边缘计算得出，将它们表示为 `pageX/pageY`
+- 相对于文档：类似于 `position:absolute` ，从文档的顶部/左侧边缘计算得出，将它们表示为 `pageX/pageY`
 
-![相对坐标.png](https://pic.jitudisk.com/public/2022/11/16/6cf42e415b819.png)
+![坐标.jpg](https://pic.img.ski/1673243756.jpg)
 
-- `elem.getBoundingClientRect()` ：返回最小矩形的窗口坐标，该矩形将 `elem` 作为内建 `DOMRect` 类的对象
+- `Element.getBoundingClientRect()` 返回最小矩形的窗口坐标，该矩形将 Element 作为内建 `DOMRect` 类的对象
 
-![窗口坐标.png](https://pic.jitudisk.com/public/2022/11/16/035e35db338b0.png)
+![getBoundingClientRect.jpg](https://pic.img.ski/1673243779.jpg)
 
-- `document.elementFromPoint(x, y)` ：返回在窗口坐标 (x, y) 处嵌套最多的元素，对于在窗口之外的坐标， 返回 `null`
+![DOMRect.jpg](https://pic.img.ski/1673244904.jpg)
+
+- `document.elementFromPoint(x, y)` 返回在窗口坐标 (x, y) 处嵌套最多的元素，对于在窗口之外的坐标，返回 `null`
 - 文档相对坐标从文档的左上角开始计算，而不是窗口。
 - 窗口坐标非常适合和 `position: fixed` 一起使用，文档坐标非常适合和 `position: absolute` 一起使用。
 
@@ -2686,7 +2682,7 @@ let scrollHeight = Math.max(
 
 | 常见事件 | 描述 |
 | --- | --- |
-| 鼠标事件： |  |
+| **鼠标事件** |  |
 | click | 当鼠标点击一个元素时（触摸屏设备会在点击时生成） |
 | contextmenu | 当鼠标右键点击一个元素时 |
 | mouseover / mouseout | 当鼠标指针移入/离开一个元素时 |
