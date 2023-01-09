@@ -2683,30 +2683,28 @@ let scrollHeight = Math.max(
 | 常见事件 | 描述 |
 | --- | --- |
 | **鼠标事件** |  |
-| click | 当鼠标点击一个元素时（触摸屏设备会在点击时生成） |
+| click | 当鼠标点击一个元素时，触摸屏设备会在触摸时生成 |
 | contextmenu | 当鼠标右键点击一个元素时 |
-| mouseover / mouseout | 当鼠标指针移入/离开一个元素时 |
-| mousedown / mouseup | 当在元素上按下/释放鼠标按钮时 |
+| mouseover/mouseout | 当鼠标指针移入/离开一个元素时 |
+| mousedown/mouseup | 当在元素按下/释放鼠标按钮时 |
 | mousemove | 当鼠标移动时 |
-| 键盘事件： |  |
-| keydown 和 keyup | 当按下和松开一个按键时 |
-| 表单元素事件： |  |
-| submit | 当访问者提交了一个 `<form>`
- 时 |
+| **键盘事件** |  |
+| keydown/keyup | 当按键按下/松开时 |
+| **表单元素事件** |  |
+| submit | 当访问者提交表单时 |
 | focus | 当访问者聚焦于一个元素时 |
-| Document事件： |  |
-| DOMContentLoaded | 当 HTML 的加载和处理均完成，DOM 被完全构建完成时 |
-| CSS事件： |  |
+| **Document 事件** |  |
+| DOMContentLoaded | 当 HTML 的加载和处理均完成 DOM 被完全构建完成时 |
+| **CSS事件** |  |
 | transitionend | 当一个 CSS 动画完成时 |
 
-- 处理程序可以设置在 HTML 中名为 `on<event>` 的特性中，最好创建一个 JavaScript 函数，然后在 HTML 特性中调用这个函数。
+- 处理程序可以设置在 HTML 中名为 `on<event>` 的特性中，最好创建一个 JS 函数，然后在 HTML 特性中调用这个函数。
 - 可以使用 DOM 属性 `on<event>` 来分配处理程序，例如 `elem.onclick`
-- 处理程序中的 `this` 的值是对应的元素，就是处理程序所在的那个元素。
-- 错误警示，例如：函数应该是以 `sayThanks` 的形式进行赋值，而不是 `sayThanks()`，但在HTML标记中，确实需要括号。
+- 错误警示，例如，函数应该是以 `sayThanks` 的形式进行赋值，而不是 `sayThanks()`，但在HTML标记中，需要括号。
 - 不要对处理程序使用 `setAttribute`，因为特性总是字符串的，函数变成了一个字符串。
-- `element.addEventListener(event, handler[, options]);`多次调用 `addEventListener` 允许添加多个处理程序。
+- `element.addEventListener(event, handler[, options])` 多次调用 `addEventListener` 允许添加多个处理程序。
 
-| element.addEventListener(event, handler[, options]) |  |
+| 参数 | 说明 --|
 | --- | --- |
 | event | 事件名 |
 | handler | 处理程序 |
