@@ -2683,7 +2683,7 @@ let scrollHeight = Math.max(
 | 常见事件 | 描述 |
 | --- | --- |
 | **鼠标事件** |  |
-| click | 当鼠标点击一个元素时，触摸屏设备会在触摸时生成 |
+| click | 当鼠标点击一个元素时，当触摸屏设备触摸时 |
 | contextmenu | 当鼠标右键点击一个元素时 |
 | mouseover/mouseout | 当鼠标指针移入/离开一个元素时 |
 | mousedown/mouseup | 当在元素按下/释放鼠标按钮时 |
@@ -2702,27 +2702,28 @@ let scrollHeight = Math.max(
 - 可以使用 DOM 属性 `on<event>` 来分配处理程序，例如 `elem.onclick`
 - 错误警示，例如，函数应该是以 `sayThanks` 的形式进行赋值，而不是 `sayThanks()`，但在HTML标记中，需要括号。
 - 不要对处理程序使用 `setAttribute`，因为特性总是字符串的，函数变成了一个字符串。
-- `element.addEventListener(event, handler[, options])` 多次调用 `addEventListener` 允许添加多个处理程序。
+- `Element.addEventListener(event, handler, [options])` 多次调用 `addEventListener` 允许添加多个处理程序。
+- 可以使用 `addEventListener` 将一个对象分配为事件处理程序，当事件发生时，就会调用该对象的 `handleEvent` 方法。
 
-| 参数 | 说明 --|
+| 参数 | 说明 |
 | --- | --- |
 | event | 事件名 |
 | handler | 处理程序 |
-| options： | 附加可选对象 |
-| once | 如果为 true，那么会在被触发后自动删除监听器 |
-| capture | 事件处理的阶段（启动捕获） |
-| passive | 如果为 true，那么处理程序将不会调用 `preventDefault()` |
+| options | 附加可选对象 |
+| -> once | 如果为 true 那么会在被触发后自动删除监听器 |
+| -> passive | 如果为 true 那么处理程序将不会调用 `.preventDefault()` |
+| -> capture | 事件处理的阶段（启动捕获） |
 
-- `element.removeEventListener(event, handler[, options]);`移除处理程序，需要传入与分配的函数完全相同的函数。
+- `Element.removeEventListener(event, handler, [options])` 移除处理程序，需要传入与分配的函数完全相同的函数。
 
 ```javascript
 function handler() {
-  alert( 'Thanks!' );
+  alert( 'Thanks!' )
 }
 
-input.addEventListener("click", handler);
-// ....
-input.removeEventListener("click", handler);
+input.addEventListener("click", handler)
+
+input.removeEventListener("click", handler)
 ```
 
 - 对于某些事件，只能通过 `addEventListener` 设置处理程序。
@@ -2730,222 +2731,263 @@ input.removeEventListener("click", handler);
 ```javascript
 // 永远不会运行
 document.onDOMContentLoaded = function() {
-  alert("DOM built");
-};
+  alert("DOM built")
+}
 
 // 这种方式可以运行
 document.addEventListener("DOMContentLoaded", function() {
-  alert("DOM built");
-});
+  alert("DOM built")
+})
 ```
 
-- 当事件发生时，浏览器会创建一个 `event` 对象，将详细信息放入其中，并将其作为参数传递给处理程序。
+- 当事件发生时，浏览器会创建一个 event 对象，将详细信息放入其中，并将其作为参数传递给处理程序。
 
 ```javascript
-<input type="button" value="Click me" id="elem">
+<input type="button" value="ClickMe" id="elem">
 
 <script>
-  elem.onclick = function(event) {
-    // 显示事件类型、元素和点击的坐标
-    alert(event.type + " at " + event.currentTarget);
-    alert("Coordinates: " + event.clientX + ":" + event.clientY);
-  };
+elem.onclick = function(event) {
+  // 显示事件类型、元素和点击的坐标
+  alert(event.type + " at " + event.currentTarget)
+  alert("Coordinates: " + event.clientX + ":" + event.clientY)
+}
 </script>
 ```
 
 | event 对象 | 描述 |
 | --- | --- |
-| event.type | 事件类型 |
-| event.currentTarget | 处理事件的元素 |
-| event.clientX/ event.clientY | 指针事件（pointer event）的指针的窗口相对坐标 |
-| event.target | 访问嵌套层级最深的元素（被称为目标元素） |
-| event.stopPropagation() | 停止冒泡 |
-| event.stopImmediatePropagation() | 停止冒泡，并阻止当前元素上的处理程序运行 |
-| event.preventDefault() | 阻止浏览器默认行为 |
+| .type | 事件类型 |
+| .target | 目标元素 |
+| .currentTarget | 处理事件的元素 |
+| .clientX / .clientY | 指针事件的指针的窗口相对坐标 |
+| .stopPropagation() | 停止冒泡 |
+| .stopImmediatePropagation() | 停止冒泡，并阻止当前元素上的处理程序运行 |
+| .preventDefault() | 阻止浏览器默认行为 |
+| ... |  |
 
-- `event` 对象在 HTML 处理程序中也可用。
-- 不仅可以分配函数，还可以使用 `addEventListener` 将一个对象分配为事件处理程序。当事件发生时，就会调用该对象的`handleEvent` 方法。
+- event 对象在 HTML 处理程序中也可用。
 
 ### 12 - 冒泡与捕获
 
-- 当一个事件发生在一个元素上，它会首先运行在该元素上的处理程序，然后运行其父元素上的处理程序，然后一直向上到其他祖先上的处理程序。几乎所有事件都会冒泡，但例如，`focus` 事件不会冒泡。
-- 如果有一个处理程序 `form.onclick`，那么它可以“捕获”表单内的所有点击。无论点击发生在哪里，它都会冒泡到 `<form>` 并运行处理程序。
+- 当一个事件发生在一个元素上时，它会首先运行在该元素上的处理程序，然后运行其父元素上的处理程序，然后一直向上到其他祖先上的处理程序，这就是冒泡。几乎所有事件都会冒泡，但例如 `focus` 事件不会冒泡。
+- 如果有一个处理程序 `form.onclick` 那么它可以捕获表单内的所有点击，无论点击发生在哪里，它都会冒泡到 `<form>` 并运行处理程序。
 - 事件传播的三个阶段：
-	- 捕获阶段（Capturing phase），事件（从 Window）向下走近元素；
-  - 目标阶段（Target phase），事件到达目标元素；
-  - 冒泡阶段（Bubbling phase），事件从元素上开始冒泡。
-- 使用 `on<event>` 属性或使用 HTML 特性或使用两个参数的 `addEventListener(event, handler)` 添加的处理程序，对捕获一无所知，它们仅在第二阶段和第三阶段运行，为了在捕获阶段捕获事件，需要将处理程序的 `capture` 选项设置为 `true`
-- 如果 `addEventListener(..., true)`，那么应该在 `removeEventListener(..., true)` 中提到同一阶段，以正确删除处理程序。
+<br />（1）捕获阶段（Capturing phase），事件从 Window 向下走近元素；
+<br />（2）目标阶段（Target phase），事件到达目标元素；
+<br />（3）冒泡阶段（Bubbling phase），事件从元素上开始冒泡。
+- 使用 `on<event>` 属性或使用 HTML 特性或使用两个参数的 `.addEventListener(event, handler)` 添加的处理程序，对捕获一无所知，它们仅在第二阶段和第三阶段运行，为了在捕获阶段捕获事件，需要将处理程序的 `capture` 选项设置为 true
 
 ### 13 - 事件委托
 
-- 它通常用于为许多相似的元素添加相同的处理，在容器（container）上放一个处理程序，在处理程序中检查源元素 `event.target`，如果事件发生在感兴趣的元素内，那么处理该事件。但是，事件必须冒泡。
-- `elem.closest(selector)` 方法返回与 `selector` 匹配的最近的祖先。
-- 可以使用事件委托将“行为”以声明方式添加到具有特殊特性和类的元素中，将自定义特性添加到描述其行为的元素，用文档范围级的处理程序追踪事件，如果事件发生在具有特定特性的元素上，则执行行为。
+- 它通常用于为许多相似的元素添加相同的处理，在容器上放一个处理程序，在处理程序中检查源元素 `event.target`，如果事件发生在感兴趣的元素内，那么处理该事件，但是事件必须冒泡。
+- 可以使用事件委托将行为以声明方式添加到具有特殊特性和类的元素中，将自定义特性添加到描述其行为的元素，用文档范围级的处理程序追踪事件，如果事件发生在具有特定特性的元素上，则执行行为。
+- `Element.closest(selector)` 匹配特定选择器且离当前元素最近的祖先元素（也可以是当前元素本身），如果匹配不到，则返回 null。
 
 ### 14 - 浏览器默认行为
 
-- 阻止浏览器默认行为：主流的方式是使用 `event` 对象，有一个 `event.preventDefault()` 方法。如果处理程序是使用 `on<event>`（而不是 `addEventListener`）分配的，那返回 `false` 也同样有效。
+- 阻止浏览器默认行为主流的方式是使用 event 对象上的 `.preventDefault()` 方法，如果处理程序是使用 `on<event>` 分配的，那返回 false 也同样有效。
+- 如果默认行为被阻止，那么 `event.defaultPrevented` 属性为 true 否则为 false
 
 ```javascript
 <a href="/" onclick="return false">Click here</a>
-or
-<a href="/" onclick="event.preventDefault()">here</a>
+// 或
+<a href="/" onclick="event.preventDefault()">Click here</a>
 ```
 
-- `addEventListener` 的可选项 `passive: true` 向浏览器发出信号，表明处理程序将不会调用 `preventDefault()`
-- 如果默认行为被阻止，那么 `event.defaultPrevented` 属性为 `true`，否则为 `false`
-- `event.stopPropagation()`阻止冒泡可以使用`event.defaultPrevented` 来代替，来通知其他事件处理程序，该事件已经被处理。
+- `addEventListener` 的可选项 `passive: true` 向浏览器发出信号，表明处理程序将不会调用 `.preventDefault()`
+- `event.stopPropagation()` 阻止冒泡可以使用 `event.defaultPrevented` 来代替，来通知其他事件处理程序该事件已经被处理。
 
 ### 15 - 自定义事件
 
-- 自定义事件可用于创建“图形组件”，这可能会有助于自动化测试。
-- 内建事件类形成一个层次结构（hierarchy），类似于 DOM 元素类，根是内建的 Event 类。
+- 自定义事件可用于创建图形组件，这会有助于自动化测试。
+- 使用自己的名称的自定义事件通常是出于架构的目的而创建的。
+- 内建事件类形成一个层次结构，类似于 DOM 元素类，根是内建的 Event 类。
 
 ```javascript
-let event = new Event(type[, options]);
+// 返回的是 event 对象
+let event = new Event(type, [options])
 ```
 
 | 参数 | 描述 |
 | --- | --- |
-| type | 事件类型，可以是像这样 "click" 的字符串，或者像这样 "my-event" 的参数 |
+| type | 事件类型，可以是像 click 的字符串，或像 my-event 的参数 |
 | options | 具有两个可选属性的对象 |
-| bubbles: true/false | 如果为 true，那么事件会冒泡 |
-| cancelable: true/false | 如果为 true，那么默认行为就会被阻止 |
+| -> bubbles: true/false | 如果为 true，事件会冒泡 |
+| -> cancelable: true/false | 如果为 true，那么默认行为就会被阻止 |
 
-- 默认情况下，以上两者都为 false：`{bubbles: false, cancelable: false}`
-- 事件对象被创建后，应该使用 `elem.dispatchEvent(event)` 调用在元素上“运行”它。
-- 对于来自真实用户操作的事件，`event.isTrusted` 属性为 `true`，对于脚本生成的事件，`event.isTrusted` 属性为 `false`
-- 对于自定义事件，应该使用 `CustomEvent` 构造器。它有一个名为 `detail` 的附加选项，应该将事件特定的数据分配给它。然后，所有处理程序可以以 `event.detail` 的形式来访问它。
-- 事件中的事件是同步的，通常事件是在队列中处理的，但存在例外：一个事件是在另一个事件中发起的。例如使用 `dispatchEvent`，这类事件将会被立即处理，即在新的事件处理程序被调用之后，恢复到当前的事件处理程序。
-- 使用自己的名称的自定义事件通常是出于架构的目的而创建的。
+- 默认情况下，以上两者都为 false `{bubbles: false, cancelable: false}`
+- 事件对象被创建后，应该使用 `EventTarget.dispatchEvent(event)` 在元素上运行它。
+- 对于来自真实用户操作的事件 `event.isTrusted` 属性为 true，对于脚本生成的事件 `event.isTrusted` 属性为 false
+- 对于自定义事件，还可以使用 `CustomEvent` 构造器，它有一个 `detail` 的附加选项，应该将事件特定的数据分配给它，然后所有处理程序可以以 `event.detail` 的形式访问它。
+- 事件中的事件是同步的，通常事件是在队列中处理的，但存在例外，即一个事件是在另一个事件中发起的。例如：使用 `EventTarget.dispatchEvent(event)`，这类事件将会被立即处理，即在新的事件处理程序被调用之后，恢复到当前的事件处理程序。
 
 ### 16 - 鼠标事件
 
-- 遵循 `mousedown → mouseup → click` 的顺序调用处理程序。
+- 遵循 mousedown（按下） → mouseup（释放） → click（点击）的顺序调用处理程序。
 - 与点击相关的事件始终具有 `button` 属性，该属性允许获取确切的鼠标按钮，可以使用 `button` 属性来区分是左键单击还是右键单击。
-- 所有的鼠标事件都提供了两种形式的坐标：相对于窗口的坐标 `clientX` 和 `clientY`；相对于文档的坐标 `pageX` 和 `pageY`
+- 所有的鼠标事件都提供了两种形式的坐标，一种是相对于窗口的坐标 `clientX` 和 `clientY`，另一种是相对于文档的坐标 `pageX` 和 `pageY`
 - `mousedown` 的默认浏览器操作是文本选择，如果它对界面不利，则应避免它。
-- `oncopy`，防止复制：
 
 ```javascript
-<div oncopy="alert('Copying forbidden!');return false">
-  Dear user,
+// oncopy 防止复制
+<div oncopy="alert('禁止复制 哇哇哇'); return false">
+  试试复制我
 </div>
 ```
 
-- 对于 mouseover：
+- `mouseover` 事件的 event 对象。
 
-| mouseover |  |
+| event | 描述 |
 | --- | --- |
-| event.target | 是鼠标移过的那个元素 |
-| event.relatedTarget | 是鼠标来自的那个元素 |
-| relatedTarget → target | mouseout 则与之相反 |
+| .target | 鼠标移过的元素 |
+| .relatedTarget | 鼠标来自的元素 |
 
-- `relatedTarget` 属性可以为 `null`，仅仅是意味着鼠标不是来自另一个元素，而是来自窗口之外，或者它离开了窗口。
-- `mouseenter/mouseleave` 类似于 `mouseover/mouseout`。它们在鼠标指针进入/离开元素时触发，元素内部与后代之间的转换不会产生影响，事件 `mouseenter/mouseleave` 不会冒泡。
-- 基础的拖放算法：在 `mousedown` 上，根据需要准备要移动的元素（也许创建一个它的副本，向其中添加一个类或其他任何东西），然后在 `mousemove` 上，通过更改 `position:absolute` 情况下的 `left/top` 来移动它，在 `mouseup` 上，执行与完成的拖放相关的所有行为。
-- 禁用浏览器的默认拖放处理：
+- `event.relatedTarget` 属性可以为 null，意味着鼠标不是来自另一个元素，而是来自窗口之外，或者它离开了窗口。
+- `mouseenter/mouseleave` 类似于 `mouseover/mouseout` 它们在鼠标指针进入/离开元素时触发，元素内部与后代之间的转换不会产生影响，事件 `mouseenter/mouseleave` 不会冒泡。
+- 关于基础的拖放算法：在 `mousedown` 上，根据需要准备要移动的元素（也许创建一个它的副本，向其中添加一个类或其他任何东西），然后在 `mousemove` 上，通过更改 `position:absolute` 情况下的 `left/top` 来移动它，在 `mouseup` 上，执行与完成的拖放相关的所有行为。
 
 ```javascript
+// 禁用浏览器的默认拖放处理
 elem.ondragstart = function() {
-  return false;
-};
+  return false
+}
 ```
 
-- 在拖动开始时，记住鼠标指针相对于元素的初始偏移（shift）：`shiftX/shiftY`，并在拖动过程中保持它不变。
-- `document.elementFromPoint(clientX, clientY)` 的方法，它会返回在给定的窗口相对坐标处的嵌套的最深的元素（如果给定的坐标在窗口外，则返回 `null`）。
+- 在拖动开始时，记住鼠标指针相对于元素的初始偏移 `shiftX/shiftY`，并在拖动过程中保持它不变。
+- `document.elementFromPoint(clientX, clientY)` 的方法，它会返回在给定的窗口相对坐标处的嵌套的最深的元素（如果给定的坐标在窗口外，则返回 null）
 
 ### 17 - 指针事件
 
-- 指针事件具备和鼠标事件完全相同的属性，包括 `clientX/Y` 和 `target` 等。
+- 指针事件具备和鼠标事件完全相同的属性。
 
 | 属性 | 描述 |
 | --- | --- |
-| pointerId | 触发当前事件的指针唯一标识符 |
-| pointerType | 指针的设备类型 |
-| isPrimary | 当指针为首要指针（多点触控时按下的第一根手指）时为 true |
-| width | 指针（例如手指）接触设备的区域的宽度，对于不支持的设备（如鼠标），这个值总是 1 |
-| height | 指针（例如手指）接触设备的区域的长度，对于不支持的设备，这个值总是 1 |
-| pressure | 触摸压力，是一个介于 0 到 1 之间的浮点数，对于不支持压力检测的设备，这个值总是 0.5（按下时）或 0 |
-| tangentialPressure | 归一化后的切向压力 |
-| tiltX, tiltY, twist | 针对触摸笔的几个属性，用于描述笔和屏幕表面的相对位置 |
+| .target | 目标元素 |
+| .pointerId | 触发当前事件的指针唯一标识符 |
+| .pointerType | 指针的设备类型 |
+| .isPrimary | 当指针为首要指针（多点触控时按下的第一根手指）时为 true |
+| .width | 指针（例如手指）接触设备的区域的宽度，对于不支持的设备如鼠标，这个值总是 1 |
+| .height | 指针（例如手指）接触设备的区域的长度，对于不支持的设备，这个值总是 1 |
+| .pressure | 触摸压力，是一个介于 0 到 1 之间的浮点数，对于不支持压力检测的设备，这个值总是 0.5 或 0 |
+| .tangentialPressure | 归一化后的切向压力 |
+| .clientX/Y | 指针在窗口中的位置 |
+| .tiltX/Y, twist | 针对触摸笔的几个属性，用于描述笔和屏幕表面的相对位置 |
 
-- 大多数设备都不支持这些属性，因此它们很少被使用。
-- `pointercancel` 事件将会在一个正处于活跃状态的指针交互由于某些原因被中断时触发。也就是在这个事件之后，该指针就不会继续触发更多事件了。
-- `elem.setPointerCapture(pointerId)` 将给定的 `pointerId` 绑定到 `elem`。在调用之后，所有具有相同 `pointerId` 的指针事件都将 `elem` 作为目标（就像事件发生在 `elem` 上一样），无论这些 `elem` 在文档中的实际位置是什么，当 `elem.releasePointerCapture(pointerId)` 被调用，绑定会被移除，当 `pointerup` 或 `pointercancel` 事件出现时，绑定会被自动地移除。指针捕获可以被用于简化拖放类的交互。
-- `gotpointercapture` 会在一个元素使用 `setPointerCapture` 来启用捕获后触发。
-- `lostpointercapture` 会在捕获被释放后触发：其触发可能是由于 `releasePointerCapture` 的显式调用，或是 `pointerup/pointercancel` 事件触发后的自动调用。
+- `pointercancel` 事件将会在一个正处于活跃状态的指针交互由于某些原因被中断时触发，也就是在这个事件之后，该指针就不会继续触发更多事件了。
+- `Element.setPointerCapture(pointerId)` 将给定的 pointerId 绑定到 Element，在调用之后，所有具有相同 pointerId 的指针事件都将 Element 作为目标（就像事件发生在 Element 上一样），无论这些 Element 在文档中的实际位置是什么，当 `Element.releasePointerCapture(pointerId)` 被调用，绑定会被移除，当 `pointerup` 或 `pointercancel` 事件出现时，绑定会被自动地移除。指针捕获可以被用于简化拖放类的交互。
+- `gotpointercapture` 事件会在一个元素使用 `Element.setPointerCapture(pointerId)` 来启用捕获后触发。
+- `lostpointercapture` 会在捕获被释放后触发，其触发可能是由于 `Element.releasePointerCapture(pointerId)` 的显式调用，或是 `pointerup/pointercancel` 事件触发后的自动调用。
 
 ### 18 - 键盘事件
 
 - 当一个按键被按下时，会触发 `keydown` 事件，而当按键被释放时，会触发 `keyup` 事件。
-- `event.code` 和 `event.key`，事件对象的 `key` 属性允许获取字符，而事件对象的 `code` 属性则允许获取“物理按键代码”。
+- `event.code` 和 `event.key` 属性允许获取物理按键代码和字符。
 
 ```javascript
 document.addEventListener('keydown', function(event) {
+  console.log(event.code)
+  console.log(event.key)
+
   if (event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)) {
     alert('Undo!')
   }
-});
+})
 ```
 
-- 对于由自动重复触发的事件，`event` 对象的 `event.repeat` 属性被设置为 `true`
-- 跟踪 `oninput` 事件：在任何修改后都会触发此事件。这样就可以检查新的 `input.value`，并在其无效时修改它/高亮显示 `<input>`
+- 对于由自动重复触发的事件，event 对象的 `event.repeat` 属性被设置为 true
+- 跟踪 `oninput` 事件，即在任何修改后都会触发此事件，这样就可以检查新的 `input.value`，并在其无效时修改它/高亮显示 `<input>`
 
 ### 19 - 滚动事件
 
 ```javascript
 // 显示当前滚动
 window.addEventListener('scroll', function() {
-  document.getElementById('showScroll').innerHTML = window.pageYOffset + 'px';
-});
+  document.getElementById('showScroll').innerHTML = window.pageYOffset + 'px'
+})
 ```
 
 - 不能通过在 `onscroll` 监听器中使用 `event.preventDefault()` 来阻止滚动，因为它会在滚动发生之后才触发，但是可以在导致滚动的事件上，例如在 `pageUp` 和 `pageDown` 的 `keydown` 事件上，使用 `event.preventDefault()` 来阻止滚动。
 
-### 20 - 表单属性与方法
+### 20 - 聚焦与其他事件
 
-- 文档中的表单是特殊集合 `document.forms` 的成员，这就是所谓的“命名的集合”：既是被命名了的，也是有序的。既可以使用名字，也可以使用在文档中的编号来获取表单：
+**聚焦**
+
+- 当元素聚焦时，会触发 `focus` 事件，当元素失去焦点时，会触发 `blur` 事件。
+- `focus` 和 `blur` 事件不会向上冒泡，但会在捕获阶段向下传播。
+- `Element.focus()` 和 `Element.blur()` 方法可以设置和移除元素上的焦点。
+- 可以通过 `document.activeElement` 来获取当前所聚焦的元素。
+- 使用 `focusin` 和 `focusout` 事件与 `focus/blur` 事件完全一样，只是它们会冒泡，必须使用 `Element.addEventListener()` 来分配它们，而不是 `on<event>`
+- 任何具有 `tabindex` 特性的元素，都会变成可聚焦的。该特性的 `value` 是当使用 Tab（或类似的东西）在元素之间进行切换时，元素存在顺序号，也就是说，如果有两个元素，第一个具有 `tabindex="1"`，第二个具有 `tabindex="2"`，然后当焦点在第一个元素的时候，按下 Tab 键，会使焦点移动到第二个元素身上，`tabindex="0"` 会使该元素被与那些不具有 `tabindex` 的元素放在一起，`tabindex="-1"` 只允许以编程的方式聚焦于元素。
+
+**更新**
+
+- 当元素更改完成时，将触发 `change` 事件，对于文本输入框，当其失去焦点时，就会触发 `change` 事件，单选和复选，会在选项更改后立即触发 `change` 事件。
+
+**输入**
+
+- 现代 HTML 允许使用 `input` 特性进行许多验证，例如 `required`、`pattern` 等。
+- 每当用户对输入值进行修改后，就会触发 `input` 事件，与键盘事件不同，只要值改变了，`input` 事件就会触发，即使那些不涉及键盘行为的值的更改也是如此，例如，使用鼠标粘贴，或者使用语音识别来输入文本。另一方面，`input` 事件不会在那些不涉及值更改的键盘输入或其他行为上触发，例如，在输入时按方向键 `⇦ ⇨` 无法阻止 `oninput` 中的任何事件，无法使用 `event.preventDefault()`，已经太迟了，不会起任何作用了。
+
+**CV**
+
+- `cut/copy/paste` 这些事件发生于剪切/拷贝/粘贴一个值的时候，它们属于 ClipboardEvent 类，并提供了对剪切/拷贝/粘贴的数据的访问方法，也可以使用 `event.preventDefault()` 来中止行为，然后什么都不会被复制/粘贴。`event.clipboardData` 属性可以用于访问剪贴板。
+
+**提交**
+
+- 提交表单时，会触发 `submit` 事件，它通常用于在将表单发送到服务器之前对表单进行校验或者中止提交，并使用 JS 来处理表单。`form.submit()` 方法允许从 JS 启动表单发送，可以使用此方法动态地创建表单，并将其发送到服务器。
+- 提交表单主要有两种方式，一种是点击 `<input type="submit">` 或 `<input type="image">`，另一种是在 `input` 字段中按下 Enter 键。
+- 在输入框中使用 Enter 发送表单时，会在 `<input type="submit">` 上触发一次 `click` 事件。如果要手动将表单提交到服务器，可以调用 `form.submit()`，这样就不会产生 `submit` 事件。
 
 ```javascript
-document.forms.my;  // name="my" 的表单
-document.forms[0];  // 文档中的第一个表单
+let form = document.createElement('form')
+form.action = 'https://baidu.com/'
+form.method = 'GET'
+form.innerHTML = '<input name="s" value="百度一下">'
+
+// 该表单必须在文档中才能提交
+document.body.append(form)
+
+form.submit()
 ```
 
-- 当有了一个表单时，其中的任何元素都可以通过命名的集合 `form.elements` 来获取到：
+### 21 - 表单属性与方法
+
+- 文档中的表单是特殊集合 `document.forms` 的成员，该集合为命名的集合：既是被命名了的，也是有序的，既可以使用名字，也可以使用在文档中的编号来获取表单。
 
 ```javascript
+document.forms.my  // name="my" 的表单
+document.forms[0]  // 文档中的第一个表单
+```
+
+- 表单中，任何元素都可以通过命名的集合 `form.elements.xxx` 来获取到。
+
+```html
 <form name="my">
   <input name="one" value="1">
   <input name="two" value="2">
 </form>
 
 <script>
-  // 获取表单
-  let form = document.forms.my; // <form name="my"> 元素
-
-  // 获取表单中的元素
-  let elem = form.elements.one; // <input name="one"> 元素
-
-  alert(elem.value); // 1
+  let form = document.forms.my
+  let elem = form.elements.one
+  alert(elem.value)
 </script>
 ```
 
-- 可能会有多个名字相同的元素，这种情况经常在处理单选按钮中出现，在这种情况下，`form.elements[name]` 将会是一个集合。
-- 一个表单内会有一个或多个 `<fieldset>` 元素。它们也具有 `elements` 属性。
-- 可以通过 `form[index/name]` 来访问元素，可以将 `form.elements.login` 写成 `form.login`，这也有效，但是会有一个小问题：如果访问一个元素，然后修改它的 `name`，之后它仍然可以被通过旧的 `name` 访问到（当然也能通过新的 `name` 访问）。
-- 对于任何元素，其对应的表单都可以通过 `element.form` 访问到，因此，表单引用了所有元素，元素也引用了表单。
-- 可以通过 `input.value`（字符串）或 `input.checked`（布尔值）来访问复选框（`checkbox`）和单选按钮（`radio button`）中的 `value`
-- 一个 `<select>` 元素有 3 个重要的属性：
+- 可能会有多个名字相同的元素，这种情况经常在处理单选按钮中出现，此时 `form.elements[name]` 将会是一个集合。
+- 一个表单内会有一个或多个 `<fieldset>` 元素，它们也具有 `elements` 属性。
+- 可以通过 `form[index/name]` 来访问元素，可以将 `form.elements.login` 写成 `form.login`，但是会有一个小问题：如果访问一个元素，然后修改它的 `name`，之后它仍然可以被通过旧的 `name` 访问到（当然也能通过新的 `name` 访问）。
+- 对于任何元素，其对应的表单都可以通过 `Element.form` 访问到，即表单引用了所有元素，元素也引用了表单。
+- 可以通过 `input.value`（字符串）或 `input.checked`（布尔值）来访问复选框 checkbox 和单选按钮 radio button 中的 `value`
+- `<select>` 元素有 3 个重要的属性：
 
 | 属性 | 描述 |
 | --- | --- |
-| select.options |  当前所选择的子元素的集合 |
-| select.value | 当前所选择的 value |
-| select.selectedIndex | 当前所选择的编号 |
+| .options | 当前所选择的子元素的集合 |
+| .value | 当前所选择的 value |
+| .selectedIndex | 当前所选择的编号 |
 
-```javascript
+```html
 <select id="select">
   <option value="apple">Apple</option>
   <option value="pear">Pear</option>
@@ -2953,17 +2995,16 @@ document.forms[0];  // 文档中的第一个表单
 </select>
 
 <script>
-  // 下面这三行做的都是同一件事
-  select.options[2].selected = true;
-  select.selectedIndex = 2;
-  select.value = 'banana';
-  // 请注意：选项编号是从零开始的，所以编号 2 表示的是第三项
+  // 下面三行做的都是同一件事
+  select.options[2].selected = true
+  select.selectedIndex = 2
+  select.value = 'banana'
 </script>
 ```
 
-- 对于多选的值，使用第一种设置值的方式：在 `<option>` 子元素中添加/移除 `selected` 属性。
+- 对于多选的值，在 `<option>` 子元素中添加/移除 `selected` 属性。
 
-```javascript
+```html
 <select id="select" multiple>
   <option value="blues" selected>Blues</option>
   <option value="rock" selected>Rock</option>
@@ -2971,154 +3012,116 @@ document.forms[0];  // 文档中的第一个表单
 </select>
 
 <script>
-  // 从 multi-select 中获取所有选定的 `value`
+  // 从 multi-select 中获取所有选定的 value
   let selected = Array.from(select.options)
     .filter(option => option.selected)
-    .map(option => option.value);
+    .map(option => option.value)
 
-  alert(selected); // blues,rock
+  alert(selected)
 </script>
 ```
 
 ```javascript
 // 创建 option 元素
-option = new Option(text, value, defaultSelected, selected);
+let option = new Option(text, value, defaultSelected, selected)
 ```
 
 | 参数 | 描述 |
 | --- | --- |
-| text |  当前所选择的中的文本 |
-| value |  当前所选择的 value |
-| defaultSelected | 如果为 true，那么 selected HTML-特性（attribute）就会被创建 |
-| selected | 如果为 true，那么这个  就会被选中 |
+| text | 当前所选中的文本 |
+| value | 当前所选择的 value |
+| defaultSelected | 如果为 true 那么 selected 特性会被创建 |
+| selected | 如果为 true 那么这个就会被选中 |
 
-- `defaultSelected` 和 `selected` 的区别是：`defaultSelected` 设置的是 HTML-特性（attribute），可以使用 `option.getAttribute('selected')` 来获得，而 `selected` 设置的是，选项是否被选中。
-
-### 21 - 聚焦
-
-- 当元素聚焦时，会触发 `focus` 事件，当元素失去焦点时，会触发 `blur` 事件。
-- 现代 HTML 允许使用 `input` 特性进行许多验证：`required`，`pattern` 等。
-- `elem.focus()` 和 `elem.blur()` 方法可以设置和移除元素上的焦点。
-- 任何具有 `tabindex` 特性的元素，都会变成可聚焦的。该特性的 `value` 是当使用 Tab（或类似的东西）在元素之间进行切换时，元素的顺序号，也就是说：如果有两个元素，第一个具有 `tabindex="1"`，第二个具有 `tabindex="2"`，然后当焦点在第一个元素的时候，按下 Tab 键，会使焦点移动到第二个元素身上。`tabindex="0"` 会使该元素被与那些不具有 `tabindex` 的元素放在一起，`tabindex="-1"` 只允许以编程的方式聚焦于元素。
-- `focus` 和 `blur` 事件不会向上冒泡。
-- `focus/blur` 不会向上冒泡，但会在捕获阶段向下传播。
-- 使用 `focusin` 和 `focusout` 事件：与 `focus/blur` 事件完全一样，只是它们会冒泡，必须使用 `elem.addEventListener` 来分配它们，而不是 `on<event>`
-- 可以通过 `document.activeElement` 来获取当前所聚焦的元素。
-- 当元素更改完成时，将触发 `change` 事件，对于文本输入框，当其失去焦点时，就会触发 `change` 事件，`select，input type=checkbox/radio`，会在选项更改后立即触发 `change` 事件。
-- 每当用户对输入值进行修改后，就会触发 `input` 事件，与键盘事件不同，只要值改变了，`input` 事件就会触发，即使那些不涉及键盘行为的值的更改也是如此：使用鼠标粘贴，或者使用语音识别来输入文本。另一方面，`input` 事件不会在那些不涉及值更改的键盘输入或其他行为上触发，例如在输入时按方向键 `⇦ ⇨`、无法阻止 `oninput` 中的任何事件，无法使用 `event.preventDefault()`，已经太迟了，不会起任何作用了。
-- `cut，copy，paste`，这些事件发生于剪切/拷贝/粘贴一个值的时候，它们属于 `ClipboardEvent` 类，并提供了对剪切/拷贝/粘贴的数据的访问方法，也可以使用 `event.preventDefault()` 来中止行为，然后什么都不会被复制/粘贴。`event.clipboardData` 属性可以用于访问剪贴板。
-- 提交表单时，会触发 `submit` 事件，它通常用于在将表单发送到服务器之前对表单进行校验，或者中止提交，并使用 JavaScript 来处理表单。`form.submit()` 方法允许从 JavaScript 启动表单发送。可以使用此方法动态地创建表单，并将其发送到服务器。
-- 提交表单主要有两种方式：第一种，点击 `<input type="submit">` 或 `<input type="image">`；第二种，在 `input` 字段中按下 `Enter` 键。
-- 在输入框中使用 `Enter` 发送表单时，会在 `<input type="submit">` 上触发一次 `click` 事件。
-- 如果要手动将表单提交到服务器，可以调用 `form.submit()`，这样就不会产生 `submit` 事件。
-
-```javascript
-let form = document.createElement('form');
-form.action = 'https://google.com/search';
-form.method = 'GET';
-form.innerHTML = '<input name="q" value="test">';
-
-// 该表单必须在文档中才能提交
-document.body.append(form);
-
-form.submit();
-```
+- `defaultSelected` 和 `selected` 的区别是 `defaultSelected` 设置的是 HTML 特性，可以使用 `option.getAttribute('selected')` 来获得，而 `selected` 设置的是选项是否被选中。
 
 ### 22 - 页面生命周期
 
 - HTML 页面的生命周期包含三个重要事件：
-	- `DOMContentLoaded`：浏览器已完全加载 HTML，并构建了 DOM 树，但像 `<img>` 和样式表之类外部资源可能未加载完成。
-	- `load`：浏览器不仅加载完成了 HTML，还加载完成了所有外部资源：图片，样式等。
-	- `beforeunload/unload`：当用户正在离开页面时。
-- `DOMContentLoaded` 事件：DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。`load` 事件：外部资源已加载完成，样式已被应用，图片大小也已知了。`beforeunload` 事件：用户正在离开，可以检查用户是否保存了更改，并询问他是否真的要离开。`unload` 事件：用户几乎已经离开了，但是仍然可以启动一些操作，例如发送统计数据。
-- `DOMContentLoaded` 事件发生在 `document` 对象上，必须使用 `addEventListener` 来捕获它。
-- 当整个页面，包括样式、图片和其他资源被加载完成时，会触发 `window` 对象上的 `load` 事件。可以通过 `onload` 属性获取此事件。
-- 当访问者离开页面时，`window` 对象上的 `unload` 事件就会被触发，可以在那里做一些不涉及延迟的操作，例如关闭相关的弹出窗口。
+<br />（1）DOMContentLoaded：浏览器已完全加载 HTML 并构建了 DOM 树，但像 `<img>` 和样式表之类外部资源可能未加载完成。
+<br />（2）load：浏览器不仅加载完成了 HTML 还加载完成了所有外部资源，图片、样式等。
+<br />（3）beforeunload/unload：当用户正要离开和已经离开页面时。
+- `DOMContentLoaded` 事件：DOM 已经就绪，因此处理程序可以查找 DOM 节点，并初始化接口。事件发生在 `document` 对象上，必须使用 `addEventListener` 来捕获它。
+- `load` 事件：外部资源已加载完成，样式已被应用，图片大小也已知了。`window` 对象上的 `load` 事件，可以通过 `onload` 属性获取此事件。
+- `beforeunload` 事件：用户正在离开，可以检查用户是否保存了更改，并询问他是否真的要离开。如果访问者触发了离开页面的导航或试图关闭窗口处理程序将要求进行更多确认。`event.preventDefault()` 在 `beforeunload` 处理程序中不起作用。
+- `unload` 事件：用户几乎已经离开了，但是仍然可以启动一些操作。`window` 对象上的 `unload` 事件就会被触发，可以在那里做一些不涉及延迟的操作，例如关闭相关的弹出窗口、发送统计数据。
 
 ```javascript
 // 它在后台发送数据，转换到另外一个页面不会有延迟：浏览器离开页面，但仍然在执行 sendBeacon
-let analyticsData = { /* 带有收集数据的对象 */ };
+let analyticsData = { /* 带有收集数据的对象 */ }
 
 window.addEventListener("unload", function() {
-  // navigator.sendBeacon() 方法可用于通过 HTTP POST 将少量数据 异步 传输到 Web 服务器
-  navigator.sendBeacon("/analytics", JSON.stringify(analyticsData));
-});
+  // navigator.sendBeacon() 方法可用于通过 HTTP POST 将少量数据异步传输到 Web 服务器
+  navigator.sendBeacon("/analytics", JSON.stringify(analyticsData))
+})
 ```
 
-- 如果访问者触发了离开页面的导航或试图关闭窗口，`beforeunload` 处理程序将要求进行更多确认。
-- `event.preventDefault()` 在 `beforeunload` 处理程序中不起作用。
-- `document.readyState` 属性可以提供当前加载状态的信息：
+- `document.readyState` 属性可以提供当前加载状态的信息。
+- `readystatechange` 事件，会在状态发生改变时触发。
 
 | 状态 | 描述 |
 | --- | --- |
 | loading | 文档正在被加载 |
 | interactive | 文档被全部读取 |
-| complete | 文档被全部读取，并且所有资源（例如图片等）都已加载完成 |
+| complete | 文档被全部读取，并且所有资源都已加载完成 |
 
 ```javascript
 function work() { /*...*/ }
 
 if (document.readyState == 'loading') {
   // 仍在加载，等待事件
-  document.addEventListener('DOMContentLoaded', work);
+  document.addEventListener('DOMContentLoaded', work)
 } else {
-  // DOM 已就绪！
-  work();
+  // DOM 已就绪
+  work()
 }
 ```
 
-- `readystatechange` 事件，会在状态发生改变时触发。
-
 ### 23 - 脚本
 
-- 当浏览器加载 HTML 时遇到 `<script>...</script>` 标签，浏览器就不能继续构建 DOM，它必须立刻执行此脚本。对于外部脚本 `<script src="..."></script>` 也是一样的：浏览器必须等脚本下载完，并执行结束，之后才能继续处理剩余的页面。导致的问题：脚本不能访问到位于它们下面的 DOM 元素，因此，脚本无法给它们添加处理程序等。如果页面顶部有一个笨重的脚本，它会“阻塞页面”。在该脚本下载并执行结束前，用户都不能看到页面内容。
-- 可以把脚本放在页面底部。此时，它可以访问到它上面的元素，并且不会阻塞页面显示内容。
-- `<script>` 特性：`defer` 特性告诉浏览器不要等待脚本，浏览器将继续处理 HTML，构建 DOM。脚本会“在后台”下载，然后等 DOM 构建完成后，脚本才会执行。不会阻塞页面，脚本总是要等到 DOM 解析完毕，但在 `DOMContentLoaded` 事件之前执行。具有 `defer` 特性的脚本保持其相对顺序，就像常规脚本一样。
-- `defer` 特性仅适用于外部脚本。
-- `async` 特性意味着脚本是完全独立的：浏览器不会因 `async` 脚本而阻塞（与 `defer` 类似），其他脚本不会等待 `async` 脚本加载完成，同样，`async` 脚本也不会等待其他脚本。`DOMContentLoaded` 和异步脚本不会彼此等待：`DOMContentLoaded` 可能会发生在异步脚本之前（如果异步脚本在页面完成后才加载完成），`DOMContentLoaded` 也可能发生在异步脚本之后（如果异步脚本很短，或者是从 HTTP 缓存中加载的）。
-- `async` 脚本会在后台加载，并在加载就绪时运行，DOM 和其他脚本不会等待它们，它们也不会等待其它的东西。
-- `async` 特性仅适用于外部脚本。
-- 可以使用 JavaScript 动态地创建一个脚本，并将其附加到文档中。默认情况下，动态脚本的行为是“异步”的，如果显式地设置了 `script.async=false`，则可以改变这个规则
-- 在实际开发中，`defer` 用于需要整个 DOM 的脚本，和/或脚本的相对执行顺序很重要的时候。`async` 用于独立脚本，例如计数器或广告，这些脚本的相对执行顺序无关紧要。
+- 当浏览器加载 HTML 时遇到 `<script></script>` 标签，浏览器就不能继续构建 DOM，它必须立刻执行此脚本，对于外部脚本 `<script src="..."></script>` 也是一样的，浏览器必须等脚本下载完，并执行结束，之后才能继续处理剩余的页面。这将导致脚本不能访问到位于它们下面的 DOM 元素，无法给它们添加处理程序等。如果页面顶部有一个笨重的脚本，它会阻塞页面，在该脚本下载并执行结束前，用户都不能看到页面内容。
+- 可以把脚本放在页面底部，它可以访问到它上面的元素，并且不会阻塞页面显示内容。
+- `<script>` 的特性：
+  - `defer` 特性告诉浏览器不要等待脚本，浏览器将继续处理 HTML，构建 DOM，脚本会在后台下载，等 DOM 构建完成后，脚本才会执行。不会阻塞页面，脚本总是要等到 DOM 解析完毕，但在 `DOMContentLoaded` 事件之前执行。脚本保持其相对顺序，就像常规脚本一样，特性仅适用于外部脚本。
+  - `async` 特性意味着脚本是完全独立的，浏览器不会因脚本而阻塞（与 `defer` 类似），其他脚本不会等待 `async` 脚本加载完成，同样 `async` 脚本也不会等待其他脚本。`DOMContentLoaded` 事件和异步脚本不会彼此等待，`DOMContentLoaded` 事件可能会发生在异步脚本之前（如果异步脚本在页面完成后才加载完成），`DOMContentLoaded` 事件也可能发生在异步脚本之后（如果异步脚本很短，或者是从 HTTP 缓存中加载的）。脚本会在后台加载，并在加载就绪时运行，DOM 和其他脚本不会等待它们，它们也不会等待其它的东西，特性仅适用于外部脚本。
+- 可以使用 JS 动态地创建一个脚本，并将其附加到文档中。默认情况下，动态脚本的行为是异步的，如果显式地设置了 `script.async = false`，则可以改变这个规则
+- 在实际开发中，`defer` 用于需要整个 DOM 的脚本，适用于脚本的相对执行顺序很重要的时候。`async` 用于独立脚本，例如计数器或广告，这些脚本的相对执行顺序无关紧要。
 
 ### 24 - 资源加载
 
-- 浏览器允许跟踪外部资源的加载：脚本，`iframe`，图片等。`onload`：成功加载，`onerror` ：出现 `error`
-- `script.onload`，它会在脚本加载并执行完成时触发：
+- 浏览器允许跟踪外部资源的加载，脚本、图片、`iframe`等。`onload` 成功加载，`onerror` 出现 `error`
+- `script.onload` 它会在脚本加载并执行完成时触发：
 
 ```javascript
-let script = document.createElement('script');
-
-// 可以从任意域（domain），加载任意脚本
+let script = document.createElement('script')
 script.src = "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"
-document.head.append(script);
+document.head.append(script)
 
 script.onload = function() {
-  // 该脚本创建了一个变量 "_"
-  alert( _.VERSION ); // 显示库的版本
-};
+  // 显示库的版本
+  alert( _.VERSION )
+}
 ```
 
-- `script.onerror`，发生在脚本加载期间的 `error` 会被 `error` 事件跟踪到：
+- `script.onerror` 发生在脚本加载期间的 error 会被 error 事件跟踪到：
 
 ```javascript
-let script = document.createElement('script');
-script.src = "https://example.com/404.js"; // 没有这个脚本
-document.head.append(script);
+let script = document.createElement('script')
+script.src = "https://example.com/404.js"
+document.head.append(script)
 
 script.onerror = function() {
-  alert("Error loading " + this.src); // Error loading https://example.com/404.js
-};
+  alert("Error loading " + this.src)
+}
 ```
 
-- `onload/onerror` 事件仅跟踪加载本身。
-- `load` 和 `error` 事件也适用于其他资源，基本上适用于具有外部 `src` 的任何资源。
-- 大多数资源在被添加到文档中后，便开始加载吗。但是 `<img>` 是个例外，它要等到获得 `src (*)` 后才开始加载。对于 `<iframe>` 来说，`iframe` 加载完成时会触发 `iframe.onload` 事件，无论是成功加载还是出现 `error`
-- 要允许跨源访问，`<script>` 标签需要具有 `crossorigin` 特性，并且远程服务器必须提供特殊的 `header`
+- `onload`、`onerror` 事件仅跟踪加载本身。基本上适用于具有外部 `src` 的任何资源。
+- 大多数资源在被添加到文档中后，便开始加载，但是 `<img>` 是个例外，它要等到获得 `src (*)` 后才开始加载，对于 `<iframe>` 加载完成时会触发 `iframe.onload` 事件，无论是成功加载还是出现 error
+- 要允许跨源访问 `<script>` 标签需要具有 crossorigin 特性，并且远程服务器必须提供特殊的 header
 - 三个级别的跨源访问：
-	- 无 `crossorigin` 特性： 禁止访问。
-	- `crossorigin="anonymous"`：如果服务器的响应带有包含 _ 或的源的 _`_header Access-Control-Allow-Origin_`_，则允许访问。浏览器不会将授权信息和 _`_cookie_`_ 发送到远程服务器。
-  - `crossorigin="use-credentials"`：如果服务器发送回带有的源的 `header Access-Control-Allow-Origin` 和 `Access-Control-Allow-Credentials: true`，则允许访问。浏览器会将授权信息和 `cookie` 发送到远程服务器。
+<br />（1）无 `crossorigin` 特性：禁止访问；
+<br />（2）`crossorigin = "anonymous"`：如果服务器发送回带有的源的 header `Access-Control-Allow-Origin` 则允许访问。浏览器不会将授权信息和 cookie 发送到远程服务器。
+<br />（3）`crossorigin= "use-credentials"`：如果服务器发送回带有的源的 header `Access-Control-Allow-Origin` 和 `Access-Control-Allow-Credentials: true` 则允许访问。浏览器会将授权信息和 cookie 发送到远程服务器。
 
 ### 25 - DOM变动观察器
 
