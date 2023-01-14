@@ -3089,7 +3089,7 @@ if (document.readyState == 'loading') {
 
 ### 24 - 资源加载
 
-- 浏览器允许跟踪外部资源的加载，脚本、图片、`iframe`等。`onload` 成功加载，`onerror` 出现 `error`
+- 浏览器允许跟踪外部资源的加载，脚本、图片、`iframe`等。`onload` 成功加载，`onerror` 出现 error
 - `script.onload` 它会在脚本加载并执行完成时触发：
 
 ```javascript
@@ -3123,196 +3123,246 @@ script.onerror = function() {
 <br />（2）`crossorigin = "anonymous"`：如果服务器发送回带有的源的 header `Access-Control-Allow-Origin` 则允许访问。浏览器不会将授权信息和 cookie 发送到远程服务器。
 <br />（3）`crossorigin= "use-credentials"`：如果服务器发送回带有的源的 header `Access-Control-Allow-Origin` 和 `Access-Control-Allow-Credentials: true` 则允许访问。浏览器会将授权信息和 cookie 发送到远程服务器。
 
-### 25 - DOM变动观察器
+### 25 - DOM 变动观察器
 
-- `MutationObserver` 是一个内建对象，它观察 DOM 元素，并在检测到更改时触发回调。
+- MutationObserver 是一个内建对象，它观察 DOM 元素，并在检测到更改时触发回调。
 
 ```javascript
-let observer = new MutationObserver(callback);
-observer.observe(node, config);
+let observer = new MutationObserver(callback)
+observer.observe(...)
 ```
 
-| 参数 | 描述 |
+```javascript
+// 选择需要观察变动的节点
+const target = document.getElementById('some-id')
+
+// 观察器的配置（需要观察什么变动）
+const config = { attributes: true, childList: true, subtree: true }
+
+// 当观察到变动时执行的回调函数
+const callback = function(mutationsList, observer) {
+    // Use traditional 'for loops' for IE 11
+    for(let mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+            console.log('A child node has been added or removed.')
+        }
+        else if (mutation.type === 'attributes') {
+            console.log('The ' + mutation.attributeName + ' attribute was modified.')
+        }
+    }
+}
+
+// 创建一个观察器实例并传入回调函数
+const observer = new MutationObserver(callback)
+
+// 以上述配置开始观察目标节点
+observer.observe(target, config)
+
+// 之后，可停止观察
+observer.disconnect()
+```
+
+| observe 参数 | 描述 |
 | --- | --- |
-| config | 一个具有布尔选项的对象，该布尔选项表示“将对哪些更改做出反应” |
-| childList | node 的直接子节点的更改 |
-| subtree | node 的所有后代的更改 |
-| attributes | node 的特性 |
-| attributeFilter | 特性名称数组，只观察选定的特性 |
-| characterData | 是否观察 `node.data`
-（文本内容） |
-| attributeOldValue | 如果为 true，则将特性的旧值和新值都传递给回调，否则只传新值（需要 attributes 选项） |
-| characterDataOldValue | 如果为 true，则将 `node.data`
- 的旧值和新值都传递给回调，否则只传新值（需要...） |
+| target | 被观察的节点 |
+| config | 布尔选项的对象，表示将对哪些更改做出反应，childList、attributes 和 characterData 中，必须有一个参数为 true |
+| -> subtree: true | 监听以 target 为根节点的整个子树 |
+| -> childList: true | 监听 target 节点中发生的节点的新增与删除 |
+| -> attributes: true | 观察所有监听的节点属性值的变化 |
+| -> attributeFilter | 一个用于声明哪些属性名会被监听的数组，如果不声明该属性，所有属性的变化都将触发通知 |
+| -> attributeOldValue: true | 记录上一次被监听的节点的属性变化 |
+| -> characterData: true | 监听声明的 target 节点上所有字符的变化 |
+| -> characterDataOldValue:true | 记录前一个被监听的节点中发生的文本变化 |
 
-- 在发生任何更改后，将执行“回调”：更改被作为一个 `MutationRecord` 对象列表，传入第一个参数。而观察器自身作为第二个。
+- 在发生任何更改后，将执行回调，更改被作为一个 MutationRecord 对象列表，传入第一个参数，而观察器自身作为第二个。
 
-| MutationRecord |  |
+| 属性 | 描述 |
 | --- | --- |
-| type | 变动类型 |
-| attributes | 特性被修改了 |
-| characterData | 数据被修改了，用于文本节点 |
-| childList | 添加/删除了子元素 |
-| target | 更改发生在何处 |
-| attributes | 所在的元素 |
-| characterData | 所在的文本节点 |
-| childList | 变动所在的元素 |
-| addedNodes/removedNodes | 添加/删除的节点 |
-| previousSibling/nextSibling | 添加/删除的节点的上一个/下一个兄弟节点 |
-| attributeName/attributeNamespace | 被更改的特性的名称/命名空间（用于 XML） |
-| oldValue | 之前的值，仅适用于特性或文本更改 |
+| .type | 变动类型 |
+| .target | 更改发生处 |
+| .addedNodes/removedNodes | 添加/删除的节点 |
+| .previousSibling/nextSibling | 添加/删除的节点的上一个/下一个兄弟节点 |
+| .attributeName/attributeNamespace | 被更改的特性的名称/命名空间（用于 XML） |
+| .oldValue | 之前的值，仅适用于特性或文本更改 |
 
-- 使用 `MutationObserver`，可以监测到不需要的元素何时出现在 DOM 中，并将其删除。
-- 可以使用 `MutationObserver` 来自动检测何时在页面中插入了代码段，并高亮显示它们。
+- 使用 MutationObserver，可以监测到不需要的元素何时出现在 DOM 中，并将其删除。
+- 可以使用 MutationObserver 来自动检测何时在页面中插入了代码段，并高亮显示它们。
 
 | 方法 | 描述 |
 | --- | --- |
-| observer.disconnect() | 停止观察 |
-| observer.takeRecords() | 获取尚未处理的变动记录列表，表中记录的是已经发生，但回调暂未处理的变动 |
-|  | observer.takeRecords() 返回的记录被从处理队列中移除 |
+| MutationObserver.observe() | 根据需求开始观察 |
+| MutationObserver.disconnect() | 观察者停止观察变动 |
+| MutationObserver.takeRecords() | 返回已检测到但尚未由观察者的回调函数处理的所有匹配 DOM 更改的列表，使变更队列保持为空 |
 
 ### 26 - 选择与范围
 
-- 在没有任何参数的情况下，创建一个 Range 对象：`let range = new Range();`
+- Range 对象表示一个包含节点与文本节点的一部分的文档片段 `let range = new Range()`
 
-| 方法 | 属性 |
+| 属性/方法 | 描述 |
 | --- | --- |
-| range.setStart(node, offset) | 边界起点 |
-| range.setEnd(node, offset) | 边界终点 |
-| setStartBefore(node) | 将起点设置在 node 前面 |
-| setStartAfter(node) | 将起点设置在 node 后面 |
-| setEndBefore(node) | 将终点设置为 node 前面 |
-| setEndAfter(node) | 将终点设置为 node 后面 |
-| selectNode(node) | 设置范围以选择整个 node |
-| selectNodeContents(node) | 设置范围以选择整个 node 的内容 |
-| collapse(toStart) | 如果 toStart=true 则设置 end=start，否则设置 start=end，从而折叠范围 |
-| cloneRange() | 创建一个具有相同起点/终点的新范围 |
-| deleteContents() | 从文档中删除范围中的内容 |
-| extractContents() | 从文档中删除范围中的内容，并将删除的内容作为 DocumentFragment 返回 |
-| cloneContents() | 复制范围中的内容，并将复制的内容作为 DocumentFragment 返回 |
-| insertNode(node) | 在范围的起始处将 node 插入文档 |
-| surroundContents(node) | 使用 node 将所选范围中的内容包裹起来，要使此操作有效，则该范围必须包含其中所有元素的开始和结束标签 |
+| .startContainer | 返回开始的节点 |
+| .endContainer | 返回终点的节点 |
+| .startOffset | 返回在 startContainer 中的起始位置的数字 |
+| .endOffset | 返回终点在 endContainer 中的终点位置的数字 |
+| .collapsed | 返回起始位置是否相同 |
+| .commonAncestorContainer | 返回包含 startContainer 和 endContainer 的最深一级的节点 |
+|  |  |
+| .setStart(node, offset) | 边界起点 |
+| .setEnd(node, offset) | 边界终点 |
+| .setStartBefore(node) | 将起点设置在 node 前面 |
+| .setStartAfter(node) | 将起点设置在 node 后面 |
+| .setEndBefore(node) | 将终点设置为 node 前面 |
+| .setEndAfter(node) | 将终点设置为 node 后面 |
+| .selectNode(node) | 设置范围以选择整个 node |
+| .selectNodeContents(node) | 设置范围以选择整个 node 的内容 |
+| .collapse(toStart) | 如果 toStart = true 则设置 end = start，从而折叠范围 |
+| .cloneRange() | 创建一个具有相同起点/终点的新范围 Range 对象 |
+| .deleteContents() | 从文档中删除范围中的内容 |
+| .extractContents() | 从文档中删除范围中的内容，并将删除的内容作为 DocumentFragment 返回 |
+| .cloneContents() | 复制范围中的内容，并将复制的内容作为 DocumentFragment 返回 |
+| .insertNode(node) | 在范围的起始处将 node 插入文档 |
+| .surroundContents(node) | 使用 node 将所选范围中的内容包裹起来，要使此操作有效，则该范围必须包含其中所有元素的开始和结束标签 |
 
-- 如果 `node` 是一个文本节点，那么 `offset` 则必须是其文本中的位置。如果 `node` 是一个元素节点，那么 `offset` 则必须是子元素的编号，不是必须在 `setStart` 和 `setEnd` 中使用相同的节点。一个范围可能会跨越很多不相关的节点，唯一要注意的是终点要在起点之后。
-- 文档选择是由 `Selection` 对象表示的，可通过 `window.getSelection()` 或 `document.getSelection()` 来获取。一个选择可以包括零个或多个范围。
+- 如果 node 是一个文本节点，那么 offset 则必须是其文本中的位置。如果 node 是一个元素节点，那么 offset 则必须是子元素的编号，不是必须在 `setStart` 和 `setEnd` 中使用相同的节点。一个范围可能会跨越很多不相关的节点，唯一要注意的是终点要在起点之后。
+- 文档选择是由 Selection 对象表示的，可通过 `window.getSelection()` 或 `document.getSelection()` 来获取，一个选择可以包括零个或多个范围。
 
-| 方法属性 | 描述 |
+| 属性/方法 | 描述 |
 | --- | --- |
-| getRangeAt(i) | 获取第 i 个范围，i 从 0 开始，在除 Firefox 之外的所有浏览器中，仅使用 0 |
-| anchorNode | 选择的起始节点 |
-| anchorOffset | 选择开始的 anchorNode 中的偏移量 |
-| focusNode | 选择的结束节点 |
-| focusOffset | 选择开始处 focusNode 的偏移量 |
-| isCollapsed | 如果未选择任何内容（空范围）或不存在，则为 true |
-| rangeCount | 选择中的范围数，除 Firefox 外，其他浏览器最多为 1 |
-| elem.onselectstart | 当在元素 elem 上（或在其内部）开始选择时 |
-| document.onselectionchange | 当选择发生变化或开始时 |
-| addRange(range) | 将 range 添加到选择中，如果选择已有关联的范围，则除 Firefox 外的所有浏览器都将忽略该调用 |
-| removeRange(range) | 从选择中删除 range |
-| removeAllRanges() | 删除所有范围 |
-| empty() | removeAllRanges 的别名 |
-| collapse(node, offset) | 用一个新的范围替换选定的范围，该新范围从给定的 node 处开始到偏移 offset 处结束 |
-| setPosition(node, offset) | collapse 的别名 |
-| collapseToStart() | 折叠（替换为空范围）到选择起点 |
-| collapseToEnd() | 折叠到选择终点 |
-| extend(node, offset) | 将选择的焦点（focus）移到给定的 node，位置偏移 offset |
-| setBaseAndExtent(anchorNode, anchorOffset, focusNode, focusOffset) | 用给定的起点 anchorNode/anchorOffset 和终点 focusNode/focusOffset 来替换选择范围，选中它们之间的所有内容 |
-| selectAllChildren(node) | 选择 node 的所有子节点 |
-| deleteFromDocument() | 从文档中删除所选择的内容 |
-| containsNode(node, allowPartialContainment = false) | 检查选择中是否包含 node（特别是如果第二个参数是 true 的话） |
+| .anchorNode | 返回该选区起点所在的节点 |
+| .focusNode | 返回该选区终点所在的节点 |
+| .anchorOffset | 返回一个数字，其表示的是选区起点在 anchorNode 中的位置偏移量 |
+| .focusOffset | 返回一个数字，其表示的是选区终点在 focusNode 中的位置偏移量 |
+| .isCollapsed | 返回一个布尔值，用于判断选区的起始点和终点是否在同一个位置 |
+| .rangeCount | 返回该选区所包含的连续范围的数量 |
+|  |  |
+| .getRangeAt(i) | 获取第 i 个范围，返回选区包含的指定区域的引用 |
+| .collapse(node, offset) | 用一个新的范围替换选定的范围，该新范围从给定的 node 处开始到偏移 offset 处结束 |
+| .setPosition(node, offset) | collapse 的别名 |
+| .extend(node, offset) | 将选择的焦点移到给定的 node 位置偏移 offset |
+| .modify() | 修改当前的选区 |
+| .collapseToStart() | 折叠（替换为空范围）到选择起点 |
+| .collapseToEnd() | 折叠到选择终点 |
+| .selectAllChildren(node) | 选择 node 的所有子节点 |
+| .addRange(range) | 将 range 添加到选择中，如果选择已有关联的范围将忽略该调用 |
+| .removeRange(range) | 从选择中删除 range |
+| .removeAllRanges() | 删除所有范围 |
+| .empty() | removeAllRanges 的别名 |
+| .deleteFromDocument() | 从文档中删除所选择的内容 |
+| .toString() | 返回当前选区存文本内容 |
+| .containsNode(node, allowPartialContainment = false) | 检查选择中是否包含 node（特别是如果第二个参数是 true 的话） |
+| .setBaseAndExtent(anchorNode, anchorOffset, focusNode, focusOffset) | 用给定的起点 anchorNode/anchorOffset 和终点 focusNode/focusOffset 来替换选择范围，选中它们之间的所有内容 |
+| Element.onselectstart | 当在元素 Element 上或在其内部开始选择时 |
+| Document.onselectionchange | 当选择发生变化或开始时 |
 
-- 诸如 `input` 和 `textarea` 等表单元素提供了专用的选择 API，没有 `Selection` 或 `Range` 对象：
+- 诸如 `input` 和 `textarea` 等表单元素提供了专用的选择 API，没有 Selection 或 Range 对象。
 
 | 方法 | 描述 |
 | --- | --- |
+| input.onselect | 当某个东西被选择时触发 |
 | input.selectionStart | 选择的起始位置（可写） |
 | input.selectionEnd | 选择的结束位置（可写） |
-| input.selectionDirection | 选择方向，其中之一：“forward”，“backward” 或 “none”（例如使用鼠标双击进行的选择） |
-| input.onselect | 当某个东西被选择时触发 |
+| input.selectionDirection | 选择方向 forward、backward、none（例如使用鼠标双击进行的选择） |
 | input.select() | 选择文本控件中的所有内容（可以是 textarea 而不是 input） |
 | input.setSelectionRange(start, end, [direction]) | 在给定方向上（可选），从 start 一直选择到 end |
 | input.setRangeText(replacement, [start], [end], [selectionMode]) | 用新文本替换范围中的文本 |
 
-### 27 - 弹窗与window方法
+### 27 - 弹窗与 window 方法
 
-- 弹窗（popup）是向用户显示其他文档的最古老的方法之一，`window.open(url, name, params)`：，它将打开一个具有给定 URL 的新窗口。
+- 弹窗（popup）是向用户显示其他文档的最古老的方法之一，`window.open(url, name, params)` 它将打开一个具有给定 URL 的新窗口。
 
 | 参数 | 描述 |
 | --- | --- |
 | url | 要在新窗口中加载的 URL |
 | name | 新窗口的名称 |
-| params | 新窗口的配置字符串，它包括设置用逗号分隔。参数之间不能有空格，例如：width=200,height=100 |
+| params | 新窗口的配置字符串，它包括设置用逗号分隔，参数之间不能有空格，例如：width=200,height=100 |
 
 - 默认情况下，浏览器会打开一个新标签页，但如果提供了窗口大小，那么浏览器将打开一个弹窗。
-- 弹窗是一个独立的窗口，具有自己的独立 JavaScript 环境。因此，使用弹窗打开一个不信任的第三方网站是安全的。
+- 弹窗是一个独立的窗口，具有自己的独立 JS 环境，因此，使用弹窗打开一个不信任的第三方网站是安全的。
 - 如果弹窗是在用户触发的事件处理程序（如 `onclick`）之外调用的，大多数浏览器都会阻止此类弹窗。
 
 ```javascript
-// 弹窗被阻止
-window.open('https://javascript.info');
-
-// 弹窗被允许
-button.onclick = () => {
-  window.open('https://javascript.info');
-};
+let params = `scrollbars=no,resizable=no,
+  status=no,location=no,
+  toolbar=no,menubar=no,
+  width=600,height=300,
+  left=100,top=100`
+open('/', 'test', params)
 ```
 
-```javascript
-let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-width=600,height=300,left=100,top=100`;
+- `open` 调用会返回对新窗口的引用，它可以用来操纵弹窗的属性，更改位置，甚至更多操作。
+- 只有在窗口是同源的时，窗口才能自由访问彼此的内容。
 
-open('/', 'test', params);
-```
-
-- `open` 调用会返回对新窗口的引用。它可以用来操纵弹窗的属性，更改位置，甚至更多操作。
-- 只有在窗口是同源的时，窗口才能自由访问彼此的内容（相同的协议`://domain:port`）。
-
-| 方法 | 描述 |
+| 弹窗方法 | 描述 |
 | --- | --- |
-| window.opener | 访问 opener 窗口，除了弹窗之外，对其他所有窗口来说，window.opener 均为 null |
-| win.close() | 关闭一个窗口 |
-| win.closed | 检查一个窗口是否被关闭 |
-| win.moveBy(x,y) | 将窗口相对于当前位置向右移动 x 像素，并向下移动 y 像素，允许负值（向上/向左移动） |
-| win.moveTo(x,y) | 将窗口移动到屏幕上的坐标 (x,y) 处 |
-| win.resizeBy(width,height) | 根据给定的相对于当前大小的 width/height 调整窗口大小，允许负值 |
-| win.resizeTo(width,height) | 将窗口调整为给定的大小 |
-| win.scrollBy(x,y) | 相对于当前位置，将窗口向右滚动 x 像素，并向下滚动 y 像素，允许负值 |
-| win.scrollTo(x,y) | 将窗口滚动到给定坐标 (x,y) |
-| elem.scrollIntoView(top = true) | 滚动窗口，使 elem 显示在 elem.scrollIntoView(false) 的顶部（默认）或底部 |
+| window.opener | 访问 opener 窗口，除了弹窗之外，对其他所有窗口来说均为 null |
+| window.close() | 关闭一个窗口 |
+| window.closed | 检查一个窗口是否被关闭 |
+| window.moveBy(x,y) | 将窗口相对于当前位置向右移动 x 像素，并向下移动 y 像素，允许负值（向上/向左移动） |
+| window.moveTo(x,y) | 将窗口移动到屏幕上的坐标 (x,y) 处 |
+| window.resizeBy(width, height) | 根据给定的相对于当前大小的 width/height 调整窗口大小，允许负值 |
+| window.resizeTo(width, height) | 将窗口调整为给定的大小 |
+| window.scrollBy(x,y) | 相对于当前位置，将窗口向右滚动 x 像素，并向下滚动 y 像素，允许负值 |
+| window.scrollTo(x,y) | 将窗口滚动到给定坐标 (x,y) |
+| Element.scrollIntoView(top = true) | 滚动窗口，使 elem 显示在 elem.scrollIntoView(false) 的顶部（默认）或底部 |
 
-- 如果 window 不是通过 `window.open()` 创建的，那么大多数浏览器都会忽略 `window.close()`。因此，`close()` 只对弹窗起作用。
+- 如果窗口不是通过 `window.open()` 创建的，那么大多数浏览器都会忽略 `window.close()`，因此 `close()` 只对弹窗起作用。
 
 ### 28 - 跨窗口通信
 
-- 如果两个 URL 具有相同的协议，域和端口，则称它们是“同源”的。
-- 一个 `<iframe>` 标签承载了一个单独的嵌入的窗口，它具有自己的 `document` 和 `window`。`iframe.contentWindow` 来获取 `<iframe>` 中的 `window`。`iframe.contentDocument` 来获取 `<iframe>` 中的 `document`，是 `iframe.contentWindow.document` 的简写形式。当访问嵌入的窗口中的东西时，浏览器会检查 `iframe` 是否具有相同的源，如果不是，则会拒绝访问（对 `location` 进行写入是一个例外，它是会被允许的）。
-- 如果窗口的二级域相同，可以使浏览器忽略该差异，使得它们可以被作为“同源”的来对待，以便进行跨窗口通信，每个这样的窗口都应该执行下面这行代码：`document.domain = 'xxxxx.com'`; `document.domain` 属性正在被从规范中删除。跨窗口通信是建议的替代方案。
-- 不应该对尚未加载完成的 `iframe` 的文档进行处理，因为那是错误的文档。
-- 获取 `<iframe>` 的 `window` 对象的另一个方式是从命名集合 `window.frames` 中获取。通过索引获取：`window.frames[0]`，文档中的第一个 `iframe` 的 `window` 对象。通过名称获取：`window.frames.iframeName` ，获取 `name="iframeName"` 的 `iframe` 的 `window` 对象。
-- 一个 `iframe` 内可能嵌套了其他的 `iframe`，相应的 `window` 对象会形成一个层次结构：`window.frames`，“子”窗口的集合（用于嵌套的 `iframe`）。`window.parent`：对“父”（外部）窗口的引用。`window.top`：对最顶级父窗口的引用。
-- `sandbox` 特性允许在 `<iframe>` 中禁止某些特定行为，以防止其执行不被信任的代码。它通过将 `iframe` 视为非同源的，或者应用其他限制来实现 `iframe` 的“沙盒化”，对于 `<iframe sandbox src="...">`，有一个应用于其上的默认的限制集。但是，可以通过提供一个以空格分隔的限制列表作为特性的值，来放宽这些限制，该列表中的各项为不应该应用于这个 `iframe` 的限制，例如：`<iframe sandbox="allow-forms allow-popups">`。一个空的 `sandbox` 特性会施加最严格的限制，但是用一个以空格分隔的列表，列出要移除的限制。
-- `allow-same-origin`，默认情况下，"`sandbox`" 会为 `iframe` 强制实施“不同来源”的策略。换句话说，它使浏览器将 `iframe` 视为来自另一个源，即使其 `src` 指向的是同一个网站也是如此。具有所有隐含的脚本限制。此选项会移除这些限制。`allow-top-navigation`，允许 `iframe` 更改 `parent.location`。`allow-forms`，允许在 `iframe` 中提交表单。`allow-scripts`，允许在 `iframe` 中运行脚本。`allow-popups`，允许在 `iframe` 中使用 `window.open` 打开弹窗。
-- `postMessage` 接口允许窗口之间相互通信，无论它们来自什么源。
-- 想要发送消息的窗口需要调用接收窗口的 `postMessage` 方法。换句话说，如果想把消息发送给 `win`，应该调用 `win.postMessage(data, targetOrigin)`，`data`：要发送的数据，可以是任何对象，数据会被通过使用“结构化序列化算法（structured serialization algorithm）”进行克隆。IE 浏览器只支持字符串，因此需要对复杂的对象调用 `JSON.stringify` 方法进行处理，以支持该浏览器。`targetOrigin`：指定目标窗口的源，以便只有来自给定的源的窗口才能获得该消息。
-- 为了接收消息，目标窗口应该在 `message` 事件上有一个处理程序。当 `postMessage` 被调用时触发该事件（并且 `targetOrigin` 检查成功）。`event` 对象具有特殊属性：`data`，从 `postMessage` 传递来的数据。`origin`，发送方的源，例如 `http://javascript.info`。`source`，对发送方窗口的引用。可以立即 `source.postMessage(...)` 回去。
+- 如果两个 URL 具有相同的协议、域和端口，则称它们是同源的。
+- 一个 `<iframe>` 标签承载了一个单独的嵌入的窗口，它具有自己的 `document` 和 `window`。当访问嵌入的窗口中的东西时，浏览器会检查是否具有相同的源，如果不是，则会拒绝访问（对 `location` 进行写入是一个例外，它是会被允许的）。
+- 如果窗口的二级域相同，可以使浏览器忽略该差异，使得它们可以被作为同源的来对待，以便进行跨窗口通信，每个这样的窗口都应该执行下面这行代码：`document.domain = 'xxxxx.com'` 该属性正在被从规范中删除，跨窗口通信是建议的替代方案。
+- 不应该对尚未加载完成的 `<iframe>` 的文档进行处理，因为那是错误的文档。
+- 一个 `<iframe>` 内可能嵌套了其他的 `<iframe>`，相应的 `window` 对象会形成一个层次结构。
+
+| 属性/方法 | 描述 |
+| --- | --- |
+| iframe.contentWindow | 获取 `<iframe>` 中的 window |
+| window.frames[0]/.name | 获取 `<iframe>` 中的 window 的另一种方式 |
+| iframe.contentDocument | 获取 `<iframe>` 中的 document |
+| window.frames | 子窗口的集合 |
+| window.parent | 对父（外部）窗口的引用 |
+| window.top | 对最顶级父窗口的引用 |
+
+- `sandbox` 特性允许在 `<iframe>` 中禁止某些特定行为，以防止其执行不被信任的代码。它通过将 `<iframe>` 视为非同源的，或者应用其他限制来实现 `<iframe>` 的沙盒化，对于 `<iframe sandbox src="...">` 有一个应用于其上的默认的限制集，但是可以通过提供一个以空格分隔的限制列表作为特性的值，来放宽这些限制，该列表中的各项为不应该应用于这个 `<iframe>` 的限制，例如：`<iframe sandbox="allow-forms allow-popups">`。一个空的 `sandbox` 特性会施加最严格的限制，但是用一个以空格分隔的列表，列出要移除的限制。
+
+| value | 描述 |
+| --- | --- |
+| allow-same-origin | 默认情况下 sandbox 会为 `<iframe>` 强制实施不同来源的策略，具有所有隐含的脚本限制，此选项会移除这些限制 |
+| allow-top-navigation | 允许 `<iframe>` 更改 parent.location |
+| allow-forms | 允许在 `<iframe>` 中提交表单 |
+| allow-scripts | 允许在 `<iframe>` 中运行脚本 |
+| allow-popups | 允许在 `<iframe>` 中使用 window.open 打开弹窗
+
+- `window.postMessage` 接口允许窗口之间相互通信，无论它们来自什么源。
+- 想要发送消息的窗口需要调用接收窗口的 `postMessage` 方法。例如，如果想把消息发送给 win，应该调用 `win.postMessage(data, targetOrigin)`，data 是要发送的数据，可以是任何对象，数据会被通过使用结构化序列化算法进行克隆，IE 浏览器只支持字符串，因此需要对复杂的对象调用 `JSON.stringify` 方法进行处理，以支持该浏览器，targetOrigin 是指定目标窗口的源，以便只有来自给定的源的窗口才能获得该消息。
+- 为了接收消息，目标窗口应该在 `message` 事件上有一个处理程序，当 `postMessage` 被调用时触发该事件（并且 `targetOrigin` 检查成功）。此时 `event` 对象具有几个特殊属性：data 是从 `postMessage` 传递来的数据，origin 是发送方的源，source 是对发送方窗口的引用。
 
 ```javascript
 window.addEventListener("message", function(event) {
-  if (event.origin != 'http://javascript.info') {
-    // 来自未知的源的内容，忽略它
-    return;
+  if (event.origin != 'http://xxx.com') {
+    // 来自未知的源的内容忽略它
+    return
   }
 
-  alert( "received: " + event.data );
+  alert( "received: " + event.data )
   // 可以使用 event.source.postMessage(...) 向回发送消息
-});
+})
 ```
 
 ### 29 - 点击劫持攻击
 
-- “点击劫持”攻击允许恶意页面以用户的名义点击“受害网站”。
-- 服务器端 `header X-Frame-Options` 可以允许或禁止在 `frame` 中显示页面，它必须被完全作为 `HTTP-header` 发送：如果浏览器在 HTML `<meta>` 标签中找到它，则会忽略它。因此，`<meta http-equiv="X-Frame-Options"...>` 没有任何作用。这个 `header` 可能包含 3 个值：`DENY`，始终禁止在 `frame` 中显示此页面。`SAMEORIGIN`，允许在和父文档同源的 `frame` 中显示此页面。`ALLOW-FROM domain`，允许在来自给定域的父文档的 `frame` 中显示此页面。`X-Frame-Options` 有一个副作用，其他的网站即使有充分的理由也无法在 `frame` 中显示页面。
-- `samesite cookie` 特性也可以阻止点击劫持攻击，`samesite` 特性的 `cookie` 仅在网站是通过直接方式打开（而不是通过 `frame` 或其他方式）的情况下才发送到网站。
+- 点击劫持攻击允许恶意页面以用户的名义点击受害网站，例如在用户操作界面放置伪装的 `<frame>` 提供恶意访问攻击。
+- 服务器端设置 header `X-Frame-Options` 可以允许或禁止在 `<frame>` 中显示页面，它必须被完全作为 HTTP-header 发送。如果浏览器在 HTML `<meta>` 标签中找到它，则会忽略它，因此 `<meta http-equiv="X-Frame-Options"...>` 没有任何作用。
+
+| header | 描述 |
+| --- | --- |
+| DENY | 始终禁止在 `<frame>` 中显示此页面 |
+| SAMEORIGIN | 允许在和父文档同源的 `<frame>` 中显示此页面 |
+| ALLOW-FROM domain | 允许在来自给定域的父文档的 `<frame>` 中显示此页面 |
+
+- `X-Frame-Options` 有一个副作用，其他的网站即使有充分的理由也无法在 `<frame>` 中显示页面。
+- samesite cookie 特性也可以阻止点击劫持攻击，`samesite` 特性的 cookie 仅在网站是通过直接方式打开（而不是通过 `<frame>` 或其他方式）的情况下才发送到网站。
 
 ### 30 - 二进制
 
