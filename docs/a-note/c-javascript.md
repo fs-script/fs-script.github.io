@@ -3366,230 +3366,291 @@ window.addEventListener("message", function(event) {
 
 ### 30 - 二进制
 
-- 基本的二进制对象是 `ArrayBuffer`：对固定长度的连续内存空间的引用。
+**ArrayBuffer 对象**
+
+- 基本的二进制对象是 ArrayBuffer 是对固定长度的连续内存空间的引用。
 
 ```javascript
-let buffer = new ArrayBuffer(16); // 创建一个长度为 16 的 buffer
-alert(buffer.byteLength); // 16
+// 创建一个长度为 16 的 buffer
 // 它会分配一个 16 字节的连续内存空间，并用 0 进行预填充
+let buffer = new ArrayBuffer(16)
+alert(buffer.byteLength)  // 16
 ```
 
-- 操作 `ArrayBuffer`，需要使用“视图”对象：
+**TypedArray 对象**
+
+- 操作 ArrayBuffer 需要使用视图对象。
 
 | 视图对象 | 描述 |
 | --- | --- |
-| Uint8Array、Uint16Array、Uint32Array | 用于 8 位、16 位和 32 位无符号整数 |
-| Uint8ClampedArray | 用于 8 位整数，在赋值时便“固定”其值 |
-| Int8Array、Int16Array、Int32Array | 用于有符号整数（可以为负数） |
-| Float32Array、Float64Array | 用于 32 位和 64 位的有符号浮点数 |
+| Uint8Array / Uint16Array / Uint32Array | 用于 8 位、16 位、32 位无符号整数 |
+| Int8Array / Int16Array / Int32Array | 用于有符号整数，可以为负数 |
+| Float32Array、Float64Array | 用于 32 位、 64 位的有符号浮点数 |
+| Uint8ClampedArray | 用于 8 位整数，在赋值时便固定其值 |
 
 ```javascript
-let buffer = new ArrayBuffer(16);  // 创建一个长度为 16 的 buffer
+// 创建一个长度为 16 的 buffer
+let buffer = new ArrayBuffer(16)
 
-let view = new Uint32Array(buffer);  // 将 buffer 视为一个 32 位整数的序列
+// 将 buffer 视为一个 32 位整数的序列 数组
+let view = new Uint32Array(buffer)
 
-alert(Uint32Array.BYTES_PER_ELEMENT);  // 每个整数 4 个字节
-alert(view.length); // 4，它存储了 4 个整数
-alert(view.byteLength); // 16，字节中的大小
+alert(Uint32Array.BYTES_PER_ELEMENT)  // 每个整数 4 个字节
+alert(view.length)  // 它存储了 4 个整数
+alert(view.byteLength)  // 16 字节中的大小
 
-// 让写入一个值
-view[0] = 123456;
+// 写入一个值
+view[0] = 123456
 
 // 遍历值
 for(let num of view) {
-  alert(num); // 123456，然后 0，0，0（一共 4 个值）
+  alert(num)  // 123456 0 0 0
 }
 ```
 
-- 所有这些视图（`Uint8Array`，`Uint32Array` 等）的通用术语是 TypedArray，它们共享同一方法和属性集。类型化数组的行为类似于常规数组：具有索引，并且是可迭代的。参数有 5 种变体：
+- 所有这些视图的通用术语是 TypedArray，它们共享同一方法和属性集，没有称为 TypedArray 的全局属性，也没有直接可用的 TypedArray 构造函数，但是有很多不同的全局属性，其值是指定元素类型的类型化数组构造函数，如上。类型化数组的行为类似于常规数组，具有索引并且是可迭代的。参数有 5 种变体：
 
 ```javascript
-new TypedArray(buffer, [byteOffset], [length]);
-new TypedArray(object);
-new TypedArray(typedArray);
-new TypedArray(length);
-new TypedArray();
+new TypedArray(buffer, [byteOffset], [length])
+new TypedArray(object)
+new TypedArray(typedArray)
+new TypedArray(length)
+new TypedArray()
 ```
 
-- `TypedArray` 具有常规的 `Array` 方法，可以遍历，`map`，`slice`，`find` 和 `reduce` 等，没有 `splice`，无法“删除”一个值，因为类型化数组是缓冲区（buffer）上的视图，并且缓冲区（buffer）是固定的、连续的内存区域。所能做的就是分配一个零值。无 `concat` 方法。
-- `arr.set(fromArr, [offset])` 从 `offset`（默认为 0）开始，将 `fromArr` 中的所有元素复制到 arr。`arr.subarray([begin, end])` 创建一个从 `begin` 到 `end`（不包括）相同类型的新视图，这类似于 `slice` 方法（同样也支持），但不复制任何内容，只是创建一个新视图，以对给定片段的数据进行操作。
-- `DataView` 是在 `ArrayBuffer` 上的一种特殊的超灵活“未类型化”视图。它允许以任何格式访问任何偏移量（offset）的数据，`new DataView(buffer, [byteOffset], [byteLength])`，`buffer` ，底层的 `ArrayBuffer`。与类型化数组不同，`DataView` 不会自行创建缓冲区（buffer），需要事先准备好。`byteOffset`，视图的起始字节位置（默认为 0）。`byteLength`，视图的字节长度（默认至 buffer 的末尾）。
+- TypedArray 具有常规的 Array 方法，可以遍历、`map`、`slice`、`find`、`reduce` 等，没有 `splice` 无法删除一个值，因为类型化数组是缓冲区（buffer）上的视图，并且缓冲区是固定的、连续的内存区域，所能做的就是分配一个零值，也无 `concat` 方法。
+
+| 方法 | 描述 |
+| --- | --- |
+| arr.set(fromArr, [offset]) | 从 offset（默认为 0）开始，将 fromArr 中的所有元素复制到 arr |
+| arr.subarray([begin, end]) | 创建一个从 begin 到 end（不包括）相同类型的新视图，这类似于 `slice` 方法，但不复制任何内容，只是创建一个新视图，以对给定片段的数据进行操作 |
+
+**DataView 对象**
+
+- DataView 是在 ArrayBuffer 上的一种特殊的超灵活未类型化视图，它允许以任何格式访问任何偏移量（offset）的数据。
+
+```javascript
+new DataView(buffer, [byteOffset], [byteLength])
+```
+
+| 参数 | 描述 |
+| --- | --- |
+| buffer | 底层的 ArrayBuffer， 与类型化数组不同 DataView 不会自行创建缓冲区（buffer），需要事先准备好 |
+| byteOffset | 视图的起始字节位置，默认为 0 |
+| byteLength | 视图的字节长度，默认至 buffer 的末尾 |
 
 ```javascript
 // 4 个字节的二进制数组，每个都是最大值 255
-let buffer = new Uint8Array([255, 255, 255, 255]).buffer;
+let buffer = new Uint8Array([255, 255, 255, 255]).buffer
 
-let dataView = new DataView(buffer);
+let dataView = new DataView(buffer)
 
 // 在偏移量为 0 处获取 8 位数字
-alert( dataView.getUint8(0) ); // 255
+alert(dataView.getUint8(0))  // 255
 
-// 现在在偏移量为 0 处获取 16 位数字，它由 2 个字节组成，一起解析为 65535
-alert( dataView.getUint16(0) ); // 65535（最大的 16 位无符号整数）
+// 在偏移量为 0 处获取 16 位数字，它由 2 个字节组成，一起解析为 65535
+alert(dataView.getUint16(0))  // 65535（最大的 16 位无符号整数）
 
 // 在偏移量为 0 处获取 32 位数字
-alert( dataView.getUint32(0) ); // 4294967295（最大的 32 位无符号整数）
+alert(dataView.getUint32(0))  // 4294967295（最大的 32 位无符号整数）
 
-dataView.setUint32(0, 0); // 将 4 个字节的数字设为 0，即将所有字节都设为 0
+// 将 4 个字节的数字设为 0，即将所有字节都设为 0
+dataView.setUint32(0, 0)
 ```
 
-- 内建的 `TextDecoder` 对象在给定缓冲区（buffer）和编码格式（encoding）的情况下，允许将值读取为实际的 JavaScript 字符串。
+**TextDecoder / TextEncoder 对象**
+
+- TextDecoder 对象在给定缓冲区（buffer）和编码格式（encoding）的情况下，允许将值读取为实际的 JS 字符串。
 
 ```javascript
-let decoder = new TextDecoder([label], [options]);
+let decoder = new TextDecoder([label], [options])
 ```
 
 | 参数 | 描述 |
 | --- | --- |
 | label | 编码格式，默认为 utf-8，但同时也支持 big5，windows-1251 等 |
 | options | 可选对象 |
-| fatal | 布尔值，如果为 true 则为无效（不可解码）字符抛出异常，否则（默认）用字符 \\uFFFD 替换无效字符 |
-| gnoreBOM | 布尔值，如果为 true 则 BOM（可选的字节顺序 Unicode 标记），很少需要使用 |
+| -> fatal: true | 如果为 true 则无效（不可解码）字符抛出异常，否则（默认）用字符 \\uFFFD 替换无效字符 |
+| -> gnoreBOM: true | 如果为 true 则 BOM（可选的字节顺序 Unicode 标记） |
 
 ```javascript
 // 解码
-let str = decoder.decode([input], [options]);
+let str = decoder.decode([input], [options])
 ```
 
 | 参数 | 描述 |
 | --- | --- |
 | input | 要被解码的 BufferSource |
 | options | 可选对象 |
-| stream | 对于解码流，为 true，则将传入的数据块（chunk）作为参数重复调用 decoder。在这种情况下，多字节的字符可能偶尔会在块与块之间被分割。这个选项告诉 TextDecoder 记住“未完成”的字符，并在下一个数据块来的时候进行解码。 |
+| -> stream | 对于解码流为 true，则将传入的数据块（chunk）作为参数重复调用 decoder，在这种情况下，多字节的字符可能偶尔会在块与块之间被分割，这个选项告诉 TextDecoder 记住未完成的字符，并在下一个数据块来的时候进行解码 |
 
 ```javascript
-let uint8Array = new Uint8Array([72, 101, 108, 108, 111]);
+let uint8Array = new Uint8Array([72, 101, 108, 108, 111])
 
-alert( new TextDecoder().decode(uint8Array) );  // Hello
+alert(new TextDecoder().decode(uint8Array))  // Hello
 ```
 
-- `TextEncoder` 做相反的事情：将字符串转换为字节。
+- TextEncoder 对象做相反的事情，将字符串转换为字节。
 
 ```javascript
-let encoder = new TextEncoder();
+let encoder = new TextEncoder()
 ```
 
 | 方法 | 描述 |
 | --- | --- |
-| encode(str) | 从字符串返回 Uint8Array |
-| encodeInto(str, destination) | 将 str 编码到 destination 中，该目标必须为 Uint8Array |
+| .encode(str) | 从字符串返回 Uint8Array |
+| .encodeInto(str, destination) | 将 str 编码到 destination 中，该目标必须为 Uint8Array |
 
 ```javascript
-let encoder = new TextEncoder();
-let uint8Array = encoder.encode("Hello");
-alert(uint8Array);  // 72,101,108,108,111
+let encoder = new TextEncoder()
+
+let uint8Array = encoder.encode("Hello")
+
+alert(uint8Array)  // 72 101 108 108 111
 ```
 
-- `Blob` 由一个可选的字符串 `type`（通常是 MIME 类型）和 `blobParts` 组成的一系列其他 `Blob` 对象，字符串和 `BufferSource`。
+**Blob 对象**
+
+- Blob 对象表示一个不可变、原始数据的类文件对象。它的数据可以按文本或二进制的格式进行读取，也可以转换成 ReadableStream 来用于数据操作。
 
 ```javascript
-let blob = new Blob(blobParts, options);
+let blob = new Blob(blobParts, [options])
 ```
 
 | 参数 | 描述 |
 | --- | --- |
-| blobParts | 是 Blob/BufferSource/String 类型的值的数组 |
+| blobParts | 是 Blob / BufferSource / String 类型值的数组 |
 | options | 可选对象 |
-| type | Blob 类型，通常是 MIME 类型，例如 image/png |
-| endings | 是否转换换行符，使 Blob 对应于当前操作系统的换行符（\\r\\n 或 \\n），默认为 "transparent"（啥也不做），不过也可以是 "native"（转换） |
+| -> type | Blob 类型，通常是 MIME 类型，例如 image/png |
+| -> endings | 是否转换换行符，使 Blob 对应于当前操作系统的换行符（\\r\\n 或 \\n），默认为 transparent（啥也不做），不过也可以是 native（转换） |
+
+- MIME 指媒体类型，是一种标准，其通用结构为 `type/subtype`
+
+| MIME 媒体类型 | 描述 |
+| --- | --- |
+| text/plain | 文本文件默认值，即使它意味着未知的文本文件，但浏览器认为是可以直接展示的 |
+| text/html |  |
+| text/css |  |
+| text/javascript |  |
+| image/gif |  |
+| image/png |  |
+| image/jpeg |  |
+| image/bmp |  |
+| image/webp |  |
+| image/x-icon |  |
+| image/svg+xml |  |
+| audio/midi |  |
+| audio/mpeg |  |
+| audio/webm |  |
+| audio/ogg |  |
+| audio/wav |  |
+| video/webm |  |
+| video/ogg |  |
+| application/octet-stream | 应用程序文件的默认值，意思是未知的应用程序文件，浏览器一般不会自动执行或询问执行 |
+| application/pkcs12 |  |
+| application/vnd.mspowerpoint |  |
+| application/xhtml+xml |  |
+| application/xml |  |
+| application/pdf |  |
 
 ```javascript
-// 提取blob片段
-blob.slice([byteStart], [byteEnd], [contentType]);
+// 提取 blob 片段
+blob.slice([byteStart], [byteEnd], [contentType])
 ```
 
 | 参数 | 描述 |
 | --- | --- |
 | byteStart | 起始字节，默认为 0 |
-| byteEnd | 最后一个字节（专有，默认为最后） |
+| byteEnd | 最后一个字节，默认为最后 |
 | contentType | 新 blob 的 type，默认与源 blob 相同 |
 
-- 无法直接在 `Blob` 中更改数据，但可以通过 `slice` 获得 `Blob` 的多个部分，从这些部分创建新的 `Blob` 对象，将它们组成新的 `Blob`
-- `Blob` 用作 URL，`Blob` 可以很容易用作 `<a>、<img>` 或其他标签的 URL，来显示它们的内容。
+- 无法直接在 blob 中更改数据，但可以通过 `.slice` 获得 blob 的多个部分，从这些部分创建新的 Blob 对象，将它们组成新的 blob
+- （1）Blob 用作 URL，Blob 可以很容易用作 `<a>`、`<img>` 或其他标签的 URL，来显示它们的内容。
 
-```javascript
+```html
 <!-- download 特性强制浏览器下载而不是导航 -->
 <a download="hello.txt" href='#' id="link">Download</a>
 
 <script>
-let blob = new Blob(["Hello, world!"], {type: 'text/plain'});
+let blob = new Blob(["Hello, world!"], {type: 'text/plain'})
 
-link.href = URL.createObjectURL(blob);
+link.href = URL.createObjectURL(blob)
 </script>
 ```
 
--  `URL.createObjectURL` 取一个 `Blob`，并为其创建一个唯一的 URL，形式为 `blob:<origin>/<uuid>`
-也就是 `link.href` 的值的样子：
+- `URL.createObjectURL()` 取一个 blob，并为其创建一个唯一的 URL，形式为 `blob:<origin>/<uuid>` 也就是 `link.href` 的值的样子。
 
 ```javascript
-blob:https://javascript.info/1e67e00e-860d-40a5-89ae-6ab0cbee6273
+blob:https://javascript.com/1e67e00e-860d-40a5-89ae-6ab0cbee6273
 ```
 
-- 浏览器内部为每个通过 `URL.createObjectURL` 生成的 URL 存储了一个 `URL → Blob` 映射。因此，此类 URL 很短，但可以访问 `Blob`。生成的 URL（即其链接）仅在当前文档打开的状态下才有效。它允许引用 `<img>、<a>` 中的 `Blob`，以及基本上任何其他期望 URL 的对象。虽然这里有 `Blob` 的映射，但 `Blob` 本身只保存在内存中的，浏览器无法释放它。`URL.revokeObjectURL(url)` 从内部映射中移除引用，因此允许 `Blob` 被删除（如果没有其他引用的话），并释放内存。
-- `URL.createObjectURL` 的一个替代方法是，将 `Blob` 转换为 base64-编码的字符串。这种编码将二进制数据表示为一个由 0 到 64 的 ASCII 码组成的字符串。
-- Image 转换为 `blob`，图像操作是通过 `<canvas>` 元素来实现的：使用 `canvas.drawImage` 在 canvas 上绘制图像（或图像的一部分）。调用 canvas 方法 `.toBlob(callback, format, quality)` 创建一个 `Blob`，并在创建完成后使用其运行 `callback`
+- 浏览器内部为每个通过 `URL.createObjectURL()` 生成的 URL 存储了一个 URL → Blob 的映射，因此，此类 URL 很短，但可以访问 Blob。生成的 URL 仅在当前文档打开的状态下才有效，它允许引用 `<img>`、`<a>` 中的 Blob，以及基本上任何其他期望 URL 的对象。虽然这里有 Blob 的映射，但 Blob 本身只保存在内存中的，浏览器无法释放它。
+- `URL.revokeObjectURL(url)` 从内部映射中移除引用，因此允许 Blob 被删除（如果没有其他引用的话），并释放内存。
+- `URL.createObjectURL()` 的一个替代方法是将 Blob 转换为 base64-编码的字符串。这种编码将二进制数据表示为一个由 0 到 64 的 ASCII 码组成的字符串。
+- （2）Image 转换为 Blob，图像操作是通过 `<canvas>` 元素来实现的，使用 `canvas.drawImage` 在 Canvas 上绘制图像（或图像的一部分）。调用 `canvas.toBlob(callback, format, quality)` 创建一个 Blob，并在创建完成后使用其运行 callback
 
 ```javascript
 // 获取任何图像
-let img = document.querySelector('img');
+let img = document.querySelector('img')
 
 // 生成同尺寸的 <canvas>
-let canvas = document.createElement('canvas');
-canvas.width = img.clientWidth;
-canvas.height = img.clientHeight;
+let canvas = document.createElement('canvas')
+canvas.width = img.clientWidth
+canvas.height = img.clientHeight
 
-let context = canvas.getContext('2d');
-
+let context = canvas.getContext('2d')
 // 向其中复制图像（此方法允许剪裁图像）
-context.drawImage(img, 0, 0);
+context.drawImage(img, 0, 0)
 // context.rotate()，并在 canvas 上做很多其他事情
 
 // toBlob 是异步操作，结束后会调用 callback
 canvas.toBlob(function(blob) {
   // blob 创建完成，下载它
-  let link = document.createElement('a');
-  link.download = 'example.png';
+  let link = document.createElement('a')
+  link.download = 'example.png'
 
-  link.href = URL.createObjectURL(blob);
-  link.click();
+  link.href = URL.createObjectURL(blob)
+  link.click()
 
   // 删除内部 blob 引用，这样浏览器可以从内存中将其清除
-  URL.revokeObjectURL(link.href);
-}, 'image/png');
+  URL.revokeObjectURL(link.href)
+}, 'image/png')
 ```
 
-- `Blob` 转换为 `ArrayBuffer`，如果需要执行低级别的处理时，可以从 `blob.arrayBuffer()` 中获取最低级别的 `ArrayBuffer`：
+- （3）Blob 转换为 ArrayBuffer，如果需要执行低级别的处理时，可以从 `blob.arrayBuffer()` 中获取最低级别的 ArrayBuffer
 
 ```javascript
 // 从 bolb 获取 arrayBuffer
-const bufferPromise = await blob.arrayBuffer();
+const bufferPromise = await blob.arrayBuffer()
 
 // 或
-blob.arrayBuffer().then(buffer => /* 处理 ArrayBuffer */);
+blob.arrayBuffer().then(buffer => /* 处理 ArrayBuffer */)
 ```
 
-- `Blob` 转换为 `Stream`，`stream` 是一种特殊的对象，可以从它那里逐部分地读取（或写入）。`Blob` 接口里的 `stream()` 方法返回一个 `ReadableStream`，在被读取时可以返回 `Blob` 中包含的数据。
+- （4）Blob 转换为 Stream，Stream 是一种特殊的对象，可以从它那里逐部分地读取（或写入）。Blob 接口里的 `.stream()` 方法返回一个 ReadableStream，在被读取时可以返回 Blob 中包含的数据。
 
 ```javascript
 // 从 blob 获取可读流（readableStream）
-const readableStream = blob.stream();
-const stream = readableStream.getReader();
+const readableStream = blob.stream()
+const stream = readableStream.getReader()
 
 while (true) {
   // 对于每次迭代：value 是下一个 blob 数据片段
-  let { done, value } = await stream.read();
+  let { done, value } = await stream.read()
   if (done) {
-    // 读取完毕，stream 里已经没有数据了
-    console.log('all blob processed.');
-    break;
+    // 读取完毕 stream 里已经没有数据了
+    console.log('all blob processed.')
+    break
   }
 
   // 对刚从 blob 中读取的数据片段做一些处理
-  console.log(value);
+  console.log(value)
 }
 ```
 
-- `File` 对象继承自 `Blob`，并扩展了与文件系统相关的功能。
+**File / FileReader 对象**
+
+- File 对象继承自 Blob，并扩展了与文件系统相关的功能。
 
 ```javascript
 let file = new File(fileParts, fileName, [options])
@@ -3597,277 +3658,258 @@ let file = new File(fileParts, fileName, [options])
 
 | 参数 | 描述 |
 | --- | --- |
-| fileParts | Blob/BufferSource/String 类型值的数组 |
-| fileName | 文件名字符串 |
+| fileParts | Blob / BufferSource / String 类型值的数组 |
+| fileName | 文件名 |
 | options | 可选对象 |
-| lastModified | 最后一次修改的时间戳（整数日期） |
+| -> lastModified | 最后一次修改的时间戳（整数日期） |
 
-- 更常见的是从 `<input type="file">` 或拖放或其他浏览器接口来获取文件。
+- 常见的是从 `<input type="file">` 或拖放或其他浏览器接口来获取文件。
 
-```javascript
+```html
 <input type="file" onchange="showFile(this)">
 
 <script>
 function showFile(input) {
-  let file = input.files[0];
+  let file = input.files[0]
 
-  alert(`File name: ${file.name}`); // 例如 my.png
-  alert(`Last modified: ${file.lastModified}`); // 例如 1552830408824
+  alert(`File name: ${file.name}`)
+  alert(`Last modified: ${file.lastModified}`)
 }
 </script>
 ```
 
-- 输入 `input` 可以选择多个文件，因此 `input.files` 是一个类数组对象。
-- `FileReader` 是一个对象，其唯一目的是从 `Blob`（因此也从 `File`）对象中读取数据。
+- 输入 input 可以选择多个文件，因此 `input.files` 是一个类数组对象。
+- FileReader 对象，其唯一目的是从 Blob（因此也从 File）对象中读取数据。
 
 ```javascript
-let reader = new FileReader();  // 没有参数
+let reader = new FileReader()
 ```
 
 | 方法 | 描述 |
 | --- | --- |
-| readAsArrayBuffer(blob) | 将数据读取为二进制格式的 ArrayBuffer |
-| readAsText(blob, [encoding]) | 将数据读取为给定编码（默认为 utf-8 编码）的文本字符串 |
-| readAsDataURL(blob) | 读取二进制数据，并将其编码为 base64 的 data url |
-| abort() | 取消操作 |
+| .readAsArrayBuffer(blob) | 将数据读取为二进制格式的 ArrayBuffer |
+| .readAsText(blob, [encoding]) | 将数据读取为给定编码（默认为 utf-8 编码）的文本字符串 |
+| .readAsDataURL(blob) | 读取二进制数据，并将其编码为 base64 的 dataUrl |
+| .abort() | 取消操作 |
 
-```javascript
+```html
 <input type="file" onchange="readFile(this)">
 
 <script>
 function readFile(input) {
-  let file = input.files[0];
+  let file = input.files[0]
 
-  let reader = new FileReader();
+  let reader = new FileReader()
 
-  reader.readAsText(file);
+  reader.readAsText(file)
 
   reader.onload = function() {
-    console.log(reader.result);
-  };
+    console.log(reader.result)
+  }
 
   reader.onerror = function() {
-    console.log(reader.error);
-  };
+    console.log(reader.error)
+  }
 }
 </script>
 ```
 
-- 在很多情况下，不必读取文件内容，就像处理 `blob` 一样，可以使用 `URL.createObjectURL(file)` 创建一个短的 url，并将其赋给 `<a>` 或 `<img>`。这样，文件便可以下载文件或者将其呈现为图像，作为 `canvas` 等的一部分，如果要通过网络发送一个 File，像 `XMLHttpRequest` 或 `fetch` 等网络 API 本身就接受 `File` 对象。
+- 在很多情况下，不必读取文件内容，就像处理 Blob 一样，可以使用 `URL.createObjectURL(file)` 创建一个短的 URL，并将其赋给 `<a>` 或 `<img>` 这样，文件便可以下载文件或者将其呈现为图像，作为 Canvas 等的一部分，如果要通过网络发送一个 File，像 XMLHttpRequest 或 fetch 等网络 API 本身就接受 File 对象。
 
-### 31 - LocalStorge/sessionStorage
+### 31 - LocalStorge / SessionStorage
 
-- Web 存储对象 `localStorage` 和 `sessionStorage` 允许在浏览器上保存键/值对。
-- 与 `cookie` 不同，Web 存储对象不会随每个请求被发送到服务器。因此，可以保存更多数据，大多数现代浏览器都允许保存至少 5 MB 的数据（或更多），并且具有用于配置数据的设置。还有一点和 `cookie` 不同，服务器无法通过 `HTTP header` 操纵存储对象，一切都是在 JavaScript 中完成的，存储绑定到源（域/协议/端口三者）。也就是说，不同协议或子域对应不同的存储对象，它们之间无法访问彼此数据。
+- Web 存储对象 localStorage 和 sessionStorage 允许在浏览器上保存键 / 值对。
+- 与 cookie 不同，Web 存储对象不会随每个请求被发送到服务器，因此，可以保存更多数据，大多数现代浏览器都允许保存至少 5 MB 的数据，并且具有用于配置数据的设置。还有一点和 cookie 不同，服务器无法通过 HTTP header 操纵存储对象，一切都是在 JS 中完成的，存储绑定到源（域/协议/端口三者），也就是说，不同协议或子域对应不同的存储对象，它们之间无法访问彼此数据。
 - 两个存储对象都提供相同的方法和属性：
 
 | 方法 | 描述 |
 | --- | --- |
-| setItem(key, value) | 存储键/值对 |
-| getItem(key) | 按照键获取值 |
-| removeItem(key) | 删除键及其对应的值 |
-| clear() | 删除所有数据 |
-| key(index) | 获取该索引下的键名 |
-| length | 存储的内容的长度 |
+| .setItem(key, value) | 存储键 / 值对 |
+| .getItem(key) | 按照键获取值 |
+| .key(index) | 获取该索引下的键名 |
+| .removeItem(key) | 删除键及其对应的值 |
+| .clear() | 删除所有数据 |
+| .length | 存储的内容的长度 |
 
-- `localStorage` 最主要的特点是：在同源的所有标签页和窗口之间共享数据。数据不会过期，它在浏览器重启甚至系统重启后仍然存在。键和值都必须是字符串，如果是任何其他类型，例数字或对象，它会被自动转换为字符串。
-- `sessionStorage` 的数据只存在于当前浏览器标签页，具有相同页面的另一个标签页中将会有不同的存储。但是，它在同一标签页下的 `iframe` 之间是共享的（假如它们来自相同的源）。数据在页面刷新后仍然保留，但在关闭/重新打开浏览器标签页后不会被保留。
-- 当 `localStorage` 或 `sessionStorage` 中的数据更新后，`storage` 事件就会触发，它具有以下属性：
+- localStorage 的特点是：在同源的所有标签页和窗口之间共享数据。数据不会过期，它在浏览器重启甚至系统重启后仍然存在。键和值都必须是字符串，如果是任何其他类型，例数字或对象，它会被自动转换为字符串。
+- sessionStorage 的特点是：数据只存在于当前浏览器标签页，具有相同页面的另一个标签页中将会有不同的存储。但在同一标签页下的 `<iframe>` 之间是共享的（假如它们来自相同的源）。数据在页面刷新后仍然保留，但在关闭/重新打开浏览器标签页后不会被保留。
+- 当 localStorage 或 sessionStorage 中的数据更新后，storage 事件就会触发，此时 event 对象具有以下属性：
 
 | 属性 | 描述 |
 | --- | --- |
-| key | 发生更改的数据的 key（如果调用的是 .clear() 方法，则为 null） |
-| oldValue | 旧值（如果是新增数据，则为 null） |
-| newValue | 新值（如果是删除数据，则为 null） |
-| url | 发生数据更新的文档的 url |
-| storageArea | 发生数据更新的 localStorage 或 sessionStorage 对象，该事件会在所有可访问到存储对象的 window 对象上触发，导致当前数据改变的 window 对象除外 |
+| .key | 发生更改的数据的 key，如果调用的是 .clear() 方法，则为 null |
+| .oldValue | 旧值，如果是新增数据，则为 null |
+| .newValue | 新值，如果是删除数据，则为 null |
+| .url | 发生数据更新的文档的 url |
+| .storageArea | 发生数据更新的 localStorage 或 sessionStorage 对象 |
 
 ### 32 - IndexedDB
 
-- `IndexedDB` 是一个浏览器内建的数据库，通过支持多种类型的键，来存储几乎可以是任何类型的值。支撑事务的可靠性。支持键值范围查询、索引。和 `localStorage` 相比，它可以存储更大的数据量。
-- `IndexedDB` 适用于离线应用，可与 `ServiceWorkers` 和其他技术相结合使用。
-- 打开数据库：`let openRequest = indexedDB.open(name, version);`
+- IndexedDB 是一个浏览器内建的数据库，通过支持多种类型的键，来存储几乎可以是任何类型的值。支持键值范围查询、索引，和 localStorage 相比它可以存储更大的数据量。IndexedDB 适用于离线应用，可与 ServiceWorkers 和其他技术相结合使用。
+
+- 打开数据库 `let openRequest = indexedDB.open(name, version)`
 
 | 参数 | 描述 |
 | --- | --- |
-| name | 字符串，即数据库名称 |
-| version | 一个正整数版本，默认为 1。调用之后会返回 |
-| 监听openRequest 对象上的事件 | 描述 |
+| name | 数据库的名称 |
+| version | 一个正整数版本，默认为 1，调用之后会返回 |
+
+- 监听 openRequest 对象上的事件。
+
+| 事件 | 描述 |
+| --- | --- |
 | success | 数据库准备就绪 |
 | error | 打开失败 |
 | upgradeneeded | 数据库已准备就绪，但其版本已过时 |
 
-- 如果本地数据库版本低于 `open` 中指定的版本，会触发一个特殊事件 `upgradeneeded`。可以根据需要比较版本并升级数据结构。
+- 如果本地数据库版本低于 `.open()` 中指定的版本，会触发一个特殊事件 upgradeneeded，可以根据需要比较版本并升级数据结构。
 
 ```javascript
-let openRequest = indexedDB.open("store", 1);
+let openRequest = indexedDB.open("store", 1)
 
 openRequest.onupgradeneeded = function() {
   // 如果客户端没有数据库则触发
   // ...执行初始化...
-};
+}
 
 openRequest.onerror = function() {
-  console.error("Error", openRequest.error);
-};
+  console.error("Error", openRequest.error)
+}
 
 openRequest.onsuccess = function() {
-  let db = openRequest.result;
+  let db = openRequest.result
   // 继续使用 db 对象处理数据库
-};
+}
 ```
 
-```javascript
-let openRequest = indexedDB.open("store", 2);
-
-openRequest.onupgradeneeded = function(event) {
-  // 现有的数据库版本小于 2（或不存在）
-  let db = openRequest.result;
-  switch(event.oldVersion) { // 现有的 db 版本
-    case 0:
-      // 版本 0 表示客户端没有数据库
-      // 执行初始化
-    case 1:
-      // 客户端版本为 1
-      // 更新
-  }
-};
-```
-
-- 删除数据库：
+- 删除数据库 `let deleteRequest = indexedDB.deleteDatabase(name)`
+- `deleteRequest.onsuccess/onerror` 用于追踪（tracks）结果。
+- versionchange 事件会在过时的数据库对象上触发。需要监听这个事件，关闭对旧版本数据库的连接，还应该建议访问者重新加载页面，以加载最新的代码。
 
 ```javascript
-let deleteRequest = indexedDB.deleteDatabase(name)
-// deleteRequest.onsuccess/onerror 追踪（tracks）结果
-```
+let openRequest = indexedDB.open("store", 2)
 
-- `versionchange` 事件会在“过时的”数据库对象上触发。需要监听这个事件，关闭对旧版本数据库的连接（还应该建议访问者重新加载页面，以加载最新的代码）。
-
-```javascript
-let openRequest = indexedDB.open("store", 2);
-
-openRequest.onupgradeneeded = ...;
-openRequest.onerror = ...;
+openRequest.onupgradeneeded = ...
+openRequest.onerror = ...
 
 openRequest.onsuccess = function() {
-  let db = openRequest.result;
+  let db = openRequest.result
 
   db.onversionchange = function() {
-    db.close();
+    db.close()
     alert("Database is outdated, please reload the page.")
-  };
+  }
 
   // ……数据库已经准备好，请使用它……
-};
+}
 
 openRequest.onblocked = function() {
   // 如果正确处理了 onversionchange 事件，这个事件就不应该触发
-
   // 这意味着还有另一个指向同一数据库的连接
   // 并且在 db.onversionchange 被触发后，该连接没有被关闭
-};
+}
 ```
 
-- 对象库是 `IndexedDB` 的核心概念，在其他数据库中对应的对象称为“表”或“集合”，它是储存数据的地方。一个数据库可能有多个存储区，尽管被命名为“对象库”，但也可以存储原始类型。有一种对象不能被存储：循环引用的对象，此类对象不可序列化，也不能进行 `JSON.stringify`
-- 库中的每个值都必须有唯一的键 `key`。键的类型必须为数字、日期、字符串、二进制或数组。它是唯一的标识符，所以可以通过键来搜索/删除/更新值。
-- 创建对象库：`db.createObjectStore(name[, keyOptions]);`
+- 对象库是 IndexedDB 的核心概念，在其他数据库中对应的对象称为表或集合，它是储存数据的地方。一个数据库可能有多个存储区，尽管被命名为对象库，但也可以存储原始类型。有一种对象不能被存储，即循环引用的对象，此类对象不可序列化，也不能进行 `JSON.stringify`
+- 库中的每个值都必须有唯一的键 key，键的类型必须为数字、日期、字符串、二进制或数组。它是唯一的标识符，所以可以通过键来搜索/删除/更新值。
+
+- 创建对象库 `let objectStore = db.createObjectStore(name, [keyOptions])`
 
 | 参数 | 描述 |
 | --- | --- |
 | name | 存储区名称 |
-| keyOptions | 具有以下两个属性之一的可选对象 |
-| keyPath | 对象属性的路径，IndexedDB 将以此路径作为键，例如 id |
-| autoIncrement | 如果为 true，则自动生成新存储的对象的键，键是一个不断递增的数字 |
+| keyOptions | 可选对象 |
+| -> keyPath | 对象属性的路径，IndexedDB 将以此路径作为键，例如 id |
+| -> autoIncrement | 如果为 true，则自动生成新存储的对象的键，键是一个不断递增的数字 |
 
-- 在 `upgradeneeded` 处理程序中，只有在创建数据库版本时，对象库被才能被创建/修改。
+- 在 upgradeneeded 处理程序中，只有在创建数据库版本时，对象库被才能被创建/修改。
 
 ```javascript
-let openRequest = indexedDB.open("db", 2);
+let openRequest = indexedDB.open("db", 2)
 
 // 创建/升级 数据库而无需版本检查
-openRequest.onupgradeneeded = function() {
-  let db = openRequest.result;
-  if (!db.objectStoreNames.contains('books')) { // 如果没有 “books” 数据
-    db.createObjectStore('books', {keyPath: 'id'}); // 创造它
+openRequest.onupgradeneeded = function(event) {
+  let db = event.target.result
+
+  if (!db.objectStoreNames.contains('books')) {
+    db.createObjectStore('books', {keyPath: 'id'})
   }
-};
+}
 ```
 
-- 删除对象库：
-
-```javascript
-db.deleteObjectStore('books')
-```
-- 事务是一组操作，要么全部成功，要么全部失败。所有数据操作都必须在 `IndexedDB` 中的事务内进行。启动事务`db.transaction(store[, type]);`
+- 删除对象库 `db.deleteObjectStore('books')`
+- 事务是一组操作，要么全部成功，要么全部失败。所有数据操作都必须在 IndexedDB 中的事务内进行。
+- 启动事务 `db.transaction(store, [type])`
 
 | 参数 | 描述 |
 | --- | --- |
-| store | 事务要访问的库名称，例如 "books"，要访问多个库，则是库名称的数组 |
+| store | 事务要访问的库名称，要访问多个库，则是库名称的数组 |
 | type | 事务类型 |
-| readonly | 只读，默认值 |
-| readwrite | 只能读取和写入数据，而不能创建/删除/更改对象库 |
+| -> readonly | 只读，默认值 |
+| -> readwrite | 只能读取和写入数据，而不能创建/删除/更改对象库 |
 
 ```javascript
-let transaction = db.transaction("books", "readwrite"); // (1)
+let transaction = db.transaction("books", "readwrite")
 
 // 获取对象库进行操作
-let books = transaction.objectStore("books"); // (2)
+let books = transaction.objectStore("books")
 
 let book = {
   id: 'js',
   price: 10,
   created: new Date()
-};
+}
 
-let request = books.add(book); // (3)
+let request = books.add(book)
 
-request.onsuccess = function() { // (4)
-  console.log("Book added to the store", request.result);
-};
+request.onsuccess = function() {
+  console.log("Book added to the store", request.result)
+}
 
 request.onerror = function() {
-  console.log("Error", request.error);
-};
+  console.log("Error", request.error)
+}
 ```
 
 - 对象库支持两种存储值的方法：
 
 | 方法 | 描述 |
 | --- | --- |
-| put(value, [key]) | 将 value 添加到存储区，仅当对象库没有 keyPath 或 autoIncrement 时，才提供 key，如果已经存在具有相同键的值，则将替换该值 |
-| add(value, [key]) | 与 put 相同，但是如果已经有一个值具有相同的键，则请求失败，并生成一个名为 "ConstraInterror" 的错误 |
+| .put(value, [key]) | 将 value 添加到存储区，仅当对象库没有 keyPath 或 autoIncrement 时，才提供 key，如果已经存在具有相同键的值，则将替换该值 |
+| .add(value, [key]) | 与 put 相同，但是如果已经有一个值具有相同的键，则请求失败，并生成一个名为 ConstraInterror 的错误 |
 
 - 当所有事务的请求完成，并且微任务队列为空时，它将自动提交。为了检测到成功完成的时刻，可以监听 `transaction.oncomplete` 事件。
-- 要手动中止事务，调用，`transaction.abort();`取消请求里所做的所有修改，并触发 `transaction.onabort` 事件。
+- 要手动中止事务，调用 `transaction.abort()` 取消请求里所做的所有修改，并触发 `transaction.onabort` 事件。
 - 失败的请求将自动中止事务，并取消所有的更改。
 - 自己去处理失败事务（例如尝试另一个请求）并让它继续执行，而不是取消现有的更改。可以调用 `request.onerror` 处理程序，在其中调用 `event.preventDefault()` 防止事务中止。
-- `IndexedDB` 事件冒泡：请求 → 事务 → 数据库。可以通过在 `request.onerror` 中使用 `event.stopPropagation()` 来停止冒泡，从而停止 `db.onerror` 事件。
+- IndexedDB 事件冒泡：请求 → 事务 → 数据库。可以通过在 `request.onerror` 中使用 `event.stopPropagation()` 来停止冒泡，从而停止 `db.onerror` 事件。
 
 ```javascript
 request.onerror = function(event) {
   if (request.error.name == "ConstraintError") {
-    console.log("Book with such id already exists"); // 处理错误
-    event.preventDefault(); // 不要中止事务
-    event.stopPropagation(); // 不要让错误冒泡, 停止它的传播
+    console.log("Book with such id already exists")  // 处理错误
+    event.preventDefault()  // 不要中止事务
+    event.stopPropagation()  // 不要让错误冒泡, 停止它的传播
   } else {
     // 什么都不做
     // 事务将中止
     // 可以解决 transaction.onabort 中的错误
   }
-};
+}
 ```
 
-- 对象库有两种主要的搜索类型：通过键值或键值范围。在 “books” 存储中，将是 `book.id` 的值或值的范围。通过另一个对象字段，例如 `book.price`。这需要一个额外的数据结构，名为“索引（index）”。
-- `IDBKeyRange` 对象，指定一个可接受的“键值范围”，`IDBKeyRange` 对象是通过下列调用创建的：
+- 对象库有两种主要的搜索类型：通过键值或键值范围。
+- 在 books 存储中，将是 `book.id` 的值或值的范围。通过另一个对象字段，例如 `book.price`，这需要一个额外的数据结构，名为索引（index）
+- IDBKeyRange 对象，指定一个可接受的键值范围，IDBKeyRange 对象是通过下列调用创建的：
 
-| 调用 | 描述 |
+| 方法 | 描述 |
 | --- | --- |
-| IDBKeyRange.lowerBound(lower, [open]) | 表示：≥lower（如果 open 是 true，表示 >lower） |
-| IDBKeyRange.upperBound(upper, [open]) | 表示：≤upper（如果 open 是 true，表示 <upper） |
-| IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen]) | 表示: 在 lower 和 upper 之间。如果 open 为 true，则相应的键不包括在范围中 |
+| IDBKeyRange.lowerBound(lower, [open]) | 表示：≥ lower（如果 open 是 true，表示 > lower） |
+| IDBKeyRange.upperBound(upper, [open]) | 表示：≤ upper（如果 open 是 true，表示 < upper） |
+| IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen]) | 表示: 在 lower 和 upper 之间（如果 open 为 true，则相应的键不包括在范围中） |
 | IDBKeyRange.only(key) | 仅包含一个键的范围 key，很少使用 |
 
-- 要进行实际的搜索，有以下方法，它们接受一个可以是精确键值或键值范围的 `query` 参数：
+- 要进行实际的搜索，有以下方法，它们接受一个可以是精确键值或键值范围的 query 参数：
 
 | 方法 | 描述 |
 | --- | --- |
@@ -3895,104 +3937,79 @@ books.getAllKeys(IDBKeyRange.lowerBound('js', true))
 ```
 
 - 对象内部存储的值是按键对值进行排序的，因此请求的返回值，是按照键的顺序排列的。
-- 索引是存储的"附加项"，用于跟踪给定的对象字段。对于该字段的每个值，它存储有该值的对象的键列表。
-
-```javascript
-objectStore.createIndex(name, keyPath, [options]);
-```
+- 索引是存储的附加项，用于跟踪给定的对象字段。对于该字段的每个值，它存储有该值的对象的键列表。
+- 创建索引 `objectStore.createIndex(name, keyPath, [options])`
 
 | 参数 | 描述 |
 | --- | --- |
 | name | 索引名称 |
 | keyPath | 索引应该跟踪的对象字段的路径（将根据该字段进行搜索） |
-| option | 具有以下属性的可选对象： |
-| unique | 如果为true，则存储中只有一个对象在 keyPath 上具有给定值，如果尝试添加重复项，索引将生成错误 |
-| multiEntry | 只有 keypath 上的值是数组时才使用。默认情况下，索引将默认把整个数组视为键。但是如果 multiEntry 为 true，那么索引将为该数组中的每个值保留一个存储对象的列表，所以数组成员成为了索引键 |
+| option | 可选对象 |
+| -> unique | 如果为true，则存储中只有一个对象在 keyPath 上具有给定值，如果尝试添加重复项，索引将生成错误 |
+| -> multiEntry | 只有 keypath 上的值是数组时才使用。默认情况下，索引将默认把整个数组视为键。但是如果 multiEntry 为 true，那么索引将为该数组中的每个值保留一个存储对象的列表，所以数组成员成为了索引键 |
 
 ```javascript
 openRequest.onupgradeneeded = function() {
   // 在 versionchange 事务中，必须在这里创建索引
-  let books = db.createObjectStore('books', {keyPath: 'id'});
-  let index = books.createIndex('price_idx', 'price');
-};
+  let books = db.createObjectStore('books', {keyPath: 'id'})
+  let index = books.createIndex('price_idx', 'price')
+}
 ```
 
-- `delete` 方法查找要由查询删除的值，调用格式类似于 `getAll`。`delete(query)`：通过查询删除匹配的值。删除所有内容：`books.clear();`
+- `delete` 方法查找要由查询删除的值，调用格式类似于 `getAll`。`books.delete(query)` 通过查询删除匹配的值，`books.clear()` 删除所有内容。
 - 像 `getAll/getAllKeys` 这样的方法，会返回一个键/值数组。光标是一种特殊的对象，它在给定查询的情况下遍历对象库，一次返回一个键/值，从而节省内存。由于对象库是按键在内部排序的，因此光标按键顺序（默认为升序）遍历存储。
-
-```javascript
-// 类似于 getAll，但带有光标：
-let request = store.openCursor(query, [direction]);
-
-// 获取键，而不是值（例如 getAllKeys）：store.openKeyCursor
-```
+- 类似于 getAll，但带有光标 `let request = store.openCursor(query, [direction])` 获取键，而不是值（例如 getAllKeys）
 
 | 参数 | 描述 |
 | --- | --- |
 | query | 是一个键值或键值范围，与 getAll 相同 |
-| direction | 是一个可选参数 |
-| next | 默认值，光标从有最小索引的记录向上移动 |
-| prev | 相反的顺序，从有最大的索引的记录开始下降 |
-| nextunique/prevunique | 同上，但是跳过键相同的记录，仅适用于索引上的光标 |
+| direction | 可选参数 |
+| -> next | 默认值，光标从有最小索引的记录向上移动 |
+| -> prev | 相反的顺序，从有最大的索引的记录开始下降 |
+| -> nextunique/prevunique | 同上，但是跳过键相同的记录，仅适用于索引上的光标 |
 
 - 光标对象的主要区别在于 `request.onSuccess` 多次触发，每个结果触发一次。
-- 主要的光标方法有：
 
 | 方法 | 描述 |
 | --- | --- |
-| advance(count) | 将光标向前移动 count 次，跳过值 |
-| continue([key]) | 将光标移至匹配范围中的下一个值（如果给定键，紧接键之后） |
+| .advance(count) | 将光标向前移动 count 次，跳过值 |
+| .continue([key]) | 将光标移至匹配范围中的下一个值（如果给定键，紧接键之后） |
 
-- 无论是否有更多的值匹配光标调用 `onsuccess`。结果中，可以获得指向下一条记录的光标，或者 `undefined`
+- 无论是否有更多的值匹配光标调用 onsuccess，结果中，可以获得指向下一条记录的光标，或者 undefined
 - 索引是允许按对象字段进行搜索，在索引上的光标与在对象存储上的光标完全相同，它们通过一次返回一个值来节省内存。
-- 使用一个轻便的承诺包装器 [https://github.com/jakearchibald/idb](https://github.com/jakearchibald/idb) 。它使用 `promisified IndexedDB` 方法创建全局 `idb` 对象，可以不使用 `onsuccess/onerror`，而是这样写：
+- 使用一个轻便的承诺包装器 [https://github.com/jakearchibald/idb](https://github.com/jakearchibald/idb) 。它使用 promisified IndexedDB 方法创建全局 idb 对象，可以不使用 onsuccess/onerror，而是这样写：
 
 ```javascript
 let db = await idb.openDB('store', 1, db => {
   if (db.oldVersion == 0) {
     // 执行初始化
-    db.createObjectStore('books', {keyPath: 'id'});
+    db.createObjectStore('books', {keyPath: 'id'})
   }
-});
+})
 
-let transaction = db.transaction('books', 'readwrite');
-let books = transaction.objectStore('books');
+let transaction = db.transaction('books', 'readwrite')
+let books = transaction.objectStore('books')
 
 try {
-  await books.add(...);
-  await books.add(...);
+  await books.add(...)
+  await books.add(...)
 
-  await transaction.complete;
+  await transaction.complete
 
-  console.log('jsbook saved');
+  console.log('jsbook saved')
 } catch(err) {
-  console.log('error', err.message);
+  console.log('error', err.message)
 }
-```
 
-- 错误处理：
-
-```javascript
+// 错误处理
 window.addEventListener('unhandledrejection', event => {
-  let request = event.target; // IndexedDB 本机请求对象
-  let error = event.reason; //  未处理的错误对象，与 request.error 相同
+  let request = event.target  // IndexedDB 本机请求对象
+  let error = event.reason  //  未处理的错误对象，与 request.error 相同
   // ……报告错误……
-});
+})
 ```
 
-- 浏览器一旦执行完成当前的代码和微任务之后，事务就会自动提交。因此，如果在事务中间放置一个类似 `fetch` 的宏任务，事务只是会自动提交，而不会等待它执行完成。因此，下一个请求会失败。
-- 极少数情况下，需要原始的 `request` 对象。可以将 `promise` 的 `promise.request` 属性，当作原始对象进行访问：
-
-```javascript
-let promise = books.add(book); // 获取 promise 对象(不要 await 结果)
-
-let request = promise.request; // 本地请求对象
-let transaction = request.transaction; // 本地事务对象
-
-// ……做些本地的 IndexedDB 的处理……
-
-let result = await promise; // 如果仍然需要
-```
+- 浏览器一旦执行完成当前的代码和微任务之后，事务就会自动提交，因此，如果在事务中间放置一个类似 fetch 的宏任务，事务只是会自动提交，而不会等待它执行完成，所以下一个请求会失败。
 
 ### 33 - 动画
 
