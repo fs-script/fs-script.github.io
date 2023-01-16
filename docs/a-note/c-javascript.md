@@ -4014,65 +4014,65 @@ window.addEventListener('unhandledrejection', event => {
 ### 33 - 动画
 
 - 贝塞尔曲线用于计算机图形绘制形状，贝塞尔曲线由控制点定义。
-- 时间函数 `steps(number of steps[, start/end])` 允许让动画分段进行，`number of steps` 表示需要拆分为多少段
-- `transitionend` 的事件对象有几个特定的属性：
+- 时间函数 `steps(number of steps, [start/end])` 允许让动画分段进行，`number of steps` 表示需要拆分为多少段。
+- transitionend 的事件对象 event 有几个特定的属性：
 
 | 属性 | 描述 |
 | --- | --- |
-| event.propertyName | 当前完成动画的属性，这在同时为多个属性加上动画时会很有用 |
-| event.elapsedTime | 动画完成的时间（按秒计算），不包括 transition-delay |
+| .propertyName | 当前完成动画的属性，这在同时为多个属性加上动画时会很有用 |
+| .elapsedTime | 动画完成的时间（按秒计算），不包括 transition-delay |
 
-- 使用 `setInterval`：
+- 使用 `setInterval()` 重复调用一个函数或执行一个代码片段来控制动画：
 
 ```javascript
 elem.onclick = function() {
-  let start = Date.now();
+  let start = Date.now()
 
   let timer = setInterval(function() {
-    let timePassed = Date.now() - start;
+    let timePassed = Date.now() - start
 
-    train.style.left = timePassed / 5 + 'px';
+    train.style.left = timePassed / 5 + 'px'
 
-    if (timePassed > 2000) clearInterval(timer);
+    if (timePassed > 2000) clearInterval(timer)
 
-    }, 20);
+    }, 20)
   }
 ```
 
-- 使用 `requestAnimationFrame`：`let requestId = requestAnimationFrame(callback);`会让 `callback` 函数在浏览器每次重绘的最近时间运行。返回值 `requestId` 可用来取消回调：取消回调的周期执行 `cancelAnimationFrame(requestId);`
+- 使用 `let requestId = requestAnimationFrame(callback)` 告诉浏览器执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。会让 callback 函数在浏览器每次重绘的最近时间运行。返回值 requestId 可用来取消回调，取消回调的周期执行 `cancelAnimationFrame(requestId)`
 
 ```javascript
 function animate({timing, draw, duration}) {
-  let start = performance.now();
+  let start = performance.now()
 
   requestAnimationFrame(function animate(time) {
     // timeFraction 从 0 增加到 1
-    let timeFraction = (time - start) / duration;
-    if (timeFraction > 1) timeFraction = 1;
+    let timeFraction = (time - start) / duration
+    if (timeFraction > 1) timeFraction = 1
 
     // 计算当前动画状态
-    let progress = timing(timeFraction);
+    let progress = timing(timeFraction)
 
-    draw(progress);  // 绘制
+    draw(progress)  // 绘制
 
     if (timeFraction < 1) {
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animate)
     }
-  });
+  })
 }
 ```
 
-- `animate` 函数接受 3 个描述动画的基本参数：
+- `animate()` 函数接受 3 个描述动画的基本参数：
 
 | 参数 | 描述 |
 | --- | --- |
+| timing | 时序函数 |
+| draw | 获取动画完成状态并绘制的函数 |
 | duration | 动画总时间，比如 1000 |
-| timing(timeFraction) | 时序函数 |
-| draw(progress) | 获取动画完成状态并绘制的函数 |
 
-- 时序函数：类似 CSS 属性 `transition-timing-function`，传入一个已过去的时间与总时间之比的小数（0 代表开始，1 代表结束），返回动画完成度（类似 `Bezier` 曲线中的 y）。
+- 时序函数是类似 CSS 属性 `transition-timing-function`，传入一个已过去的时间与总时间之比的小数（0 代表开始，1 代表结束），返回动画完成度（类似 Bezier 曲线中的 y）。
 - 值 `progress = 0` 表示开始动画状态，`progress = 1` 表示结束状态，这是实际绘制动画的函数。
-- n 次幂，抛物线：
+- （1）n 次幂的抛物线：
 
 ```javascript
 function quad(timeFraction) {
@@ -4080,23 +4080,23 @@ function quad(timeFraction) {
 }
 ```
 
-- 圆弧：
+- （2）圆弧：
 
 ```javascript
 function circ(timeFraction) {
-  return 1 - Math.sin(Math.acos(timeFraction));
+  return 1 - Math.sin(Math.acos(timeFraction))
 }
 ```
 
-- 反弹：弓箭射击：
+- （3）反弹、弓箭射击：
 
 ```javascript
 function back(x, timeFraction) {
-  return Math.pow(timeFraction, 2) * ((x + 1) * timeFraction - x);
+  return Math.pow(timeFraction, 2) * ((x + 1) * timeFraction - x)
 }
 ```
 
-- 弹跳：
+- （4）弹跳：
 
 ```javascript
 function bounce(timeFraction) {
@@ -4108,7 +4108,7 @@ function bounce(timeFraction) {
 }
 ```
 
-- 伸缩动画：
+- （5）伸缩：
 
 ```javascript
 function elastic(x, timeFraction) {
@@ -4116,80 +4116,80 @@ function elastic(x, timeFraction) {
 }
 ```
 
-- “变换”函数 `makeEaseOut`，接受一个“常规”时序函数 `timing` 并返回一个封装器，里面封装了 `timing` 函数：
+- 变换函数 `makeEaseOut()`，接受一个常规时序函数 `timing` 并返回一个封装器，里面封装了 `timing` 函数：
 
 ```javascript
 // 接受时序函数，返回变换后的变体
 function makeEaseOut(timing) {
   return function(timeFraction) {
-    return 1 - timing(1 - timeFraction);
+    return 1 - timing(1 - timeFraction)
   }
 }
 ```
 
-- 在动画的开头和结尾都显示效果。该变换称为 `easeInOut`：
+- 在动画的开头和结尾都显示效果，该变换称为 easeInOut：
 
 ```javascript
 function makeEaseInOut(timing) {
   return function(timeFraction) {
     if (timeFraction < .5)
-      return timing(2 * timeFraction) / 2;
+      return timing(2 * timeFraction) / 2
     else
-      return (2 - timing(2 * (1 - timeFraction))) / 2;
+      return (2 - timing(2 * (1 - timeFraction))) / 2
   }
 }
 ```
 
 ### 34 - Web Components
 
-- 一个组件有自己的 JavaScript 类与 DOM 结构，并且只由自己的类管理，无法被外部代码操作，（「封装」原则），CSS 样式，作用在这个组件上。API：事件，类方法等等，让组件可以与其他组件交互。
-- 可以通过描述带有自己的方法、属性和事件等的类来创建自定义 HTML 元素。在 `custom elements` （自定义标签）定义完成之后，可以将其和 HTML 的内建标签一同使用。
-- `Custom elements` 有两种：`Autonomous custom elements` （自主自定义标签），“全新的” 元素, 继承自 `HTMLElement` 抽象类。`Customized built-in elements` （自定义内建元素），继承内建的 HTML 元素，比如自定义 `HTMLButtonElement` 等
+- 一个组件有自己的 JS 类与 DOM 结构，并且只由自己的类管理，无法被外部代码操作。API 指事件、类方法等，让组件可以与其他组件交互。
+- 可以通过描述带有自己的方法、属性和事件等的类来创建自定义 HTML 元素。在 custom elements（自定义标签）定义完成之后，可以将其和 HTML 的内建标签一同使用。
+- Custom elements 有两种：一种是 Autonomous custom elements（自主自定义标签），全新的元素, 继承自 HTMLElement 抽象类。另一种是Customized built-in elements（自定义内建元素），继承内建的 HTML 元素，比如自定义 HTMLButtonElement 等。
 
 ```javascript
-  class MyElement extends HTMLElement {
-    constructor() {
-      super();
-      // 元素在这里创建
-    }
-
-    connectedCallback() {
-      // 在元素被添加到文档之后，浏览器会调用这个方法
-      //（如果一个元素被反复添加到文档／移除文档，那么这个方法会被多次调用）
-    }
-
-    disconnectedCallback() {
-      // 在元素从文档移除的时候，浏览器会调用这个方法
-      // （如果一个元素被反复添加到文档／移除文档，那么这个方法会被多次调用）
-    }
-
-    static get observedAttributes() {
-      return [/* 属性数组，这些属性的变化会被监视 */];
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-      // 当上面数组中的属性发生变化的时候，这个方法会被调用
-    }
-
-    adoptedCallback() {
-      // 在元素被移动到新的文档的时候，这个方法会被调用
-      // （document.adoptNode 会用到, 非常少见）
-    }
-    // 还可以添加更多的元素方法和属性
+class MyElement extends HTMLElement {
+  constructor() {
+    super()
+    // 元素在这里创建
   }
 
-  // 注册元素，让浏览器知道新定义的类是为 <my-element> 服务的
-  customElements.define("my-element", MyElement);
+  connectedCallback() {
+    // 在元素被添加到文档之后，浏览器会调用这个方法
+    //如果一个元素被反复添加到文档／移除文档，那么这个方法会被多次调用
+  }
+
+  disconnectedCallback() {
+    // 在元素从文档移除的时候，浏览器会调用这个方法
+    // 如果一个元素被反复添加到文档／移除文档，那么这个方法会被多次调用
+  }
+
+  static get observedAttributes() {
+    return [/* 属性数组，这些属性的变化会被监视 */]
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    // 当上面数组中的属性发生变化的时候，这个方法会被调用
+  }
+
+  adoptedCallback() {
+    // 在元素被移动到新的文档的时候，这个方法会被调用
+    // document.adoptNode 会用到, 非常少见
+  }
+  // 还可以添加更多的元素方法和属性
+}
+
+// 注册元素，让浏览器知道新定义的类是为 <my-element> 服务的
+customElements.define("my-element", MyElement)
 ```
 
-- `Custom element` 名称必须包括一个短横线 -, 比如 `my-element` 和 `super-button` 都是有效的元素名，这是为了确保 `custom element` 和内建 HTML 元素之间不会发生命名冲突。
-- 为了监视这些属性，可以在 `observedAttributes() static getter` 中提供属性列表。当这些属性发生变化的时候，`attributeChangedCallback` 会被调用。出于性能优化的考虑，其他属性变化的时候并不会触发这个回调方法。
+- Custom element 名称必须包括一个短横线, 比如 `my-element` 和 `super-button` 都是有效的元素名，这是为了确保 Custom element 和内建 HTML 元素之间不会发生命名冲突。
+- 为了监视这些属性，可以在 `observedAttributes()` static getter 中提供属性列表。当这些属性发生变化的时候，`attributeChangedCallback` 会被调用。出于性能优化的考虑，其他属性变化的时候并不会触发这个回调方法。
 
-```javascript
+```html
 <script>
 class TimeFormatted extends HTMLElement {
   render() {
-    let date = new Date(this.getAttribute('datetime') || Date.now());
+    let date = new Date(this.getAttribute('datetime') || Date.now())
 
     this.innerHTML = new Intl.DateTimeFormat("default", {
       year: this.getAttribute('year') || undefined,
@@ -4198,118 +4198,110 @@ class TimeFormatted extends HTMLElement {
       hour: this.getAttribute('hour') || undefined,
       minute: this.getAttribute('minute') || undefined,
       second: this.getAttribute('second') || undefined,
-      timeZoneName: this.getAttribute('time-zone-name') || undefined,
-    }).format(date);
+      timeZoneName: this.getAttribute('time-zone-name') || undefined
+    }).format(date)
   }
 
   connectedCallback() {
     if (!this.rendered) {
-      this.render();
-      this.rendered = true;
+      this.render()
+      this.rendered = true
     }
   }
 
   static get observedAttributes() {
-    return ['datetime', 'year', 'month', 'day', 'hour', 'minute', 'second', 'time-zone-name'];
+    return ['datetime', 'year', 'month', 'day', 'hour', 'minute', 'second', 'time-zone-name']
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    this.render();
+    this.render()
   }
 }
 
-customElements.define("time-formatted", TimeFormatted);
+customElements.define("time-formatted", TimeFormatted)
 </script>
 
 <time-formatted id="elem" hour="numeric" minute="numeric" second="numeric"></time-formatted>
 
 <script>
-setInterval(() => elem.setAttribute('datetime', new Date()), 1000);
+setInterval(() => elem.setAttribute('datetime', new Date()), 1000)
 </script>
 ```
 
 - 在 HTML 解析器构建 DOM 的时候，会按照先后顺序处理元素，先处理父级元素再处理子元素。如果需要子元素，可以使用延迟时间为零的 `setTimeout` 来推迟访问子元素。
 
-```javascript
+```html
 <script>
-// 这个按钮在被点击的时候说 "hello"
+// 这个按钮在被点击的时候说 hello
 class HelloButton extends HTMLButtonElement {
   constructor() {
-    super();
-    this.addEventListener('click', () => alert("Hello!"));
+    super()
+    this.addEventListener('click', () => alert("Hello!"))
   }
 }
 
-customElements.define('hello-button', HelloButton, {extends: 'button'});
+customElements.define('hello-button', HelloButton, {extends: 'button'})
 </script>
 
 <button is="hello-button">Click me</button>
-
-<button is="hello-button" disabled>Disabled</button>
 ```
 
-- Shadow DOM 为封装而生，可以让一个组件拥有自己的「影子」DOM 树，这个 DOM 树不能在主文档中被任意访问，可能拥有局部样式规则，还有其他特性。
-- 一个 DOM 元素可以有以下两类 DOM 子树：Light tree（光明树） ，常规 DOM 子树，由 HTML 子元素组成。Shadow tree（影子树） ，一个隐藏的 DOM 子树，不在 HTML 中反映，无法被察觉。
-- 如果一个元素同时有以上两种子树，那么浏览器只渲染 shadow tree，但是同样可以设置两种树的组合。
+- Shadow DOM 为封装而生，可以让一个组件拥有自己的影子 DOM 树，这个 DOM 树不能在主文档中被任意访问，可能拥有局部样式规则，还有其他特性。
+- 一个 DOM 元素可以有以下两类 DOM 子树，一类是 Light tree（光明树），即常规 DOM 子树，由 HTML 子元素组成，另一类是 Shadow tree（影子树），一个隐藏的 DOM 子树，不在 HTML 中反映，无法被察觉。
+- 如果一个元素同时有以上两种子树，那么浏览器只渲染 Shadow tree，但是同样可以设置两种树的组合。
 
-```javascript
-//  <show-hello> 元素将它的内部 DOM 隐藏在了影子里面
+```html
 <script>
 customElements.define('show-hello', class extends HTMLElement {
   connectedCallback() {
-    const shadow = this.attachShadow({mode: 'open'});
+    const shadow = this.attachShadow({mode: 'open'})
     shadow.innerHTML = `<p>
       Hello, ${this.getAttribute('name')}
-    </p>`;
+    </p>`
   }
-});
+})
 </script>
 
 <show-hello name="John"></show-hello>
 ```
 
-- 调用 `elem.attachShadow({mode: …})` 可以创建一个 shadow tree。这里有两个限制：在每个元素中，只能创建一个 shadow root；`elem` 必须是自定义元素，或者是以下元素的其中一个：`「article」`、`「aside」`、`「blockquote」`、`「body」`、`「div」`、`「footer」`、`「h1…h6」`、`「header」`、`「main」`、`「nav」`、`「p」`、`「section」`或者`「span」`。其他元素，比如 `<img>`，不能容纳 shadow tree
-- `mode` 选项可以设定封装层级，必须是以下两个值之一：
+- `Element.attachShadow({mode: …})` 可以创建一个 Shadow tree，这里有两个限制，一是在每个元素中，只能创建一个 Shadow root，二是 Element 必须是自定义元素，或者是以下元素的其中一个：`「article」`、`「aside」`、`「blockquote」`、`「body」`、`「div」`、`「footer」`、`「h1…h6」`、`「header」`、`「main」`、`「nav」`、`「p」`、`「section」`、`「span」`，其他元素，如 `<img>`，不能容纳 Shadow tree。mode 选项可以设定封装层级，必须是以下两个值之一：
 
 | 参数 | 描述 |
 | --- | --- |
-| open | shadow root 可以通过 `elem.shadowRoot`
- 访问，任何代码都可以访问 elem 的 shadow tree |
-| closed | `elem.shadowRoot`
- 永远是 null，只能通过 `attachShadow`
- 返回的指针来访问 shadow DOM（并且可能隐藏在一个 class 中） |
-|  | 浏览器原生的 shadow tree，比如 `<input type="range">`
-，是封闭的，没有任何方法可以访问它们 |
+| open | Shadow root 可以通过 `elem.shadowRoot` 访问，任何代码都可以访问 Element 的 Shadow tree |
+| closed | `elem.shadowRoot` 永远是 null，只能通过 `attachShadow` 返回的指针来访问 Shadow DOM（并且可能隐藏在一个 class 中） |
 
-- Shadow DOM 元素对于 light DOM 中的 `querySelector` 不可见。Shadow DOM 中的元素可能与 light DOM 中某些元素的 `id` 冲突，这些元素必须在 shadow tree 中独一无二，Shadow DOM 有自己的样式，外部样式规则在 shadow DOM 中不产生作用。
+- 浏览器原生的 Shadow tree，比如 `<input type="range">` 是封闭的，没有任何方法可以访问它们。
+- Shadow DOM 元素对于 Light DOM 中的 `querySelector` 不可见。Shadow DOM 中的元素可能与 Light DOM 中某些元素的 id 冲突，这些元素必须在 Shadow tree 中独一无二，Shadow DOM 有自己的样式，外部样式规则在 Shadow DOM 中不产生作用。
 
-```javascript
+```html
 <style>
   /* 文档样式对 #elem 内的 shadow tree 无作用 */
-  p { color: red; }
+  p { color: red }
 </style>
 
 <div id="elem"></div>
 
 <script>
-  elem.attachShadow({mode: 'open'});
+  elem.attachShadow({mode: 'open'})
   // shadow tree 有自己的样式
   elem.shadowRoot.innerHTML = `
-    <style> p { font-weight: bold; } </style>
+    <style> p { font-weight: bold } </style>
     <p>Hello, John!</p>
-  `;
+  `
 
   // <p> 只对 shadow tree 里面的查询可见
-  alert(document.querySelectorAll('p').length);  // 0
-  alert(elem.shadowRoot.querySelectorAll('p').length);  // 1
+  alert(document.querySelectorAll('p').length)  // 0
+  alert(elem.shadowRoot.querySelectorAll('p').length)  // 1
 </script>
 ```
 
-- 内建的 `<template>` 元素用来存储 HTML 模板，浏览器将忽略它的内容，仅检查语法的有效性，但可以在 JavaScript 中访问和使用它来创建其他元素。
+- 内建的 `<template>` 元素用来存储 HTML 模板，浏览器将忽略它的内容，仅检查语法的有效性，但可以在 JS 中访问和使用它来创建其他元素。
 
 ```javascript
 <template id="tmpl">
-  <style> p { font-weight: bold; } </style>
+  <style> p { font-weight: bold } </style>
   <p id="message"></p>
 </template>
 
@@ -4317,23 +4309,23 @@ customElements.define('show-hello', class extends HTMLElement {
 
 <script>
   elem.onclick = function() {
-    elem.attachShadow({mode: 'open'});
+    elem.attachShadow({mode: 'open'})
 
-    elem.shadowRoot.append(tmpl.content.cloneNode(true)); // (*)
+    elem.shadowRoot.append(tmpl.content.cloneNode(true))
 
-    elem.shadowRoot.getElementById('message').innerHTML = "Hello from the shadows!";
-  };
+    elem.shadowRoot.getElementById('message').innerHTML = "Hello from the shadows!"
+  }
 </script>
 ```
 
-- `<template>` 的内容可以是任何语法正确的 HTML，`<template>` 内容被视为“超出文档范围”，因此它不会产生任何影响。可以在JavaScript 中访问 `template.content` ，将其克隆以在新组件中重复使用。
-- 通常，如果一个元素含有 shadow DOM，那么其 light DOM 就不会被展示出来，插槽允许在 shadow DOM 中显示 light DOM 子元素。Shadow DOM 支持 `<slot>` 元素，由 light DOM 中的内容自动填充：
+- `<template>` 的内容可以是任何语法正确的 HTML，`<template>` 内容被视为超出文档范围，因此它不会产生任何影响。可以在 JS 中访问 `template.content`，将其克隆以在新组件中重复使用。
+- 通常，如果一个元素含有 Shadow DOM，那么其 Light DOM 就不会被展示出来，插槽允许在 Shadow DOM 中显示 Light DOM 子元素。Shadow DOM 支持 `<slot>` 元素，由 Light DOM 中的内容自动填充。
 
-```javascript
+```html
 <script>
 customElements.define('user-card', class extends HTMLElement {
   connectedCallback() {
-    this.attachShadow({mode: 'open'});
+    this.attachShadow({mode: 'open'})
     this.shadowRoot.innerHTML = `
       <div>Name:
         <slot name="username"></slot>
@@ -4341,9 +4333,9 @@ customElements.define('user-card', class extends HTMLElement {
       <div>Birthday:
         <slot name="birthday"></slot>
       </div>
-    `;
+    `
   }
-});
+})
 </script>
 
 <user-card>
@@ -4352,15 +4344,13 @@ customElements.define('user-card', class extends HTMLElement {
 </user-card>
 ```
 
-- `<slot name="X">` 定义了一个插入点，一个带有 `slot="X"` 的元素被渲染的地方。
-- `slot="..."` 属性仅仅对 shadow host 的直接子代有效，对于嵌套元素它将被忽略。
-- 如果在 light DOM 里有多个相同插槽名的元素，那么它们会被一个接一个地添加到插槽中。
-- 如果在一个 `<slot>` 内部放点什么，它将成为后备内容，如果 light DOM 中没有相应填充物的话浏览器就展示它。
-- shadow DOM 中第一个没有名字的 `<slot>` 是一个默认插槽，它从 light DOM 中获取没有放置在其他位置的所有节点。
-- 如果添加/删除了插槽元素，浏览器将监视插槽并更新渲染。
-- 如果组件想知道插槽的更改，那么可以用 `slotchange` 事件：
+- `<slot name="X">` 定义了一个插入点，一个带有 `slot="X"` 的元素被渲染的地方。属性仅仅对 Shadow host 的直接子代有效，对于嵌套元素它将被忽略。
+- 如果在 Light DOM 里有多个相同插槽名的元素，那么它们会被一个接一个地添加到插槽中。
+- 如果在一个 `<slot>` 内部放点什么，它将成为后备内容，如果 Light DOM 中没有相应填充物的话浏览器就展示它。
+- Shadow DOM 中第一个没有名字的 `<slot>` 是一个默认插槽，它从 Light DOM 中获取没有放置在其他位置的所有节点。
+- 如果添加/删除了插槽元素，浏览器将监视插槽并更新渲染。如果组件想知道插槽的更改，那么可以用 slotchange 事件。
 
-```javascript
+```html
 <custom-menu id="menu">
   <span slot="title">Candy menu</span>
 </custom-menu>
@@ -4368,34 +4358,33 @@ customElements.define('user-card', class extends HTMLElement {
 <script>
 customElements.define('custom-menu', class extends HTMLElement {
   connectedCallback() {
-    this.attachShadow({mode: 'open'});
+    this.attachShadow({mode: 'open'})
     this.shadowRoot.innerHTML = `<div class="menu">
       <slot name="title"></slot>
       <ul><slot name="item"></slot></ul>
-    </div>`;
+    </div>`
 
-    // shadowRoot can't have event handlers, so using the first child
     this.shadowRoot.firstElementChild.addEventListener('slotchange',
       e => alert("slotchange: " + e.target.name)
-    );
+    )
   }
-});
+})
 
 setTimeout(() => {
   menu.insertAdjacentHTML('beforeEnd', '<li slot="item">Lollipop</li>')
-}, 1000);
+}, 1000)
 
 setTimeout(() => {
-  menu.querySelector('[slot="title"]').innerHTML = "New menu";
-}, 2000);
+  menu.querySelector('[slot="title"]').innerHTML = "New menu"
+}, 2000)
 </script>
 ```
 
-- `node.assignedSlot` ， 返回 node 分配给的 `<slot>` 元素。
-- `slot.assignedNodes({flatten: true/false})` ，分配给插槽的 DOM 节点。默认情况下，`flatten` 选项为 `false`，如果显式地设置为 `true`，则它将更深入地查看扁平化 DOM ，如果嵌套了组件，则返回嵌套的插槽，如果未分配节点，则返回备用内容。
-- `slot.assignedElements({flatten: true/false})` ，分配给插槽的 DOM 元素，与上面相同，但仅元素节点。
+- `node.assignedSlot` 返回 node 分配给的 `<slot>` 元素。
+- `slot.assignedNodes({flatten: true/false})` 分配给插槽的 DOM 节点。默认情况下，flatten 选项为 false，如果显式地设置为 true，则它将更深入地查看扁平化 DOM ，如果嵌套了组件，则返回嵌套的插槽，如果未分配节点，则返回备用内容。
+- `slot.assignedElements({flatten: true/false})` 分配给插槽的 DOM 元素，与上面相同，但仅元素节点。
 
-```javascript
+```html
 <custom-menu id="menu">
   <span slot="title">Candy menu</span>
   <li slot="item">Lollipop</li>
@@ -4407,39 +4396,39 @@ customElements.define('custom-menu', class extends HTMLElement {
   items = []
 
   connectedCallback() {
-    this.attachShadow({mode: 'open'});
+    this.attachShadow({mode: 'open'})
     this.shadowRoot.innerHTML = `<div class="menu">
       <slot name="title"></slot>
       <ul><slot name="item"></slot></ul>
-    </div>`;
+    </div>`
 
     // 插槽能被添加/删除/代替
     this.shadowRoot.firstElementChild.addEventListener('slotchange', e => {
-      let slot = e.target;
+      let slot = e.target
       if (slot.name == 'item') {
-        this.items = slot.assignedElements().map(elem => elem.textContent);
-        alert("Items: " + this.items);
+        this.items = slot.assignedElements().map(elem => elem.textContent)
+        alert("Items: " + this.items)
       }
-    });
+    })
   }
-});
+})
 
 // items 在 1 秒后更新
 setTimeout(() => {
   menu.insertAdjacentHTML('beforeEnd', '<li slot="item">Cup Cake</li>')
-}, 1000);
+}, 1000)
 </script>
 ```
 
-- shadow DOM 可以包含 `<style>` 和 `<link rel="stylesheet" href="…">` 标签，在后一种情况下，样式表是 HTTP 缓存的，因此不会为使用同一模板的多个组件重新下载样式表。
-- `:host` 选择器允许选择 shadow 宿主（包含 shadow 树的元素）。
-- shadow 宿主（ `<custom-dialog>` 本身）驻留在 light DOM 中，因此它受到文档 CSS 规则的影响。如果在局部的 `:host` 和文档中都给一个属性设置样式，那么文档样式优先。唯一的例外是当局部属性被标记 `!important` 时，对于这样的属性，局部样式优先。
-- `:host(selector)`，与 `:host` 相同，但仅在 shadow 宿主与 selector 匹配时才应用样式。
-- `:host-context(selector)`，与 `:host` 相同，但仅当外部文档中的 shadow 宿主或它的任何祖先节点与 selector 匹配时才应用样式。
-- 占槽元素来自 light DOM，所以它们使用文档样式，局部样式不会影响占槽内容。如果想要在组件中设置占槽元素的样式，有两种选择：首先，可以对 `<slot>` 本身进行样式化，并借助 CSS 继承；另一个选项是使用 `::slotted(selector)` 伪类，它根据两个条件来匹配元素，这是一个占槽元素，来自于 light DOM，插槽名并不重要，任何占槽元素都可以，但只能是元素本身，而不是它的子元素 ，该元素与 selector 匹配，`::slotted` 选择器不能用于任何插槽中更深层的内容，`::sloated` 只能在 CSS 中使用，不能在 `querySelector` 中使用。
-- 自定义 CSS 属性存在于所有层次，包括 light DOM 和 shadow DOM。
+- Shadow DOM 可以包含 `<style>` 和 `<link rel="stylesheet" href="…">` 标签，在后一种情况下，样式表是 HTTP 缓存的，因此不会为使用同一模板的多个组件重新下载样式表。
+- `:host` 选择器允许选择 Shadow 宿主（包含 Shadow 树的元素）
+- Shadow 宿主（ `<custom-dialog>` 本身）驻留在 Light DOM 中，因此它受到文档 CSS 规则的影响。如果在局部的 `:host` 和文档中都给一个属性设置样式，那么文档样式优先。唯一的例外是当局部属性被标记 `!important` 时，对于这样的属性，局部样式优先。
+- `:host(selector)` 与 `:host` 相同，但仅在 Shadow 宿主与 selector 匹配时才应用样式。
+- `:host-context(selector)` 与 `:host` 相同，但仅当外部文档中的 Shadow 宿主或它的任何祖先节点与 selector 匹配时才应用样式。
+- 占槽元素来自 Light DOM，所以它们使用文档样式，局部样式不会影响占槽内容。如果想要在组件中设置占槽元素的样式，有两种选择：首先可以对 `<slot>` 本身进行样式化，并借助 CSS 继承；另一个选项是使用 `::slotted(selector)` 伪类，它根据两个条件来匹配元素，这是一个占槽元素，来自于 Light DOM，插槽名并不重要，任何占槽元素都可以，但只能是元素本身，而不是它的子元素 ，该元素与 selector 匹配，`::slotted` 选择器不能用于任何插槽中更深层的内容，`::sloated` 只能在 CSS 中使用，不能在 `querySelector` 中使用。
+- 自定义 CSS 属性存在于所有层次，包括 Light DOM 和 Shadow DOM
 
-```javascript
+```html
 <style>
   user-card {
     --user-card-field-color: green;
@@ -4459,10 +4448,10 @@ setTimeout(() => {
 <script>
 customElements.define('user-card', class extends HTMLElement {
   connectedCallback() {
-    this.attachShadow({mode: 'open'});
-    this.shadowRoot.append(document.getElementById('tmpl').content.cloneNode(true));
+    this.attachShadow({mode: 'open'})
+    this.shadowRoot.append(document.getElementById('tmpl').content.cloneNode(true))
   }
-});
+})
 </script>
 
 <user-card>
@@ -4473,30 +4462,29 @@ customElements.define('user-card', class extends HTMLElement {
 
 - Shadow tree 背后的思想是封装组件的内部实现细节：
 
-```javascript
+```html
 <user-card></user-card>
 
 <script>
-customElements.define('user-card', class extends HTMLElement {
-  connectedCallback() {
-    this.attachShadow({mode: 'open'});
-    this.shadowRoot.innerHTML = `<p>
-      <button>Click me</button>
-    </p>`;
-    this.shadowRoot.firstElementChild.onclick =
-      e => alert("Inner target: " + e.target.tagName);
-  }
-});
+  customElements.define('user-card', class extends HTMLElement {
+    connectedCallback() {
+      this.attachShadow({mode: 'open'})
+      this.shadowRoot.innerHTML = `<p>
+        <button>Click me</button>
+      </p>`
+      this.shadowRoot.firstElementChild.onclick =
+        e => alert("Inner target: " + e.target.tagName)
+    }
+  })
 
-document.onclick =
-  e => alert("Outer target: " + e.target.tagName);
+  document.onclick = e => alert("Outer target: " + e.target.tagName)
 </script>
 ```
 
-- 当事件在组件外部捕获时，shadow DOM 中发生的事件将会以 `host` 元素作为目标。事件重定向是一件很棒的事情，因为外部文档并不需要知道组件的内部情况，从它的角度来看，事件是发生在`<user-card>`
-- 如果事件发生在 `slotted` 元素上，实际存在于 light DOM 上，则不会发生重定向。
+- 当事件在组件外部捕获时，Shadow DOM 中发生的事件将会以 `host` 元素作为目标。事件重定向是一件很棒的事情，因为外部文档并不需要知道组件的内部情况，从它的角度来看，事件是发生在 `<user-card>`
+- 如果事件发生在 `slotted` 元素上，实际存在于 Light DOM 上，则不会发生重定向。
 
-```javascript
+```html
 <user-card id="userCard">
   <span slot="username">John Smith</span>
 </user-card>
@@ -4504,24 +4492,24 @@ document.onclick =
 <script>
 customElements.define('user-card', class extends HTMLElement {
   connectedCallback() {
-    this.attachShadow({mode: 'open'});
+    this.attachShadow({mode: 'open'})
     this.shadowRoot.innerHTML = `<div>
       <b>Name:</b> <slot name="username"></slot>
-    </div>`;
+    </div>`
 
     this.shadowRoot.firstElementChild.onclick =
-      e => alert("Inner target: " + e.target.tagName);
+      e => alert("Inner target: " + e.target.tagName)
   }
-});
+})
 
-userCard.onclick = e => alert(`Outer target: ${e.target.tagName}`);
+userCard.onclick = e => alert(`Outer target: ${e.target.tagName}`)
 </script>
 ```
 
-- 如果单击事件发生在 "John Smith" 上，则对于内部和外部处理程序来说，其目标是 `<span slot="username">`，这是 light DOM 中的元素，所以没有重定向。另一方面，如果单击事件发生在源自 shadow DOM 的元素上，例如，在 Name 上，然后当它冒泡出 shadow DOM 后，其 `event.target` 将重置为 `<user-card>`
-- 出于事件冒泡的目的，使用扁平 DOM（flattened DOM）。如果有一个 `slot` 元素，并且事件发生在它的内部某个地方，那么它就会冒泡到 `<slot>` 并继续向上，使用 `event.composedPath()` 获得原始事件目标的完整路径以及所有 shadow 元素。
+- 如果单击事件发生在 John Smith 上，则对于内部和外部处理程序来说，其目标是 `<span slot="username">`，这是 Light DOM 中的元素，所以没有重定向。另一方面，如果单击事件发生在源自 Shadow DOM 的元素上，例如，在 Name 上，然后当它冒泡出 Shadow DOM 后，其 `event.target` 将重置为 `<user-card>`
+- 出于事件冒泡的目的，使用扁平 DOM。如果有一个 `slot` 元素，并且事件发生在它的内部某个地方，那么它就会冒泡到 `<slot>` 并继续向上，使用 `event.composedPath()` 获得原始事件目标的完整路径以及所有 Shadow 元素。
 
-```javascript
+```html
 <user-card id="userCard">
   #shadow-root
     <div>
@@ -4533,20 +4521,19 @@ userCard.onclick = e => alert(`Outer target: ${e.target.tagName}`);
 </user-card>
 ```
 
-- 对于 `<span slot="username">` 上的点击事件，会调用 `event.composedPath()` 并返回一个数组：`[span, slot, div, shadow-root, user-card, body, html, document, window]`，在组合之后，这正是扁平 DOM 中目标元素的父链。
-- Shadow 树详细信息仅提供给 `{mode:'open'}` 树，如果 shadow 树是用 `{mode: 'closed'}` 创建的，那么组合路径就从 `host` 开始：`user-card` 及其更上层。
-- 大多数事件能成功冒泡到 shadow DOM 边界，很少有事件不能冒泡到 shadow DOM 边界。这由 `composed` 事件对象属性控制：如果 `composed` 是 `true`，那么事件就能穿过边界；否则它仅能在 shadow DOM 内部捕获。内建事件大部分都是 `composed: true` 的。
+- 对于 `<span slot="username">` 上的点击事件，会调用 `event.composedPath()` 并返回一个数组 `[span, slot, div, shadow-root, user-card, body, html, document, window]`，在组合之后，这正是扁平 DOM 中目标元素的父链。
+- Shadow 树详细信息仅提供给 `{mode:'open'}` 树，如果 Shadow 树是用 `{mode: 'closed'}` 创建的，那么组合路径就从 `host` 开始`user-card` 及其更上层。
+- 大多数事件能成功冒泡到 Shadow DOM 边界，很少有事件不能冒泡到 Shadow DOM 边界。这由 `composed` 事件对象属性控制，如果 composed 是 true，那么事件就能穿过边界，否则它仅能在 Shadow DOM 内部捕获。内建事件大部分都是 `composed: true` 的。
+- 当发送自定义事件，需要设置 `bubbles` 和 `composed` 属性都为 true 以使其冒泡并从组件中冒泡出来。
 
-- 当发送（dispatch）自定义事件，需要设置 `bubbles` 和 `composed` 属性都为 `true` 以使其冒泡并从组件中冒泡出来：
-
-```javascript
+```html
 <div id="outer"></div>
 
 <script>
-outer.attachShadow({mode: 'open'});
+outer.attachShadow({mode: 'open'})
 
-let inner = document.createElement('div');
-outer.shadowRoot.append(inner);
+let inner = document.createElement('div')
+outer.shadowRoot.append(inner)
 
 /*
 div(id=outer)
@@ -4554,19 +4541,19 @@ div(id=outer)
     div(id=inner)
 */
 
-document.addEventListener('test', event => alert(event.detail));
+document.addEventListener('test', event => alert(event.detail))
 
 inner.dispatchEvent(new CustomEvent('test', {
   bubbles: true,
   composed: true,
   detail: "composed"
-}));
+}))
 
 inner.dispatchEvent(new CustomEvent('test', {
   bubbles: true,
   composed: false,
   detail: "not composed"
-}));
+}))
 </script>
 ```
 
