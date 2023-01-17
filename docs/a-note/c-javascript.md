@@ -4143,8 +4143,8 @@ function makeEaseInOut(timing) {
 ### 34 - Web Components
 
 - 一个组件有自己的 JS 类与 DOM 结构，并且只由自己的类管理，无法被外部代码操作。API 指事件、类方法等，让组件可以与其他组件交互。
-- 可以通过描述带有自己的方法、属性和事件等的类来创建自定义 HTML 元素。在 custom elements（自定义标签）定义完成之后，可以将其和 HTML 的内建标签一同使用。
-- Custom elements 有两种：一种是 Autonomous custom elements（自主自定义标签），全新的元素, 继承自 HTMLElement 抽象类。另一种是Customized built-in elements（自定义内建元素），继承内建的 HTML 元素，比如自定义 HTMLButtonElement 等。
+- 可以通过描述带有自己的方法、属性和事件等的类来创建自定义 HTML 元素。在 Custom elements（自定义标签）定义完成之后，可以将其和 HTML 的内建标签一同使用。
+- Custom elements 有两种：一种是 Autonomous custom elements（自主自定义标签），全新的元素，继承自 HTMLElement 抽象类；另一种是Customized built-in elements（自定义内建元素），继承内建的 HTML 元素，比如自定义 HTMLButtonElement 等。
 
 ```javascript
 class MyElement extends HTMLElement {
@@ -4155,7 +4155,7 @@ class MyElement extends HTMLElement {
 
   connectedCallback() {
     // 在元素被添加到文档之后，浏览器会调用这个方法
-    //如果一个元素被反复添加到文档／移除文档，那么这个方法会被多次调用
+    // 如果一个元素被反复添加到文档／移除文档，那么这个方法会被多次调用
   }
 
   disconnectedCallback() {
@@ -4182,7 +4182,7 @@ class MyElement extends HTMLElement {
 customElements.define("my-element", MyElement)
 ```
 
-- Custom element 名称必须包括一个短横线, 比如 `my-element` 和 `super-button` 都是有效的元素名，这是为了确保 Custom element 和内建 HTML 元素之间不会发生命名冲突。
+- Custom element 名称必须包括一个短横线,，比如 `my-element` 和 `super-button` 都是有效的元素名，这是为了确保 Custom element 和内建 HTML 元素之间不会发生命名冲突。
 - 为了监视这些属性，可以在 `observedAttributes()` static getter 中提供属性列表。当这些属性发生变化的时候，`attributeChangedCallback` 会被调用。出于性能优化的考虑，其他属性变化的时候并不会触发这个回调方法。
 
 ```html
@@ -4428,38 +4428,6 @@ setTimeout(() => {
 - 占槽元素来自 Light DOM，所以它们使用文档样式，局部样式不会影响占槽内容。如果想要在组件中设置占槽元素的样式，有两种选择：首先可以对 `<slot>` 本身进行样式化，并借助 CSS 继承；另一个选项是使用 `::slotted(selector)` 伪类，它根据两个条件来匹配元素，这是一个占槽元素，来自于 Light DOM，插槽名并不重要，任何占槽元素都可以，但只能是元素本身，而不是它的子元素 ，该元素与 selector 匹配，`::slotted` 选择器不能用于任何插槽中更深层的内容，`::sloated` 只能在 CSS 中使用，不能在 `querySelector` 中使用。
 - 自定义 CSS 属性存在于所有层次，包括 Light DOM 和 Shadow DOM
 
-```html
-<style>
-  user-card {
-    --user-card-field-color: green;
-  }
-</style>
-
-<template id="tmpl">
-  <style>
-    .field {
-      color: var(--user-card-field-color, black);
-    }
-  </style>
-  <div class="field">Name: <slot name="username"></slot></div>
-  <div class="field">Birthday: <slot name="birthday"></slot></div>
-</template>
-
-<script>
-customElements.define('user-card', class extends HTMLElement {
-  connectedCallback() {
-    this.attachShadow({mode: 'open'})
-    this.shadowRoot.append(document.getElementById('tmpl').content.cloneNode(true))
-  }
-})
-</script>
-
-<user-card>
-  <span slot="username">John Smith</span>
-  <span slot="birthday">01.01.2001</span>
-</user-card>
-```
-
 - Shadow tree 背后的思想是封装组件的内部实现细节：
 
 ```html
@@ -4523,7 +4491,7 @@ userCard.onclick = e => alert(`Outer target: ${e.target.tagName}`)
 
 - 对于 `<span slot="username">` 上的点击事件，会调用 `event.composedPath()` 并返回一个数组 `[span, slot, div, shadow-root, user-card, body, html, document, window]`，在组合之后，这正是扁平 DOM 中目标元素的父链。
 - Shadow 树详细信息仅提供给 `{mode:'open'}` 树，如果 Shadow 树是用 `{mode: 'closed'}` 创建的，那么组合路径就从 `host` 开始`user-card` 及其更上层。
-- 大多数事件能成功冒泡到 Shadow DOM 边界，很少有事件不能冒泡到 Shadow DOM 边界。这由 `composed` 事件对象属性控制，如果 composed 是 true，那么事件就能穿过边界，否则它仅能在 Shadow DOM 内部捕获。内建事件大部分都是 `composed: true` 的。
+- 大多数事件能成功冒泡到 Shadow DOM 边界，很少有事件不能冒泡到 Shadow DOM 边界。这由 `composed` 事件对象属性控制，如果 `composed` 是 true，那么事件就能穿过边界，否则它仅能在 Shadow DOM 内部捕获。内建事件大部分都是 `composed: true` 的。
 - 当发送自定义事件，需要设置 `bubbles` 和 `composed` 属性都为 true 以使其冒泡并从组件中冒泡出来。
 
 ```html
@@ -4557,43 +4525,47 @@ inner.dispatchEvent(new CustomEvent('test', {
 </script>
 ```
 
-## 三、正则表达式
+## （三）正则表达式
 
-- 正则表达式是搜索和替换字符串的一种强大方式，在 JavaScript 中，正则表达式通过内建的 `RegExp` 类的对象来实现，并与字符串集成。正则表达式（可叫作“`regexp`”或者“`reg`”）包含模式和可选的修饰符
-- 创建一个正则表达式对象有两种语法，较长一点的语法：`regexp = new RegExp("pattern", "flags");`较短一点的语法，使用斜杠 "`/`"：`regexp = /pattern/gmi;`
-- 如果要在字符串中进行搜索，可以使用 `search` 方法，然后返回匹配项在字符串中的位置，如果没找到则返回 -1
-- 正则表达式的修饰符可能会影响搜索结果，在 JavaScript 中，有 6 个修饰符：
+- 正则表达式是搜索和替换字符串的一种强大方式，在 JS 中，正则表达式通过内建的 RegExp 类的对象来实现，并与字符串集成。正则表达式可叫作regexp 或者 reg 包含模式和可选的修饰符。
+- 创建一个正则表达式对象有两种语法，较长一点的语法是 `regexp = new RegExp("pattern", "flags")` 较短一点的语法，使用斜杠 `regexp = /pattern/gmi`
+- 如果要在字符串中进行搜索，可以使用 `.search()` 方法，然后返回匹配项在字符串中的位置，如果没找到则返回 -1
+- `.match()` 方法检索返回一个字符串匹配正则表达式的结果。
+- 正则表达式的修饰符可能会影响搜索结果，有 6 个修饰符：
 
 | 修饰符 | 描述 |
 | --- | --- |
-| /i | 搜索时不区分大小写: A 和 a 没有区别 |
-| /g | 搜索时会查找所有的匹配项，而不只是第一个 |
+| /i | 搜索时不区分大小写 |
+| /g | 搜索时会查找所有的匹配项 |
 | /m | 多行模式 |
-| /s | 启用 “dotall” 模式，允许点 . 匹配换行符 \\n |
-| /u | 开启完整的 unicode 支持，该修饰符能够修正对于代理对的处理 |
+| /s | 启用 dotall 模式，允许点 `.` 匹配换行符 `\n` |
+| /u | 开启完整的 unicode 支持 |
 | /y | 粘滞模式 |
 
-- 字符类（Character classes） 是一个特殊的符号，匹配特定集中的任何符号。
+- 字符类是一个特殊的符号，匹配特定集中的任何符号。
 
 | 字符类 | 描述 |
 | --- | --- |
-| \\d | 数字：从 0 到 9 的字符 |
-| \\s | 空格符号：包括空格，制表符 \\t，换行符 \\n 和其他少数稀有字符，例如 \\v，\\f 和 \\r |
-| \\w | 单字字符：拉丁字母或数字或下划线 _，非拉丁字母（如西里尔字母或印地文）不属于 \\w |
-| \\d\\s\\w | 表示数字，后跟空格字符，后跟单字字符，例如 1 a |
+| \d | 数字，从 0 到 9 的字符 |
+| \s | 空格，包括空格、制表符 \t、换行符 \n、其他少数稀有字符，例如 \v \f \r |
+| \w | 单字符，包括拉丁字母、数字、下划线 _ |
+| \d\s\w | 表示数字后跟空格字符后跟单字字符，例如 1 a |
+
 | 反向字符类 | 描述 |
-| \\D | 非数字：除 \\d 以外的任何字符，例如字母 |
-| \\S | 非空格符号：除 \\s 以外的任何字符，例如字母 |
-| \\W | 非单字字符：除 \\w 以外的任何字符，例如非拉丁字母或空格 |
+| --- | --- |
+| \D | 非数字，除 \d 以外的任何字符，例如字母 |
+| \S | 非空格，除 \s 以外的任何字符，例如字母 |
+| \W | 非单字符，除 \w 以外的任何字符，例如非拉丁字母或空格 |
+
 | 特殊字符类 | 描述 |
-| . | 与 “除换行符之外的任何字符” 匹配，点表示“任何字符”，而不是“缺少字符”，必须有一个与之匹配的字符 |
-|  |  |
-| [\\s\\S] | 空格字符或非空格字符即任何东西 |
-| [\\d\\D] | 同上 |
-| [^] | 匹配任何字符，除了什么都没有 |
+| --- | --- |
+| . | 与除换行符之外的任何字符匹配，点表示任何字符，而不是缺少字符，必须有一个与之匹配的字符 |
+| ^ | 匹配任何字符，除了什么都没有 |
+| \s\S | 空格或非空格，即任何东西 |
+| \d\D | 数字或非数字，即任何东西 |
 
 ```javascript
-alert( "I love HTML5!".match(/\s\w\w\w\w\d/) ); // ' HTML5'
+alert("I love HTML5!".match(/\s\w\w\w\w\d/))  // HTML5
 ```
 
 - 带有“s”标志时点字符类严格匹配任何字符
