@@ -4527,490 +4527,514 @@ inner.dispatchEvent(new CustomEvent('test', {
 
 ## （三）正则表达式
 
-- 正则表达式是搜索和替换字符串的一种强大方式，在 JS 中，正则表达式通过内建的 RegExp 类的对象来实现，并与字符串集成。正则表达式可叫作regexp 或者 reg 包含模式和可选的修饰符。
-- 创建一个正则表达式对象有两种语法，较长一点的语法是 `regexp = new RegExp("pattern", "flags")` 较短一点的语法，使用斜杠 `regexp = /pattern/gmi`
-- 如果要在字符串中进行搜索，可以使用 `.search()` 方法，然后返回匹配项在字符串中的位置，如果没找到则返回 -1
+- 正则表达式是搜索和替换字符串的一种强大方式，通过内建的 RegExp 类的对象来实现并与字符串集成。正则表达式可叫作 regexp 或 reg，包含模式和可选的修饰符。
+- 创建一个正则表达式对象，一种方式是 `regexp = new RegExp("pattern", "flags")`，另一种方式是 `regexp = /pattern/gmi`
 - `.match()` 方法检索返回一个字符串匹配正则表达式的结果。
-- 正则表达式的修饰符可能会影响搜索结果，有 6 个修饰符：
+- `.test()` 方法执行一个检索，用来查看正则表达式与指定的字符串是否匹配。
+
+**修饰符**
+
+- 正则表达式的修饰符会影响搜索结果，有 6 个修饰符：
 
 | 修饰符 | 描述 |
 | --- | --- |
 | /i | 搜索时不区分大小写 |
 | /g | 搜索时会查找所有的匹配项 |
-| /m | 多行模式 |
+| /m | 启用多行模式 |
 | /s | 启用 dotall 模式，允许点 `.` 匹配换行符 `\n` |
-| /u | 开启完整的 unicode 支持 |
-| /y | 粘滞模式 |
+| /u | 启用完整的 unicode 支持 |
+| /y | 启用粘滞模式 |
 
-- 字符类是一个特殊的符号，匹配特定集中的任何符号。
+**字符类**
 
-| 字符类 | 描述 |
+- 字符类是一个特殊的符号，匹配特定的任何符号：
+
+| 种类 | 描述 |
 | --- | --- |
-| \d | 数字，从 0 到 9 的字符 |
+| **字符类** |  |
+| \d | 数字，包括 0 到 9 的字符 |
 | \s | 空格，包括空格、制表符 \t、换行符 \n、其他少数稀有字符，例如 \v \f \r |
-| \w | 单字符，包括拉丁字母、数字、下划线 _ |
-| \d\s\w | 表示数字后跟空格字符后跟单字字符，例如 1 a |
-
-| 反向字符类 | 描述 |
-| --- | --- |
-| \D | 非数字，除 \d 以外的任何字符，例如字母 |
-| \S | 非空格，除 \s 以外的任何字符，例如字母 |
-| \W | 非单字符，除 \w 以外的任何字符，例如非拉丁字母或空格 |
-
-| 特殊字符类 | 描述 |
-| --- | --- |
-| . | 与除换行符之外的任何字符匹配，点表示任何字符，而不是缺少字符，必须有一个与之匹配的字符 |
-| ^ | 匹配任何字符，除了什么都没有 |
+| \w | 单字字符，包括拉丁字母、数字、下划线 _ |
+| **反向字符类** |  |
+| \D | 非数字，除 \d 以外的任何字符 |
+| \S | 非空格，除 \s 以外的任何字符 |
+| \W | 非单字字符，除 \w 以外的任何字符 |
+| **特殊字符类** |  |
+| . | 与除换行符之外的任何字符匹配，表示任何字符，而不是缺少字符，必须有一个与之匹配的字符 |
+| **其他** |  |
 | \s\S | 空格或非空格，即任何东西 |
 | \d\D | 数字或非数字，即任何东西 |
 
+- 带有 `/s` 标志时点字符类严格匹配任何字符。
+- 空格是一个字符，与其他字符同等重要。
+
 ```javascript
 alert("I love HTML5!".match(/\s\w\w\w\w\d/))  // HTML5
+
+alert("A\nB".match(/A[\s\S]B/))  // A（换行）B
 ```
 
-- 带有“s”标志时点字符类严格匹配任何字符
+**Unicode**
 
-```javascript
-alert( "A\nB".match(/A[\s\S]B/) ); // A\nB (match!)
-```
-
-- 空格是一个字符。与其他字符同等重要
-- JavaScript 使用 Unicode 编码 （Unicode encoding）对字符串进行编码。大多数字符使用 2 个字节编码，`length` 把 4 个字节当成了 2 个 2 字节长的字符。
-- 默认情况下，正则表达式同样把一个 4 个字节的长字符当成一对 2 个字节长的字符。
-- /u，当一个正则表达式使用这个修饰符后，4 个字节长的字符将被正确地处理。
+- JS 使用 Unicode 编码对字符串进行编码。大多数字符使用 2 个字节编码，但这种方式只能编码最多 65536 个字符， 4 个字节对一些罕见的字符进行编码，例如：😀
+- 默认情况下，正则表达式同样把一个 4 个字节的长字符当成一对 2 个字节长的字符。`/u` 当一个正则表达式使用这个修饰符后，4 个字节长的字符将被正确地处理。
 - 查找具有某种属性的字符，写作 `\p{…}`
 
 ```javascript
-let regexp = /x\p{Hex_Digit}\p{Hex_Digit}/u;
-alert("number: xAF".match(regexp)); // xAF
+let regexp = /x\p{Hex_Digit}\p{Hex_Digit}/u
+alert("number: xAF".match(regexp))  // xAF
 
-let regexp = /\p{sc=Han}/gu; // returns Chinese hieroglyphs
-let str = `Hello Привет 你好 123_456`;
-alert( str.match(regexp) ); // 你,好
-
-let regexp = /\p{sc=Han}/gu; // returns Chinese hieroglyphs
-let str = `Hello Привет 你好 123_456`;
-alert( str.match(regexp) ); // 你,好
+let regexp = /\p{sc=Han}/gu
+let str = `Hello Привет 你好 123_456`
+alert(str.match(regexp))  // 你,好
 ```
+**锚点**
 
-- 锚点，插入符号 `^` 匹配文本开头，而美元符号 `$`  则匹配文本末尾。
+- 锚点：插入符号 `^` 匹配文本开头，美元符号 `$`  则匹配文本末尾。锚点属于测试，它们的宽度为零。
 
 ```javascript
-let str1 = "Mary had a little lamb";
-alert( /^Mary/.test(str1) ); // true
-// 该模式 ^Mary 的意思是：字符串开始，接着是 “Mary”
+let str1 = "Mary had a little lamb"
+alert(/^Mary/.test(str1))  // true
 
-let str1 = "it's fleece was white as snow";
-alert( /snow$/.test(str1) ); // true
+let str1 = "it's fleece was white as snow"
+alert(/snow$/.test(str1))  // true
 ```
 
-- 这两个锚点 `^...$` 放在一起被用于测试一个字符串是否完全匹配一个模式。比如，测试用户的输入是否符合正确的格式。
+- 两个锚点 `^...$` 放在一起被用于测试一个字符串是否完全匹配一个模式，比如，测试用户的输入是否符合正确的格式。
 
 ```javascript
-let goodInput = "12:34";
-let badInput = "12:345";
+let goodInput = "12:34"
+let badInput = "12:345"
 
-let regexp = /^\d\d:\d\d$/;
-alert( regexp.test(goodInput) ); // true
-alert( regexp.test(badInput) ); // false
+let regexp = /^\d\d:\d\d$/
+alert(regexp.test(goodInput))  // true
+alert(regexp.test(badInput))  // false
 ```
 
-- 锚点 `^` 和 `$` 属于测试，它们的宽度为零。
 - 通过 `/m` 可以开启多行模式，这仅仅会影响 `^` 和 `$` 锚符的行为。在多行模式下，它们不仅仅匹配文本的开始与结束，还匹配每一行的开始与结束。
 
 ```javascript
 // /^\d+/gm 将匹配每一行的开头数字
 let str = `1st place: Winnie
 2nd place: Piglet
-33rd place: Eeyore`;
+33rd place: Eeyore`
 
-alert( str.match(/^\d+/gm) ); // 1, 2, 33
+alert(str.match(/^\d+/gm))  // 1, 2, 33
 ```
 
-- 默认情况下，锚符 `^` 仅仅匹配文本的开头，在多行模式下，它匹配行的开头。
-- 要寻找新的一行的话，不仅可以使用锚符 `^` 和 `$`，也可以使用换行符 `\n`。它和锚符 `^` 和 `$` 的第一个不同点是它不像锚符那样，它会“消耗”掉 `\n` 并且将其（`\n`）加入到匹配结果中，还有一个不同点，换行符 `\n` 不会匹配字符串结尾。
+- 默认情况下，锚符 `^` 仅匹配文本的开头，在多行模式下，它匹配行的开头。
+- 要寻找新的一行的话，不仅可以使用锚符 `^` 和 `$`，也可以使用换行符 `\n`。它和锚符的第一个不同点是它不像锚符那样，它会消耗掉 `\n` 并且将其加入到匹配结果中，还有一个不同点，换行符 `\n` 不会匹配字符串结尾。
 
 ```javascript
 let str = `1st place: Winnie
 2nd place: Piglet
-33rd place: Eeyore`;
+33rd place: Eeyore`
 
-alert( str.match(/\w+\n/gim) ); // Winnie\n,Piglet\n
+alert(str.match(/\w+\n/gim) )  // Winnie\n,Piglet\n
 ```
 
-- 词边界 `\b` 是一种检查，就像 `^` 和 `$` 一样，当正则表达式引擎（实现搜索正则表达式的程序模块）遇到 `\b` 时，它会检查字符串中的位置是否是词边界。
-- 有三种不同的位置可作为词边界：在字符串开头，如果第一个字符是单词字符 `\w`。在字符串中的两个字符之间，其中一个是单词字符 `\w`，另一个不是。在字符串末尾，如果最后一个字符是单词字符 `\w`。
+**边界词**
+
+- 词边界 `\b` 是一种检查，就像锚点一样，当正则表达式引擎遇到 `\b` 时，它会检查字符串中的位置是否是词边界。
+- 有三种不同的位置可作为词边界：第一种是在字符串开头，如果第一个字符是单词字符 `\w`。第二种是在字符串中的两个字符之间，其中一个是单词字符 `\w`，另一个不是。第三种是在字符串末尾，如果最后一个字符是单词字符 `\w`
 
 ```javascript
-alert( "Hello, Java!".match(/\bJava\b/) );  // Java
-alert( "Hello, JavaScript!".match(/\bJava\b/) );  // null
+alert("Hello, Java!".match(/\bJava\b/))  // Java
+alert("Hello, JavaScript!".match(/\bJava\b/))  // null
 ```
 
 - `\b` 既可以用于单词，也可以用于数字，例如，模式 `\b\d\d\b` 查找独立的两位数。
 - 词边界 `\b` 不适用于非拉丁字母。
+
+**转义**
+
+- 如果要把特殊字符作为常规字符来使用，只需要在它前面加个反斜杠，这种方式也被叫做转义一个字符。
+
+```javascript
+alert("Chapter 5.1".match(/\d\.\d/))  // 5.1
+alert("function g()".match(/g\(\)/))  // g()
+alert("1\\2".match(/\\/))  // \
+alert("/".match(/\//))  // /
+alert("/".match(new RegExp("/")))  // /
+```
+
+- 斜杠符号 `/` 并不是一个特殊符号，但是它被用于在 JS 中开启和关闭正则匹配 `/...pattern.../`，所以也应该转义它。
+- 调用 `new RegExp()` 会获得一个没有反斜杠的字符串，要修复这个问题，需要双斜杠，因为引用会把 `\\` 变为 `\`
 - 一个反斜杠 `\`  是用来表示匹配字符类的，所以它是一个特殊字符。
-- 这里是包含所有特殊字符的列表：`[ \ ^ $ . | ? * + ( )`
-- 如果要把特殊字符作为常规字符来使用，只需要在它前面加个反斜杠。这种方式也被叫做“转义一个字符”。
+
+**集合与范围**
+
+- 在方括号 `[…]` 中的几个字符或字符类意味着搜索给定的字符中的任意一个这被叫做一个集合。
 
 ```javascript
-alert( "Chapter 5.1".match(/\d\.\d/) );  // 5.1
-alert( "function g()".match(/g\(\)/) );  // "g()"
-alert( "1\\2".match(/\\/) );  // '\'
-alert( "/".match(/\//) );  // '/'
-alert( "/".match(new RegExp("/")) );  // '/'
+// 查找 [t 或 m]，然后再匹配 op
+alert("Mop top".match(/[tm]op/gi))  // Mop, top
+
+// 查找 V，然后匹配 [o 或 i]，之后再匹配 la
+alert("Voila".match(/V[oi]la/))  // null
 ```
 
-- 斜杠符号 `/` 并不是一个特殊符号，但是它被用于在 Javascript 中开启和关闭正则匹配：`/...pattern.../`，所以也应该转义它。
-- 所以调用 `new RegExp` 会获得一个没有反斜杠的字符串。要修复这个问题，需要双斜杠，因为引用会把 `\\` 变为 `\`
-- 在方括号 `[…]` 中的几个字符或者字符类意味着“搜索给定的字符中的任意一个”这被叫做一个集合。
+- 尽管在集合中有多个字符，但它们在匹配中只会对应其中的一个。
+- 方括号也可以包含字符范围，比如说 `[a-z]` 会匹配从 a 到 z 范围内的字母，`[0-5]` 表示从 0 到 5 的数字。
 
 ```javascript
-// 查找 [t 或者 m]，然后再匹配 “op”
-alert( "Mop top".match(/[tm]op/gi) );  // "Mop", "top"
-
-// 查找 “V”，然后匹配 [o 或者 i]，之后再匹配 “la”
-alert( "Voila".match(/V[oi]la/) );  // null，并没有匹配上
+alert("Exception 0xAF".match(/x[0-9A-F][0-9A-F]/g))  // xAF
 ```
 
-- 请注意尽管在集合中有多个字符，但它们在匹配中只会对应其中的一个。
-- 方括号也可以包含字符范围，比如说，`[a-z]` 会匹配从 a 到 z 范围内的字母，`[0-5]` 表示从 0 到 5 的数字。
+- `[0-9A-F]` 表示两个范围：搜索一个字符，满足数字 0 到 9 或字母 A 到 F
+- 可以在 `[…]` 里面使用字符类，`\d` 和 `[0-9]` 相同，`\w` 和 `[a-zA-Z0-9_]` 相同，`\s` 和 `[\t\n\v\f\r]` 外加少量罕见的 unicode 空格字符相同。
+- 更通用的模式，该模式可以查找任何语言中的文字字符使用 Unicode 属性：`[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]`
 
 ```javascript
-alert( "Exception 0xAF".match(/x[0-9A-F][0-9A-F]/g) );  // xAF
-```
-
-- `[0-9A-F]` 表示两个范围：搜索一个字符，满足数字 0 到 9 或字母 A 到 F。
-- 也可以在 `[…]` 里面使用字符类，`\d` 和 `[0-9]` 相同，`\w` 和 `[a-zA-Z0-9_]` 相同，`\s` 和 `[\t\n\v\f\r]` 外加少量罕见的 unicode 空格字符相同。
-- 可以编写一个更通用的模式，该模式可以查找任何语言中的文字字符。这很容易想到就 Unicode 属性：`[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]`
-
-```javascript
-let regexp = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu;
+let regexp = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu
 
 let str = `Hi 你好 12`;
 
-// finds all letters and digits:
-alert( str.match(regexp) ); // H,i,你,好,1,2
+alert( str.match(regexp) )  // H,i,你,好,1,2
 ```
 
-- 类似 `[^…]`的“排除”范围匹配，通过在匹配查询的开头添加插入符号 `^` 来表示，它会匹配所有除了给定的字符之外的任意字符。
+- 类似 `[^…]`的排除范围匹配，通过在匹配查询的开头添加插入符号 `^` 来表示，它会匹配所有除了给定的字符之外的任意字符。
 
 ```javascript
-alert( "alice15@gmail.com".match(/[^\d\sA-Z]/gi) );  // @ and .
+alert("alice15 @gmail.com".match(/[^\d\sA-Z]/gi))  // @ .
 ```
 
 - 在方括号表示中，绝大多数特殊字符可以在不转义的情况下使用。
 
 ```javascript
-// 并不需要转义
 let reg = /[-().^+]/g;
 
-alert( "1 + 2 - 3".match(reg) );  // 匹配 +，-
+alert("1 + 2 - 3".match(reg))  // + -
 ```
 
-- 如果集合中有代理对（surrogate pairs），则需要标志 `u` 以使其正常工作。
+- 如果集合中有代理对，则需要标志 `/u` 以使其正常工作。
+- 没有标志 `/u` 的代理对被视为两个字符。
 
 ```javascript
-alert( '𝒳'.match(/[𝒳𝒴]/u) );  // 𝒳
+alert('𝒳'.match(/[𝒳𝒴]/u))  // 𝒳
 ```
 
-- 没有标志 `u` 的代理对被视为两个字符。
-- 用来形容所需要的数量的词被称为量词，最明显的量词便是一对引号间的数字：`{n}`。在一个字符（或一个字符类等等）后跟着一个量词，用来指出具体需要的数量。`\d{5}` 表示 5 位的数字，如同 `\d\d\d\d\d` 
+**量词**
+
+- 用来形容所需要的数量的词被称为量词，最明显的量词便是一对引号间的数字 `{n}`。在一个字符后跟着一个量词，用来指出具体需要的数量，`\d{5}` 表示 5 位的数字，如同 `\d\d\d\d\d`
 
 ```javascript
-alert( "I'm 12345 years old".match(/\d{5}/) );  // "12345"
+alert("I'm 12345 years old".match(/\d{5}/))  // 12345
 ```
 
-- 某个范围的位数：`{3,5}`
+- 某个范围的位数 `{3,5}`
 
 ```javascript
-alert( "I'm not 12, but 1234 years old".match(/\d{3,5}/) );  // "1234"
+alert("I'm not 12, but 1234 years old".match(/\d{3,5}/))  // 1234
 ```
 
-- 可以省略上限，那么正则表达式 `\d{3,}` 就会查找位数大于或等于 3 的数字。
-- 大多数常用的量词都可以有缩写：
-- `+`，代表一个或多个，相当于 `{1,}`
-
-```javascript
-let str = "+7(903)-123-45-67";
-
-alert( str.match(/\d+/g) );  // 7,903,123,45,67
-```
-
+- 可以省略上限，那么正则表达式 `\d{3,}` 就会查找位数大于或等于 3 的数字。大多数常用的量词都可以有缩写，如下。
 - `?` 代表零个或一个，相当于 `{0,1}`
 
 ```javascript
-let str = "Should I write color or colour?";
+let str = "Should I write color or colour?"
 
-alert( str.match(/colou?r/g) );  // color, colour
+alert(str.match(/colou?r/g))  // color, colour
 ```
 
 - `*`代表着零个或多个，相当于 `{0,}`
 
 ```javascript
-alert( "100 10 1".match(/\d0*/g) );  // 100, 10, 1
+alert("100 10 1".match(/\d0*/g))  // 100, 10, 1
 ```
 
-- 贪婪搜索：为了查找到一个匹配项，正则表达式引擎采用了以下算法，对于字符串中的每一个字符用这个模式来匹配此字符若无匹配，移至下一个字符。在贪婪模式下（默认情况下），量词都会尽可能地重复多次。
-- 懒惰模式：懒惰模式中的量词与贪婪模式中的是相反的，它想要“重复最少次数”。能够通过在量词之后添加一个问号 `?` 来启用它。通常，一个问号 `?` 就是一个它本身的量词（0 或 1），但如果添加另一个量词（甚至可以是它自己），就会有不同的意思，它将匹配的模式从贪婪转为懒惰。懒惰模式只能够通过带 `?` 的量词启用，其它的量词依旧保持贪婪模式。
-- 模式的一部分可以用括号括起来 (...)，这称为捕获组（capturing group）这有两个影响：允许将匹配的一部分作为结果数组中的单独项。如果将量词放在括号后，则它将括号视为一个整体。
+- `+` 代表一个或多个，相当于 `{1,}`
 
 ```javascript
-alert( 'Gogogo now!'.match(/(go)+/i) );  // "Gogogo"
+let str = "+7(903)-123-45-67"
 
-let regexp = /(\w+\.)+\w+/g;
-alert( "site.com my.site.com".match(regexp) );  // site.com,my.site.com
+alert(str.match(/\d+/g))  // 7,903,123,45,67
+```
 
-let regexp = /[-.\w]+@([\w-]+\.)+[\w-]+/g;
-alert("my@mail.com @ his@site.com.uk".match(regexp));  // my@mail.com, his@site.com.uk
+**贪婪量词与惰性量词**
+
+- 贪婪搜索：为了查找到一个匹配项，正则表达式引擎采用了以下算法，对于字符串中的每一个字符用这个模式来匹配此字符若无匹配，移至下一个字符。在贪婪模式下（默认），量词都会尽可能地重复多次。
+- 懒惰模式：懒惰模式中的量词与贪婪模式中的是相反的，它想要重复最少次数。能够通过在量词之后添加一个问号 `?` 来启用它。通常，一个问号 `?` 就是一个它本身的量词（0 或 1），但如果添加另一个量词（甚至可以是它自己），就会有不同的意思，它将匹配的模式从贪婪转为懒惰。懒惰模式只能够通过带 `?` 的量词启用，其它的量词依旧保持贪婪模式。
+
+**捕获组**
+
+- 模式的一部分可以用括号括起来 `(...)`，这称为捕获组，将允许匹配的一部分作为结果数组中的单独项，如果将量词放在括号后，则它将括号视为一个整体。
+
+```javascript
+alert('Gogogo now!'.match(/(go)+/i) )  // Gogogo
+
+let regexp = /(\w+\.)+\w+/g
+alert("site.com my.site.com".match(regexp) )  // site.com,my.site.com
+
+let regexp = /[-.\w]+@([\w-]+\.)+[\w-]+/g
+alert("my@mail.com @ his@site.com.uk".match(regexp))  // my@mail.com, his@site.com.uk
 ```
 
 - 括号从左到右编号，正则引擎会记住它们各自匹配的内容，并允许在结果中获得它。
 
 ```javascript
-let str = '<h1>Hello, world!</h1>';
+let str = '<h1>Hello, world!</h1>'
 
 let tag = str.match(/<(.*?)>/);
 
-alert( tag[0] );  // <h1>
-alert( tag[1] );  // h1
+alert(tag[0])  // <h1>
+alert(tag[1])  // h1
 ```
 
 - 括号可以嵌套，在这种情况下，编号也从左到右。
 
 ```javascript
-let str = '<span class="my">';
+let str = '<span class="my">'
 
-let regexp = /<(([a-z]+)\s*([^>]*))>/;
+let regexp = /<(([a-z]+)\s*([^>]*))>/
 
-let result = str.match(regexp);
-alert(result[0]);  // <span class="my">
-alert(result[1]);  // span class="my"
-alert(result[2]);  // span
-alert(result[3]);  // class="my"
+let result = str.match(regexp)
+
+alert(result[0])  // <span class="my">
+alert(result[1])  // span class="my"
+alert(result[2])  // span
+alert(result[3])  // class="my"
 ```
 
-- 即使组是可选的并且在匹配项中不存在（例如，具有数量词 (...)?），也存在相应的 `result` 数组项，并且等于 `undefined`
+- 即使组是可选的并且在匹配项中不存在（例如，具有数量词 (...)?），也存在相应的 result 数组项，并且等于 undefined
 
 ```javascript
-let match = 'a'.match(/a(z)?(c)?/);
+let match = 'a'.match(/a(z)?(c)?/)
 
-alert( match.length );  // 3
-alert( match[0] );  // a（完全匹配）
-alert( match[1] );  // undefined
-alert( match[2] );  // undefined
+alert(match.length)  // 3
+alert(match[0])  // a（完全匹配）
+alert(match[1])  // undefined
+alert(match[2])  // undefined
 
 let match = 'ac'.match(/a(z)?(c)?/)
 
-alert( match.length );  // 3
-alert( match[0] );  // ac（完全匹配）
-alert( match[1] );  // undefined，因为 (z)? 没匹配项
-alert( match[2] );  // c
+alert(match.length)  // 3
+alert(match[0])  // ac（完全匹配）
+alert(match[1])  // undefined，因为 (z)? 没匹配项
+alert(match[2])  // c
 ```
 
-- 搜索所有具有组的匹配项：`matchAll`
-- 当搜索所有匹配项（标志 g）时，`match` 方法不会返回组的内容。
+- 搜索所有具有组的匹配项 `.matchAll()`
+- 当搜索所有匹配项（标志 g）时，`.match()` 方法不会返回组的内容。
 
 ```javascript
-let str = '<h1> <h2>';
+let str = '<h1> <h2>'
 
-let tags = str.match(/<(.*?)>/g);
+let tags = str.match(/<(.*?)>/g)
 
-alert( tags );  // <h1>,<h2>
+alert(tags)  // <h1>,<h2>
 // 结果是一个匹配数组，但没有每个匹配项的详细信息
 ```
 
+- 由 `.matchAll()` 所返回的每个匹配，其格式与不带标志 `/g` 的 `.match()` 所返回的格式相同，它是一个具有额外的 index（字符串中的匹配索引）属性和 input（源字符串）的数组。
+- 调用 `.matchAll()` 不会执行搜索，相反它返回一个可迭代的对象，最初没有结果。每当对它进行迭代时才会执行搜索，例如在循环中。因此这将根据需要找到尽可能多的结果，而不是全部。
+
 ```javascript
-let results = '<h1> <h2>'.matchAll(/<(.*?)>/gi);
+let results = '<h1> <h2>'.matchAll(/<(.*?)>/gi)
 
-// results - is not an array, but an iterable object
-alert(results);  // [object RegExp String Iterator]
+alert(results)  // [object RegExp String Iterator]
 
-alert(results[0]);  // undefined (*)
+alert(results[0])  // undefined (*)
 
-results = Array.from(results);  // let's turn it into array
+results = Array.from(results)  // let's turn it into array
 
-alert(results[0]);  // <h1>,h1 (1st tag)
-alert(results[1]);  // <h2>,h2 (2nd tag)
+alert(results[0])  // <h1>,h1 (1st tag)
+alert(results[1])  // <h2>,h2 (2nd tag)
 ```
 
-- 由 `matchAll` 所返回的每个匹配，其格式与不带标志 `g` 的 `match` 所返回的格式相同：它是一个具有额外的 `index`（字符串中的匹配索引）属性和 `input`（源字符串）的数组。
-- 调用 `matchAll` 不会执行搜索。相反它返回一个可迭代的对象，最初没有结果。每当对它进行迭代时才会执行搜索，例如在循环中。因此这将根据需要找到尽可能多的结果，而不是全部。
-- 计算括号很不方便，但有一个更好的选择：给括号起个名字，是通过在开始括号之后立即放置 `?<name>` 来完成的。
+- 计算括号很不方便，但有一个更好的选择，即给括号起个名字，是通过在开始括号之后立即放置 `?<name>` 来完成的。
 
 ```javascript
-let dateRegexp = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/;
+let dateRegexp = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/
 let str = "2019-04-30";
 
-let groups = str.match(dateRegexp).groups;
+let groups = str.match(dateRegexp).groups
 
-alert(groups.year);  // 2019
-alert(groups.month);  // 04
-alert(groups.day);  // 30
+alert(groups.year)  // 2019
+alert(groups.month)  // 04
+alert(groups.day)  // 30
 ```
 
 ```javascript
-let dateRegexp = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/g;
+let dateRegexp = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/g
 
-let str = "2019-10-30 2020-01_01";
+let str = "2019-10-30 2020-01_01"
 
-let results = str.matchAll(dateRegexp);
+let results = str.matchAll(dateRegexp)
 
 for(let result of results) {
-  let {year, month, day} = result.groups;
+  let {year, month, day} = result.groups
 
-  alert(`${day}.${month}.${year}`);
+  alert(`${day}.${month}.${year}`)
   // 第一个 alert：30.10.2019
-  // 第二个：01.01.2020
+  // 第二个 01.01.2020
 }
 ```
 
-- 方法 `str.replace(regexp, replacement)` 用 `replacement` 替换 `str` 中匹配 `regexp` 的所有捕获组。这使用 `$n` 来完成，其中 `n` 是组号。
+- 方法 `str.replace(regexp, replacement)` 用 replacement 替换 str 中匹配 regexp 的所有捕获组。这使用 `$n` 来完成，其中 n 是组号，代表第 n 个捕获组。
 
 ```javascript
-let str = "John Bull";
-let regexp = /(\w+) (\w+)/;
+let str = "John Bull"
+let regexp = /(\w+) (\w+)/
 
-alert( str.replace(regexp, '$2, $1') );  // Bull, John
+alert(str.replace(regexp, '$2, $1'))  // Bull, John
 ```
 
 - 对于命名括号，引用为 `$<name>`
 
 ```javascript
-let regexp = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/g;
+let regexp = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/g
 
-let str = "2019-10-30, 2020-01_01";
+let str = "2019-10-30, 2020-01_01"
 
-alert( str.replace(regexp, '$<day>.$<month>.$<year>') );
+alert(str.replace(regexp, '$<day>.$<month>.$<year>'))
 // 30.10.2019, 01.01.2020
 ```
 
-- 非捕获组 `?:`   有时需要括号才能正确应用量词，但不希望它们的内容出现在结果中，可以通过在开头添加 `?:` 来排除组。
+- 非捕获组 `?:` 有时需要括号才能正确应用量词，但不希望它们的内容出现在结果中，可以通过在开头添加 `?:` 来排除组。
 
 ```javascript
-let str = "Gogogo John!";
+let str = "Gogogo John!"
 
 // ?: 从捕获组中排除 'go'
 let regexp = /(?:go)+ (\w+)/i;
 
-let result = str.match(regexp);
+let result = str.match(regexp)
 
-alert( result[0] ); // Gogogo John（完全匹配）
-alert( result[1] ); // John
-alert( result.length ); // 2（数组中没有更多项）
+alert(result[0])  // Gogogo John（完全匹配）
+alert(result[1])  // John
+alert(result.length)  // 2
 ```
 
-- 按编号反向引用：`\N`，可以使用 `\N` 在模式中引用一个组，其中 `N` 是组号。
+**反向引用**
+
+- 按编号反向引用 `\N`，可以使用 `\N` 在模式中引用一个组，其中 N 是组号。
 
 ```javascript
-let str = `He said: "She's the one!".`;
+let str = `He said: "She's the one!".`
 
-let regexp = /(['"])(.*?)\1/g;
+let regexp = /(['"])(.*?)\1/g
 
-alert( str.match(regexp) );  // "She's the one!"
+alert(str.match(regexp))  // "She's the one!"
 ```
 
-- 不要搞混了： 在模式中用 `\1`，在替换项中用：`$1`
-- 按命名反向引用：`\k<name>`，要引用命名组，可以使用：`\k<name>`
+- 在模式中用 `\1`，在替换项中用 `$1`
+- 按命名反向引用 `\k<name>`，要引用命名组，可以使用 `\k<name>`
 
 ```javascript
-let str = `He said: "She's the one!".`;
+let str = `He said: "She's the one!".`
 
-let regexp = /(?<quote>['"])(.*?)\k<quote>/g;
+let regexp = /(?<quote>['"])(.*?)\k<quote>/g
 
-alert( str.match(regexp) );  // "She's the one!"
+alert(str.match(regexp))  // "She's the one!"
 ```
 
-- 选择是正则表达式中的一个术语，实际上是一个简单的“或”。
+**选择 OR**
+
+- 选择是正则表达式中的一个术语，实际上是一个简单的或。
 
 ```javascript
-let reg = /html|php|css|java(script)?/gi;
+let reg = /html|php|css|java(script)?/gi
 
 let str = "First HTML appeared, then CSS, then JavaScript";
 
-alert( str.match(reg) );  // 'HTML', 'CSS', 'JavaScript'
+alert(str.match(reg))  // HTML,CSS,JavaScript
 ```
 
 - 选择符号并非在字符级别生效，而是在表达式级别。正则表达式 `A|B|C` 意思是命中 A、B 或 C 其一均可。
 
 ```javascript
-let reg = /([01]\d|2[0-3]):[0-5]\d/g;
+let reg = /([01]\d|2[0-3]):[0-5]\d/g
 
-alert("00:00 10:10 23:59 25:99 1:2".match(reg));  // 00:00,10:10,23:59
+alert("00:00 10:10 23:59 25:99 1:2".match(reg))  // 00:00,10:10,23:59
 ```
 
-- 前瞻断言：`x(?=y)`，它表示：仅在后面是 y 的情况匹配 x
+**断言**
+
+- 前瞻断言 `x(?=y)`，它表示仅在后面是 y 的情况匹配 x
 
 ```javascript
-let str = "1 turkey costs 30€";
+let str = "1 turkey costs 30€"
 
-alert( str.match(/\d+(?=€)/) );  // 30 （正确地跳过了单个的数字 1）
+alert(str.match(/\d+(?=€)/))  // 30（正确地跳过了单个的数字 1）
 ```
 
-- 前瞻否定断言：`x(?!y)`，意思是：查找 x, 但是仅在不被 y 跟随的情况下匹配成功。
+- 前瞻否定断言 `x(?!y)`，意思是查找 x, 但是仅在不被 y 跟随的情况下匹配成功。
 
 ```javascript
-let str = "2 turkeys cost 60€";
+let str = "2 turkeys cost 60€"
 
-alert( str.match(/\d+(?!€)/) );  // 2（正确地跳过了价格）
+alert(str.match(/\d+(?!€)/))  // 2（正确地跳过了价格）
 ```
 
-- 后瞻断言也是类似的，只不过它是在相反的方向上进行条件判断。也就是说，它只允许匹配前面有特定字符串的模式。
-- 后瞻肯定断言：`(?<=y)x`, 匹配 x, 仅在前面是 y 的情况。后瞻否定断言：`(?<!y)x`, 匹配 x, 仅在前面不是 y 的情况。
-- 但是如果想要捕捉整个环视表达式或其中的一部分，那也是有可能的，只需要将其包裹在另加的括号中。
+- 后瞻断言也是类似的，只不过它是在相反的方向上进行条件判断。它只允许匹配前面有特定字符串的模式。
+- 后瞻肯定断言 `(?<=y)x`, 匹配 x 仅在前面是 y 的情况。
+- 后瞻否定断言 `(?<!y)x`, 匹配 x, 仅在前面不是 y 的情况。
+- 如果想要捕捉整个环视表达式或其中的一部分，那也是有可能的，只需要将其包裹在另加的括号中。
 
 ```javascript
-let str = "1 turkey costs 30€";
-let reg = /\d+(?=(€|kr))/;  // €|kr 两边有额外的括号
+let str = "1 turkey costs 30€"
+let reg = /\d+(?=(€|kr))/  // €|kr 两边有额外的括号
 
-alert( str.match(reg) );  // 30, €
+alert(str.match(reg))  // 30, €
 ```
 
-- 灾难性回溯（catastrophic backtracking），又译作回溯陷阱，有 2 种处理它的思路：重写正则表达式，尽可能减少其中排列组合的数量；可以使用前瞻断言来防止回溯。
-- y 标志允许在源字符串中的指定位置执行搜索。
-- `regexp.exec` 是 `str.matchAll` 方法的替代方法，与其他方法不同可以设置自己的 `lastIndex`，从给定位置开始搜索。
+**回溯**
+
+- 灾难性回溯，又译作回溯陷阱，有 2 种处理它的思路：一是，重写正则表达式，尽可能减少其中排列组合的数量；二是，使用前瞻断言来防止回溯。
+
+**粘性修饰符**
+
+- `/y` 标志允许在源字符串中的指定位置执行搜索。
+- `regexp.exec()` 是 `str.matchAll()` 方法的替代方法，与其他方法不同可以设置自己的 lastIndex，从给定位置开始搜索。
 
 ```javascript
-let str = 'let varName = "value"';
+let str = 'let varName = "value"'
+let regexp = /\w+/g  // 如果没有标志 g，属性 lastIndex 会被忽略
+regexp.lastIndex = 4
+let word = regexp.exec(str)
 
-let regexp = /\w+/g;  // 如果没有标志 "g"，属性 lastIndex 会被忽略
-
-regexp.lastIndex = 4;
-
-let word = regexp.exec(str);
-alert(word);  // varName
+alert(word)  // varName
 ```
 
-- 标记 y 使 `regexp.exec` 正好在 `lastIndex` 位置，而不是在它之前，也不是在它之后。
+- 标记 `/y` 使 `regexp.exec()` 正好在 lastIndex 位置，而不是在它之前，也不是在它之后。
 
 ```javascript
-let str = 'let varName = "value"';
+let str = 'let varName = "value"'
+let regexp = /\w+/y
 
-let regexp = /\w+/y;
+regexp.lastIndex = 3
+alert(regexp.exec(str))  // null（位置 3 有一个空格，不是单词）
 
-regexp.lastIndex = 3;
-alert( regexp.exec(str) );  // null（位置 3 有一个空格，不是单词）
-
-regexp.lastIndex = 4;
-alert( regexp.exec(str) );  // varName（在位置 4 的单词）
+regexp.lastIndex = 4
+alert(regexp.exec(str))  // varName（在位置 4 的单词）
 ```
 
-- `str.match(regexp)` 方法在字符串 `str` 中找到匹配 `regexp` 的字符。它有 3 种模式：如果 `regexp` 不带有 `g` 标记，则它以数组的形式返回第一个匹配项，其中包含分组和属性 `index`（匹配项的位置）、`input`（输入字符串，等于 `str`）。如果 `regexp` 带有 `g` 标记，则它将所有匹配项的数组作为字符串返回，而不包含分组和其他详细信息。如果没有匹配项，则无论是否带有标记 `g`，都将返回 `null`。
-- 方法 `str.matchAll(regexp)` 是 `str.match` 变体，主要用来搜索所有组的所有匹配项。与 `match` 相比有 3 个区别：它返回包含匹配项的可迭代对象，而不是数组，可以用 `Array.from` 从中得到一个常规数组。每个匹配项均以包含分组的数组形式返回（返回格式与不带 `g` 标记的 `str.match` 相同）。如果没有结果，则返回的不是 `null`，而是一个空的可迭代对象。
+**正则与字符串的方法**
+
+- `str.match(regexp)` 方法在字符串 str 中找到匹配 regexp 的字符。它有 3 种模式：
+  <br />（1）如果 regexp 不带有 g 标记，则它以数组的形式返回第一个匹配项，其中包含分组和属性 index（匹配项的位置）、input（输入字符串，等于 str）；
+  <br />（2）如果 regexp 带有 g 标记，则它将所有匹配项的数组作为字符串返回，而不包含分组和其他详细信息；
+  <br />（3）如果没有匹配项，则无论是否带有标记 g，都将返回 null
+- `str.matchAll(regexp)` 是 `str.match()` 变体，主要用来搜索所有组的所有匹配项。与 match 相比有 3 个区别：
+  <br />（1）它返回包含匹配项的可迭代对象，而不是数组，可以用 `Array.from` 从中得到一个常规数组；
+  <br />（2）每个匹配项均以包含分组的数组形式返回（返回格式与不带 g 标记的 `str.match` 相同）；
+  <br />（3）如果没有结果，则返回的不是 `null`，而是一个空的可迭代对象。
 - `str.split(regexp|substr, limit)`，使用正则表达式（或子字符串）作为分隔符来分割字符串。
-- `str.search(regexp)`，返回第一个匹配项的位置，如果未找到，则返回 -1、重要限制：`search` 仅查找第一个匹配项。
-- `str.replace(str|regexp, str|func)`，这是用于搜索和替换的通用方法，是最有用的方法之一。当 `replace` 的第一个参数是字符串时，它仅替换第一个匹配项，应使用带 `g` 标记的正则表达式 。第二个参数是一个替代字符串，对于需要“智能”替换的场景，第二个参数可以是一个函数。
+- `str.search(regexp)`，返回第一个匹配项的位置，如果未找到，则返回 -1、重要限制 `search()` 仅查找第一个匹配项。
+- `str.replace(str|regexp, str|func)`，这是用于搜索和替换的通用方法，是最有用的方法之一。当 `replace()` 的第一个参数是字符串时，它仅替换第一个匹配项，应使用带 g 标记的正则表达式 。第二个参数是一个替代字符串，对于需要智能替换的场景，第二个参数可以是一个函数。
 
 ```javascript
-let str = "html and css";
+let str = "html and css"
 
-let result = str.replace(/html|css/gi, str => str.toUpperCase());
+let result = str.replace(/html|css/gi, str => str.toUpperCase())
 
-alert(result);  // HTML and CSS
+alert(result)  // HTML and CSS
 ```
 
-- `regexp.exec(str)` 方法返回字符串 `str` 中的 `regexp` 匹配项。与以前的方法不同，它是在正则表达式而不是字符串上调用的。如果没有 `g`，那么 `regexp.exec(str)` 返回的第一个匹配与 `str.match(regexp)` 完全相同。如果有标记 `g`，那么用 `regexp.exec(str)` 会返回第一个匹配项，并将紧随其后的位置保存在属性 `regexp.lastIndex` 中。下一次同样的调用会从位置 `regexp.lastIndex` 开始搜索，返回下一个匹配项，并将其后的位置保存在 `regexp.lastIndex` 中。…以此类推。如果没有匹配项，则 `regexp.exec` 返回 `null`，并将 `regexp.lastIndex` 重置为 0。 重复调用会挨个返回所有的匹配项，属性 `regexp.lastIndex` 用来跟踪当前的搜索位置。
-- `regexp.test(str)` 查找匹配项，然后返回 `true/false` 表示是否存在。如果正则表达式带有标记 `g`，则 `regexp.test` 从 `regexp.lastIndex` 属性中查找，并更新此属性，就像 `regexp.exec` 一样。
-- 如果在不同的源字符串上应用相同的全局表达式，可能会出现错误的结果，因为 `regexp.test` 的调用会增加 `regexp.lastIndex` 属性值，因此在另一个字符串中的搜索可能是从非 0 位置开始的。
+- `regexp.exec(str)` 方法返回字符串 str 中的 regexp 匹配项。与以前的方法不同，它是在正则表达式而不是字符串上调用的。如果没有 g，那么返回的第一个匹配与 `str.match(regexp)` 完全相同。如果有标记 g，那么会返回第一个匹配项，并将紧随其后的位置保存在属性 `regexp.lastIndex` 中。下一次同样的调用会从位置 `regexp.lastIndex` 开始搜索，返回下一个匹配项，并将其后的位置保存在 `regexp.lastIndex` 中，以此类推。如果没有匹配项，则返回 null，并将 `regexp.lastIndex` 重置为 0。 重复调用会挨个返回所有的匹配项，属性 `regexp.lastIndex` 用来跟踪当前的搜索位置。
+- `regexp.test(str)` 查找匹配项，然后返回 true/false 表示是否存在。如果正则表达式带有标记 g，则从 `regexp.lastIndex` 属性中查找，并更新此属性，就像 `regexp.exec()` 一样。
+- 如果在不同的源字符串上应用相同的全局表达式，可能会出现错误的结果，因为 `regexp.test()` 的调用会增加 `regexp.lastIndex` 属性值，因此在另一个字符串中的搜索可能是从非 0 位置开始的。
 
 ## 四、Ajax
 
