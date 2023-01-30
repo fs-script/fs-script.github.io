@@ -155,7 +155,7 @@ next:
 | 组合选择器 | 描述 |
 | --- | --- |
 | 相邻兄弟选择器 | `A + B`　B 选择的元素在水平方向上紧随 A 选择的元素 |
-| 普通兄弟选择器 | A`B　A 选择的元素在 B 选择的元素之前，但不一定紧接 |
+| 普通兄弟选择器 | `AˋB`　A 选择的元素在 B 选择的元素之前，但不一定紧接 |
 | 子选择器 | `A > B`　B 是 A 的直接子元素 |
 | 后代选择器 | `A B`　B 是 A 的后代，不一定是直接子代 |
 
@@ -164,19 +164,19 @@ next:
 | 属性 | 值 | 描述 |
 | --- | --- | --- |
 | background： |  | 背景 |
-| background-color | rgba/hsla/hex | 背景颜色 |
-| background-image | url() | 背景图像 |
+| > background-color | rgba/hsla/hex | 背景颜色 |
+| > background-image | url() | 背景图像 |
 |  | linear-gradient(1,2,3...) | 上下线性渐变色 |
 |  | linear-gradient(to right,1,2,3...) | 左右线性渐变色 |
 |  | linear-gradient(to bottom right,1,2,3...) | 对角线线性渐变色 |
 |  | radial-gradient(circle, 1, 2, 3...) | 径向渐变均匀间隔 |
 |  | radial-gradient(1 5%, 2 15%, 3 25%...) | 径向渐变不同间距 |
-| background-repeat | repeat-x、repeat-y、space、round、no-repeat | 背景图像重复 |
-| background-attachment | scroll，fixed，local | 背景图像滚动方式 |
-| background-position (-x/-y) | top、right、bottom、left、% | 背景图像位置 |
-| background-size | px、%、contain、cover | 背景图像大小 |
-| background-origin | border-box、padding-box、content-box | 背景图像起始位置 |
-| background-clip | border-box、padding-box、content-box、text | 背景图像绘制区域 |
+| > background-repeat | repeat-x、repeat-y、space、round、no-repeat | 背景图像重复 |
+| > background-attachment | scroll，fixed，local | 背景图像滚动方式 |
+| > background-position (-x/-y) | top、right、bottom、left、% | 背景图像位置 |
+| > background-size | px、%、contain、cover | 背景图像大小 |
+| > background-origin | border-box、padding-box、content-box | 背景图像起始位置 |
+| > background-clip | border-box、padding-box、content-box、text | 背景图像绘制区域 |
 | opacity | 0-1 | 不透明度，子元素将继承 |
 | filter |  | 将滤镜添加给元素 |
 | backdrop-filter |  | 为元素后面的区域添加滤镜效果 |
@@ -188,9 +188,9 @@ next:
 | --- | --- | --- |
 | border： |  | 边框 |
 | -top、-right、-bottom、-left |  |  |
-| border-width | px | 宽度 |
-| border-style | dotted、dashed、solid、double、groove、ridge、inset、outset、none、hidden | 样式 |
-| border-color | rgba/hsla/hex | 颜色 |
+| > border-width | px | 宽度 |
+| > border-style | dotted、dashed、solid、double、groove、ridge、inset、outset、none、hidden | 样式 |
+| > border-color | rgba/hsla/hex | 颜色 |
 | border-image | url() | 绘图 |
 | border-block | px | 边界 |
 | border-radius | px | 圆角 |
@@ -219,10 +219,10 @@ next:
 | 属性 | 值 | 描述 |
 | --- | --- | --- |
 | outline： |  | 轮廓 |
-| outline-style | 同border-style | 轮廓样式 |
-| outline-width | px | 轮廓宽度 |
-| outline-offset | px | 轮廓偏移 (间隙) |
-| outline-color | rgba/hsla/hex | 轮廓颜色 |
+| > outline-style | 同border-style | 轮廓样式 |
+| > outline-width | px | 轮廓宽度 |
+| > outline-offset | px | 轮廓偏移 (间隙) |
+| > outline-color | rgba/hsla/hex | 轮廓颜色 |
 
 ### 12 - 文本
 
@@ -241,19 +241,19 @@ next:
 | word-spacing | px | 字间距 |
 | letter-spacing | px | 字母间距 |
 | font： |  | 字体 |
-| font-family | "黑体" | 字体 |
-| font-style | italic | 字体样式 |
-| font-weight | bold、lighter、bolder、number | 字体粗细 |
-| font-size | px、em、%、vw、vh | 字体大小 |
+| > font-family | "黑体" | 字体 |
+| > font-style | italic | 字体样式 |
+| > font-weight | bold、lighter、bolder、number | 字体粗细 |
+| > font-size | px、em、%、vw、vh | 字体大小 |
 
 ### 13 - 列表
 
 | 属性 | 值 | 描述 |
 | --- | --- | --- |
 | list-style： |  |  |
-| list-style-type | circle、square、upper-roman、lower-alpha | 项目标记 |
-| list-style-image | url() | 项目图像标记 |
-| list-style-position | outside、inside | 项目标记定位 |
+| > list-style-type | circle、square、upper-roman、lower-alpha | 项目标记 |
+| > list-style-image | url() | 项目图像标记 |
+| > list-style-position | outside、inside | 项目标记定位 |
 
 ### 14 - 表格
 
@@ -270,16 +270,16 @@ next:
 | --- | --- | --- |
 | display |  | 元素的内部和外部显示类型，<br />外部指块级或内联，内部指子元素 |
 |  | none | 隐藏后元素不占位 |
-| outside: | block | 块级元素 |
+| > outside: | block | 块级元素 |
 |  | inline | 行内元素 |
 |  | run-in | 取决于相邻元素的形态 |
-| inside: | flow | 流式布局 |
+| > inside: | flow | 流式布局 |
 |  | flow-root |  |
 |  | table | 块级表格形式 |
 |  | flex | 弹性布局 |
 |  | grid | 网格布局 |
-| listitem: | list-item | 列表形式 |
-| legacy: | inline-block |  |
+| > listitem: | list-item | 列表形式 |
+| > legacy: | inline-block |  |
 |  | inline-table |  |
 |  | inline-flex |  |
 |  | inline-grid |  |
@@ -422,11 +422,11 @@ next:
 
 | 属性 | 值 | 描述 |
 | --- | --- | --- |
-| transition： | 属性，时间 | 可以指定多项过渡时间 |
-| transition-property | all | 指定过渡属性名称 |
-| transition-duration | s | 过渡动画所需时间 |
-| transition-timing-function | ease、ease-in、ease-out、linear、step-start、step-end、steps | 变化函数速度曲线 |
-| transition-delay | s | 开始前的等待时间 |
+| transition： | 属性，时间，函数 | 可以指定多项过渡时间 |
+| > transition-property | all | 指定过渡属性名称 |
+| > transition-duration | s | 过渡动画所需时间 |
+| > transition-timing-function | ease、ease-in、ease-out、linear、step-start、step-end、steps | 变化函数速度曲线 |
+| > transition-delay | s | 开始前的等待时间 |
 
 ### 24 - 动画
 
@@ -435,13 +435,13 @@ next:
 | @keyframes name {} | from{} to {} | 定义动画帧 |
 |  | 0%{} 25%{} 50%{} 100%{} |  |
 | animation： |  | 指定一组或多组动画 |
-| animation-name | 动画名 | 绑定动画 |
-| animation-duration | s、ms | 动画周期 |
-| animation-delay | s、ms | 动画延迟时间 |
-| animation-iteration-count | number | 运行次数，infinite 无限次 |
-| animation-direction | reverse、alternate、alternate-reverse | 反向、交替执行、反向交替 |
-| animation-timing-function | ease、ease-in、ease-out、ease-in-out、linear、step-start、step-end | 动画速度曲线 |
-| animation-fill-mode | forwards、backwards、both | 动画填充模式 |
+| > animation-name | 动画名 | 绑定动画 |
+| > animation-duration | s、ms | 动画周期 |
+| > animation-delay | s、ms | 动画延迟时间 |
+| > animation-iteration-count | number | 运行次数，infinite 无限次 |
+| > animation-direction | reverse、alternate、alternate-reverse | 反向、交替执行、反向交替 |
+| > animation-timing-function | ease、ease-in、ease-out、ease-in-out、linear、step-start、step-end | 动画速度曲线 |
+| > animation-fill-mode | forwards、backwards、both | 动画填充模式 |
 |  | 最后一个关键帧、首个关键帧、两个方向上扩展 |  |
 
 ### 25 - 多列
@@ -451,11 +451,11 @@ next:
 | column-count | number | 列数 |
 | column-gap | px | 列间隙 |
 | column-rule： |  |  |
-| column-rule-style | solid | 列之间的样式规则 |
-| column-rule-width | px | 列之间规则的宽度 |
-| column-rule-color | rgba/hsla/hex | 列之间规则的颜色 |
-| column-width | px | 指定列的宽度 |
-| column-span | all | 指定跨多少列 |
+| > column-rule-style | solid | 列之间的样式规则 |
+| > column-rule-width | px | 列之间规则的宽度 |
+| > column-rule-color | rgba/hsla/hex | 列之间规则的颜色 |
+| > column-width | px | 指定列的宽度 |
+| > column-span | all | 指定跨多少列 |
 | columns | 6rem auto | 列宽与列数 |
 
 ### 26 - 变量
@@ -505,10 +505,10 @@ next:
 |  | start | 起始对齐 |
 |  | end | 结束对齐 |
 |  | stretch | 拉伸对齐 |
-| flex： |  |  |
-| flex-grow | number | 相对于其他项目的增长倍数<br />（在 flex 容器中分配剩余空间的相对比例） |
-| flex-shrink | number | 相对于其他项目的收缩倍数<br />（仅在默认宽度之和大于容器时） |
-| flex-basis | px | 元素在主轴方向上的初始大小 |
+| flex： | 默认 `0 1 auto` |  |
+| > flex-grow | number | 相对于其他项目的增长倍数<br />（在 flex 容器中分配剩余空间的相对比例） |
+| > flex-shrink | number | 相对于其他项目的收缩倍数<br />（仅在默认宽度之和大于容器时） |
+| > flex-basis | px | 元素在主轴方向上的初始大小 |
 | order | number | 布局顺序 |
 | row-gap | px | 行之间的间隔 |
 
@@ -517,10 +517,10 @@ next:
 | 属性 | 值 | 描述 |
 | --- | --- | --- |
 | display | grid | 设置父元素容器 |
-| grid-template： |  |  |
-| grid-template-rows | 200px 100px auto auto | 初始化网格行数及高度 |
-| grid-template-columns | 100px 200px auto auto | 初始化网格列数及宽度 |
-| grid-template-areas |  | 网格排列方式定义（矩阵） |
+| grid-template： |  | 初始化网格行列 |
+| > grid-template-rows | 200px 100px auto auto | 初始化网格行数及高度 |
+| > grid-template-columns | 100px 200px auto auto | 初始化网格列数及宽度 |
+| > grid-template-areas |  | 网格排列方式定义（矩阵） |
 | grid-auto-rows | px | 隐式网格行高 |
 |  | min-content |  |
 |  | min-max() |  |
@@ -539,11 +539,11 @@ next:
 | align-self |  | 所选项目的对齐方式，覆盖align-items |
 | grid-area： |  |  |
 | grid-row： | 1/3 | 行项目始末位置 |
-| grid-row-start | 1 | 行项目起始位置 |
-| grid-row-end | 3 | 行项目结束位置 |
+| > grid-row-start | 1 | 行项目起始位置 |
+| > grid-row-end | 3 | 行项目结束位置 |
 | grid-column： | 1/3 | 列项目始末位置 |
-| grid-column-start | 1 | 列项目起始位置 |
-| grid-column-end | 3 | 列项目结束位置 |
+| > grid-column-start | 1 | 列项目起始位置 |
+| > grid-column-end | 3 | 列项目结束位置 |
 
 > 隐式：如果定位到某行中的网格元素没有使用 `grid-template-rows`、`grid-template-columns` 来指定大小，则会隐式创建 grid 轨道来保存它。
 
@@ -594,7 +594,7 @@ next:
 
 - 简介：
 
-  精灵图就是图片拼合技术，把多张图标小图合成一张大图，通过 CSS 中的 `background-position` 定位图标位置来显示对应图 (原点在图的左上角，X轴的右边是正值，左边是负值，Y轴同X轴)，优势是减少图的请求次数。
+  精灵图（也称雪碧图）就是图片拼合技术，把多张图标小图合成一张大图，通过 CSS 中的 `background-position` 定位图标位置来显示对应图 (原点在图的左上角，X轴的右边是正值，左边是负值，Y轴同X轴)，优势是减少图的请求次数。
 
 ## （二）Less
 
@@ -648,7 +648,7 @@ next:
 
 /* 05 - 运算 + - * / calc() */
 
-/* 06 - 函数：参考官方函数手册 */
+/* 06 - 函数：https://lesscss.org/functions/ */
 
 /* 07 - 命名空间与访问符 */
 #header() {
@@ -681,6 +681,7 @@ next:
 
 - Node 环境中使用：
   - 安装：`npm install -g sass`
+  - 编译：`sass input.scss output.css`
 
 ```scss
 📂 .scss
@@ -744,11 +745,23 @@ a {
 }
 ```
 
-## （四）Bootstrap
+## （四）Stylus
 
-待更新...
+[官方文档](https://stylus-lang.com/)
 
-## （五）TailwindCSS
+## （五）PostCSS
+
+[官方文档](https://postcss.org/)
+
+## （六）Bootstrap
+
+[V5文档](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+
+[V4文档](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+
+[V3文档](https://getbootstrap.com/docs/3.4/)
+
+## （七）TailwindCSS
 
 待更新...
 
