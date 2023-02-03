@@ -56,7 +56,7 @@ next:
 | String | "字符串"、'字符串'、'反引号用于功能扩展${变量名}' |
 | Boolean | true、false |
 | BigInt | 用于表示大于2的253次方-1和小于2的-253次方的整数，数字尾部加n，代表此类型 |
-| Symbol | 创建对象的唯一标识符 |
+| Symbol | 用于创建对象属性的唯一标识符 |
 | Object | 存储数据集合和更复杂的实体 |
 
 - `typeof(...)` 用于返回数据类型。
@@ -240,7 +240,7 @@ for (let i = 0; i < 9; i++) {
 - 标签，用于跳出多层循环。
 
 ```javascript
-let num = 0;
+let num = 0
 
 // outer 标签
 outer: for (let b = 1; b <= 9; b++) {
@@ -861,7 +861,7 @@ let now = new Date()
 ### 33 - JSON
 
 - 全称 JavaScript Object Notation，是表示值和对象的通用格式。
-- JSON 支持以下数据类型：`Objects`、`Arrays`、`Primitives`（`strings`、`numbers`、`boolean`、`true/false`、`null`）
+- JSON 支持以下数据类型：`Objects`、`Arrays`、`Primitives`（`strings`、`numbers`、`boolean`、`null`）
 - `JSON.stringify(obj)` 将对象转换为 JSON
 
 ```javascript
@@ -1027,11 +1027,6 @@ console.log(sum(1, 2))
 - `clearTimeout(timeoutID)` 取消调度。
 
 ```javascript
-function sayHi(phrase, who) {
-  console.log(phrase + ", " + who)
-}
-
-// 箭头函数
 setTimeout(() => console.log("Hello Xiaofan"), 2000)
 ```
 
@@ -1115,7 +1110,7 @@ function hash() {
 function debounce(func, wait) {
   let timeout = null
 
-  return function () {
+  return function (arguments) {
     // 先清除定时器
     clearTimeout(timeout)
     // 设置多久后执行回调
@@ -1133,7 +1128,7 @@ function debounce(func, wait) {
 function throttle(func, wait) {
   let timeout = null
 
-  return function () {
+  return function (arguments) {
     // 时间未到会退出执行
     if (timeout) return
     // 设置每次执行的间隔时间
@@ -1598,7 +1593,8 @@ console.log(coffeeMachine.power)
 ### 54 - 类检查
 
 - `instanceof` 操作符用于检查一个对象是否属于某个特定的 Class，同时它还考虑了继承。
-- `instanceof` 并不关心函数，而是关心函数的与原型链匹配的 `prototype`，真正决定类型的是 `prototype`，而不是构造函数。- 可以将 `obj instanceof Class` 检查改为 `Class.prototype.isPrototypeOf(obj)`
+- `instanceof` 并不关心函数，而是关心函数的与原型链匹配的 `prototype`，真正决定类型的是 `prototype`，而不是构造函数。
+- 可以将 `obj instanceof Class` 检查改为 `Class.prototype.isPrototypeOf(obj)`
 - 使用特殊的对象属性 `Symbol.toStringTag` 自定义对象的 `toString` 方法的行为：
 
 ```javascript
@@ -1743,8 +1739,6 @@ try {
 }
 ```
 
-- 包装异常指将低级别的异常包装到了更抽象的 `ReadError` 中。
-
 ### 57 - 回调
 
 - 基于回调的异步编程风格，异步执行某项功能的函数应该提供一个 Callback 参数用于在相应事件完成时调用，可以在回调中回调。
@@ -1858,7 +1852,7 @@ new Promise(function() {
 
 | 方法 | 参数 | 描述 |
 | --- | --- | --- |
-| Promise.all(iterable) | 由 Promise 项组成的数组 | 并行执行多个 Promise 并等待所有 Promise 准备就绪，返回存放它们结果的数组 |
+| Promise.all(iterable) | 由 Promise 项组成的数组 | 并行执行多个 Promise 并等待所有 Promise 准备就绪，如果出现 error，其他 Promise 将被忽略，返回存放它们结果的数组 |
 | Promise.allSettled(iterable) | 由 Promise 项组成的数组 | 等待所有的 Promise 被 settle 无论结果如何，返回结果的对象数组 |
 | Promise.race(iterable) | 由 Promise 项组成的数组 | 只等待第一个 settled 的 Promise 并获取其结果，将其 result/error 作为结果返回 |
 | Promise.any(iterable) | 由 Promise 项组成的数组 | 等待第一个 fulfilled 的 Promise，并将这个 fulfilled 的 Promise 返回，如果给出的 Promise 都 rejected，那么则返回 rejected 的 Promise 和 AggregateError 错误类型的 error 实例，并将其结果作为结果返回 |
@@ -1955,9 +1949,9 @@ let three = generator.next()  // {value: 3, done: true}
 - `yield` 是一条双向路，它不仅可以向外返回结果，而且还可以将外部的值传递到 Generator 内。
 
 ```javascript
-for (let value of generator) {
-  console.log(value)
-}
+// for (let value of generator) {
+//   console.log(value)
+// }
 
 function* gen() {
   let result = yield "2 + 2 = ?"
@@ -2381,7 +2375,7 @@ function curry(func) {
 
 ### 01 - 介绍
 
-- Window 的根代表着浏览器窗口，并提供了控制它的方法；文档对象模型（Document Object Model）简称 DOM，将所有页面内容表示为可以修改的对象；浏览器对象模型（Browser Object Model）简称 BOM，表示由浏览器（主机环境）提供的用于处理文档之外的所有内容的其他对象。
+- Window 对象（根），代表着浏览器窗口，该对象提供了控制浏览器窗口的方法；文档对象模型（Document Object Model）简称 DOM，将所有页面内容表示为可以修改的对象；浏览器对象模型（Browser Object Model）简称 BOM，表示由浏览器（主机环境）提供的用于处理文档之外的所有内容的其他对象。
 - 按照 DOM 规范，必须具有 `<tbody>` 标签，但 HTML 文本可能会忽略它，然后浏览器在创建 DOM 时，自动地创建了 `<tbody>`
 - HTML 中的所有内容，甚至注释，都会成为 DOM 的一部分。
 - 每个 HTML 标签都是一个对象，标签内的文本也是一个对象，DOM 将 HTML 表示为标签的树形结构，每个树的节点都是一个对象，标签被称为元素节点，元素内的文本称为文本节点。
@@ -2554,7 +2548,7 @@ function curry(func) {
 | Document.write('html') | 将 html 就地马上写入页面，调用只在页面加载时工作 |
 | Element.insertAdjacentHTML(where, html) | 将内容作为 HTML 代码插入 |
 | Element.insertAdjacentText(where, text) | 将 text 字符串作为文本插入 |
-| elem.insertAdjacentElement(where, elem) | 将内容作为元素插入 |
+| Element.insertAdjacentElement(where, elem) | 将内容作为元素插入 |
 | Node.cloneNode(true) | 创建节点的副本，具有所有特性和子元素 |
 | Node.cloneNode(false) | 创建节点的副本，但不包括子元素 |
 
@@ -2668,13 +2662,15 @@ let scrollHeight = Math.max(
 
 ![坐标.jpg](https://pic.img.ski/1673243756.jpg)
 
-- `Element.getBoundingClientRect()` 返回最小矩形的窗口坐标，该矩形将 Element 作为内建 `DOMRect` 类的对象
+| 方法 | 描述 |
+| --- | --- |
+| Element.getBoundingClientRect() | 返回最小矩形的窗口坐标，该矩形将 Element 作为内建 DOMRect 类的对象 |
+| Document.elementFromPoint(x, y) | 返回在窗口坐标 (x, y) 处嵌套最多的元素，对于在窗口之外的坐标，返回 null |
 
 ![getBoundingClientRect.jpg](https://pic.img.ski/1673243779.jpg)
 
 ![DOMRect.jpg](https://pic.img.ski/1673244904.jpg)
 
-- `document.elementFromPoint(x, y)` 返回在窗口坐标 (x, y) 处嵌套最多的元素，对于在窗口之外的坐标，返回 `null`
 - 文档相对坐标从文档的左上角开始计算，而不是窗口。
 - 窗口坐标非常适合和 `position: fixed` 一起使用，文档坐标非常适合和 `position: absolute` 一起使用。
 
@@ -2854,7 +2850,6 @@ elem.ondragstart = function() {
 ```
 
 - 在拖动开始时，记住鼠标指针相对于元素的初始偏移 `shiftX/shiftY`，并在拖动过程中保持它不变。
-- `document.elementFromPoint(clientX, clientY)` 的方法，它会返回在给定的窗口相对坐标处的嵌套的最深的元素（如果给定的坐标在窗口外，则返回 null）
 
 ### 17 - 指针事件
 
