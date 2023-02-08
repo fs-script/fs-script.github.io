@@ -5442,7 +5442,7 @@ class Uploader {
 }
 ```
 
-## 五、Axios
+## （五）Axios
 
 > 基于 promise 的网络请求库
 
