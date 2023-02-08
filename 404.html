@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.53">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/images/logo.png"><title> | 前端摸金手册</title><meta name="description" content="专注前端学习的摸金手册">
+    <link rel="preload" href="/assets/style.4b8f4191.css" as="style" /><link rel="stylesheet" href="/assets/style.4b8f4191.css" />
+    <link rel="modulepreload" href="/assets/app.b32f6c43.js"><link rel="modulepreload" href="/assets/404.html.e189f612.js"><link rel="modulepreload" href="/assets/404.html.c3e557d0.js"><link rel="prefetch" href="/assets/index.html.e2693613.js" as="script" /><link rel="prefetch" href="/assets/index.html.8135ef4f.js" as="script" /><link rel="prefetch" href="/assets/a-html.html.4be33213.js" as="script" /><link rel="prefetch" href="/assets/b-css.html.dbc85fff.js" as="script" /><link rel="prefetch" href="/assets/c-javascript.html.e80bac3b.js" as="script" /><link rel="prefetch" href="/assets/d-typescript.html.f84f6244.js" as="script" /><link rel="prefetch" href="/assets/e-node.html.31bc1885.js" as="script" /><link rel="prefetch" href="/assets/f-vue.html.11b783ee.js" as="script" /><link rel="prefetch" href="/assets/g-react.html.a89bb39e.js" as="script" /><link rel="prefetch" href="/assets/h-build.html.da4ce56f.js" as="script" /><link rel="prefetch" href="/assets/i-wechat.html.40090a15.js" as="script" /><link rel="prefetch" href="/assets/j-visualization.html.4f967a62.js" as="script" /><link rel="prefetch" href="/assets/k-uniapp.html.3b988185.js" as="script" /><link rel="prefetch" href="/assets/l-flutter.html.407f83df.js" as="script" /><link rel="prefetch" href="/assets/m-electron.html.c8f2b8fc.js" as="script" /><link rel="prefetch" href="/assets/n-microFrontends.html.33e39f71.js" as="script" /><link rel="prefetch" href="/assets/o-web3.html.5b81d948.js" as="script" /><link rel="prefetch" href="/assets/index.html.2103c924.js" as="script" /><link rel="prefetch" href="/assets/a-snippet.html.cb02b2a3.js" as="script" /><link rel="prefetch" href="/assets/b-project.html.e4392c80.js" as="script" /><link rel="prefetch" href="/assets/index.html.c79737f7.js" as="script" /><link rel="prefetch" href="/assets/a-theory.html.af5ac838.js" as="script" /><link rel="prefetch" href="/assets/b-operation.html.6e27cf18.js" as="script" /><link rel="prefetch" href="/assets/c-algorithm.html.c2259b94.js" as="script" /><link rel="prefetch" href="/assets/d-network.html.d0c84f7e.js" as="script" /><link rel="prefetch" href="/assets/e-browser.html.9f39ae01.js" as="script" /><link rel="prefetch" href="/assets/index.html.bb2717c2.js" as="script" /><link rel="prefetch" href="/assets/a-git.html.638b71b2.js" as="script" /><link rel="prefetch" href="/assets/b-use.html.050833c1.js" as="script" /><link rel="prefetch" href="/assets/c-color.html.6ea7bf71.js" as="script" /><link rel="prefetch" href="/assets/d-icon.html.a12da04c.js" as="script" /><link rel="prefetch" href="/assets/e-animation.html.2ef64224.js" as="script" /><link rel="prefetch" href="/assets/f-design.html.9281f2db.js" as="script" /><link rel="prefetch" href="/assets/index.html.5384a1db.js" as="script" /><link rel="prefetch" href="/assets/index.html.5be539fe.js" as="script" /><link rel="prefetch" href="/assets/index.html.0e2d0a3b.js" as="script" /><link rel="prefetch" href="/assets/a-html.html.f8ea0d46.js" as="script" /><link rel="prefetch" href="/assets/b-css.html.3a76ba7b.js" as="script" /><link rel="prefetch" href="/assets/c-javascript.html.96c5abff.js" as="script" /><link rel="prefetch" href="/assets/d-typescript.html.e492f317.js" as="script" /><link rel="prefetch" href="/assets/e-node.html.f7947540.js" as="script" /><link rel="prefetch" href="/assets/f-vue.html.b1b1bcea.js" as="script" /><link rel="prefetch" href="/assets/g-react.html.88592d98.js" as="script" /><link rel="prefetch" href="/assets/h-build.html.d159264a.js" as="script" /><link rel="prefetch" href="/assets/i-wechat.html.5f28ab4b.js" as="script" /><link rel="prefetch" href="/assets/j-visualization.html.c9c50309.js" as="script" /><link rel="prefetch" href="/assets/k-uniapp.html.741b9a9d.js" as="script" /><link rel="prefetch" href="/assets/l-flutter.html.89e90391.js" as="script" /><link rel="prefetch" href="/assets/m-electron.html.9ffa70ce.js" as="script" /><link rel="prefetch" href="/assets/n-microFrontends.html.db8c6bec.js" as="script" /><link rel="prefetch" href="/assets/o-web3.html.e3775be3.js" as="script" /><link rel="prefetch" href="/assets/index.html.0bafd42d.js" as="script" /><link rel="prefetch" href="/assets/a-snippet.html.c383ce67.js" as="script" /><link rel="prefetch" href="/assets/b-project.html.af6f6bdb.js" as="script" /><link rel="prefetch" href="/assets/index.html.3420d9bb.js" as="script" /><link rel="prefetch" href="/assets/a-theory.html.91409399.js" as="script" /><link rel="prefetch" href="/assets/b-operation.html.dfd8bd20.js" as="script" /><link rel="prefetch" href="/assets/c-algorithm.html.cd489bde.js" as="script" /><link rel="prefetch" href="/assets/d-network.html.25a886c2.js" as="script" /><link rel="prefetch" href="/assets/e-browser.html.22d359e9.js" as="script" /><link rel="prefetch" href="/assets/index.html.a5fdbe2b.js" as="script" /><link rel="prefetch" href="/assets/a-git.html.5e7cf9d0.js" as="script" /><link rel="prefetch" href="/assets/b-use.html.bd631920.js" as="script" /><link rel="prefetch" href="/assets/c-color.html.738919ba.js" as="script" /><link rel="prefetch" href="/assets/d-icon.html.1d802f80.js" as="script" /><link rel="prefetch" href="/assets/e-animation.html.4578f1dc.js" as="script" /><link rel="prefetch" href="/assets/f-design.html.7dc8a073.js" as="script" /><link rel="prefetch" href="/assets/index.html.49379c59.js" as="script" />
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="theme-container"><main class="page"><div class="theme-default-content"><h1>404</h1><blockquote>That&#39;s a Four-Oh-Four.</blockquote><a href="/" class="">Take me home</a></div></main></div><!----><!--]--></div>
+    <script type="module" src="/assets/app.b32f6c43.js" defer></script>
+  </body>
+</html>
