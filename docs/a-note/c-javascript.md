@@ -3261,7 +3261,7 @@ observer.disconnect()
 | input.setSelectionRange(start, end, [direction]) | 在给定方向上（可选），从 start 一直选择到 end |
 | input.setRangeText(replacement, [start], [end], [selectionMode]) | 用新文本替换范围中的文本 |
 
-### 27 - 弹窗与 window 方法
+### 27 - 弹窗
 
 - 弹窗（popup）是向用户显示其他文档的最古老的方法之一，`window.open(url, name, params)` 它将打开一个具有给定 URL 的新窗口。
 
@@ -4522,7 +4522,7 @@ inner.dispatchEvent(new CustomEvent('test', {
 
 ## （三）正则表达式
 
-- 正则表达式是搜索和替换字符串的一种强大方式，通过内建的 RegExp 类的对象来实现并与字符串集成。正则表达式可叫作 regexp 或 reg，包含模式和可选的修饰符。
+- 正则表达式是搜索和替换字符串的一种强大方式，通过内建的 RegExp(regular expression) 类的对象来实现并与字符串集成。正则表达式包含模式和可选的修饰符。
 - 创建一个正则表达式对象，一种方式是 `regexp = new RegExp("pattern", "flags")`，另一种方式是 `regexp = /pattern/gmi`
 - `.match()` 方法检索返回一个字符串匹配正则表达式的结果。
 - `.test()` 方法执行一个检索，用来查看正则表达式与指定的字符串是否匹配。
@@ -5031,22 +5031,22 @@ alert(result)  // HTML and CSS
 - `regexp.test(str)` 查找匹配项，然后返回 true/false 表示是否存在。如果正则表达式带有标记 g，则从 `regexp.lastIndex` 属性中查找，并更新此属性，就像 `regexp.exec()` 一样。
 - 如果在不同的源字符串上应用相同的全局表达式，可能会出现错误的结果，因为 `regexp.test()` 的调用会增加 `regexp.lastIndex` 属性值，因此在另一个字符串中的搜索可能是从非 0 位置开始的。
 
-## 四、Ajax
+## （四）Ajax
 
 > Ajax (Asynchronous JavaScript And XML) 称为异步的 JS 和 XML，可以在浏览器中向服务器发送异步请求，最大优势是无刷新获取数据。
 
-### 01 - HTTP 协议简介
+### 01 - HTTP 协议
 
 | 请求报文 | 内容 |
 | --- | --- |
-| 请求行 | 请求类型、URL请求路径、HTTP协议版本 |
+| 请求行 | 请求类型、URL 请求路径、HTTP 协议版本 |
 | 请求头 | Host、Cookie、Content-type、User-Agent... |
 | 空行 | (必选) |
-| 请求体 | (可选) GET请求为空、POST请求可携带内容 |
+| 请求体 | (可选) GET 请求为空、POST 请求可携带内容 |
 
 | 响应报文 | 内容 |
 | --- | --- |
-| 响应行 | 状态码、状态字符串、HTTP版本 |
+| 响应行 | 状态码、状态字符串、HTTP 版本 |
 | 响应头 | Content-type、Content-length、Content-encoding... |
 | 空行 | (必选) |
 | 响应体 | 响应的内容... |
@@ -5060,7 +5060,7 @@ alert(result)  // HTML and CSS
 
 ### 02 - 服务端
 
-> 以 Node Express 为例
+> 以 Node 的 Express 为例
 
 ```javascript
 const express = require('express')
@@ -5075,7 +5075,7 @@ app.get('/server', (request, response) => {
 })
 
 app.listen(8080, () => {
-  console.log('http://127.0.0.1:8080');
+  console.log('http://127.0.0.1:8080')
 })
 ```
 
@@ -5090,12 +5090,12 @@ const result = document.getElementById('result')
 btn.onclick = function () {
   // 1、创建对象
   const xhr = new XMLHttpRequest()
-  // 2、初始化 设置请求方法和 url
+  // 2、初始化 设置请求方法和 URL
   xhr.open('GET', 'http://127.0.0.1:8080/server?a=10&b=20&c=30')
-  // 3、发送
+  // 3、发送请求
   xhr.send()
   // 4、事件绑定 处理服务端返回的结果
-  // ready state 是 xhr 对象中的属性，表示状态：
+  // readyState 是 xhr 对象中的属性，表示状态：
   // 0 表示未初始化、1 表示 open 方法完毕、2 表示 send 完毕、
   // 3 表示服务返回部分结果、4 表示服务已经返回所有结果
   xhr.onreadystatechange = function () {
@@ -5106,11 +5106,10 @@ btn.onclick = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
         // 处理结果 行、头、空行、体
         // 响应行
-        // console.log(xhr.status);  // 状态码
-        // console.log(xhr.statusText); // 状态字符串
-        // console.log(xhr.getAllResponseHeaders());  // 所有响应头
-        // console.log(xhr.response);  // 响应体
-        // 设置展示文本
+        // console.log(xhr.status)  // 状态码
+        // console.log(xhr.statusText) // 状态字符串
+        // console.log(xhr.getAllResponseHeaders())  // 所有响应头
+        // console.log(xhr.response)  // 响应体
         result.innerHTML = xhr.response
       } else {
         ...
@@ -5127,9 +5126,9 @@ const result = document.getElementById('result')
 result.addEventListener('mouseover', function() {
   // 1、创建对象
   const xhr = new XMLHttpRequest()
-  // 2、初始化 设置类型与URL
+  // 2、初始化 设置类型与 URL
   xhr.open('POST', 'http://127.0.0.1:8080/server')
-  // 3、发送
+  // 3、发送请求 可携带内容
   // xhr.send('a=90&b=80&c=70')
   xhr.send('a:1,b:2,b:3')
   // 4、事件绑定
@@ -5182,10 +5181,9 @@ app.get('/json-server', (request, response) => {
 
 ```javascript
 const result = document.getElementById('result')
-  // 绑定键盘按下事件
 window.onkeydown = function() {
   const xhr = new XMLHttpRequest()
-    // 设置响应体的类型
+  // 设置响应体的类型
   xhr.responseType = 'json'
 
   xhr.open('GET', 'http://127.0.0.1:8080/json-server')
@@ -5197,10 +5195,10 @@ window.onkeydown = function() {
 
         // 手动对数据进行转换
         // let data = JSON.parse(xhr.response)
-        // console.log(data);
+        // console.log(data)
 
         // 自动转换 需要设置响应体的类型
-        console.log(xhr.response);
+        console.log(xhr.response)
 
         // result.innerHTML = data.name
         result.innerHTML = xhr.response.name
@@ -5283,139 +5281,103 @@ btn[0].onclick = function() {
 }
 ```
 
-### 09 - 异步模式
+### 09 - 属性/方法/事件
 
-```javascript
-let xhr = new XMLHttpRequest();
+**属性总结**
 
-xhr.open(method, URL, [async, user, password])
-
-xhr.send([body])
-```
-
-| 参数 | 描述 |
+| 属性 | 描述 |
 | --- | --- |
-| method | HTTP 方法，通常是 "GET" 或 "POST" |
-| URL | 要请求的 URL，通常是一个字符串，也可以是 URL 对象 |
-| async | 如果显式地设置为 false，那么请求将会以同步的方式处理 |
-| user，password | HTTP 基本身份验证（如果需要的话）的登录名和密码 |
-| body | 包含了 request body |
+| .readyState | 返回请求状态码 |
+| .status | 返回请求响应码 |
+| .statusText | 返回带有文本的响应码 |
+| .response | 返回响应体 |
+| .responseText | 返回字符串形式的响应体 |
+| .responseXML | 返回 XML 形式的响应体 |
+| .responseURL | 返回序列化的响应 URL |
+| .upload | 返回上传进度 |
+| .responseType | 设置响应类型 |
+| .timeout | 设置超时时间 |
+| .withCredentials | 设置跨域是否应携带授权信息 |
 
-- 监听 `xhr` 事件以获取响应：
-
-| xhr事件 | 描述 |
-| --- | --- |
-| load | 当请求完成（即使 HTTP 状态为 400 或 500 等），并且响应已完全下载 |
-| error | 当无法发出请求，例如网络中断或者无效的 URL |
-| progress | 在下载响应期间定期触发，报告已经下载了多少 |
-
-```javascript
-// 1. 创建一个 new XMLHttpRequest 对象
-let xhr = new XMLHttpRequest();
-
-// 2. 配置它：从 URL /article/.../load GET-request
-xhr.open('GET', '/article/xmlhttprequest/example/load');
-
-// 3. 通过网络发送请求
-xhr.send();
-
-// 4. 当接收到响应后，将调用此函数
-xhr.onload = function() {
-  // 分析响应的 HTTP 状态
-  if (xhr.status != 200) {
-    alert(`Error ${xhr.status}: ${xhr.statusText}`);  // 例如 404: Not Found
-  } else {
-    alert(`Done, got ${xhr.response.length} bytes`);  // response 是服务器响应
-  }
-};
-
-xhr.onprogress = function(event) {
-  if (event.lengthComputable) {
-    alert(`Received ${event.loaded} of ${event.total} bytes`);
-  } else {
-    alert(`Received ${event.loaded} bytes`);  // 没有 Content-Length
-  }
-};
-
-xhr.onerror = function() {
-  alert("Request failed");
-};
-```
-
-- 可以在以下 `xhr` 属性中接收结果：
-
-| xhr属性 | 描述 |
-| --- | --- |
-| status | HTTP 状态码（一个数字）：200，404，403 等，如果出现非 HTTP 错误，则为 0 |
-| statusText | HTTP 状态消息（一个字符串）：状态码为 200 对应于 OK，404 对应于 Not Found，403 对应于 Forbidden |
-| response/responseText | 服务器 response body |
-
-```javascript
-// 如果在给定时间内请求没有成功执行，请求就会被取消，并且触发 timeout 事件
-// timeout 单位是 ms，此处即 10 秒
-xhr.timeout = 10000;
-```
-
-- 使用 `xhr.responseType` 属性来设置响应格式：
+- 设置响应格式：
 
 | 属性值 | 描述 |
 | --- | --- |
-| ""（默认） | 响应格式为字符串 |
+| "" | 默认响应格式为字符串 |
 | "text" | 响应格式为字符串 |
-| arraybuffer" | 响应格式为 ArrayBuffer |
+| "arraybuffer" | 响应格式为 ArrayBuffer |
 | "blob" | 响应格式为 Blob |
 | "document" | 响应格式为 XML document（可以使用 XPath 和其他 XML 方法）或 HTML document（基于接收数据的 MIME 类型） |
 | "json" | 响应格式为 JSON（自动解析） |
 
-- `XMLHttpRequest` 的状态（`state`）会随着它的处理进度变化而变化。可以通过 `xhr.readyState` 来了解当前状态：
-
-```javascript
-UNSENT = 0;  // 初始状态
-OPENED = 1;  // open 被调用
-HEADERS_RECEIVED = 2;  // 接收到 response header
-LOADING = 3;  // 响应正在被加载（接收到一个数据包）
-DONE = 4;  // 请求完成
-```
-
-- `XMLHttpRequest` 对象以 0 → 1 → 2 → 3 → … → 3 → 4 的顺序在它们之间转变，每当通过网络接收到一个数据包，就会重复一次状态 3
-- 可以随时终止请求。调用 `xhr.abort()` ，它会触发 `abort` 事件，且 `xhr.status` 变为 0
-- 同步模式：在 `open` 方法中将第三个参数 `async` 设置为 `false`，那么请求就会以同步的方式进行，JavaScript 执行在 `send()` 处暂停，并在收到响应后恢复执行，但是很少使用同步调用，因为它们会阻塞页面内的 JavaScript，直到加载完成。
--  `XMLHttpRequest` 允许发送自定义 `header`，并且可以从响应中读取 `header`，`HTTP-header` 有三种方法：
+**方法总结**
 
 | 方法 | 描述 |
 | --- | --- |
-| setRequestHeader(name, value) | 使用给定的 name 和 value 设置 request header |
-| getResponseHeader(name) | 获取具有给定 name 的 header（Set-Cookie 和 Set-Cookie2 除外） |
-| getAllResponseHeaders() | 返回除 Set-Cookie 和 Set-Cookie2 外的所有 response header |
+| .open() | 初始化请求 |
+| .send() | 发送请求 |
+| .abort() | 中止请求 |
+| .setRequestHeader() | 设置请求头 |
+| .getAllResponseHeaders() | 获取所有响应头 |
+| .overrideMimeType() | 覆写服务器返回的 MIME 类型 |
 
-- 一些 `header` 是由浏览器专门管理的，例如 `Referer` 和 `Host`。`XMLHttpRequest` 的另一个特点是不能撤销 `setRequestHeader`，一旦设置了 `header`，就无法撤销了，其他调用会向 `header` 中添加信息，但不会覆盖它。
-- 专门用于跟踪上传事件：`xhr.upload`，它会生成事件，类似于 `xhr`，但是 `xhr.upload` 仅在上传时触发它们：
+**事件总结**
 
-| 属性 | 描述 |
+| 事件 | 描述 |
 | --- | --- |
-| loadstart | 上传开始 |
-| progress | 上传期间定期触发 |
-| abort | 上传中止 |
-| error | 非 HTTP 错误 |
-| load | 上传成功完成 |
-| timeout | 上传超时（如果设置了 timeout 属性） |
-| loadend | 上传完成，无论成功还是 error |
+| .onreadystatechange | 当 readyState 属性发生变化时触发 |
+| .onabort | 当请求被停止时触发 |
+| .ontimeout | 当请求超时时触发 |
+| .onload | 当请求完成（即使 HTTP 状态为 400 或 500 等）并且响应已完全下载时触发 |
+| .onloadend | 当请求结束时触发 |
+| .onloadstart | 当接受到响应数据时触发 |
+| .onerror | 当无法发出请求，例如网络中断或者无效的 URL 时触发 |
+| .onprogress | 在下载响应期间定期触发，报告已经下载了多少 |
 
-- `XMLHttpRequest` 可以使用和 `fetch` 相同的 CORS 策略进行跨源请求。默认情况下不会将 `cookie` 和 HTTP 授权发送到其他域。要启用它们，可以将 `xhr.withCredentials` 设置为 `true`
+```javascript
+let xhr = new XMLHttpRequest()
+
+xhr.open('GET', 'URL')
+
+xhr.send()
+
+xhr.onload = function() {
+  // 分析响应的 HTTP 状态
+  if (xhr.status != 200) {
+    alert(`Error ${xhr.status}: ${xhr.statusText}`)  // 例如 404: Not Found
+  } else {
+    alert(`Done, got ${xhr.response.length} bytes`)  // response 是服务器响应
+  }
+}
+
+xhr.onprogress = function(event) {
+  if (event.lengthComputable) {
+    alert(`Received ${event.loaded} of ${event.total} bytes`)
+  } else {
+    alert(`Received ${event.loaded} bytes`)  // 没有 Content-Length
+  }
+}
+
+xhr.onerror = function() {
+  alert("Request failed")
+}
+```
+
+- `XMLHttpRequest` 可以使用和 `fetch` 相同的 CORS 策略进行跨源请求。默认情况下不会将 cookie 和 HTTP 授权发送到其他域。要启用它们，可以将 `xhr.withCredentials` 设置为 true
 
 ### 10 - 恢复上传
 
-- 要恢复上传，需要确切地知道服务器接收的字节数，而且只有服务器能告诉，因此，将发出一个额外的请求：
+- 要恢复上传，需要确切地知道服务器接收的字节数，而且只有服务器能告诉，因此将发出一个额外的请求：
 
 ```javascript
 class Uploader {
   constructor({file, onProgress}) {
-    this.file = file;
-    this.onProgress = onProgress;
+    this.file = file
+    this.onProgress = onProgress
 
     // 创建唯一标识文件的 fileId
     // 还可以添加用户会话标识符（如果有的话），以使其更具唯一性
-    this.fileId = file.name + '-' + file.size + '-' + file.lastModified;
+    this.fileId = file.name + '-' + file.size + '-' + file.lastModified
   }
 
   async getUploadedBytes() {
@@ -5423,34 +5385,34 @@ class Uploader {
       headers: {
         'X-File-Id': this.fileId
       }
-    });
+    })
 
     if (response.status != 200) {
-      throw new Error("Can't get uploaded bytes: " + response.statusText);
+      throw new Error("Can't get uploaded bytes: " + response.statusText)
     }
 
-    let text = await response.text();
+    let text = await response.text()
 
-    return +text;
+    return +text
   }
 
   async upload() {
-    this.startByte = await this.getUploadedBytes();
+    this.startByte = await this.getUploadedBytes()
 
-    let xhr = this.xhr = new XMLHttpRequest();
-    xhr.open("POST", "upload", true);
+    let xhr = this.xhr = new XMLHttpRequest()
+    xhr.open("POST", "upload", true)
 
     // 发送文件 id，以便服务器知道要恢复哪个文件
-    xhr.setRequestHeader('X-File-Id', this.fileId);
+    xhr.setRequestHeader('X-File-Id', this.fileId)
     // 发送要从哪个字节开始恢复，因此服务器知道正在恢复
-    xhr.setRequestHeader('X-Start-Byte', this.startByte);
+    xhr.setRequestHeader('X-Start-Byte', this.startByte)
 
     xhr.upload.onprogress = (e) => {
-      this.onProgress(this.startByte + e.loaded, this.startByte + e.total);
-    };
+      this.onProgress(this.startByte + e.loaded, this.startByte + e.total)
+    }
 
-    console.log("send the file, starting from", this.startByte);
-    xhr.send(this.file.slice(this.startByte));
+    console.log("send the file, starting from", this.startByte)
+    xhr.send(this.file.slice(this.startByte))
 
     // return
     // true —— 如果上传成功，
@@ -5458,25 +5420,23 @@ class Uploader {
     // 出现 error 时将其抛出
     return await new Promise((resolve, reject) => {
       xhr.onload = xhr.onerror = () => {
-        console.log("upload end status:" + xhr.status + " text:" + xhr.statusText);
+        console.log("upload end status:" + xhr.status + " text:" + xhr.statusText)
 
         if (xhr.status == 200) {
-          resolve(true);
+          resolve(true)
         } else {
-          reject(new Error("Upload failed: " + xhr.statusText));
+          reject(new Error("Upload failed: " + xhr.statusText))
         }
-      };
+      }
 
       // onabort 仅在 xhr.abort() 被调用时触发
-      xhr.onabort = () => resolve(false);
-
-    });
-
+      xhr.onabort = () => resolve(false)
+    })
   }
 
   stop() {
     if (this.xhr) {
-      this.xhr.abort();
+      this.xhr.abort()
     }
   }
 }
