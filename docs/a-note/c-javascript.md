@@ -4492,7 +4492,7 @@ userCard.onclick = e => alert(`Outer target: ${e.target.tagName}`)
 ```html
 <div id="outer"></div>
 
-<script>
+<scrip>
 outer.attachShadow({mode: 'open'})
 
 let inner = document.createElement('div')
@@ -5444,92 +5444,82 @@ class Uploader {
 
 ## （五）Axios
 
-> 基于 promise 的网络请求库
+> 基于 Promise 的网络请求库
 
 ### 01 - GET
 
 ```javascript
-<script>
 const btn = document.querySelector('button')
 
-btn.addEventListener('click', function () {
+btn.addEventListener('click', function() {
   // 发起 get 请求
-  axios
-    .get('http://127.0.0.1:8080/axios-get', {
-      params: {
-        ID: 123,
-        name: 'marry',
-      },
-    })
-    .then(function (response) {
-      // 处理成功的情况
-      console.log(response)
-      console.log(response.data)
-      console.log(response.status)
-      console.log(response.statusText)
-    })
-    .catch(function (error) {
-      // 处理错误情况
-      console.log(error)
-    })
-    .then(function () {
-      // 总会执行
-    })
+  axios.get('http://127.0.0.1:8080/axios-get', {
+    params: {
+      ID: 123,
+      name: 'marry'
+    }
+  }).then(function(response) {
+    // 处理成功的情况
+    console.log(response)
+    console.log(response.data)
+    console.log(response.status)
+    console.log(response.statusText)
+  }).catch(function(error) {
+    // 处理错误情况
+    console.log(error)
+  }).then(function () {
+    // 总会执行
+  })
 })
-  </script>
 ```
 
 ### 02 - POST
 
 ```javascript
-<script>
-  const btn = document.querySelector('button')
+const btn = document.querySelector('button')
 
-  btn.addEventListener('click', function() {
-      axios.post('http://127.0.0.1:8080/axios-post', {
-        userName: 'marry',
-        password: '123456',
-      }).then(function(response) {
-        console.log(response.data);
-      })
-    })
-</script>
+btn.addEventListener('click', function() {
+  axios.post('http://127.0.0.1:8080/axios-post', {
+    userName: 'marry',
+    password: '123456'
+  }).then(function(response) {
+    console.log(response.data)
+  })
+})
 ```
 
 ### 03 - 通用方式
 
 ```javascript
-<script>
-  const btn = document.querySelector('button')
+const btn = document.querySelector('button')
 
-  btn.addEventListener('click', function () {
-    axios({
-      // 请求方法，默认 get
-      method: 'post',
-      baseURL: 'http://127.0.0.1:8080',
-      url: '/axios-post',
-      responseType: 'json',
-      // URL参数
-      params: {
-        ID: 1,
-      },
-      headers: {
-        width: 180,
-        height: 180,
-      },
-      data: {
-        vip: 123,
-        name: 'sun',
-      },
-      // 跨域是否需要携带凭证
-      withCredentials: false,
-      // 超时
-      timeout: 2000,
-    }).then(function (response) {
-      console.log(response)
-    })
+btn.addEventListener('click', function() {
+  axios({
+    // 请求方法，默认 GET
+    method: 'POST',
+    baseURL: 'http://127.0.0.1:8080',
+    url: '/axios-post',
+    responseType: 'json',
+    // URL参数
+    params: {
+      ID: 1
+    },
+    headers: {
+      width: 180,
+      height: 180
+    },
+    data: {
+      vip: 123,
+      name: 'sun'
+    },
+    // 跨域是否需要携带凭证
+    withCredentials: false,
+    // 超时
+    timeout: 2000
+  }).then(function(response) {
+    console.log(response)
   })
-</script>
+})
 ```
 
 ### 04 - 响应结构
@@ -5548,447 +5538,407 @@ btn.addEventListener('click', function () {
 ### 05 - 拦截器
 
 ```javascript
-<script>
-  const btn = document.querySelector('button')
+const btn = document.querySelector('button')
 
-  // 配置全局默认值
-  axios.defaults.baseURL = 'http://127.0.0.1:8080'
-  // 添加请求拦截器
-  axios.interceptors.request.use(function(config) {
-    console.log('正在发送请求...');
+// 配置全局默认值
+axios.defaults.baseURL = 'http://127.0.0.1:8080'
+// 添加请求拦截器
+axios.interceptors.request.use(
+  function(config) {
+    console.log('正在发送请求...')
     return config
-  }, function(error) {
-    console.log('请求发生了错误');
+  },
+  function(error) {
+    console.log('请求发生了错误')
     return Promise.reject(error)
-  })
+  }
+)
 
-  // 添加响应拦截器
-  axios.interceptors.response.use(function(response) {
-    console.log('响应成功！');
+// 添加响应拦截器
+axios.interceptors.response.use(
+  function(response) {
+    console.log('响应成功！')
     return response
-  }, function(error) {
-    console.log('发生了一些错误，响应失败');
+  },
+  function(error) {
+    console.log('发生了一些错误，响应失败')
     return Promise.reject(error)
-  })
+  }
+)
 
-  btn.addEventListener('click', function () {
-    axios({
-      // 请求方法，默认 get
-      method: 'post',
-      url: '/axios-post',
-      responseType: 'json',
-      // URL参数
-      params: {
-        ID: 1,
-      },
-      headers: {
-        width: 180,
-        height: 180,
-      },
-      data: {
-        vip: 123,
-        name: 'sun',
-      },
-      // 跨域是否需要携带凭证
-      withCredentials: false,
-      // 超时
-      timeout: 2000,
-    }).then(function (response) {
-      console.log(response)
-    })
+btn.addEventListener('click', function () {
+  axios({
+    method: 'POST',
+    url: '/axios-post',
+    responseType: 'json',
+    params: {
+      ID: 1,
+    },
+    headers: {
+      width: 180,
+      height: 180,
+    },
+    data: {
+      vip: 123,
+      name: 'sun',
+    },
+    withCredentials: false,
+    timeout: 2000
+  }).then(function (response) {
+    console.log(response)
   })
-</script>
+})
 ```
 
 ### 06 - 错误处理
 
 ```javascript
- axios.get('/user/12345')
-  .catch(function (error) {
-    if (error.response) {
-      // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      // 请求已经成功发起，但没有收到响应
-      // `error.request` 在浏览器中是 XMLHttpRequest 的实例，
-      // 而在node.js中是 http.ClientRequest 的实例
-      console.log(error.request);
-    } else {
-      // 发送请求时出了点问题
-      console.log('Error', error.message);
-    }
-    console.log(error.config);
-  });
+axios.get('/user/12345').catch(function(error) {
+  if (error.response) {
+    // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
+    console.log(error.response.data)
+    console.log(error.response.status)
+    console.log(error.response.headers)
+  } else if (error.request) {
+    // 请求已经成功发起，但没有收到响应
+    // `error.request` 在浏览器中是 XMLHttpRequest 的实例
+    // 而在node.js中是 http.ClientRequest 的实例
+    console.log(error.request)
+  } else {
+    // 发送请求时出了点问题
+    console.log('Error', error.message)
+  }
+  console.log(error.config)
+})
 ```
 
 ### 07 - 取消请求
 
 ```javascript
-<script>
-  const btn = document.querySelectorAll('button')
+const btn = document.querySelectorAll('button')
 
-  axios.defaults.baseURL = 'http://127.0.0.1:8080'
+axios.defaults.baseURL = 'http://127.0.0.1:8080'
 
-  // 创建控制器器对象
-  const controller = new AbortController()
+// 创建控制器器对象
+const controller = new AbortController()
 
-  btn[0].addEventListener('click', function () {
-    axios({
-      signal: controller.signal,
-      method: 'post',
-      url: '/axios-all',
-      params: {
-        id: 12,
-      },
-      headers: {
-        width: 100,
-      },
-      data: {
-        username: 'sun',
-        password: '123456',
-      },
-    }).then(function (response) {
-      console.log(response.data)
-    })
+btn[0].addEventListener('click', function() {
+  axios({
+    signal: controller.signal,
+    method: 'post',
+    url: '/axios-all',
+    params: {
+      id: 12
+    },
+    headers: {
+      width: 100
+    },
+    data: {
+      username: 'sun',
+      password: '123456'
+    },
+  }).then(function(response) {
+    console.log(response.data)
   })
+})
 
-  btn[1].addEventListener('click', function () {
-    // 取消请求
-    controller.abort()
-  })
-</script>
+btn[1].addEventListener('click', function () {
+  // 取消请求
+  controller.abort()
+})
 ```
 
-### 08 - 跨域
-#### 01 - JSONP
+### 08 - 跨域方案
 
-- 通过 `script` 标签本身可跨域的特性返回的结果应该是一个函数的执行，函数的参数就是服务端要给客户端的数据，函数本身的定义是在客户端中，数据和函数的调用在服务端中。仅支持 GET 请求。
+**JSONP**
+
+- 通过 `script` 标签本身可跨域的特性返回的结果应该是一个函数的执行，函数的参数就是服务端要给客户端的数据，函数本身的定义是在客户端中，数据和函数的调用在服务端中（仅支持 GET 请求）
 
 ```javascript
-  // 检测用户名是否存在
-  app.all('/check-username', (request, response) => {
-    const data = {
-      exist: 1,
-      msg: '用户名已经存在'
-    }
-    // 将数据转换为字符串
-    let str = JSON.stringify(data)
-    // 返回结果
-    response.end(`handle(${str})`)
-  })
+// 检测用户名是否存在
+app.all('/check-username', (request, response) => {
+  const data = {
+    exist: 1,
+    msg: '用户名已经存在'
+  }
+  // 将数据转换为字符串
+  let str = JSON.stringify(data)
+  // 返回结果
+  response.end(`handle(${str})`)
+})
 
-  //-------------------------------------------------
+//-------------------------------------------------
 
-  <script>
-    const input = document.querySelector('input')
-    const p = document.querySelector('p')
+const input = document.querySelector('input')
+const p = document.querySelector('p')
 
-    function handle(data) {
-      input.style.border = '1px solid red'
-      p.innerHTML = data.msg
-    }
+function handle(data) {
+  input.style.border = '1px solid red'
+  p.innerHTML = data.msg
+}
 
-    input.onblur = function() {
-      // 获取用户输入的值
-      let username = this.value
-      // 向服务器发送请求
-      const script = document.createElement('script')
-      script.src = 'http://127.0.0.1:8080/check-username'
-      document.body.appendChild(script)
-    }
-  </script>
+input.onblur = function() {
+  // 获取用户输入的值
+  let username = this.value
+  // 向服务器发送请求
+  const script = document.createElement('script')
+  script.src = 'http://127.0.0.1:8080/check-username'
+  document.body.appendChild(script)
+}
 ```
 
 ```javascript
-  <script>
-    $('button').eq(0).click(function() {
-      $.getJSON('http://127.0.0.1:8080/jquery-json-server?callback=?', function(data) {
-        $('#result').html (`
-          名称：${data.name}<br/>
-          校区：${data.city}
-        `)
-      })
-    })
-  </script>
+$('button').eq(0).click(function() {
+  $.getJSON('http://127.0.0.1:8080/jquery-json-server?callback=?', function(data) {
+    $('#result').html (`
+      名称：${data.name}<br/>
+      校区：${data.city}
+    `)
+  })
+})
 
-  //---------------------------------------------------------------
+//---------------------------------------------------------------
 
-  app.all('/jquery-json-server', (request, response) => {
+app.all('/jquery-json-server', (request, response) => {
   const data = {
     name: '城市',
-    city: ['北京', '上海', '武汉'],
+    city: ['北京', '上海', '武汉']
   }
   let str = JSON.stringify(data)
   let cb = request.query.callback
 
   response.end(`${cb}(${str})`)
- })
+})
 ```
 
-#### 02 - CORS
+**CORS**
 
 - Cross-Origin Resource Sharing 跨域资源共享，是官方的跨域解决方案。跨域资源共享标准新增了一组 HTTP 首部字段，允许服务器声明哪些站点可以访问哪些资源
 - [跨源资源共享（CORS） - HTTP | MDN (mozilla.org)](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS)
 
-## 六、Fetch
+## （六）Fetch
 
 ### 01 - 使用
 
-- `fetch()` 方法是一种现代通用的方法：
+- `fetch()` 是一种现代通用的异步资源请求方法，返回一个 Promise
 
 ```javascript
-let promise = fetch(url, [options])
+let promise = fetch(URL, [options])
 ```
 
 | 参数 | 描述 |
 | --- | --- |
-| url | 要访问的 URL |
+| URL | 要访问的 URL |
 | options | 可选参数 |
-| method |  |
-| header |  |
+| -> method | 请求方式 |
+| -> header | 请求头信息 |
+| -> body | 请求体信息 |
 
-- 没有 `options`，这就是一个简单的 GET 请求，下载 url 的内容。
-
-**获取响应通常需要经过两个阶段：**
-
-- 第一阶段：当服务器发送了响应头（`response header`），`fetch` 返回的 `promise` 就使用内建的 `Response class` 对象来对响应头进行解析。可以在 `response` 的属性中看到 HTTP 状态：
-
-| 状态 | 描述 |
-| --- | --- |
-| status | HTTP 状态码，例如 200：OK。布尔值，如果 HTTP 状态码为 200-299，则为 true |
-
-```javascript
-let response = await fetch(url);
-
-// 如果 HTTP 状态码为 200-299
-if (response.ok) {
-  // 获取 response body
-  let json = await response.json();
-} else {
-  alert("HTTP-Error: " + response.status);
-}
-```
-
-> `Response header` 位于 `response.headers` 中的一个类似于 `Map` 的 `header` 对象，它不是真正的 `Map`，但是它具有类似的方法，可以按名称（`name`）获取各个 `header`，或迭代它们。
-
-- 第二阶段：为了获取 `response body`，需要使用一个其他的方法调用。`Response` 提供了多种基于 `promise` 的方法，来以不同的格式访问 `body`：（只能选择一种读取 `body` 的方法）
+- 无 options 时，是一个简单的 GET 请求。
+- 获取响应通常需要经过两个阶段：
+  - 第一阶段：当服务器发送了响应头，fetch 返回的 Promise 就使用内建的 Response class 对象来对响应头进行解析。可以在 response 的属性中看到 HTTP 状态 status，Response header 位于 `response.headers` 中的一个类似于 Map 的 header 对象，它不是真正的 Map，但是它具有类似的方法，可以按名称获取各个 header 或迭代它们。
+  - 第二阶段：为了获取 Response body，需要使用一个其他的方法调用，response 提供了多种基于 Promise 的方法，来以不同的格式访问 body
 
 | 方法 | 描述 |
 | --- | --- |
-| response.text() | 读取 response，并以文本形式返回 response |
-| response.json() | 将 response 解析为 JSON 格式 |
+| response.text() | 以文本形式返回 response |
+| response.json() | 以 JSON 形式返回 response |
 | response.formData() | 以 FormData 对象的形式返回 response |
 | response.blob() | 以 Blob（具有类型的二进制数据）形式返回 response |
 | response.arrayBuffer() | 以 ArrayBuffer（低级别的二进制数据）形式返回 response |
 | response.body | 是 ReadableStream 对象，它允许你逐块读取 body |
 
 ```javascript
-let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
-
-// 获取一个 header
-alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
-
-// 迭代所有 header
-for (let [key, value] of response.headers) {
-  alert(`${key} = ${value}`);
-}
+fetch('https://v.api.aa1.cn/api/api-wenan-wangyiyunreping/index.php?aa1=json')
+	.then(response => response.json())
+	.then(data => console.log(data[0].wangyiyunreping))
 ```
 
-> 要在 `fetch` 中设置 `request header`，可以使用 `headers` 选项。它有一个带有输出 `heade`r 的对象，有些 `header` 保证了 HTTP 的正确性和安全性，所以它们仅由浏览器控制。
+**设置请求头**
 
 ```javascript
-let response = fetch(protectedUrl, {
-  headers: {
+fetch(URL, {
+  header: {
     Authentication: 'secret'
   }
-});
+})
 ```
 
-- POST 请求：
+**POST 请求**
 
 ```javascript
 let user = {
   name: 'John',
   surname: 'Smith'
-};
+}
 
-let response = await fetch('/article/fetch/post/user', {
+fetch(URL, {
   method: 'POST',
-  headers: {
+  header: {
     'Content-Type': 'application/json;charset=utf-8'
   },
   body: JSON.stringify(user)
-});
-
-let result = await response.json();
-alert(result.message);
-// 如果请求的 body 是字符串，则 Content-Type 会默认设置为 text/plain;charset=UTF-8
+})
 ```
 
-- 发送图片：
+**发送图片**
 
-```javascript
-<body>
-  <canvas id="canvasElem" width="100" height="80" style="border:1px solid"></canvas>
+```html
+<canvas id="canvasElem" width="100" height="80" style="border:1px solid"></canvas>
 
-  <input type="button" value="Submit" onclick="submit()">
+<input type="button" value="Submit" onclick="submit()">
 
-  <script>
-    canvasElem.onmousemove = function(e) {
-      let ctx = canvasElem.getContext('2d');
-      ctx.lineTo(e.clientX, e.clientY);
-      ctx.stroke();
-    };
+<script>
+  canvasElem.onmousemove = function(e) {
+    let ctx = canvasElem.getContext('2d')
+    ctx.lineTo(e.clientX, e.clientY)
+    ctx.stroke()
+  }
 
-    async function submit() {
-      let blob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'));
-      let response = await fetch('/article/fetch/post/image', {
-        method: 'POST',
-        body: blob
-      });
+  async function submit() {
+    let blob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'))
+    let response = await fetch(URL, {
+      method: 'POST',
+      body: blob
+    })
 
-      // 服务器给出确认信息和图片大小作为响应
-      let result = await response.json();
-      alert(result.message);
-    }
-
-  </script>
-</body>
+    // 服务器给出确认信息和图片大小作为响应
+    let result = await response.json()
+    alert(result.message)
+  }
+</script>
 ```
 
 ### 02 - FormData
 
-- 关于发送 HTML 表单的：带有或不带文件，带有其他字段等，如果提供了 HTML `form` 元素，它会自动捕获 `form` 元素字段。
+- 关于发送 HTML 表单的，带有或不带文件，带有其他字段等，如果提供了 HTML 的 form 元素，它会自动捕获 form 元素字段。
 
 ```javascript
-let formData = new FormData([form]);
+let formData = new FormData([form])
 ```
 
-- `FormData` 的特殊之处在于网络方法，例如 `fetch` 可以接受一个 `FormData` 对象作为 `body`，它会被编码并发送出去，带有 `Content-Type: multipart/form-data`
+- FormData 的特殊之处在于网络方法，例如 fetch 可以接受一个 FormData 对象作为 body，它会被编码并发送出去，带有 `Content-Type: multipart/form-data`
 
 | 方法 | 描述 |
 | --- | --- |
 | formData.append(name, value) | 添加具有给定 name 和 value 的表单字段 |
-| formData.append(name, blob, fileName) | 添加一个字段，就像是 `<input type="file">`
-，第三个参数 fileName 设置文件名（而不是表单字段名），因为它是用户文件系统中文件的名称 |
-| formData.delete(name) | 移除带有给定 name 的字段 |
+| formData.append(name, blob, fileName) | 添加一个字段，就像是 `<input type="file">`，fileName 设置文件名 |
 | formData.get(name) | 获取带有给定 name 的字段值 |
-| formData.has(name) | 如果存在带有给定 name 的字段，则返回 true，否则返回 false |
-| formData.set(name, value) |  |
-| formData.set(name, blob, fileName) |  |
+| formData.delete(name) | 移除带有给定 name 的字段 |
+| formData.has(name) | 判断是否存在该字段 |
+| formData.set(name, value) | 设置给定 name 字段的 value |
+| formData.set(name, blob, fileName) | 设置给定 name 字段的文件和文件名 |
 
-- 一个表单可以包含多个具有相同 `name` 的字段。`set` 方法，语法与 `append` 相同，不同之处在于 `.set` 移除所有具有给定 `name` 的字段，然后附加一个新字段。
-- 可以使用 `for..of` 循环迭代 `formData` 字段。
+- 一个表单可以包含多个具有相同 name 的字段。set 方法与 append 相同，不同之处在于 set 移除所有具有给定 name 的字段，然后附加一个新字段。
+- 可以使用 `for..of` 循环迭代 formData 字段。
 - 表单始终以 `Content-Type: multipart/form-data` 来发送数据，这个编码允许发送文件。因此 `<input type="file">` 字段也能被发送，类似于普通的表单提交。
-- 通常更方便的发送图片的方式不是单独发送，而是将其作为表单的一部分，并带有附加字段（例如 `name` 和其他 `metadata`）一起发送。
+- 通常更方便的发送图片的方式不是单独发送，而是将其作为表单的一部分，并带有附加字段，例如 name 和其他 metadata 一起发送。
 
 ### 03 - 下载进度
 
-- `fetch` 方法允许去跟踪下载进度。到目前为止，`fetch` 方法无法跟踪上传进度。要跟踪下载进度，可以使用 `response.body` 属性。它是 `ReadableStream` 的一个特殊的对象，它可以逐块（chunk）提供 `body`。
+- `fetch()` 方法允许去跟踪下载进度，无法跟踪上传进度。要跟踪下载进度，可以使用 `response.body` 属性，它是 ReadableStream 的一个特殊的对象，它可以逐块（chunk）提供 body
+- 流读取器（stream reader）：`response.body.getReader()`
 
 ```javascript
 // 代替 response.json() 以及其他方法
-const reader = response.body.getReader();
+const reader = response.body.getReader()
 
 // 在 body 下载时，一直为无限循环
 while(true) {
   // 当最后一块下载完成时，done 值为 true
   // value 是块字节的 Uint8Array
-  const {done, value} = await reader.read();
+  const {done, value} = await reader.read()
 
   if (done) {
-    break;
+    break
   }
 
   console.log(`Received ${value.length} bytes`)
 }
 ```
 
-- 要将进度打印出来，只需要将每个接收到的片段 `value` 的长度（`length`）加到 `counter` 即可。
-- 流读取器（`stream reader`）`response.body.getReader()`
+- 要将进度打印出来，只需要将每个接收到的片段 value 的长度 length 加到 counter 即可。
 
-### 04 - 中止
+### 04 - 中止任务
 
-- `AbortController`，它不仅可以中止 `fetch`，还可以中止其他异步任务。
+- AbortController 它不仅可以中止 fetch，还可以中止其他异步任务。
 
 ```javascript
-let controller = new AbortController();
+let controller = new AbortController()
 ```
 
-- 具有单个方法 `abort()`，和单个属性 `signal`，可以在这个属性上设置事件监听器。
-- 当 `abort()` 被调用时：`controller.signal` 就会触发 `abort` 事件，`controller.signal.aborted` 属性变为 `true`
+- 具有单个方法 `.abort()`，和单个属性 `.signal`，可以在这个属性上设置事件监听器。
+- 当 `.abort()` 被调用时 `controller.signal` 就会触发 abort 事件，`controller.signal.aborted` 属性变为 true
 - 需要处理两部分：一部分是通过在 `controller.signal` 上添加一个监听器，来执行可取消操作；另一部分是触发取消在需要的时候调用 `controller.abort()`
 
 ```javascript
 // 1 秒后中止
-let controller = new AbortController();
-setTimeout(() => controller.abort(), 1000);
+let controller = new AbortController()
+setTimeout(() => controller.abort(), 1000)
 
 try {
   let response = await fetch('/article/fetch-abort/demo/hang', {
     signal: controller.signal
-  });
+  })
 } catch(err) {
-  if (err.name == 'AbortError') {  // handle abort()
-    alert("Aborted!");
+  if (err.name == 'AbortError') {
+    alert("Aborted!")
   } else {
-    throw err;
+    throw err
   }
 }
 ```
 
-- `AbortController` 是可伸缩的，允许一次取消多个 `fetch`
+- AbortController 是可伸缩的，允许一次取消多个 fetch
 
 ### 05 - 跨源请求
 
-- 有两种类型的跨源请求：安全请求、所有其他请求。
-- 安全的方法：`GET`，`POST` 或 `HEAD`，安全的 `header`，仅允许自定义下列 `header`：
+- 有两种类型的跨源请求：安全请求、非安全请求。
+- 安全的方法：`GET`、`POST`、`HEAD`，安全的 header 仅允许自定义下列 header：
 
-| header | 值 |
+| Header | 值 |
 | --- | --- |
 | Accept |  |
 | Accept-Language |  |
 | Content-Language |  |
-| Content-Type | application/x-www-form-urlencoded，multipart/form-data 或 text/plain |
+| Content-Type | application/x-www-form-urlencoded、multipart/form-data、text/plain |
 
-- 与非安全请求本质区别在于，可以使用 `<form>` 或 `<script>` 进行安全请求，而无需任何其他特殊方法:
+- 与非安全请求本质区别在于，可以使用 `<form>` 或 `<script>` 进行安全请求，而无需任何其他特殊方法。
+- 关于非安全请求：
 
-| 非安全请求 |  |
+| 阶段 | 描述 |
 | --- | --- |
 | Step 1 | 预检请求（preflight request） |
 | Step 2 | 预检响应（preflight response） |
 | Step 3 | 实际请求（actual request） |
 | Step 4 | 实际响应（actual response） |
 
-- 如果一个请求是跨源的，浏览器始终会向其添加 `Origin header`，`Origin` 包含了确切的源（`domain/protocol/port`），没有路径（path），服务器可以检查 `Origin`，如果同意接受这样的请求，就会在响应中添加一个特殊的 `header Access-Control-Allow-Origin`，该 `header` 包含了允许的源，或者一个星号 ，然后响应成功，否则报错。
-- 对于跨源请求，默认情况下，JavaScript 只能访问“安全的” `response header`：`Cache-Control`、`Content-Language`、`Content-Type`、`Expires`、`Last-Modified`、`Pragma`
-- 要授予 JavaScript 对任何其他 `response header` 的访问权限，服务器必须发送 `Access-Control-Expose-Headers header`。它包含一个以逗号分隔的应该被设置为可访问的非安全 `header` 名称列表。
-- 默认情况下，由 JavaScript 代码发起的跨源请求不会带来任何凭据（`cookies` 或者 HTTP 认证（HTTP authentication））
-- 要在 `fetch` 中发送凭据，需要添加 `credentials: "include"` 选项：
+- 如果一个请求是跨源的，浏览器始终会向其添加 Origin header，Origin 包含了确切的源 `domain/protocol/port`，没有路径，服务器可以检查 Origin，如果同意接受这样的请求，就会在响应中添加一个特殊的 header `Access-Control-Allow-Origin`，该 header 包含了允许的源，或者一个星号 ，然后响应成功，否则报错。
+- 对于跨源请求，默认情况下，JS 只能访问安全的 response header：`Cache-Control`、`Content-Language`、`Content-Type`、`Expires`、`Last-Modified`、`Pragma`
+- 要授予 JS 对任何其他 response header 的访问权限，服务器必须发送 `Access-Control-Expose-Headers` header。它包含一个以逗号分隔的应该被设置为可访问的非安全 header 名称列表。
+- 默认情况下，由 JS 代码发起的跨源请求不会带来任何凭据（cookies 或者 HTTP 认证（HTTP authentication））
+- 要在 `.fetch()` 中发送凭据，需要添加 `credentials: "include"` 选项。
 
 ```javascript
 fetch('http://another.com', {
   credentials: "include"
-});
+})
 ```
 
-- 如果服务器同意接受带有凭据的请求，则除了 `Access-Control-Allow-Origin` 外，服务器还应该在响应中添加 `header Access-Control-Allow-Credentials: true`
+- 如果服务器同意接受带有凭据的请求，则除了 `Access-Control-Allow-Origin` 外，服务器还应该在响应中添加 header `Access-Control-Allow-Credentials: true`
 
 ### 06 - Fetch API
 
 ```javascript
 let promise = fetch(url, {
-  method: "GET",  // POST，PUT，DELETE，等。
+  method: "GET",  // POST，PUT，DELETE...
   headers: {
     // 内容类型 header 值通常是自动设置的
     // 取决于 request body
     "Content-Type": "text/plain;charset=UTF-8"
   },
-  body: undefined  // string，FormData，Blob，BufferSource，或 URLSearchParams
-  referrer: "about:client",  // 或 "" 以不发送 Referer header，
-  // 或者是当前源的 url
+  body: undefined  // string，FormData，Blob，BufferSource，URLSearchParams
+  referrer: "about:client",  // 或 "" 以不发送 Referer header
   referrerPolicy: "no-referrer-when-downgrade",  // no-referrer，origin，same-origin...
   mode: "cors",  // same-origin，no-cors
   credentials: "same-origin",  // omit，include
@@ -5998,12 +5948,14 @@ let promise = fetch(url, {
   keepalive: false,  // true
   signal: undefined,  // AbortController 来中止请求
   window: window  // null
-});
+})
 ```
 
-### 07 - URL对象
+## （七）其他网络请求
 
-- 内建的 `URL` 类提供了用于创建和解析 `URL` 的便捷接口，没有任何一个网络方法一定需要使用 `URL` 对象，字符串就足够了。
+### 01 - URL 对象
+
+- 内建的 URL 类提供了用于创建和解析 URL 的便捷接口，没有任何一个网络方法一定需要使用 URL 对象，字符串就足够了。
 
 ```javascript
 new URL(url, [base])
@@ -6011,72 +5963,71 @@ new URL(url, [base])
 
 | 参数 | 描述 |
 | --- | --- |
-| url | 完整的 URL，或者仅路径（如果设置了 base） |
-| base | 可选的 base URL：如果设置了此参数，且参数 url 只有路径，则会根据这个 base 生成 URL |
+| url | 完整的 URL 或者仅路径（如果设置了 base） |
+| base | 可选的 base URL，如果设置了此参数，且参数 url 只有路径，则会根据这个 base 生成 URL |
 
 ```javascript
-let url1 = new URL('https://javascript.info/profile/admin');
-let url2 = new URL('/profile/admin', 'https://javascript.info');
+let url1 = new URL('https://javascript.info/profile/admin')
+let url2 = new URL('/profile/admin', 'https://javascript.info')
 
-alert(url1); // https://javascript.info/profile/admin
-alert(url2); // https://javascript.info/profile/admin
+alert(url1)  // https://javascript.info/profile/admin
+alert(url2)  // https://javascript.info/profile/admin
 ```
 
-- `URL` 对象立即允许访问其组件，因此这是一个解析 url 的好方法：
+- URL 对象立即允许访问其组件，因此这是一个解析 url 的好方法。
 
 ```javascript
-let url = new URL('https://javascript.info/url');
+let url = new URL('https://javascript.info/url')
 
-alert(url.protocol); // https:
-alert(url.host);     // javascript.info
-alert(url.pathname); // /url
+alert(url.protocol)  // https:
+alert(url.host)  // javascript.info
+alert(url.pathname)  // /url
 ```
 
-- 可以将 `URL` 对象传递给网络（和大多数其他）方法，而不是字符串。
-- `URLSearchParams` 类型的对象，它为搜索参数提供了简便的方法：
+- 可以将 URL 对象传递给网络（和大多数其他）方法，而不是字符串。
+- URL 的 SearchParams，它为搜索参数提供了简便的方法。
 
 | 方法 | 描述 |
 | --- | --- |
 | append(name, value) | 按照 name 添加参数 |
 | delete(name) | 按照 name 移除参数 |
-| get(name) | 照 name 获取参数 |
+| get(name) | 按照 name 获取参数 |
 | getAll(name) | 获取相同 name 的所有参数 |
 | has(name) | 按照 name 检查参数是否存在 |
 | set(name, value) | set/replace 参数 |
 | sort() | 按 name 对参数进行排序，并且它是可迭代的，类似于 Map |
 
 ```javascript
-let url = new URL('https://google.com/search');
+let url = new URL('https://google.com/search')
 
-url.searchParams.set('q', 'test me!');  // 添加带有一个空格和一个 ! 的参数
+url.searchParams.set('q', 'test me!')  // 添加带有一个空格和一个 ! 的参数
 
-alert(url);  // https://google.com/search?q=test+me%21
+alert(url)  // https://google.com/search?q=test+me%21
 
-url.searchParams.set('tbs', 'qdr:y');  // 添加带有一个冒号 : 的参数
+url.searchParams.set('tbs', 'qdr:y')  // 添加带有一个冒号 : 的参数
 
 // 参数会被自动编码
-alert(url);  // https://google.com/search?q=test+me%21&tbs=qdr%3Ay
+alert(url)  // https://google.com/search?q=test+me%21&tbs=qdr%3Ay
 
 // 遍历搜索参数（被解码）
 for(let [name, value] of url.searchParams) {
-  alert(`${name}=${value}`);  // q=test me!，然后是 tbs=qdr:y
+  alert(`${name}=${value}`)  // q=test me!，然后是 tbs=qdr:y
 }
 ```
 
-- 用于编码/解码 `URL` 的内建函数：
+- 用于编码/解码 URL 的内建函数：
 
 | 方法 | 描述 |
 | --- | --- |
-| encodeURI | 编码整个 URL |
-| decodeURI | 解码为编码前的状态 |
-| encodeURIComponent | 编码 URL 组件，例如搜索参数，或者 hash，或者 pathname |
+| encodeURL | 编码整个 URL |
+| decodeURL | 解码为编码前的状态 |
+| encodeURLComponent | 编码 URL 组件，例如搜索参数、hash、pathname |
 
-- `encodeURI` 仅编码 `URL` 中完全禁止的字符。`encodeURIComponent` 也编码这类字符，此外，还编码 `#，$，&，+，,，/，:，;，=，? 和 @` 字符。对于一个 `URL` 整体，可以使用 `encodeURI`。而对于 `URL` 参数，应该改用 `encodeURIComponent`。对于每个搜索参数，应该使用 `encodeURIComponent`，以将其正确地插入到 `URL` 字符串中。最安全的方式是对 `name` 和 `value` 都进行编码，除非能够绝对确保它只包含允许的字符。
-- `URL` 和 `URLSearchParams` 基于最新的 `URL` 规范：RFC3986，而 `encode*` 函数是基于过时的 RFC2396。它们之间有一些区别，例如对 IPv6 地址的编码方式不同。
+- encodeURI 仅编码 URL 中完全禁止的字符。encodeURIComponent 也编码这类字符，此外，还编码 `# $ & + , / : ; = ? @` 字符。对于一个 URL 整体，可以使用 encodeURI，而对于 URL 参数，应该改用 encodeURIComponent。对于每个搜索参数，应该使用 encodeURIComponent，以将其正确地插入到 URL 字符串中。最安全的方式是对 name 和 value 都进行编码，除非能够绝对确保它只包含允许的字符。
 
-### 08 - 长轮询
+### 02 - 长轮询
 
-- 长轮询是与服务器保持持久连接的最简单的方式，它不使用任何特定的协议，例如 `WebSocket` 或者 `Server Sent Event`
+- 长轮询是与服务器保持持久连接的最简单的方式，它不使用任何特定的协议，例如 WebSocket 或者 Server Sent Event
 - 从服务器获取新信息的最简单的方式是定期轮询。
 - 长轮询的流程：
 	- 请求发送到服务器。
@@ -6085,45 +6036,45 @@ for(let [name, value] of url.searchParams) {
 
 ```javascript
 async function subscribe() {
-  let response = await fetch("/subscribe");
+  let response = await fetch("/subscribe")
 
   if (response.status == 502) {
-    // 状态 502 是连接超时错误，
-    // 连接挂起时间过长时可能会发生，
+    // 状态 502 是连接超时错误
+    // 连接挂起时间过长时可能会发生
     // 远程服务器或代理会关闭它
     // 让重新连接
-    await subscribe();
+    await subscribe()
   } else if (response.status != 200) {
-    // 一个 error —— 让显示它
-    showMessage(response.statusText);
+    // 一个 error 让显示它
+    showMessage(response.statusText)
     // 一秒后重新连接
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    await subscribe();
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    await subscribe()
   } else {
     // 获取并显示消息
-    let message = await response.text();
-    showMessage(message);
-    // 再次调用 subscribe() 以获取下一条消息
-    await subscribe();
+    let message = await response.text()
+    showMessage(message)
+    // 再次调用以获取下一条消息
+    await subscribe()
   }
 }
 
-subscribe();
+subscribe()
 ```
 
 - 服务器架构必须能够处理许多挂起的连接。
 - 在消息很少的情况下，长轮询很有效。
 
-### 09 - WebSocket
+### 03 - WebSocket
 
-- `WebSocket` 协议，提供了一种在浏览器和服务器之间建立持久连接来交换数据的方法。数据可以作为“数据包”在两个方向上传递，而无需中段连接也无需额外的 HTTP 请求，`WebSocket` 没有跨源限制。
+- WebSocket 协议，提供了一种在浏览器和服务器之间建立持久连接来交换数据的方法。数据可以作为数据包在两个方向上传递，而无需中断连接也无需额外的 HTTP 请求，WebSocket 没有跨源限制。
 
 ```javascript
-let socket = new WebSocket("ws://javascript.info");
+let socket = new WebSocket("ws://javascript.info")
 ```
 
-- 同样也有一个加密的 `wss://` 协议。类似于 `WebSocket` 中的 HTTPS，`wss://` 协议不仅是被加密的，而且更可靠。因为 `ws://` 数据不是加密的，对于任何中间人来说其数据都是可见的，并且，旧的代理服务器不了解 `WebSocket`，它们可能会因为看到“奇怪的” `header` 而中止连接。另一方面，`wss://` 是基于 TLS 的 `WebSocket`，类似于 HTTPS 是基于 TLS 的 HTTP，传输安全层在发送方对数据进行了加密，在接收方进行解密。因此，数据包是通过代理加密传输的。它们看不到传输的里面的内容，且会让这些数据通过。
-- 一旦 `socket` 被建立，就应该监听 `socket` 上的事件。一共有 4 个事件：
+- 加密的 `wss://` 协议，类似于 WebSocket 中的 HTTPS，`wss://` 协议不仅是被加密的，而且更可靠，因为 `ws://` 数据不是加密的，对于任何中间人来说其数据都是可见的，并且旧的代理服务器不了解 WebSocket，它们可能会因为看到奇怪的 header 而中止连接。另一方面，`wss://` 是基于 TLS 的 WebSocket，类似于 HTTPS 是基于 TLS 的 HTTP，传输安全层在发送方对数据进行了加密，在接收方进行解密。因此，数据包是通过代理加密传输的。它们看不到传输的里面的内容，且会让这些数据通过。
+- 一旦 socket 被建立，就应该监听 socket 上的事件。一共有 4 个事件：
 
 | 事件 | 描述 |
 | --- | --- |
@@ -6133,8 +6084,8 @@ let socket = new WebSocket("ws://javascript.info");
 | close | 连接已关闭 |
 
 - 发送一些东西，使用 `socket.send(data)`
-- 如果服务器同意切换为 `WebSocket` 协议，服务器应该返回响应码 101
-- `WebSocket` 可能还有其他 `header`，它们（“The WebSocket Application Messaging Protocol”）
+- 如果服务器同意切换为 WebSocket 协议，服务器应该返回响应码 101
+- WebSocket 可能还有其他 header
 
 | header | 描述 |
 | --- | --- |
@@ -6143,22 +6094,22 @@ let socket = new WebSocket("ws://javascript.info");
 | Sec-WebSocket-Extensions header | 由浏览器自动发送，其中包含其支持的所有扩展的列表 |
 | Sec-WebSocket-Protocol: soap, wamp | 表示不仅要传输任何数据，还要传输 SOAP 或 WAMP 协议中的数据，WebSocket 子协议已经在 IANA catalogue 中注册，因此，此 header 描述了将要使用的数据格式 |
 
-- 扩展与传输数据有关，扩展了 `WebSocket` 协议的功能。
+- 扩展与传输数据有关，扩展了 WebSocket 协议的功能。
 
 ```javascript
-let socket = new WebSocket("wss://javascript.info/chat", ["soap", "wamp"]);
+let socket = new WebSocket("wss://javascript.info/chat", ["soap", "wamp"])
 ```
 
-- `WebSocket` 通信由 `frames`（即数据片段）组成，可以从任何一方发送。在浏览器里，仅直接使用文本或二进制 `frames`。
+- WebSocket 通信由 frames（即数据片段）组成，可以从任何一方发送。在浏览器里，仅直接使用文本或二进制 frames
 
 | 类型 | 描述 |
 | --- | --- |
-| “text frames” | 包含各方发送给彼此的文本数据 |
-| “binary data frames” | 包含各方发送给彼此的二进制数据 |
-| “ping/pong frames” | 被用于检查从服务器发送的连接，浏览器会自动响应它们 |
+| text frames | 包含各方发送给彼此的文本数据 |
+| binary data frames | 包含各方发送给彼此的二进制数据 |
+| ping/pong frames | 被用于检查从服务器发送的连接，浏览器会自动响应它们 |
 
-- `WebSocket .send()` 方法可以发送文本或二进制数据。`socket.send(body)` 调用允许 body 是字符串或二进制格式，包括 `Blob`，`ArrayBuffer` 等。
-- 当收到数据时，文本总是以字符串形式呈现。而对于二进制数据，可以在 `Blob` 和 `ArrayBuffer` 格式之间进行选择，它是由 `socket.binaryType` 属性设置的，默认为 "`blob`"，因此二进制数据通常以 `Blob` 对象呈现。
+- `socket.send(data)` 方法可以发送文本或二进制数据。调用允许 body 是字符串或二进制格式，包括 Blob、ArrayBuffer 等。
+- 当收到数据时，文本总是以字符串形式呈现。而对于二进制数据，可以在 Blob 和 ArrayBuffer 格式之间进行选择，它是由 `socket.binaryType` 属性设置的，默认为 blob，因此二进制数据通常以 Blob 对象呈现。
 - `socket.bufferedAmount` 属性储存了目前已缓冲的字节数，等待通过网络发送。
 
 ```javascript
@@ -6166,61 +6117,61 @@ let socket = new WebSocket("wss://javascript.info/chat", ["soap", "wamp"]);
 // 仅当所有现有的数据都已被发送出去时，再发送更多数据
 setInterval(() => {
   if (socket.bufferedAmount == 0) {
-    socket.send(moreData());
+    socket.send(moreData())
   }
-}, 100);
+}, 100)
 ```
 
-- 通常，当一方想要关闭连接时（浏览器和服务器都具有相同的权限），会发送一个带有数字码（numeric code）和文本形式的原因的 “connection close frame”
+- 通常，当一方想要关闭连接时（浏览器和服务器都具有相同的权限），会发送一个带有数字码和文本形式的原因的 “connection close frame”
 
 ```javascript
-socket.close([code], [reason]);
+socket.close([code], [reason])
 ```
 
-- `code` 是一个特殊的 `WebSocket` 关闭码（可选），`reason` 是一个描述关闭原因的字符串（可选）
+| 参数 | 描述 |
+| --- | --- |
+| code | 一个特殊的 WebSocket 关闭码 |
+| reason | 一个描述关闭原因的字符串 |
 
 ```javascript
 // 关闭方：
-socket.close(1000, "Work complete");
+socket.close(1000, "Work complete")
 
 // 另一方
 socket.onclose = event => {
   event.code === 1000
   event.reason === "Work complete"
   event.wasClean === true (clean close)
-};
+}
 ```
 
-- 要获取连接状态，可以通过带有值的 `socket.readyState` 属性：
+- 要获取连接状态，可以通过带有值的 `socket.readyState` 属性。
 
 | 属性值 | 描述 |
 | --- | --- |
-| 0 | “CONNECTING”：连接还未建立 |
-| 1 | “OPEN”：通信中 |
-| 2 | “CLOSING”：连接关闭中 |
-| 3 | “CLOSED”：连接已关闭 |
+| 0 | CONNECTING：连接还未建立 |
+| 1 | OPEN：通信中 |
+| 2 | CLOSING：连接关闭中 |
+| 3 | CLOSED：连接已关闭 |
 
-### 10 - Server Sent Events
+### 04 - Server Sent Events
 
-- `Server-Sent Events` 规范描述了一个内建的类 `EventSource`，它能保持与服务器的连接，并允许从中接收事件。与 `WebSocket` 类似，其连接是持久的。
-
+- Server Sent Events 规范描述了一个内建的类 EventSource，它能保持与服务器的连接，并允许从中接收事件。与 WebSocket 类似，其连接是持久的。
 - 要开始接收消息，只需要创建 `new EventSource(url)` 即可。浏览器将会连接到 url 并保持连接打开，等待事件。服务器响应状态码应该为 200，header 为 `Content-Type: text/event-stream`，然后保持此连接并以一种特殊的格式写入消息。
 
 ```javascript
-let eventSource = new EventSource("/events/subscribe");
+let eventSource = new EventSource("/events/subscribe")
 
 eventSource.onmessage = function(event) {
-  console.log("New message", event.data);
-  // 对于上面的数据流将打印三次
-};
+  console.log("New message", event.data)
+}
 
 // 或 eventSource.addEventListener('message', ...)
 ```
 
-- `EventSource` 支持跨源请求，就像 `fetch` 和任何其他网络方法。
-- 如果服务器想要浏览器停止重新连接，那么它应该使用 HTTP 状态码 204 进行响应。如果浏览器想要关闭连接，则应该调用 `eventSource.close()`。当连接最终被关闭时，就无法“重新打开”它。如果想要再次连接，只需要创建一个新的 `EventSource`
-- `EventSource` 对象有 `readyState` 属性，该属性具有下列值之一：
-  默认情况下 `EventSource` 对象生成三个事件：`message`，收到消息，可以用 `event.data` 访问。`open`，连接已打开。`error`，无法建立连接，例如，服务器返回 HTTP 500 状态码。
+- EventSource 支持跨源请求，就像 fetch 和任何其他网络方法。
+- 如果服务器想要浏览器停止重新连接，那么它应该使用 HTTP 状态码 204 进行响应。如果浏览器想要关闭连接，则应该调用 `eventSource.close()` 当连接最终被关闭时，就无法重新打开它。如果想要再次连接，只需要创建一个新的 EventSource
+- EventSource 对象有 `readyState` 属性，该属性具有下列值之一。
 
 | 属性值 | 描述 |
 | --- | --- |
@@ -6228,77 +6179,85 @@ eventSource.onmessage = function(event) {
 | EventSource.OPEN = 1 | 已连接 |
 | EventSource.CLOSED = 2 | 连接已关闭 |
 
--  要处理自定义事件，必须使用 `addEventListener` 而非 `onmessage`
+- 默认情况下 EventSource 对象生成三个事件。
 
-### 11 - Cookie
+| 事件 | 描述 |
+| --- | --- |
+| message | 收到消息，可以用 `event.data` 访问 |
+| open | 连接已打开 |
+| error | 无法建立连接，例如，服务器返回 HTTP 500 状态码 |
 
-- `Cookie` 是直接存储在浏览器中的一小串数据。是 HTTP 协议的一部分，`Cookie` 通常是由 Web 服务器使用响应 `Set-Cookie HTTP-header` 设置的。然后浏览器使用 `Cookie HTTP-header` 将它们自动添加到（几乎）每个对相同域的请求中。
-- 最常见的用处之一就是身份验证：登录后，服务器在响应中使用 `Set-Cookie HTTP-header` 来设置具有唯一会话标识符（`session identifier`）的 `cookie`。下次当请求被发送到同一个域时，浏览器会使用 `Cookie HTTP-header` 通过网络发送 `cookie`。所以服务器知道是谁发起了请求。
-- 可以使用 `document.cookie` 属性从浏览器访问 `cookie`。`document.cookie` 的值由 `name=value` 对组成，以 `;` 分隔。每一个都是独立的 `cookie`。
-- 可以写入 `document.cookie`。但这不是一个数据属性，它是一个 访问器（`getter/setter`）。对其的赋值操作会被特殊处理，对 `document.cookie` 的写入操作只会更新其中提到的 `cookie`，而不会涉及其他 `cookie`
+-  要处理自定义事件，必须使用 addEventListener 而非 onmessage
+
+### 05 - Cookie
+
+- Cookie 是直接存储在浏览器中的一小串数据，是 HTTP 协议的一部分，Cookie 通常是由 Web 服务器使用响应 Set-Cookie HTTP-header 设置的。然后浏览器使用 Cookie HTTP-header 将它们自动添加到（几乎）每个对相同域的请求中。
+- 最常见的用处之一就是身份验证：登录后，服务器在响应中使用 Set-Cookie HTTP-header 来设置具有唯一会话标识符（session identifier）的 cookie。下次当请求被发送到同一个域时，浏览器会使用 Cookie HTTP-header 通过网络发送 cookie。所以服务器知道是谁发起了请求。
+- 可以使用 `document.cookie` 属性从浏览器访问 cookie。`document.cookie` 的值由 `name=value` 对组成，以 ; 分隔。每一个都是独立的 cookie
+- 可以写入 `document.cookie` 但这不是一个数据属性，它是一个访问器（getter/setter）。对其的赋值操作会被特殊处理，对 `document.cookie` 的写入操作只会更新其中提到的 cookie，而不会涉及其他 cookie
 
 ```javascript
-document.cookie = "user=John";  // 只会更新名称为 user 的 cookie
-alert(document.cookie);  // 展示所有 cookie
+document.cookie = "user=John"  // 只会更新名称为 user 的 cookie
+alert(document.cookie)  // 展示所有 cookie
 ```
 
-- 为了保持有效的格式，它们应该使用内建的 `encodeURIComponent` 函数对其进行转义。
+- 为了保持有效的格式，它们应该使用内建的 `encodeURIComponent()` 函数对其进行转义。
 
 ```javascript
 // 特殊字符（空格），需要编码
-let name = "my name";
+let name = "my name"
 let value = "John Smith"
 
 // 将 cookie 编码为 my%20name=John%20Smith
-document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value);
+document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value)
 
-alert(document.cookie);  // ...; my%20name=John%20Smith
+alert(document.cookie)  // ...; my%20name=John%20Smith
 ```
 
-- `encodeURIComponent` 编码后的 `name=value` 对，大小不能超过 4KB。因此不能在一个 `cookie` 中保存大的东西。每个域的 `cookie` 总数不得超过 20+ 左右，具体限制取决于浏览器。
+- `encodeURIComponent()` 编码后的 `name=value` 对，大小不能超过 4KB。因此不能在一个 cookie 中保存大的东西。每个域的 cookie 总数不得超过 20+ 左右，具体限制取决于浏览器。
 
 ```javascript
 // 在 site.com
-// 使 cookie 可以被在任何子域 *.site.com 访问：
+// 使 cookie 可以被在任何子域 *.site.com 访问
 document.cookie = "user=John; domain=site.com"
 
 // 之后
 
 // 在 forum.site.com
-alert(document.cookie); // 有 cookie user=John
+alert(document.cookie)  // 有 cookie user=John
 ```
 
-- `expires`，`max-age`，默认情况下，如果一个 `cookie` 没有设置这两个参数中的任何一个，那么在关闭浏览器之后，它就会消失，此类 `cookie` 被称为 "`session cookie`”
+- expires、max-age，默认情况下，如果一个 cookie 没有设置这两个参数中的任何一个，那么在关闭浏览器之后，它就会消失，此类 cookie 被称为 session cookie
 
 ```javascript
 // 当前时间 +1 天
-let date = new Date(Date.now() + 86400e3);
-date = date.toUTCString();
-document.cookie = "user=John; expires=" + date;
+let date = new Date(Date.now() + 86400e3)
+date = date.toUTCString()
+document.cookie = "user=John; expires=" + date
 ```
 
-- 如果将 `expires` 设置为过去的时间，则 `cookie` 会被删除。
+- 如果将 expires 设置为过去的时间，则 cookie 会被删除。
 
 ```javascript
 // cookie 会在一小时后失效
-document.cookie = "user=John; max-age=3600";
+document.cookie = "user=John; max-age=3600"
 
 // 删除 cookie（让它立即过期）
-document.cookie = "user=John; max-age=0";
+document.cookie = "user=John; max-age=0"
 ```
 
-- 指明了 `cookie` 的过期时间距离当前时间的秒数，如果将其设置为 0 或负数，则 `cookie` 会被删除。
-- 默认情况下，如果在 `http://site.com` 上设置了 `cookie`，那么该 `cookie` 也会出现在 `https://site.com` 上，反之亦然。
+- 指明了 cookie 的过期时间距离当前时间的秒数，如果将其设置为 0 或负数，则 cookie 会被删除。
+- 默认情况下，如果在 `http://site.com` 上设置了 cookie，那么该 cookie 也会出现在 `https://site.com` 上，反之亦然。
 
 ```javascript
 // 假设现在在 HTTPS 环境下
 // 设置 cookie secure（只在 HTTPS 环境下可访问）
-document.cookie = "user=John; secure";
+document.cookie = "user=John; secure"
 ```
 
-- `samesite`，旨在防止 XSRF（跨网站请求伪造）攻击。`Cookie` 的 `samesite` 选项提供了另一种防止此类攻击的方式，（理论上）不需要要求 “XSRF 保护 token”
-- `samesite=strict`（和没有值的 `samesite` 一样)，如果用户来自同一网站之外，那么设置了 `samesite=strict` 的 `cookie` 永远不会被发送。`samesite=lax`，宽松（lax）模式，和 `strict` 模式类似，当从外部来到网站，则禁止浏览器发送 `cookie`，但是增加了一个例外，如果以下两个条件均成立，则会发送含 `samesite=lax` 的 `cookie`，一是HTTP 方法是“安全的”（例如 GET 方法，而不是 POST），二是该操作执行顶级导航（更改浏览器地址栏中的 URL）。
-- Web 服务器使用 `Set-Cookie header` 来设置 `cookie`。并且，它可以设置 `httpOnly` 选项，这个选项禁止任何 JavaScript 访问 `cookie`。使用 `document.cookie` 看不到此类 `cookie`，也无法对此类 `cookie` 进行操作。
+- samesite，旨在防止 XSRF（跨网站请求伪造）攻击。Cookie 的 samesite 选项提供了另一种防止此类攻击的方式，（理论上）不需要要求 XSRF 保护 token
+- `samesite=strict`（和没有值的 samesite 一样），如果用户来自同一网站之外，那么设置了 `samesite=strict` 的 cookie 永远不会被发送。`samesite=lax`，宽松（lax）模式，和 strict 模式类似，当从外部来到网站，则禁止浏览器发送 cookie，但是增加了一个例外，如果以下两个条件均成立，则会发送含 `samesite=lax` 的 cookie，一是 HTTP 方法是安全的（例如 GET 方法，而不是 POST），二是该操作执行顶级导航（更改浏览器地址栏中的 URL）
+- Web 服务器使用 Set-Cookie header 来设置 cookie。并且，它可以设置 httpOnly 选项，这个选项禁止任何 JavaScript 访问 cookie。使用 `document.cookie` 看不到此类 cookie，也无法对此类 cookie 进行操作。
 
 | 方法 | 描述 |
 | --- | --- |
@@ -6306,174 +6265,21 @@ document.cookie = "user=John; secure";
 | setCookie(name, value, options) | 将 cookie 的 name 设置为具有默认值 path=/（可以修改以添加其他默认值）和给定值 value |
 | deleteCookie(name) | 要删除一个 cookie，也可以给它设置一个负的过期时间来调用它 |
 
-## 七、jQuery
+## （八）jQuery
 
-### 01 - 基础语法
+[中文 API 文档](https://www.jquery123.com/)
 
-- `$(selector).action()`，美元符号($)定义 jQuery，选择符（selector）“查询”和“查找” HTML 元素，jQuery 的 `action()` 执行对元素的操作。
+## （九）Canvas
 
-### 02 - 选择器
+[中文 API 文档](https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API)
 
-- jQuery 元素选择器和属性选择器允许通过标签名、属性名或内容对 HTML 元素进行选择，选择器允许对 HTML 元素组或单个元素进行操作，使用 CSS 选择器来选取 HTML 元素，使用 XPath 表达式来选择带有给定属性的元素：`$("p#demo")`选取所有 `id="demo"` 的元素`$("[href$='.jpg']")` 选取所有 `href` 值以 ".jpg" 结尾的元素
-- jQuery CSS 选择器可用于改变 HTML 元素的 CSS 属性，`$("p").css("background-color","red");`
+## （十）WebGL
 
-### 03 - 事件
+[中文 API 文档](https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API)
 
-- `var jq=jQuery.noConflict()`，使用自己的名称（比如 jq）来代替 $ 符号。
+## （十一）three.js
 
-| 事件 | 描述 |
-| --- | --- |
-| $(document).ready(function) | 将函数绑定到文档的就绪事件（当文档完成加载时） |
-| $(selector).click(function) | 触发或将函数绑定到被选元素的点击事件 |
-| $(selector).dblclick(function) | 触发或将函数绑定到被选元素的双击事件 |
-| $(selector).focus(function) | 触发或将函数绑定到被选元素的获得焦点事件 |
-| $(selector).mouseover(function) | 触发或将函数绑定到被选元素的鼠标悬停事件 |
-
-### 04 - 效果
-
-| 效果 | 描述 |
-| --- | --- |
-| $(selector).hide(speed,callback); | 隐藏元素 |
-| $(selector).show(speed,callback); | 显示元素 |
-| $(selector).toggle(speed,callback); | 切换 hide() 和 show() 方法 |
-| $(selector).fadeIn(speed,callback); | 淡入元素 |
-| $(selector).fadeOut(speed,callback); | 淡出元素 |
-| $(selector).fadeToggle(speed,callback); | fadeIn() 与 fadeOut() 方法之间进行切换 |
-| $(selector).fadeTo(speed,opacity,callback); | 渐变为给定的不透明度 |
-| $(selector).slideDown(speed,callback); | 向下滑动元素 |
-| $(selector).slideUp(speed,callback); | 向上滑动元素 |
-| $(selector).slideToggle(speed,callback); | 在 slideDown() 与 slideUp() 方法之间进行切换 |
-| $(selector).animate({params},speed,callback); |  |
-| 可选参数：_speed_ 参数规定隐藏/显示的速度，可以取以下值："slow"、"fast" 或毫秒；_callback_ 参数是隐藏或显示完成后所执行的函数名称 |  |
-| 必需的 _params_ 参数定义形成动画的 CSS 属性 |  |
-| $(selector).stop(stopAll,goToEnd); | 停止动画或效果，在它们完成之前 |
-| 可选参数：_stopAll_ 参数规定是否应该清除动画队列，默认是 false，即仅停止活动的动画，允许任何排入队列的动画向后执行；_goToEnd_ 参数规定是否立即完成当前动画，默认是 false |  |
-
-- 方法可以进行链接：`$("#p1").css("color","red").slideUp(2000).slideDown(2000);`
-
-### 05 - DOM
-
-- 获取与设置
-
-| 方法 | 描述 |
-| --- | --- |
-| .text() | 设置或返回所选元素的文本内容 |
-| .html() | 设置或返回所选元素的内容（包括 HTML 标记） |
-| .val() | 设置或返回表单字段的值 |
-| .attr() | 设置或返回属性值 |
-
-`text()`、`html()` 以及 `val()`，拥有回调函数，回调函数由两个参数：被选元素列表中当前元素的下标，以及原始（旧的）值。
-
-- 添加
-
-| 方法 | 描述 |
-| --- | --- |
-| .append() | 在被选元素的结尾插入内容 |
-| .prepend() | 在被选元素的开头插入内容 |
-| .after() | 在被选元素之后插入内容 |
-| .before() | 在被选元素之前插入内容 |
-
-- 删除
-
-| 方法 | 描述 |
-| --- | --- |
-| .remove() | 删除被选元素（及其子元素） |
-| .empty() | 从被选元素中删除子元素 |
-| remove() | 方法也可接受一个参数，允许对被删元素进行过滤 |
-
-- 获取并设置 CSS 类
-
-| 方法 | 描述 |
-| --- | --- |
-| .addClass() | 向被选元素添加一个或多个类 |
-| .removeClass() | 从被选元素删除一个或多个类 |
-| .toggleClass() | 对被选元素进行添加/删除类的切换操作 |
-| .css() | 设置或返回样式属性 |
-
-- 尺寸
-
-| 方法 | 描述 |
-| --- | --- |
-| .width() | 设置或返回元素的宽度（不包括内边距、边框或外边距） |
-| .height() | 设置或返回元素的高度（不包括内边距、边框或外边距） |
-| .innerWidth() | 返回元素的宽度（包括内边距） |
-| .innerHeight() | 返回元素的高度（包括内边距） |
-| .outerWidth() | 返回元素的宽度（包括内边距和边框） |
-| .outerHeight() | 返回元素的高度（包括内边距和边框） |
-
-### 06 - 遍历
-
-| 方法 | 描述 |
-| --- | --- |
-| .parent() | 返回被选元素的直接父元素 |
-| .parents() | 返回被选元素的所有祖先元素，它一路向上直到文档的根元素 ()，可以使用可选参数来过滤对祖先元素的搜索 |
-| .parentsUntil() | 返回介于两个给定元素之间的所有祖先元素 |
-| .children() | 返回被选元素的所有直接子元素，可以使用可选参数来过滤对子元素的搜索 |
-| .find() | 返回被选元素的后代元素，一路向下直到最后一个后代 |
-| .siblings() | 返回被选元素的所有同胞元素 |
-| .next() | 返回被选元素的下一个同胞元素，prev() 反向 |
-| .nextAll() | 返回被选元素的所有跟随的同胞元素，prevAll() 反向 |
-| .nextUntil() | 返回介于两个给定参数之间的所有跟随的同胞元素，prevUntil() 反向 |
-| 过滤： |  |
-| .first() | 返回被选元素的首个元素 |
-| .last() | 返回被选元素的最后一个元素 |
-| .eq() | 返回被选元素中带有指定索引号的元素 |
-| .filter() | 不匹配这个标准的元素会被从集合中删除，匹配的元素会被返回，.not() 与之相反 |
-
-### 07 - AJAX
-
-| 方法 | 描述 |
-| --- | --- |
-| $(selector).load(URL,data,callback); | 从服务器加载数据，并把返回的数据放入被选元素中 |
-| $.get(URL,callback); | 通过 HTTP GET 请求从服务器上请求数据 |
-| $.post(URL,data,callback); | 通过 HTTP POST 请求从服务器上请求数据 |
-
-- 回调函数可以设置不同的参数：`_responseTxt_` - 包含调用成功时的结果内容；`_statusTXT_` - 包含调用的状态；`_xhr_` - 包含 `XMLHttpRequest` 对象。
-
-```javascript
-// GET
-$('button').eq(0).click(function() {
-  $.get('http://127.0.0.1:8080/jquery-server', {a:100, b:200}, function(data) {
-    console.log(data);
-  }, 'json')
-})
-
-// POST
-$('button').eq(1).click(function() {
-  $.post('http://127.0.0.1:8080/jquery-server', {a:100, b:200}, function(data) {
-    console.log(data);
-  })
-})
-
-// 通用方法
-$('button').eq(2).click(function() {
-  $.ajax({
-    url: 'http://127.0.0.1:8080/jquery-server',
-    data: {a: 100, b: 200},
-    type: 'GET',
-    dataType: 'json',
-    // 成功的回调
-    success: function(data) {
-      console.log(data);
-    },
-    // 超时时间
-    timeout: 2000,
-    // 失败的回调
-    error: function() {
-      console.log('出错了！');
-    },
-    // 头信息
-    headers: {
-      c: 300,
-      d: 400
-    }
-  })
-})
-```
-
-## 八、Canvas
-
-待更新...
+[官方文档](https://threejs.org/docs/index.html#manual/zh/introduction)
 
 ## 九、Echarts
 
