@@ -12,9 +12,11 @@ next:
   link: /a-note/e-node.md
 ---
 
-## 一、基础
+## （一）基础
 
-> 添加了类型系统的 JavaScript，使其成为静态类型语言（动态类型指的是运行才会进行类型检查确定变量的类型，而静态类型在编译阶段就会进行类型检查）<br />因为存在隐式类型转换所有 TS 是弱类型的，强类型语言不存在隐式转换时需要强制类型转换。
+> 添加了类型系统的 JavaScript，使其成为静态类型语言，因为存在隐式类型转换所有 TypeScript 是弱类型的，强类型语言不存在隐式转换，转换时需要强制类型转换。
+
+> 动态类型指的是运行才会进行类型检查确定变量的类型，而静态类型在编译阶段就会进行类型检查。
 
 - `:` 指定变量的类型，主要针对编译时的类型检查，运行时还需要代码手动判断类型。
 
@@ -25,7 +27,7 @@ next:
 - `:string`、构造函数 `String`
 - `:null`
 - `:undefined`
-- `:void` 表示没有任何返回值的函数。
+- `:void`（表示没有任何返回值的函数）
 
 ### 02 - 任意值
 
@@ -41,12 +43,12 @@ next:
 - 联合类型只能访问共有的属性和方法。
 - 联合类型，在被赋值后，会进行类型推断。
 
-### 05 - 对象的类型-接口
+### 05 - 对象的类型
 
 - `interface Person { name: string, age: number}`
-- `let tom: Person = { name: 'Tom', age: 18 }`
-- 赋值时变量的形状必须和接口的形状保持一致
-- `?:` 可选属性，该属性可以不存在，但不可以添加未定义的属性。
+- `let tom:Person = { name: 'Tom', age: 18 }`
+- 赋值时变量的形状必须和接口的形状保持一致。
+- `?:` 表示可选属性，该属性可以不存在，但不可以添加未定义的属性。
 - `[propName:string]: any` 任意属性，定义了任意属性那么确定属性和可选属性的类型必须是它的类型的子集。
 - 任意属性只能定义一个，可以使用联合类型。前提是属性名和任意值设定的类型相同时即 `[proName:string]` 时符合，`[proName:number]` 时，其他属性的属性名为 `string` 可不受约束。
 - `readonly id: number` 只读属性，只在创建的时候被赋值。
@@ -62,9 +64,9 @@ next:
 
 ### 07 - 函数的类型
 
-- 函数是 JS 中的一等民
+- 函数是 JS 中的一等民。
 - 函数声明：`function sum(x: number, y: number): number { return ...}` 设置了输入输出的类型。
-- 函数表达式：`let sum: (x: number, y: number)=> number = function(x: number, y: number): number { return ... }`
+- 函数表达式：`let sum: (x: number, y: number) => number = function(x: number, y: number): number { return ... }`
 - 通过接口的方式定义函数的形状，`interface sum { ...: ..., ...: ... }: ...`
 - `?:` 规定可选参数，可以不传入的参数，此属性后面不可再设置必须参数。
 - TS 将默认参数识别为可选参数，不受其后是必须参数的约束。
@@ -78,7 +80,7 @@ next:
 - 联合类型可以被断言为其中的一个类型。
 - 父类可以断言为子类。
 - 任何一个类型可以断言为 `any`，访问任何属性都是允许的，也可以将 `any` 断言为一个具体的类型。
-- 要 A 可以断言为 B，只要 A 兼容 B 或 B 兼容 A 即可，（具有兼容性时才可以断言）
+- 要 A 可以断言为 B，只要 A 兼容 B 或 B 兼容 A 即可（具有兼容性时才可以断言）
 - 万不得已不要使用双重断言。
 - 类型断言不是类型转换，不会影响到真的变量类型，只影响 TS 的编译。
 - 类型声明优于类型断言，更加严格。
@@ -110,7 +112,6 @@ next:
 - `:Error`
 - `:Date`
 - `:RegExp`
-
 - TypeScript 核心库的定义文件中定义了所有浏览器环境需要用到的类型，并且是预置在 TypeScript 中的。
 - Node.js 不是内置对象的一部分，需要引入第三方声明 `npm install @type/node --save-dev`
 
@@ -138,7 +139,7 @@ next:
 
 ### 15 - 类
 
-- 修饰符 `public private protected`
+- 修饰符 `public、private、protected`
 - `readonly`
 - `abstract class` 抽象类不允许被实例化，只能被继承，其中的抽象方法必须在子类被实现。
 
@@ -162,13 +163,13 @@ next:
 
 - 函数、接口、类
 
-## 二、进阶
+## （二）进阶
 
-待更新...
+[第三方翻译文档](https://ts.yayujs.com/)
 
 <style>
 table {
-  display: table !important;
-  width: 100% !important;
+  display: table;
+  width: 100%;
 }
 </style>

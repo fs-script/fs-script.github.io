@@ -6281,9 +6281,9 @@ document.cookie = "user=John; secure"
 
 [官方文档](https://threejs.org/docs/index.html#manual/zh/introduction)
 
-## 九、Echarts
+## （十二）Echarts
 
-待更新...
+[官方文档](https://echarts.apache.org/zh/index.html)
 
 <style>
 table {
