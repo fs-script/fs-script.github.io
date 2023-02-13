@@ -25,7 +25,7 @@ next:
 
 ### 02 - npm
 
-> 第三方模块又叫做包，包分为项目包和全局包，项目包又分为开发依赖包和核心依赖包。npm (Node Package Manager)，是包管理工具。
+> 第三方模块又叫做包，包分为项目包和全局包，项目包又分为开发依赖包和核心依赖包。npm (Node Package Manager)，是包管理工具
 
 | 常用命令 | 描述 |
 | --- | --- |
@@ -42,8 +42,8 @@ next:
 | `npm unpublish --force 包名` | 删除发布的包 |
 
 - 版本号的命名规则：`大版本.功能版本.Bug 修复版本`
-- 切换淘宝源： `npm config set registry=https://registry.npmmirror.com`。
-- 切换华为源 `https://repo.huaweicloud.com/repository/npm/`。
+- 切换淘宝源： `npm config set registry=https://registry.npmmirror.com`
+- 切换华为源 `npm config set registry=https://repo.huaweicloud.com/repository/npm/`
 - nrm 工具，快速切换镜像源：查看所有可用的镜像源 `nrm ls`；将镜像源切换为 xxx `nrm use xxx`
 - 模块会优先从缓存中加载，模块在第一次加载后会被缓存。
 - 内置模块得加载优先级是最高的。
@@ -51,7 +51,7 @@ next:
 
 ### 03 - fs 文件系统模块
 
-> 用于操作文件。
+> 用于操作文件
 
 | 方法 | 描述 |
 | --- | --- |
@@ -85,7 +85,7 @@ fs.writeFile("./writeText.txt", txt, "utf-8", function(err) {
 
 ### 04 - path 路径模块
 
-> 用于处理路径需求。
+> 用于处理路径需求
 
 | 方法 | 描述 |
 | --- | --- |
@@ -102,7 +102,7 @@ fs.writeFile("./writeText.txt", txt, "utf-8", function(err) {
 
 ### 05 - http 模块
 
-> 用于处理网络请求。
+> 用于处理网络请求
 
 | 方法 | 描述 |
 | --- | --- |
@@ -143,9 +143,9 @@ server.listen(8080, function () {
 - 向外共享模块作用域中的成员使用 `module` 对象，`module.exports = xxx` 对象属性将模块成员共享出去供外界使用，外界使用 `require()` 方法接收导出的内容。
 - `exports` 和 `module.exports` 指向同一个对象，前者是后者的一个引用，最终共享的结果以 `module.exports` 指向的对象为准。
 -  CommonJS 模块化规范，规定了模块的特性和各模块之间如何相互依赖：
-  - 第一，每个模块内部 `module` 变量代表当前模块；
-  - 第二，`module` 变量是一个对象，其中的 `exports` 属性是对外的接口，该属性是一个对象；
-  - 第三， 加载某个模块就是加载该模块的 `module.exports` 属性，`require()` 方法用于加载模块。
+    - 第一，每个模块内部 `module` 变量代表当前模块；
+    - 第二，`module` 变量是一个对象，其中的 `exports` 属性是对外的接口，该属性是一个对象；
+    - 第三， 加载某个模块就是加载该模块的 `module.exports` 属性，`require()` 方法用于加载模块。
 
 [官方文档](https://nodejs.org/zh-cn/docs/)
 
@@ -168,7 +168,7 @@ app.listen(80, () => {
 | --- | --- |
 | `app.get(URL, function(req, res) {})` | 监听客户端的 get 请求 |
 | `app.post(URL, function(req, res) {})` | 监听客户端的 post 请求 |
-| `req.query` | 对象，可以访问客户端通过字符串得形式发送的数据 |
+| `req.query` | 对象，可以访问客户端通过字符串的形式发送的数据 |
 | `req.params` | 对象，可以访问到 URL 中通过 ：匹配到的动态参数，可以匹配多个动态参数 |
 | `req.body` | 接收客户端发送过来的请求数据，需要配置解析表单的中间件 express.json |
 | `res.send()` | 将处理好的内容发送给客户端 |
@@ -422,9 +422,9 @@ app.use(cors());
 
 | 响应头 | 描述 |
 | --- | --- |
-| Access-Control-Allow-Origin: &#124; * | 其中指定允许访问该资源的外域 URL，* 表示允许任何域的请求 |
+| Access-Control-Allow-Origin | 其中指定允许访问该资源的外域 URL，* 表示允许任何域的请求 |
 | Access-Control-Allow-Headers | 默认支持客户端发送 9 个请求头，额外的请求需要在服务器端进行声明 |
-| Access-Control-Allow-Methods &#124; * | 默认仅支持客户端发起 GET、POST、HEAD 请求，额外的请求方法需要在服务器端声明 |
+| Access-Control-Allow-Methods | 默认仅支持客户端发起 GET、POST、HEAD 请求，额外的请求方法需要在服务器端声明 |
 
 - CORS 请求分类，根据请求方式和请求头的不同，可以分为两大类。
 - 简单请求：
