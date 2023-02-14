@@ -12,13 +12,13 @@ next:
   link: /a-note/g-react.md
 ---
 
-## 一、Vue2
+## （一）Vue2
 
 ### 01 - 使用
 
 - 使用 `script` 标签引入：
 
-```javascript
+```html
 // 开发环境
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
 
@@ -26,29 +26,37 @@ next:
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10"></script>
 ```
 
-- 使用 npm 配合打包工具：`npm install vue`
-- npm 标签及版本：
-  - `@latest`，默认标签，最近更新的
-  - `@next`，下一个大版本
-  - `@alpha`，内测版
-  - `@beta`，公测版
-  - `@rc`，候选版
+- 使用 npm 配合打包工具：
 
-**指令：**
+```sh
+npm install vue
+```
+
+- npm 标签及版本：
+
+| 标签 | 版本 |
+| --- | --- |
+| @latest | 默认标签，最近更新的 |
+| @next | 下一个大版本 |
+| @alpha | 内测版 |
+| @beta | 公测版 |
+| @rc | 候选版 |
+
+### 02 - 指令
 
 ```html
-<!-- 所有的数据绑定都支持JS单个表达式的解析，如简单计算、三元表达式、字符串数组的方法... -->
+<!-- 所有的数据绑定都支持 JS 单个表达式的解析，如简单计算、三元表达式、字符串数组的方法... -->
 <!-- 指令 attribute 冒号后的参数，可以使用 [...] 绑定为动态参数，需要对参数值做约束 -->
 <!-- 缩写仅在有参数的时候有效 -->
 
 <... is></...>
 
 <!-- 列表渲染 -->
-<... v-for="item in items" :key="..."></...>
-<... v-for="(item, index) in items" :key="..."></...>
+<... v-for="item in items"></...>
+<... v-for="(item, index) in items" :key="index"></...>
 <!-- 对象按照 Object.keys() 遍历 -->
-<... v-for="value in object" :key="..."></...>
-<... v-for="(value, name, index) in object" :key="..."></...>
+<... v-for="value in object"></...>
+<... v-for="(value, name, index) in object" :key="index"></...>
 <!-- 利用计算属性渲染过滤后的数据，当在嵌套 v-for 不适用的情况下可以利用方法过滤 -->
 <!-- 将模板重复对应的次数 -->
 <... v-for="n in 10">{{ n }}</...>
@@ -77,11 +85,11 @@ next:
 <... key="..."></...>
 <... ref></...>
 
-<!-- 表单输入绑定：双向数据绑定 -->
+<!-- 表单输入绑定（双向数据绑定） -->
 <!-- 忽略所有表单元素的 value、checked、selected attribute 的初始值而总是将 Vue 实例的数据作为数据来源，在 data 选项中声明初始值 -->
 <... v-model="..."></...>
 <!-- 多个复选框绑定到同一个数组 -->
-<!-- 选框选中时，v-model的值为 value 的值或 true false -->
+<!-- 选框选中时，v-model 的值为 value 的值或 true、false -->
 <!-- 修饰符：.lazy .number .trim -->
 
 <!-- 其他 attribute -->
@@ -119,7 +127,7 @@ next:
 <... v-text="..."></...>
 ```
 
-**创建：**
+### 03 - 创建
 
 ```javascript
 // 创建 Vue 实例
@@ -182,26 +190,30 @@ var vm = new Vue({
 })
 ```
 
-**组件基础：**
+### 04 - 组件
 
-- 一个组件本质上是一个拥有预定义选项的一个 Vue 实例。
+**组件基础**
+
+> 一个组件本质上是一个拥有预定义选项的一个 Vue 实例
 
 ```javascript
 // 全局注册
 Vue.component('todo-item', {
   // prop 类似于一个自定义的 attribute，可以将父作用域的数据传到子组件上，起到桥梁作用
   props: ['foo', 'value',...],
+
   // data 必须是一个函数，保证组件数据的独立
   data: function() {
-    return { ... }
+    return { ... };
   },
+
   template: '
    // 每个组件必须只有一个根元素
    <div class="todo-item">
-     <div>{{foo.xxx}}</div>
-     // 触发自定义事件,将该事件传递到父级组件处理，第二个事件可以用于抛出值（可选）
+     <div>{{ foo.xxx }}</div>
+     // 触发自定义事件，将该事件传递到父级组件处理，第二个事件可以用于抛出值（可选）
      <button v-on:click="$emit('enlarge-text', n)">按钮</button>
-     // 使用 v-modle
+     // 使用 v-model
      <input v-bind:value='value' v-on:input='$emit('input', $event.target.value)'>
      // 插槽
      <slot></slot>
@@ -209,31 +221,30 @@ Vue.component('todo-item', {
   '
 })
 
-var app = new Vue({ ... })
-
 //----------------------------
+
 <todo-item
- v-for="(item, index) in items"
- :foo="item"
- :key="item.id"
- :index="index"
- // 监听自定义事件并处理，$event 访问抛出的值（可选）；事件处理是一个方法，则抛出的值用第一个参数接收
- @enlarge-text="... $event"
- //
- v-modle='searchText'
->
+  v-for="(item, index) in items"
+  :foo="item"
+  :key="item.id"
+  :index="index"
+  // 监听自定义事件并处理，$event 访问抛出的值（可选）；事件处理是一个方法，则抛出的值用第一个参数接收
+  @enlarge-text="... $event"
+  //
+  v-model='searchText'>
   // 内容将会插入插槽中
   Something bad happened.
   // 注入依赖，使用 provide 提供给后代的方法/数据
   <... inject: [...]></...>
 </todo-item>
+
 // 在自定义组件上使用 class 时，会添加到该组件的根元素上，已存在的不会被覆盖
 // 组件会在 `currentTabComponent` 改变时改变，is="..." 可以用于有约束条件的元素的内部使用组件
 // 切换时组件会重新渲染，不会保存状态
 <component v-bind:is="currentTabComponent"></component>
 ```
 
-**深入组件：**
+**深入组件**
 
 ```javascript
 // 全局注册
@@ -243,17 +254,17 @@ Vue.component('my-component-name', {
   parent: Vue instance,  // 建立父子关系
 
   // --- 组件类型 ---
-  functionla: true,  // 开启函数式组件，组件无状态（data）无实例（this 上下文）
+  functional: true,  // 开启函数式组件，组件无状态（data）无实例（this 上下文）
 
   // --- 模板修改器 ---
   delimiters: ['${', '}'],  // 改变纯文本插入分隔符
   comments: true,  // 保留 HTML 注释
 
   // --- 接口 ---
-  // 禁止根元素继承 没有被prop 的attribute，不影响 class style
+  // 禁止根元素继承 没有被 prop 的 attribute，不影响 class style
   inheritAttrs: false,
   // 组件上的 v-model 会默认利用名为 value 的 prop， 和名为 input 的事件
-  // 单选 复选框类型 使用 v-modle时
+  // 单选 复选框类型 使用 v-model 时
   // 定制 prop, event
   model: {
     prop: 'checked',
@@ -287,27 +298,20 @@ Vue.component('my-component-name', {
   computed: { ... },
 
 	// --- 渲染 ---
-	render(h, [context]) { ... },  // 渲染函数，存在会忽略上面的字符串模板
+	render(h, [context]) { ... },  // 渲染函数，存在会忽略下面的字符串模板
 	renderError(h, err) { ... },  // 渲染出错时
   template: '
     <div class="root">
-     // 默认没有被 props 接收的 attribute 会被根元素继承，关闭继承后，使用 $attrs 接收使用
-     <input v-bind="$attrs">
-       <input type="checkbox" v-bind:checked="checked" v-on:change="$emit('change', $event.target.checked)"
-       // 插槽，渲染时插槽会被替换为组件标签内写的内容
-       <slot></slot>
-       <button type="sumbit">
-       <slot>后备内容</slot>
-       </button>
-       // 具名插槽
-       <header>
-       <slot name="header"></slot>
-       </header>
-       // 作用域插槽 让父级插槽的内容可以访问到当前作用域
-       <span>
-       // 插槽 prop，内部实现为拥有单个参数的函数
-       <slot v-bind:title="title"></slot>
-       </span>
+      // 默认没有被 props 接收的 attribute 会被根元素继承，关闭继承后，使用 $attrs 接收使用
+      <input v-bind="$attrs" type="checkbox" v-bind:checked="checked" v-on:change="$emit('change', $event.target.checked)"
+      // 插槽，渲染时插槽会被替换为组件标签内写的内容
+      <slot></slot>
+      <slot>后备内容</slot>
+      // 具名插槽
+      <slot name="header"></slot>
+      // 作用域插槽 让父级插槽的内容可以访问到当前作用域
+      // 插槽 prop，内部实现为拥有单个参数的函数
+      <slot v-bind:title="title"></slot>
     </div>
     '
   	// 在祖先组件里提供
@@ -328,35 +332,37 @@ new Vue({
 })
 
 // ------------------------------------------------
+
 // 父级模板里的内容都是在父级作用域中编译的，子模板的所有内容都是在子作用域中编译的
 // 将一个对象的所有 property 都作为 prop 传入
 // props 是单向下行数据绑定的
 <my-component-name
- // 绑定多个 prop
- v-bind="带有props设置内容的对象"
- // 监听根元素的事件
- v-on:focus.native="onFocus"
- // 利用事件模拟数据的双向绑定的修饰符写法
- v-bind:title.sync="xxx.title"
+  // 绑定多个 prop
+  v-bind="带有props设置内容的对象"
+  // 监听根元素的事件
+  v-on:focus.native="onFocus"
+  // 利用事件模拟数据的双向绑定的修饰符写法
+  v-bind:title.sync="xxx.title"
 >
   // 插槽内容任意，可以文本 HTML、其他组件
   // 组件位设置插槽 将会抛弃其中的内容
   Your Profile
 
-  // 插入具名插槽中 v-solt 要加在 template 上
-  <template v-solt:header>
-  <h1>Header</h1>
+  // 插入具名插槽中 v-slot 要加在 template 上
+  <template v-slot:header>
+    <h1>Header</h1>
   </template>
 
   // 作用域插槽
-  // 为插槽prop的对象起名
+  // 为插槽 prop 的对象起名
   // 支持 [] 动态插槽名
-  <template v-solt:default="slotProp">
+  <template v-slot:default="slotProp">
   // 支持缩写
   <template #:default="slotProp">
-   {{slotProp.title.xxx}}
+    {{slotProp.title.xxx}}
   </template>
 </my-component-name>
+
 // 动态组件
 // 失活的组件将会被缓存
 <keep-alive>
@@ -366,18 +372,20 @@ new Vue({
 // 异步组件，设置一个工厂函数，分割为小一些的代码块，需要时从服务器下载
 ```
 
-**建议顺序：**
+### 05 - 代码风格
+
+> 建议的书写顺序
 
 ```javascript
 // --- 副作用 ---
 el: "#...",
 
-// --- 全局感知
+// --- 全局感知 ---
 name: String,
 parent: Vue instance,
 
 // --- 组件类型 ---
-functionla: true,
+functional: true,
 
 // --- 模板修改器 ---
 delimiters: ['${', '}'],
@@ -400,7 +408,7 @@ model: {
 },
 props: { ... },
 
-// --- vuex 状态 ---
+// --- Vuex 状态 ---
 store: store,
 
 // --- 本地状态 ---
@@ -432,39 +440,38 @@ renderError(h, err) { ... },
 template: ' ... '
 ```
 
-**过渡动画：**
+### 06 - 过渡动画
 
 ```javascript
 // 默认渲染为 <span>
 <transition
- // 更换渲染的标签
- tag="p"
- // 默认前缀为 v- 使用name 可以替换 v-
- name="fade"
- // 自定义过渡类名
- enter-active-class="animated-tada"
- leave-active-class="animated ..."
- // 显性规定过渡的时间
- :duration="1000"
- // 规定进入和移出的时间
- :duration="{ enter: 500, leave: 800 }"
+  // 更换渲染的标签
+  tag="p"
+  // 默认前缀为 v- 使用 name 可以替换 v-
+  name="fade"
+  // 自定义过渡类名
+  enter-active-class="animated-data"
+  leave-active-class="animated ..."
+  // 显性规定过渡的时间
+  :duration="1000"
+  // 规定进入和移出的时间
+  :duration="{ enter: 500, leave: 800 }"
 
- // 声明 JS 钩子
- v-on:before-enter="beforeEnter"
- v-on:enter="enter"
- v-on:after-enter="..."
- v-on:enter-cancelled="..."
-
- v-on:before-leave:"..."
+  // 声明 JS 钩子
+  v-on:before-enter="beforeEnter"
+  v-on:enter="enter"
+  v-on:after-enter="..."
+  v-on:enter-cancelled="..."
+  v-on:before-leave:"..."
   ...
 
- // 设置初始渲染的过渡
- appear
- appear-class="..."
- appear-to-class="..."
- appear-active-class="..."
- v-on:before-appear="..."
- v-on:appear="..."
+  // 设置初始渲染的过渡
+  appear
+  appear-class="..."
+  appear-to-class="..."
+  appear-active-class="..."
+  v-on:before-appear="..."
+  v-on:appear="..."
   ...
 
   // 过渡模式
@@ -480,10 +487,11 @@ template: ' ... '
 
 // v-for 的列表进入与离开过渡
 <transition-group ...>
-    ...
+  ...
 </transition-group>
 
 //-----------CSS-------------
+
 .fade-enter { ... }
 .fade-enter-active { ... }
 .fade-enter-to { ... }
@@ -494,6 +502,7 @@ template: ' ... '
 .fade-move { ... }
 
 //---------JS------------
+
 methods: {
   beforeEnter: function (el) {
     el.style.opacity = 0
@@ -519,7 +528,7 @@ methods: {
 // 可以把状态过渡封装在组件里
 ```
 
-**复用性：**
+### 07 - 可复用性
 
 ```javascript
 // 混入 mixin 提升组件的复用性
@@ -528,11 +537,13 @@ var myMixin = {
   // 可以包含任意选项
   ...
 }
+
 // 定义一个使用混用对象的组件
 var Component = Vue.extend({
   mixins: [myMixin]
 })
 var component = new Component()
+
 // 混入对象会和原组件的数据和方法进行合并，重复项以原组件优先，方法将合并为一个数组均可调用
 // 全局混入
 Vue.mixin({ ... })
@@ -555,8 +566,8 @@ Vue.directive('focus', {
 Vue.component('anchored-heading', {
   render: function(createElement) {
     return createElement{
-      // 第一个参数：标签名字符串、组件选项对象、函数
-      'h' + this.level, // 标签名称
+      // 第一个参数为标签名字符串、组件选项对象、函数
+      'h' + this.level,  // 标签名称
       // 可选，数据对象 class\style\slot\attrs...
       // this.$slots 访问静态插槽的内容
       // this.$scopedSlots.具名
@@ -595,7 +606,6 @@ Vue.component('my-component', {
 // 官方插件：vue-router ...
 Vue.use(MyPlugin, { 可选对象 })
 
-new Vue({ ... })
 // 开发插件要暴露一个 install 方法
 
 //-------------------------------------------
@@ -620,12 +630,12 @@ filters: {
 Vue.filters('...', function() { ... })
 ```
 
-**工具：**
+### 08 - 工具
 
 ```javascript
 // 单文件组件
 <template>
-	...
+  ...
 </template>
 
 <script>
@@ -645,14 +655,14 @@ module.exports = {
 </template>
 
 <script>
-  import ... from '...'
+import ... from '...'
 
-  export default {
-    data() {
-      return { ... }
-    },
-    components: { ... }
-  }
+export default {
+  data() {
+    return { ... }
+  },
+  components: { ... }
+}
 </script>
 
 <style lang="less" scoped>
@@ -663,7 +673,8 @@ module.exports = {
 // 测试：单元测试、组件测试、端到端测试
 // 生产环境部署
 ```
-**规模化：**
+
+### 09 - 规模化
 
 ```javascript
 // 路由
@@ -701,7 +712,7 @@ new Vue({
 // 用户提供的内容需要过滤
 ```
 
-## 二、Vue3
+## （二）Vue3
 
 **使用：**
 - `npm init vue@latest`
@@ -1218,3 +1229,10 @@ store.commit
 ## 十一、源码分析
 
 ## Naive UI
+
+<style>
+table {
+  display: table;
+  width: 100%;
+}
+</style>
