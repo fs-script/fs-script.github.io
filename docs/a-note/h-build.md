@@ -242,3 +242,5 @@ module.exports = {
   mode: 'development',
 }
 ```
+
+## vite

@@ -714,17 +714,25 @@ new Vue({
 
 ## （二）Vue3
 
-**使用：**
-- `npm init vue@latest`
-- `npm install`
-- `npm run dev`
-- `npm run build`
+### 01 - 使用
 
-**创建：**
+```sh
+# 初始化 vue 项目
+npm init vue@latest
+# 安装项目依赖包
+npm install
+# 运行项目
+npm run dev
+# 打包项目
+npm run build
+```
+
+### 02 - 创建
 
 ```javascript
 import { createApp } from 'vue'
 
+// 创建应用实例
 const app = createApp({
   data() {
     return {
@@ -742,19 +750,19 @@ app.config.errorHandler = (err) => {
 app.component('...', ...)
 
 // 挂载实例
-app.mout('#app')
+app.mount('#app')
 // 可以创建多个应用实例，挂载到不同的实例上去
 
 // 依赖提供
 app.provide()
 
-// setup
+// setup 语法糖
 <script setup>
   ...
 </script>
 ```
 
-**响应式：**
+### 03 - 响应式
 
 ```javascript
 // 响应式数据
@@ -764,7 +772,7 @@ const 对普通值类型的引用 = ref( 普通值 )
 nextTick(() => { 访问更新后的 DOM })
 
 // 计算属性
-// 期望接受一个 getter 函数，返回一个计算属性ref
+// 期望接受一个 getter 函数，返回一个计算属性 ref
 // 默认只读，设置 get() set() 可读可写
 // 不应有副作用：做异步请求或更改 DOM
 const 计算属性 = computed(() => { return ... })
@@ -800,16 +808,17 @@ components: { ... },
 setup() { ... return ... }
 ```
 
-**Setup：**
+### 04 - Setup
 
-```javascript
-// 单文件组件中使用<PascalCase />的标签名，DOM 中书写模板使用<kabab-case></kabab-case>
-// 单独写
+```html
+<!-- 单文件组件中使用 <PascalCase /> 的标签名，DOM 中书写模板使用 <pascal-case></pascal-case> -->
+<!-- 需要单独写的内容 -->
 <script>
   export default {
     inheritAttrs: false
   }
 </script>
+
 <script setup>
   // props 列表 编译宏命令 不需要显示导入 返回一个对象
   defineProps(['...', ...])
@@ -826,7 +835,7 @@ setup() { ... return ... }
     // 无校验
     click: null,
     // 有校验
-    sumbit: ({ email, password } => {
+    submit: ({ email, password } => {
       ...
     })
   })
@@ -834,7 +843,7 @@ setup() { ... return ... }
     emit('submit', {email, password})
   }
 
-	// v-modle.
+	// v-model.
 	defineProps({
     modelValue: ...,
     modelModifiers: { ... }
@@ -872,39 +881,37 @@ setup() { ... return ... }
 </script>
 
 <template>
-  // 抛出一个事件 父组件监听后执行操作，没有冒泡机制
+  <!-- 抛出一个事件 父组件监听后执行操作，没有冒泡机制 -->
   <button @click="$emit('事件名', 额外参数)"></button>
-  // 插槽 文本、元素、组件
+  <!-- 插槽 文本、元素、组件 -->
   <slot :...="...">默认内容</slot>
 	<slot name="具名插槽"></slot>
-  // 透传进的值
+  <!-- 透传进的值 -->
   {{ $attrs }}
-	v-bind="$attrs"
-  // 多根节点不自动透传，需要显示绑定 $attrs
+	<!-- v-bind="$attrs" -->
+  <!-- 多根节点不自动透传，需要显示绑定 $attrs -->
 </template>
 
 // -----------------------------------------
+
 <component is:...></component>
 <... v-bind="存有多个 prop 的对象" />
 <template v-slot:"具名插槽"></...>
 <template #"具名插槽"></...>
-// 访问子作用域 支持解构
+<!-- 访问子作用域 支持解构 -->
 <... v-slot="slotProps"></...>
-// 具名插槽作用域
+<!-- 具名插槽作用域 -->
 <... v-slot:name="slotProps"></...>
-// 异步组件
+<!-- 异步组件 -->
 <AsyncComp />
-```
 
-```javascript
-// 组合式函数（复用相同的逻辑）：抽取单独的 .js 文件，组合式函数以 use... 开头，通过返回值暴露所管理的状态
-// 纯逻辑时使用组合式函数，逻辑和需要视图更新时使用基于作用域插槽的无渲染组件
-//
+<!-- 组合式函数（复用相同的逻辑）：抽取单独的 .js 文件，组合式函数以 use... 开头，通过返回值暴露所管理的状态 -->
+<!-- 纯逻辑时使用组合式函数，逻辑和需要视图更新时使用基于作用域插槽的无渲染组件 -->
 ```
 
 > 复用代码：组件、组合式函数、自定义指令、插件
 
-**指令、插件：**
+### 05 - 指令与插件
 
 ```javascript
 // 自定义指令
@@ -925,7 +932,7 @@ const myPlugin = {
 }
 ```
 
-**内置组件：**
+### 06 - 内置组件
 
 ```javascript
 <Transition />
@@ -935,7 +942,7 @@ const myPlugin = {
 <Suspense />
 ```
 
-## 三、代码风格
+## （三）代码风格
 
 - 组件名使用多个单词，单词小写，单词间用 - 隔开。
 - 组件的 `data` 必须是一个返回对象的函数。
@@ -945,12 +952,12 @@ const myPlugin = {
 - 单文件时组件的 css 要设置 `scoped` 指定作用域。
 - 使用模块作用域保持不允许外部访问函数的私有性，为插件、混入的不考虑对外公共 API 的自定义私有属性使用 `$_` 前缀，并附带一个命名空间。
 - 使用构建系统时，把每个组件单独分成文件。
-- 组件文件名一般化描述开头，描述性修饰结尾：搜索输入框 查询、设置检查 条款...
-- 单文件的文件名使用大驼峰命名或单词小写，单词间用 - 隔开。
+- 组件文件名一般化描述开头，描述性修饰结尾：搜索输入框查询、设置检查条款...
+- 单文件的文件名使用大驼峰命名或单词小写单词间用 - 隔开。
 - 对于展示类无逻辑无状态的组件文件名，使用 `Base`、`App`、`V` 开头的前缀开头。
 - 不会被复用，不接受 `prop` 的组件文件名，使用 `The` 开头的前缀开头，以示前缀。
 - 父组件在某些场合下的子组件文件名，使用父组件的名作为前缀开头，紧密耦合。
-- 在单文件中 `<MyComponent/>`，在 DOM 模板中，`<my-compont></my-component>`
+- 在单文件中 `<MyComponent/>`，在 DOM 模板中，`<my-component></my-component>`
 - 声明 `prop` 时，使用小驼峰命名。
 - 多个 `attribute` 换行书写。
 - 总结： JS 中使用驼峰命名，HTML 中使用 - 分隔。
@@ -958,17 +965,17 @@ const myPlugin = {
 
 ![Mind](/images/mind.jpg)
 
-## 四、Vue Router
+## （四）Vue Router
 
-**安装：**
+### 01 - 安装
 
 - `npm install vue-router@4`
 - `yarn add vue-router@4`
 
-**使用：**
+### 02 - 使用
 
-```javascript
-// HTML 使用
+```html
+<!-- HTML 使用 -->
 <script src="https://unpkg.com/vue@3"></script>
 <script src="https://unpkg.com/vue-router@4"></script>
 
@@ -986,37 +993,37 @@ const myPlugin = {
   <router-view name="..."></router-view>
 </div>
 
-// ----------------------------------------
+<!-- ---------------------------------------- -->
 
-// 1. 定义路由组件.
-// 也可以从其他文件导入
+<!-- 1. 定义路由组件. -->
+<!-- 也可以从其他文件导入 -->
 const Home = { template: '<div>Home</div>' }
 const About = { template: '<div>About</div>' }
 
-// 2. 定义一些路由
-// 每个路由都需要映射到一个组件。
+<!-- 2. 定义一些路由 -->
+<!-- 每个路由都需要映射到一个组件 -->
 const routes = [
   { path: '/', component: Home },
   { path: '/about', component: About },
 ]
 
-// 3. 创建路由实例并传递 `routes` 配置
+<!-- 3. 创建路由实例并传递 `routes` 配置 -->
 const router = VueRouter.createRouter({
-  // 4. 内部提供了 history 模式的实现。这里使用 hash 模式。
+  <!-- 4. 内部提供了 history 模式的实现。这里使用 hash 模式。 -->
   history: VueRouter.createWebHashHistory(),
-  routes, // `routes: routes` 的缩写
+  routes,
 })
 
-// 5. 创建并挂载根实例
+<!-- 5. 创建并挂载根实例 -->
 const app = Vue.createApp({})
-//确保 _use_ 路由实例使
-//整个应用支持路由。
+<!-- 确保 _use_ 路由实例使 -->
+<!-- 整个应用支持路由 -->
 app.use(router)
 
 app.mount('#app')
 ```
 
-- `this.$route` （当前路由）与 直接使用通过 `createRouter` 创建的 `router` 实例完全相同。
+- `this.$route` （当前路由）与直接使用通过 `createRouter` 创建的 `router` 实例完全相同。
 
 ```javascript
 // 动态路由
@@ -1028,7 +1035,7 @@ app.mount('#app')
 
 // 捕获所有路由或 404 路由 使用正则表达式
 
-// 路由匹配语法：在参数中自定义正则，可重复参数匹配0-n个参数 + *，sensitive 和 strict 控制匹配是灵活或严格的，? 可选参数
+// 路由匹配语法：在参数中自定义正则，可重复参数匹配 0-n 个参数 + *，sensitive 和 strict 控制匹配是灵活或严格的，? 可选参数
 
 // 嵌套路由
 
@@ -1083,7 +1090,7 @@ router.replace()
 router.go()
 ```
 
-**导航守卫：**
+### 03 - 导航守卫
 
 ```javascript
 // 导航守卫：通过跳转或取消的方式守卫导航
@@ -1093,28 +1100,28 @@ router.beforeEach(async (to, from, [next]) => { return false })
 // 全局解析守卫
 router.beforeResolve(async to => {})
 // 全局后置钩子
-router.beforeEach((to, from) => {})
+router.afterEach((to, from) => {})
 
 router.onError()
 
-// 路由独享的守卫：在路由配置中。只有在从不同的导航时才触发
+// 路由独享的守卫：在路由配置中，只有在从不同的导航时才触发
 beforeEnter:(to, from) => {}
 
 // 组件内的守卫，可用的配置 API：beforeRouteEnter、beforeRouteUpdate、beforeRouterLeave
 
 // 完整导航解析流程：
-1、导航被触发。
-2、在失活的组件里调用 beforeRouteLeave 守卫。
-3、调用全局的 beforeEach 守卫。
-4、在重用的组件里调用 beforeRouteUpdate 守卫(2.2+)。
-5、在路由配置里调用 beforeEnter。
-6、解析异步路由组件。
-7、在被激活的组件里调用 beforeRouteEnter。
-8、调用全局的 beforeResolve 守卫(2.5+)。
-9、导航被确认。
-10、调用全局的 afterEach 钩子。
-11、触发 DOM 更新。
-12、调用 beforeRouteEnter 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。
+// 1、导航被触发。
+// 2、在失活的组件里调用 beforeRouteLeave 守卫。
+// 3、调用全局的 beforeEach 守卫。
+// 4、在重用的组件里调用 beforeRouteUpdate 守卫(2.2+)。
+// 5、在路由配置里调用 beforeEnter。
+// 6、解析异步路由组件。
+// 7、在被激活的组件里调用 beforeRouteEnter。
+// 8、调用全局的 beforeResolve 守卫(2.5+)。
+// 9、导航被确认。
+// 10、调用全局的 afterEach 钩子。
+// 11、触发 DOM 更新。
+// 12、调用 beforeRouteEnter 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。
 
 // 路由元信息 meta 附加信息：过渡名称、谁可以访问...
 $route.meta()
@@ -1122,8 +1129,8 @@ $route.meta()
 // 数据获取：导航完成之后获取（接下来用生命周期钩子去获取数据，过程中显示加载中）、导航完成之前获取（在守卫中获取数据成功后执行导航）
 
 // 过渡动效
-使用 v-slot API
-// 单个路由的过渡：元信息+动态name
+// 使用 v-slot API
+// 单个路由的过渡：元信息 + 动态 name
 // 基于路由的动态过渡
 // key 强制复用过渡
 
@@ -1136,23 +1143,27 @@ scrollBehavior(to, from, savedPosition) { return { ...} }
 Promise
 
 // 动态路由
-router.addRoute()\ router.removeRoute()
+router.addRoute()
+router.removeRoute()
 
-// router.hasRoute() 检查路由是否存在
-// router.getRoutes() 获取一个包含所有路由记录的数组
+router.hasRoute()  // 检查路由是否存在
+router.getRoutes()  // 获取一个包含所有路由记录的数组
 ```
 
 - `router` 是路由实例对象，`route` 是当前正在跳转的路由对象。
 
-## 五、Vuex
+## （五）Vuex
 
-**安装：**
+### 01 - 安装
 
-- `npm install vuex --save`
-- `yarn add vuex`
-- 如果浏览器不支持 promise：`npm install es6-promise --save`
+```sh
+npm install vuex --save
+yarn add vuex
+# 如果浏览器不支持 promise
+npm install es6-promise --save
+```
 
-**使用：**
+### 02 - 使用
 
 ```javascript
 // 安装使用
@@ -1203,9 +1214,9 @@ store.commit
 // 将 store 分割为模块
 ```
 
-## 六、Pinia
+## （六）Pinia
 
-## 七、Vue CLI
+## （七）Vue CLI
 
 ### 01 - 安装
 
@@ -1220,15 +1231,9 @@ store.commit
 - 安装插件：`vue add 插件名`
 - 打包程序：`npm run build`
 
-## 八、Vite
+## （八）源码分析
 
-## 九、SSR
-
-## 十、国际化
-
-## 十一、源码分析
-
-## Naive UI
+## （九）UI 框架
 
 <style>
 table {
