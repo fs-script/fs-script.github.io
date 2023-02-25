@@ -20,4 +20,8 @@ next:
 - tree-node-cli 目录树生成：
   - `tree -L 5 -I "node_modules|.vuepress|.git" > README.md`
 
+跨域 cors
+处理日志 morgan
+数据格式校验 joi
+
 ## wangEditor 5
